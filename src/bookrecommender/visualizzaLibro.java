@@ -5,7 +5,7 @@ Borsani Nicolò 757584 VA
 Isopo Silvia 757368 VA
 Mariani Amati Federico 756811 VA
  */
-package bookrecommender;
+package src.bookrecommender;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import static bookrecommender.BookRecommender.*;
+import static src.bookrecommender.BookRecommender.*;
 /**
  * La classe {@code visualizzaLibro}gestisce la visualizzazione delle informazioni relative ai libri.
  * Permette di visualizzare i dettagli di un libro, come le valutazioni, le note degli utenti e i suggerimenti di altri libri.

@@ -5,7 +5,7 @@ Borsani Nicolò 757584 VA
 Isopo Silvia 757368 VA
 Mariani Amati Federico 756811 VA
  */
-package bookrecommender;
+package src.bookrecommender;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static bookrecommender.BookRecommender.*;
+import static src.bookrecommender.BookRecommender.*;
 
 /**
  * La classe {@code cercaLibro} gestisce la ricerca di libri nel sistema.

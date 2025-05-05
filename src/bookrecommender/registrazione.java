@@ -5,7 +5,7 @@ Borsani Nicolò 757584 VA
 Isopo Silvia 757368 VA
 Mariani Amati Federico 756811 VA
  */
-package bookrecommender;
+package src.bookrecommender;
 
 import java.io.*;
 import java.lang.*;
@@ -17,7 +17,7 @@ import com.opencsv.CSVWriter;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
-import static bookrecommender.BookRecommender.*;
+import static src.bookrecommender.BookRecommender.*;
 /**
  * La classe {@code registrazione} gestisce il processo di registrazione di nuovi utenti.
  * Permette di raccogliere informazioni personali come nome, cognome, codice fiscale, email, nome utente e password,

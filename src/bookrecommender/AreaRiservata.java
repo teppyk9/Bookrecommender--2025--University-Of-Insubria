@@ -5,7 +5,7 @@ Borsani Nicolò 757584 VA
 Isopo Silvia 757368 VA
 Mariani Amati Federico 756811 VA
  */
-package bookrecommender;
+package src.bookrecommender;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-import static bookrecommender.BookRecommender.*;
+import static src.bookrecommender.BookRecommender.*;
+
+
 /**
  * La classe {@code AreaRiservata} che gestisce l'interazione dell'utente con l'area riservata del sistema.
  * Fornisce funzionalità per autenticare gli utenti, visualizzare librerie, creare librerie e cercare libri.

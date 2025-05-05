@@ -5,7 +5,7 @@ Borsani Nicolò 757584 VA
 Isopo Silvia 757368 VA
 Mariani Amati Federico 756811 VA
  */
-package bookrecommender;
+package src.bookrecommender;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -70,8 +70,7 @@ public class BookRecommender {
     public static final String ConsigliLibriData;
 
     static {
-        String baseDirectory = getBaseDirectory();
-
+        String baseDirectory = "C:/Users/gabri/IdeaProjects/Maffioli_757587";
         UtentiRegistratiData = new File(baseDirectory, "data/UtentiRegistrati.dati.csv").getAbsolutePath();
         LibrerieData = new File(baseDirectory, "data/Librerie.dati.csv").getAbsolutePath();
         LibriData = new File(baseDirectory, "data/Libri.dati.csv").getAbsolutePath();
@@ -91,6 +90,7 @@ public class BookRecommender {
         while (!scelta.equalsIgnoreCase("STOP")) {
             Scanner s = new Scanner(System.in);
             System.out.println(ANSI_YELLOW + "BENVENUTO NEL MENU'! ");
+            System.out.println(UtentiRegistratiData);
             System.out.println(ANSI_RESET + "Cosa vuoi fare? Digita:\n(1) Per cercare un libro\n(2) Per registrarti\n(3) Per accedere\nSe vuoi terminare il programma digita (" + ANSI_RED + "STOP" + ANSI_RESET + ")");
             scelta = s.nextLine().trim().toUpperCase().replaceAll(" ", "");
 
