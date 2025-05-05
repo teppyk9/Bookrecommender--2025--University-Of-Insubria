@@ -11,9 +11,9 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
@@ -70,13 +70,11 @@ public class BookRecommender {
     public static final String ConsigliLibriData;
 
     static {
-        String baseDirectory = "C:/Users/gabri/IdeaProjects/Maffioli_757587";
-        UtentiRegistratiData = new File(baseDirectory, "data/UtentiRegistrati.dati.csv").getAbsolutePath();
-        LibrerieData = new File(baseDirectory, "data/Librerie.dati.csv").getAbsolutePath();
-        LibriData = new File(baseDirectory, "data/Libri.dati.csv").getAbsolutePath();
-        ValutazioniLibriData = new File(baseDirectory, "data/ValutazioniLibri.dati.csv").getAbsolutePath();
-        ConsigliLibriData = new File(baseDirectory, "data/ConsigliLibri.dati.csv").getAbsolutePath();
-
+        UtentiRegistratiData = Paths.get("data", "UtentiRegistrati.dati.csv").toAbsolutePath().toString();
+        LibrerieData = Paths.get("data", "Librerie.dati.csv").toAbsolutePath().toString();
+        LibriData = Paths.get("data", "Libri.dati.csv").toAbsolutePath().toString();
+        ValutazioniLibriData = Paths.get("data", "ValutazioniLibri.dati.csv").toAbsolutePath().toString();
+        ConsigliLibriData = Paths.get("data", "ConsigliLibri.dati.csv").toAbsolutePath().toString();
     }
 
     /**
@@ -90,7 +88,6 @@ public class BookRecommender {
         while (!scelta.equalsIgnoreCase("STOP")) {
             Scanner s = new Scanner(System.in);
             System.out.println(ANSI_YELLOW + "BENVENUTO NEL MENU'! ");
-            System.out.println(UtentiRegistratiData);
             System.out.println(ANSI_RESET + "Cosa vuoi fare? Digita:\n(1) Per cercare un libro\n(2) Per registrarti\n(3) Per accedere\nSe vuoi terminare il programma digita (" + ANSI_RED + "STOP" + ANSI_RESET + ")");
             scelta = s.nextLine().trim().toUpperCase().replaceAll(" ", "");
 
@@ -146,21 +143,4 @@ public class BookRecommender {
 public static String StampaInfoFull(String[] data) {
     return (data[0] + " >>> " + data[1] + " >>> " + data[3] + " >>> " + data[4] + " >>> " + data[7]);
 }
-
-    /**
-     * Ottieni la directory di base (Maffioli_757587).
-     * Questo metodo determina il percorso assoluto della directory di base
-     * in cui si trovano i file di dati dell'applicazione.
-     *
-     * @return Percorso assoluto {@code String} della directory di base.
-     * @throws RuntimeException Se non è possibile determinare la directory di base.
-     */
-    private static String getBaseDirectory() {
-        try {
-            File jarFile = new File(BookRecommender.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-            return jarFile.getParentFile().getParentFile().getAbsolutePath();
-        } catch (Exception e) {
-            throw new RuntimeException("Impossibile determinare la directory di base.");
-        }
-    }
 }
