@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bookrecommender.client.DettaglioLibroController"
+            prefHeight="400.0" prefWidth="400.0">
+    <VBox spacing="8" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0"
+          AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+        <Label fx:id="titoloLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Label fx:id="autoreLabel"/>
+        <Label fx:id="categoriaLabel"/>
+        <Label fx:id="editoreLabel"/>
+        <Label fx:id="prezzoLabel"/>
+        <Label fx:id="annoLabel"/>
+        <Label fx:id="meseLabel"/>
+        <Label text="Descrizione:" style="-fx-font-weight: bold;"/>
+        <TextArea fx:id="descrizioneArea" wrapText="true" editable="false" prefRowCount="10"/>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bookrecommender.client.MainController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <VBox spacing="10.0" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+            <TextField fx:id="campoRicerca" promptText="Cerca un libro..." />
+            <ListView fx:id="listaLibri" onMouseClicked="#handleListaDoppioClick" />
+        </VBox>
+    </children>
+</AnchorPane>
