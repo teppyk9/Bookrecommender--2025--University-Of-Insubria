@@ -27,21 +27,6 @@ public class Libro implements Serializable {
         this.annoPubblicazione = annoPubblicazione;
         this.mesePubblicazione = mesePubblicazione;
     }
-
-    public String getInfo() {
-        return "ID: " + id + "\n" +
-               "Titolo: " + titolo + "\n" +
-               "Autore: " + autore + "\n" +
-               "Descrizione: " + descrizione + "\n" +
-               "Categoria: " + categoria + "\n" +
-               "Editore: " + editore + "\n" +
-               "Prezzo: " + prezzo + "\n" +
-               "Anno di Pubblicazione: " + annoPubblicazione + "\n" +
-               "Mese di Pubblicazione: " + mesePubblicazione;
-    }
-    public int getId() {
-        return id;
-    }
     public String getTitolo() {
         return titolo;
     }
@@ -63,7 +48,26 @@ public class Libro implements Serializable {
     public short getAnnoPubblicazione() {
         return annoPubblicazione;
     }
-    public short getMesePubblicazione() {
-        return mesePubblicazione;
+    public String getMesePubblicazione() {
+        return switch (mesePubblicazione) {
+            case 1 -> "Gennaio";
+            case 2 -> "Febbraio";
+            case 3 -> "Marzo";
+            case 4 -> "Aprile";
+            case 5 -> "Maggio";
+            case 6 -> "Giugno";
+            case 7 -> "Luglio";
+            case 8 -> "Agosto";
+            case 9 -> "Settembre";
+            case 10 -> "Ottobre";
+            case 11 -> "Novembre";
+            case 12 -> "Dicembre";
+            default -> "Mese sconosciuto";
+        };
+    }
+
+    @Override
+    public String toString() {
+        return titolo;
     }
 }

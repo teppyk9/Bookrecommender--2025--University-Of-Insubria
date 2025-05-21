@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -18,6 +17,6 @@
         <Label fx:id="annoLabel"/>
         <Label fx:id="meseLabel"/>
         <Label text="Descrizione:" style="-fx-font-weight: bold;"/>
-        <TextArea fx:id="descrizioneArea" wrapText="true" editable="false" prefRowCount="10"/>
+        <TextArea fx:id="descrizioneArea" wrapText="true" editable="false"/>
     </VBox>
 </AnchorPane>

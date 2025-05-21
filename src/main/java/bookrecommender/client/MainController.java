@@ -19,6 +19,7 @@ public class MainController {
 
     @FXML private TextField campoRicerca;
     @FXML private ListView<Libro> listaLibri;
+    @FXML private Button bottoneCerca;
 
     private SearchInterface searchService;
 
@@ -38,6 +39,16 @@ public class MainController {
                 listaLibri.setItems(FXCollections.observableArrayList());
             }
         });
+    }
+
+    @FXML
+    private void handleClickCerca() {
+        String testo = campoRicerca.getText();
+        if (testo != null && testo.length() >= 2) {
+            aggiornaLista(testo);
+        } else {
+            listaLibri.setItems(FXCollections.observableArrayList());
+        }
     }
 
     private void aggiornaLista(String titolo) {
@@ -61,7 +72,7 @@ public class MainController {
 
     private void mostraDettagli(Libro libro) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/DettaglioLibro.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibro.fxml"));
             Parent root = loader.load();
 
             DettaglioLibroController controller = loader.getController();
@@ -73,6 +84,7 @@ public class MainController {
             stage.show();
         } catch (Exception e) {
             showAlert("Errore", "Impossibile aprire la finestra dei dettagli.");
+            e.printStackTrace();
         }
     }
 
