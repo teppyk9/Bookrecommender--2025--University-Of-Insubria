@@ -1,0 +1,25 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #fdfdfd;
+    -fx-padding: 20;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.label.bold {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.text-area {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8;
+    -fx-font-size: 13px;
+    -fx-text-fill: #444;
+}
