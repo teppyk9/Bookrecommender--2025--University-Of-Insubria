@@ -1,94 +1,119 @@
 package databaseUpdater;
 
-
+import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DBUp {
 
-    private static final Map<String, Integer> MAPPATURA_MESI = new HashMap<>() {{
-        put("Gennaio", 1);
-        put("Febbraio", 2);
-        put("Marzo", 3);
-        put("Aprile", 4);
-        put("Maggio", 5);
-        put("Giugno", 6);
-        put("Luglio", 7);
-        put("Agosto", 8);
-        put("Settembre", 9);
-        put("Ottobre", 10);
-        put("Novembre", 11);
-        put("Dicembre", 12);
-    }};
+    private static final Map<String, Integer> MAPPATURA_MESI = new HashMap<>();
+    static {
+        MAPPATURA_MESI.put("Gennaio", 1);
+        MAPPATURA_MESI.put("Febbraio", 2);
+        MAPPATURA_MESI.put("Marzo", 3);
+        MAPPATURA_MESI.put("Aprile", 4);
+        MAPPATURA_MESI.put("Maggio", 5);
+        MAPPATURA_MESI.put("Giugno", 6);
+        MAPPATURA_MESI.put("Luglio", 7);
+        MAPPATURA_MESI.put("Agosto", 8);
+        MAPPATURA_MESI.put("Settembre", 9);
+        MAPPATURA_MESI.put("Ottobre", 10);
+        MAPPATURA_MESI.put("Novembre", 11);
+        MAPPATURA_MESI.put("Dicembre", 12);
+        MAPPATURA_MESI.put("January", 1);
+        MAPPATURA_MESI.put("February", 2);
+        MAPPATURA_MESI.put("March", 3);
+        MAPPATURA_MESI.put("April", 4);
+        MAPPATURA_MESI.put("May", 5);
+        MAPPATURA_MESI.put("June", 6);
+        MAPPATURA_MESI.put("July", 7);
+        MAPPATURA_MESI.put("August", 8);
+        MAPPATURA_MESI.put("September", 9);
+        MAPPATURA_MESI.put("October", 10);
+        MAPPATURA_MESI.put("November", 11);
+        MAPPATURA_MESI.put("December", 12);
+    }
 
     public static void main(String[] args) {
-        String csvPath = "libri.csv";  // Percorso del file
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/tuo_database";
-        String user = "tuo_utente";
-        String password = "tua_password";
+        String csvPath = "C:/Users/gmtep/Desktop/Programmi/Maffioli_757587_B/data/Libri.dati.csv";  // Percorso del file
+        String url = "jdbc:postgresql://localhost:5432/bookrecommender";
+        String user = "postgres";
+        String password = "1234";
 
-        try (
-                Connection conn = DriverManager.getConnection(jdbcUrl, user, password);
-                CSVReader reader = new CSVReader(new FileReader(csvPath))
-        ) {
-            String[] row;
-            int lineCount = 0;
+        String sql = """
+                INSERT INTO libri (titolo, autore, descrizione, categoria, editore, prezzo, mesepubblicazione, annopubblicazione)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """;
 
-            // Preparazione statement
-            String sql = "INSERT INTO LIBRI (TITOLO, AUTORE, DESCRIZIONE, CATEGORIA, EDITORE, PREZZO, ANNOPUBBLICAZIONE, MESEPUBBLICAZIONE) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement ps = conn.prepareStatement(sql);
+             BufferedReader reader = new BufferedReader(new FileReader(csvPath))) {
 
-            while ((row = reader.readNext()) != null) {
-                lineCount++;
-                if (row.length != 8) {
-                    System.err.println("Linea " + lineCount + " ignorata: numero di colonne errato.");
+            String line;
+            int riga = 0;
+
+            while ((line = reader.readLine()) != null) {
+                riga++;
+                // Gestione righe malformate
+                String[] campi = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                if (campi.length < 8) {
+                    System.out.println("Riga ignorata (troppo corta) alla linea " + riga);
                     continue;
                 }
 
                 try {
-                    stmt.setString(1, row[0].isBlank() ? null : row[0]); // TITOLO
-                    stmt.setString(2, row[1].isBlank() ? null : row[1]); // AUTORE
-                    stmt.setString(3, row[2].isBlank() ? null : row[2]); // DESCRIZIONE
-                    stmt.setString(4, row[3].isBlank() ? null : row[3]); // CATEGORIA
-                    stmt.setString(5, row[4].isBlank() ? null : row[4]); // EDITORE
-
-                    if (row[5].isBlank()) {
-                        stmt.setNull(6, Types.NUMERIC); // PREZZO
-                    } else {
-                        stmt.setBigDecimal(6, new BigDecimal(row[5]));
+                    // I campi sono: Titolo, Autore, Descrizione, Categoria, Editore, Prezzo, Mese, Anno
+                    for (int i = 0; i < campi.length; i++) {
+                        campi[i] = campi[i].trim(); // lasciamo virgolette se ci sono
                     }
 
-                    if (row[6].isBlank()) {
-                        stmt.setNull(7, Types.SMALLINT); // ANNOPUBBLICAZIONE
+                    ps.setString(1, toNull(campi[0]));
+                    ps.setString(2, toNull(campi[1]));
+                    ps.setString(3, toNull(campi[2]));
+                    ps.setString(4, toNull(campi[3]));
+                    ps.setString(5, toNull(campi[4]));
+
+                    // Prezzo
+                    if (campi[5].isEmpty()) {
+                        ps.setNull(6, java.sql.Types.DECIMAL);
                     } else {
-                        stmt.setShort(7, Short.parseShort(row[6]));
+                        ps.setBigDecimal(6, new java.math.BigDecimal(campi[5]));
                     }
 
-                    if (row[7].isBlank()) {
-                        stmt.setNull(8, Types.SMALLINT); // MESEPUBBLICAZIONE
+                    // Mese
+                    Integer meseNum = MAPPATURA_MESI.get(campi[6].replace("\"", "").trim());
+                    if (meseNum == null) {
+                        ps.setNull(7, java.sql.Types.SMALLINT);
                     } else {
-                        Integer mese = MAPPATURA_MESI.get(row[7].trim());
-                        if (mese == null) {
-                            stmt.setNull(8, Types.SMALLINT);
-                        } else {
-                            stmt.setInt(8, mese);
-                        }
+                        ps.setInt(7, meseNum);
                     }
 
-                    stmt.executeUpdate();
+                    // Anno
+                    if (campi[7].isEmpty()) {
+                        ps.setNull(8, java.sql.Types.SMALLINT);
+                    } else {
+                        ps.setInt(8, Integer.parseInt(campi[7]));
+                    }
+
+                    ps.executeUpdate();
+
                 } catch (Exception e) {
-                    System.err.println("Errore alla riga " + lineCount + ": " + e.getMessage());
+                    System.out.println("Errore alla linea " + riga + ": " + e.getMessage());
                 }
             }
 
             System.out.println("Importazione completata.");
-        } catch (IOException | CsvValidationException | SQLException e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static String toNull(String s) {
+        return (s == null || s.trim().isEmpty()) ? null : s;
     }
 }

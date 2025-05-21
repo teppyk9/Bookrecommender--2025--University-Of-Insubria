@@ -5,6 +5,7 @@ module bookrecommender {
     requires javafx.fxml;
     requires javafx.graphics;
     requires org.postgresql.jdbc;
+    requires com.opencsv;
 
     opens bookrecommender.client to javafx.fxml;
     exports bookrecommender.client;
