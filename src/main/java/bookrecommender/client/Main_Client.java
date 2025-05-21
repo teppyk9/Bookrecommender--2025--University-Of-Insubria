@@ -9,7 +9,7 @@ public class Main_Client extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/Main.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setTitle("Book Recommender");
         primaryStage.setScene(scene);

@@ -1,7 +1,7 @@
 package bookrecommender.server;
 
-import bookrecommender.common.Libro;
 import bookrecommender.common.SearchInterface;
+import bookrecommender.common.Libro;
 
 import java.io.Serial;
 import java.rmi.RemoteException;
@@ -34,7 +34,7 @@ class Main_Server extends UnicastRemoteObject implements SearchInterface {
             registry.rebind(SERVER_NAME, server);
             System.err.println("Server ready");
         } catch (Exception e) {
-            System.out.println("Server could not start");
+            e.printStackTrace();
             System.exit(0);
         }
     }
