@@ -46,4 +46,20 @@ class Main_Server extends UnicastRemoteObject implements SearchInterface {
         }catch (ServerNotActiveException ignored){}
         return dbManager.cercaLibriPerTitolo(title);
     }
+
+    @Override
+    public List<Libro> searchByAuthor(String author) throws RemoteException {
+        try {
+            System.out.println("Searching for books by author: " + author + " From client " + getClientHost());
+        }catch (ServerNotActiveException ignored){}
+        return dbManager.cercaLibriPerAutore(author);
+    }
+
+    @Override
+    public List<Libro> searchByAuthorAndYear(String author, int year) throws RemoteException {
+        try {
+            System.out.println("Searching for books by author: " + author + " and year: " + year + " From client " + getClientHost());
+        }catch (ServerNotActiveException ignored){}
+        return dbManager.cercaLibriPerAutoreAnno(author, year);
+    }
 }

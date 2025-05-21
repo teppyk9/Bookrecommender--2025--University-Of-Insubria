@@ -17,8 +17,19 @@
     -fx-background-color: #1976d2;
     -fx-text-fill: white;
     -fx-background-radius: 8;
-    -fx-padding: 8 16;
     -fx-font-weight: bold;
+}
+
+.menu-button{
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+    -fx-text-origin: white;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+}
+
+.menu-button:hover{
+    -fx-background-color: #1565c0;
 }
 
 .button:hover {

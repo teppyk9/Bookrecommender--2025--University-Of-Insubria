@@ -18,11 +18,31 @@ public class DettaglioLibroController {
     public void setLibro(Libro libro) {
         titoloLabel.setText(libro.getTitolo());
         autoreLabel.setText("Autore: " + libro.getAutore());
-        categoriaLabel.setText("Categoria: " + libro.getCategoria());
-        editoreLabel.setText("Editore: " + libro.getEditore());
-        prezzoLabel.setText("Prezzo: €" + libro.getPrezzo());
-        annoLabel.setText("Anno pubblicazione: " + libro.getAnnoPubblicazione());
+        if(libro.getCategoria() == null || libro.getCategoria().isEmpty()) {
+            categoriaLabel.setText("Categoria: Non specificata");
+        } else {
+            categoriaLabel.setText("Categoria: " + libro.getCategoria());
+        }
+        if(libro.getEditore() == null || libro.getEditore().isEmpty()) {
+            editoreLabel.setText("Editore: Non specificato");
+        } else {
+            editoreLabel.setText("Editore: " + libro.getEditore());
+        }
+        if(libro.getPrezzo() == 0) {
+            prezzoLabel.setText("Prezzo: Non specificato");
+        } else {
+            prezzoLabel.setText("Prezzo: €" + libro.getPrezzo());
+        }
+        if(libro.getAnnoPubblicazione() == 0) {
+            annoLabel.setText("Anno pubblicazione: Non specificato");
+        } else {
+            annoLabel.setText("Anno pubblicazione: " + libro.getAnnoPubblicazione());
+        }
         meseLabel.setText("Mese pubblicazione: " + libro.getMesePubblicazione());
-        descrizioneArea.setText(libro.getDescrizione());
+        if(libro.getDescrizione() == null || libro.getDescrizione().isEmpty()) {
+            descrizioneArea.setText("Nessuna descrizione associata");
+        } else {
+            descrizioneArea.setText(libro.getDescrizione());
+        }
     }
 }

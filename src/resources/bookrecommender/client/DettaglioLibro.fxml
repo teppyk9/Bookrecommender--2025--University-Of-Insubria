@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="400.0" stylesheets="@../stylesheets/DettaglioLibro.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.DettaglioLibroController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/DettaglioLibro.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.DettaglioLibroController">
     <VBox spacing="8" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <Label fx:id="titoloLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
         <Label fx:id="autoreLabel" />

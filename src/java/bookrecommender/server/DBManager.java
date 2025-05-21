@@ -20,31 +20,64 @@ public class DBManager {
         }
     }
 
-    public List<Libro> cercaLibriPerTitolo(String titolo) {
-        List<Libro> risultati = new ArrayList<>();
-        String query = "SELECT * FROM LIBRI WHERE LOWER(TITOLO) LIKE LOWER(?)";
-
+    public List<Libro> selectLibro(String titolo, List<Libro> risultati, String query) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, "%" + titolo + "%");
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Libro libro = new Libro(
-                            rs.getInt("ID"),
-                            rs.getString("TITOLO"),
-                            rs.getString("AUTORE"),
-                            rs.getString("DESCRIZIONE"),
-                            rs.getString("CATEGORIA"),
-                            rs.getString("EDITORE"),
-                            rs.getFloat("PREZZO"),
-                            rs.getShort("ANNOPUBBLICAZIONE"),
-                            rs.getShort("MESEPUBBLICAZIONE")
-                    );
-                    risultati.add(libro);
-                }
+            resultStmt(risultati, stmt);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return risultati;
+    }
+
+    public void resultStmt(List<Libro> risultati, PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Libro libro = new Libro(
+                        rs.getInt("ID"),
+                        rs.getString("TITOLO"),
+                        rs.getString("AUTORE"),
+                        rs.getString("DESCRIZIONE"),
+                        rs.getString("CATEGORIA"),
+                        rs.getString("EDITORE"),
+                        rs.getFloat("PREZZO"),
+                        rs.getShort("ANNOPUBBLICAZIONE"),
+                        rs.getShort("MESEPUBBLICAZIONE")
+                );
+                risultati.add(libro);
             }
+        }
+    }
+
+    public List<Libro> cercaLibriPerTitolo(String titolo) {
+        List<Libro> risultati = new ArrayList<>();
+        String query = "SELECT * FROM LIBRI WHERE LOWER(TITOLO) LIKE LOWER(?)";
+
+        return selectLibro(titolo, risultati, query);
+    }
+
+    public List<Libro> cercaLibriPerAutore(String author) {
+        List<Libro> risultati = new ArrayList<>();
+        String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?)";
+
+        return selectLibro(author, risultati, query);
+    }
+
+    public List<Libro> cercaLibriPerAutoreAnno(String author, int year) {
+        List<Libro> risultati = new ArrayList<>();
+        String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) AND ANNOPUBBLICAZIONE = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + author + "%");
+            stmt.setInt(2, year);
+
+            resultStmt(risultati, stmt);
 
         } catch (SQLException e) {
             e.printStackTrace();
