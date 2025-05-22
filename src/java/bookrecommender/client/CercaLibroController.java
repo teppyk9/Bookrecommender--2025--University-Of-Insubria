@@ -40,7 +40,7 @@ public class CercaLibroController {
         searchType = "";
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            searchService = (SearchInterface) registry.lookup("BookRecommender");
+            searchService = (SearchInterface) registry.lookup("Search_Interface");
             showConfirmation("Connessione stabilita", "Connessione al server RMI avvenuta con successo.");
         } catch (Exception e) {
             showAlert("Errore di connessione", "Impossibile connettersi al server RMI.");

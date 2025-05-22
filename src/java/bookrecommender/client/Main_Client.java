@@ -18,6 +18,7 @@ public class Main_Client extends Application {
         primaryStage.setTitle("Book Recommender");
         primaryStage.getIcons().add(icon);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
