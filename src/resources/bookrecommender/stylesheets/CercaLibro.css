@@ -46,6 +46,7 @@ MenuTipoRicerca {
 }
 .menu-button > .label {
     -fx-text-fill: white;
+    -fx-text-alignment: center;
 }
 
 .menu-button:hover{

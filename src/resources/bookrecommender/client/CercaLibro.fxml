@@ -22,12 +22,11 @@
                     <Insets />
                 </opaqueInsets>
           </Button>
-            <MenuButton fx:id="MenuTipoRicerca" mnemonicParsing="false" prefHeight="23.0" prefWidth="205.0" text="Tipo di ricerca" textFill="WHITE">
+            <MenuButton fx:id="MenuTipoRicerca" mnemonicParsing="false" prefHeight="23.0" prefWidth="205.0" text="Tipo di ricerca" textFill="WHITE" alignment="CENTER">
                 <items>
                     <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" text="Titolo" />
                     <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" text="Autore" />
                     <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" text="Autore e anno di pubblicazione" />
-                    <MenuItem visible="false" />
                 </items>
                 <HBox.margin>
                     <Insets left="299.0" />

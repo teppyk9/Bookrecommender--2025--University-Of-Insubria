@@ -2,8 +2,10 @@ package bookrecommender.client;
 
 import bookrecommender.common.Libro;
 import bookrecommender.common.SearchInterface;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +39,10 @@ public class CercaLibroController {
     public void initialize() {
         campoRicercaAnno.setVisible(false);
         campoRicercaAnno.setDisable(true);
+        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/arrow_down_icon.png"))));
+        arrowImage.setFitWidth(12);
+        arrowImage.setFitHeight(12);
+        MenuTipoRicerca.setGraphic(arrowImage);
         searchType = "";
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
@@ -46,6 +52,13 @@ public class CercaLibroController {
             showAlert("Errore di connessione", "Impossibile connettersi al server RMI.");
             e.printStackTrace();
         }
+        Platform.runLater(() -> {
+            Node arrow = MenuTipoRicerca.lookup(".arrow");
+            if (arrow != null) {
+                arrow.setVisible(false);
+                arrow.setManaged(false);
+            }
+        });
     }
 
     @FXML
@@ -153,12 +166,11 @@ public class CercaLibroController {
         alert.setTitle(titolo);
         alert.setContentText(messaggio);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        Image icona = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_confirmation_icon.png")));
-        ImageView imageView = new ImageView(icona);
+        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_confirmation_icon.png"))));
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         alert.setGraphic(imageView);
-        stage.getIcons().add(icona);
+        stage.getIcons().add(imageView.getImage());
         alert.getButtonTypes().setAll(ButtonType.OK);
         alert.showAndWait();
     }
