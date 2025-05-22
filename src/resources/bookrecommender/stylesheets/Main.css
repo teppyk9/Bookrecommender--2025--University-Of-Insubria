@@ -20,18 +20,6 @@
     -fx-font-weight: bold;
 }
 
-.menu-button{
-    -fx-background-color: #1976d2;
-    -fx-text-fill: white;
-    -fx-text-origin: white;
-    -fx-background-radius: 8;
-    -fx-font-weight: bold;
-}
-
-.menu-button:hover{
-    -fx-background-color: #1565c0;
-}
-
 .button:hover {
     -fx-background-color: #1565c0;
 }
@@ -42,4 +30,22 @@
     -fx-border-color: #ccc;
     -fx-border-width: 1;
     -fx-background-color: white;
+}
+ <!-- il testo deve essere bianco -->
+MenuTipoRicerca {
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+}
+.menu-button{
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+    -fx-text-origin: white;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+}
+
+.menu-button:hover{
+    -fx-background-color: #1565c0;
 }
