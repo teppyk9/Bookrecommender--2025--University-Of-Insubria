@@ -60,6 +60,6 @@ class Main_Server extends UnicastRemoteObject implements SearchInterface {
         try {
             System.out.println("Searching for books by author: " + author + " and year: " + year + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
-        return dbManager.cercaLibriPerAutoreAnno(author, year);
+        return dbManager.cercaLibriPerAutoreAnno(author, String.valueOf(year));
     }
 }

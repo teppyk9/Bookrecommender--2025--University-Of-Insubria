@@ -67,15 +67,15 @@ public class DBManager {
         return selectLibro(author, risultati, query);
     }
 
-    public List<Libro> cercaLibriPerAutoreAnno(String author, int year) {
+    public List<Libro> cercaLibriPerAutoreAnno(String author, String year) {
         List<Libro> risultati = new ArrayList<>();
-        String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) AND ANNOPUBBLICAZIONE = ?";
+        String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) AND CAST(ANNOPUBBLICAZIONE AS TEXT) LIKE ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, "%" + author + "%");
-            stmt.setInt(2, year);
+            stmt.setString(2,"%" + year + "%");
 
             resultStmt(risultati, stmt);
 
