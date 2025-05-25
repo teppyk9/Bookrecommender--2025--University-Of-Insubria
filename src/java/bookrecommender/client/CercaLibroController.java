@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -227,5 +228,17 @@ public class CercaLibroController {
         MenuTipoRicerca.setText("Autore e Anno");
         campoRicercaAnno.setDisable(false);
         campoRicercaAnno.setVisible(true);
+    }
+
+    public void keyEnterPressed_1(KeyEvent keyEvent) {
+        if(keyEvent.getCode().getName().equals("Enter")) {
+            handleClickCerca();
+        }
+    }
+
+    public void keyEnterPressed_2(KeyEvent keyEvent) {
+        if(keyEvent.getCode().getName().equals("Enter")) {
+            handleClickCerca();
+        }
     }
 }
