@@ -20,9 +20,13 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CercaLibroController {
 
+    @FXML private Button GoBackButton_MainMenu;
+    @FXML private Button ExitButton;
     @FXML private MenuItem MenuCercaTitolo;
     @FXML private MenuButton MenuTipoRicerca;
     @FXML private MenuItem MenuCercaAutore;
@@ -35,6 +39,8 @@ public class CercaLibroController {
     private SearchInterface searchService;
 
     private String searchType;
+
+    private static final Logger logger = Logger.getLogger(CercaLibroController.class.getName());
 
     @FXML
     public void initialize() {
@@ -51,7 +57,7 @@ public class CercaLibroController {
             showConfirmation("Connessione stabilita", "Connessione al server RMI avvenuta con successo.");
         } catch (Exception e) {
             showAlert("Errore di connessione", "Impossibile connettersi al server RMI.");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Errore di connessione al server RMI", e);
         }
         Platform.runLater(() -> {
             Node arrow = MenuTipoRicerca.lookup(".arrow");
@@ -144,7 +150,7 @@ public class CercaLibroController {
             stage.show();
         } catch (Exception e) {
             showAlert("Errore", "Impossibile aprire la finestra dei dettagli.");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Impossibile aprire la finestra dei dettagli.", e);
         }
     }
 
@@ -153,13 +159,17 @@ public class CercaLibroController {
         alert.setTitle(titolo);
         alert.setContentText(messaggio);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        createAller(alert, stage);
+        alert.showAndWait();
+    }
+
+    private void createAller(Alert alert, Stage stage) {
         Image icona = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_icon.png")));
         ImageView imageView = new ImageView(icona);
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         alert.setGraphic(imageView);
         stage.getIcons().add(icona);
-        alert.showAndWait();
     }
 
     private void showConfirmation(String titolo, String messaggio) {
@@ -239,6 +249,36 @@ public class CercaLibroController {
     public void keyEnterPressed_2(KeyEvent keyEvent) {
         if(keyEvent.getCode().getName().equals("Enter")) {
             handleClickCerca();
+        }
+    }
+
+    public void GoToMainMenu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/HomeMenu.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
+            stage.setTitle("Home Menu");
+            stage.setScene(new Scene(root));
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
+            stage.getIcons().add(icon);
+            stage.show();
+        } catch (Exception e) {
+            showAlert("Errore", "Impossibile tornare al menu principale.");
+            logger.log(Level.SEVERE, "Impossibile tornare al menu principale.", e);
+        }
+    }
+
+    public void ExitApplication() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Conferma uscita");
+        alert.setContentText("Sei sicuro di voler uscire dall'applicazione?");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        createAller(alert, stage);
+        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+        if (alert.showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
+            Platform.exit();
+            System.exit(0);
         }
     }
 }
