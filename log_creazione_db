@@ -1,0 +1,313 @@
+"C:\Program Files\Java\jdk-17\bin\java.exe" "-javaagent:C:\Users\frafr\AppData\Local\Programs\IntelliJ IDEA Ultimate\lib\idea_rt.jar=54087" -Dfile.encoding=UTF-8 -classpath C:\JarLib\checker-qual-3.42.0.jar;C:\JarLib\javafx-web-17.0.7.jar;C:\JarLib\javafx-web-17.0.7-win.jar;C:\JarLib\javafx-controls-17.0.7.jar;C:\JarLib\javafx-graphics-17.0.7.jar;C:\JarLib\javafx-base-17.0.7.jar;C:\JarLib\javafx-media-17.0.7.jar;C:\JarLib\javafx-media-17.0.7-win.jar;C:\JarLib\javafx-fxml-17.0.6.jar;C:\JarLib\javafx-controls-17.0.6.jar;C:\JarLib\javafx-graphics-17.0.6.jar;C:\JarLib\javafx-base-17.0.6.jar;C:\JarLib\javafx-base-17.0.12.jar;C:\JarLib\commons-lang3-3.13.0.jar;C:\JarLib\commons-text-1.11.0.jar;C:\JarLib\commons-beanutils-1.9.4.jar;C:\JarLib\commons-logging-1.2.jar;C:\JarLib\commons-collections-3.2.2.jar;C:\JarLib\commons-collections4-4.4.jar;C:\JarLib\commons-lang3-3.17.0.jar -p "C:\JarLib\javafx-fxml-17.0.6-win.jar;C:\JarLib\opencsv-5.9.jar;C:\JarLib\javafx-graphics-17.0.7-win.jar;C:\JarLib\javafx-graphics-17.0.6-win.jar;C:\JarLib\postgresql-42.7.3.jar;C:\Users\frafr\Desktop\UNIVERSITA'\2°ANNO\Lab B\Maffioli_757587\out\production\bookrecommender;C:\JarLib\javafx-controls-17.0.7-win.jar;C:\JarLib\javafx-controls-17.0.6-win.jar;C:\JarLib\javafx-base-17.0.12-win.jar;C:\JarLib\javafx-base-17.0.7-win.jar;C:\JarLib\javafx-base-17.0.6-win.jar" -m bookrecommender/databaseUpdater.DBUp
+Errore alla linea 1: Character array is missing "e" notation exponential mark.
+Errore alla linea 520: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 3203: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 4644: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 7099: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 7114: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 8400: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 9287: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 10554: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 12558: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 14200: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 15811: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 16850: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 17289: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 17379: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 19176: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 19841: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 20406: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 20447: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 20596: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 20625: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 21554: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 21724: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 21828: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 22415: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 23217: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 28575: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 28631: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 28805: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 29183: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 29843: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 33225: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 33356: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 33408: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 33421: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 33497: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 33705: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 34090: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 34574: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 35260: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 35399: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 35766: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 36698: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 38178: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 38904: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 38955: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 40916: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 41373: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 41404: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 41433: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 41977: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 42071: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 42316: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 42638: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 42993: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 43520: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 44057: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 45303: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 45367: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 46858: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 47814: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 48846: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 49228: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 51274: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 53268: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 53973: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 54071: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 54423: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 54428: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 54491: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 54993: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 55595: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 55720: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 56167: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 56398: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 56719: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 56721: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 57615: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 57885: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 58323: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 58404: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 58594: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 59424: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 59628: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 60044: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 60114: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 60427: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 60460: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 60628: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 61976: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 61978: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 62013: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 62651: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 62748: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 63825: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 63963: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 64175: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 64517: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 64782: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 65125: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 65316: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 66384: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 66527: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 66945: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 67695: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 67699: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 68670: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 68883: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 68886: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 68975: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 71442: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 71981: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 73453: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 75276: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 76824: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 77824: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 79032: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 79744: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 80293: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 80892: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 81126: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 81210: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 81484: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 81583: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 81617: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 81921: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 81989: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 82223: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 83080: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 83662: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 84385: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 85793: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 85802: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 87581: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 88166: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 89122: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 89938: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 90837: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 91684: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 92949: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 93171: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 93172: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 93179: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 93877: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 95308: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 95754: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 96047: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 97148: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 97433: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 97546: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 97800: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 99240: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 100565: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 102288: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Errore alla linea 103021: ERRORE: il campo numeric causa un overflow
+  Dettaglio: Un campo con precisione 3 e 1 cifre decimali deve arrotondarsi ad un valore assoluto inferiore a 10^2.
+Importazione completata.
+
+Process finished with exit code 0
