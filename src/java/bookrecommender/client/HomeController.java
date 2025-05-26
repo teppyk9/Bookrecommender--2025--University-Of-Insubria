@@ -24,7 +24,7 @@ public class HomeController {
             Stage stage = (Stage) CercaLibroBaseButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("Cerca Libro");
+            stage.setTitle("Login");
             Image icon = new Image(java.util.Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
             stage.getIcons().add(icon);
             stage.show();
@@ -40,7 +40,7 @@ public class HomeController {
             Stage stage = (Stage) CercaLibroBaseButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("Cerca Libro");
+            stage.setTitle("Registrazione");
             Image icon = new Image(java.util.Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
             stage.getIcons().add(icon);
             stage.show();

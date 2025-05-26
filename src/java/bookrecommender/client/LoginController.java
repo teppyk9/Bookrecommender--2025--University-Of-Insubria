@@ -74,7 +74,22 @@ public class LoginController {
             Token token = logRegService.TryLogin(username, password);
             if (token != null) {
                 showConfirmation("Login riuscito", "Benvenuto " + username + "!");
-                GoBackMainMenu();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/AreaRiservata.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) AccediButton.getScene().getWindow();
+                    Scene scene = new Scene(root);
+                    AreaRiservataController controller = loader.getController();
+                    controller.setToken(token);
+                    controller.setLogRegService(logRegService);
+                    stage.setScene(scene);
+                    stage.setTitle("Area Riservata");
+                    Image icon = new Image(java.util.Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
+                    stage.getIcons().add(icon);
+                    stage.show();
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, "Impossibile caricare l'interfaccia richiesta!", e);
+                }
             } else {
                 ErrorToLogin.setVisible(true);
                 ErrorToLogin.setManaged(true);

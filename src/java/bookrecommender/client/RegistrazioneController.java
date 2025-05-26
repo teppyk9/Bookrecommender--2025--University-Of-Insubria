@@ -155,12 +155,13 @@ public class RegistrazioneController {
                 showConfirmation("Registrazione riuscita", "Benvenuto " + username + "!");
                 GoBackMainMenu();
             } else{
-                if(!result.isUsernameAvailable()) {showAlert("Errore", "Username già utilizzata");
+                if(result.isUsernameAvailable()) {
+                    showAlert("Errore", "Username già utilizzata");
                 }
-                if(!result.isEmailAvailable()) {
+                if(result.isEmailAvailable()) {
                     showAlert("Errore", "Email già utilizzata");
                 }
-                if(!result.isCFAvailable()) {
+                if(result.isCFAvailable()) {
                     showAlert("Errore", "Codice Fiscale già utilizzato");
                 }
             }

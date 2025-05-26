@@ -23,6 +23,7 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     @Override
     public Token TryLogin(String username, String password) throws RemoteException {
         try {
+            System.out.println("TryLogin called with username: " + username + ", password: " + password + ", client host: " + getClientHost());
             return dbManager.loginUtente(username, password, getClientHost());
         }catch(ServerNotActiveException e){
             return null;
@@ -31,6 +32,19 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
 
     @Override
     public RegToken Register(String nome, String cognome, String CF, String email, String username, String password) throws RemoteException {
-        return DBManager.Register(nome, cognome, CF, email, username, password);
+        try {
+            System.out.println("Register called with nome: " + nome + ", cognome: " + cognome + ", CF: " + CF + ", email: " + email + ", username: " + username + ", client host: " + getClientHost());
+            return dbManager.Register(nome, cognome, CF, email, username, password);
+        } catch (ServerNotActiveException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean LogOut(Token token) throws RemoteException {
+        try {
+            System.out.println("LogOut called for token: " + token.getToken() + ", client host: " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        return dbManager.LogOut(token);
     }
 }

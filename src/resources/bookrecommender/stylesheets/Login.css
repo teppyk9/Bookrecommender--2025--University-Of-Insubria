@@ -43,6 +43,9 @@
     -fx-padding: 8 16;
     -fx-font-family: "Century Gothic";
 }
+.button:hover {
+    -fx-background-color: #1565c0;
+}
 
 .reg{
     -fx-text-fill: #c7e7f5;

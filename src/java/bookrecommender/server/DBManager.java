@@ -144,7 +144,7 @@ public class DBManager {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(tokenBytes);
     }
 
-    public static RegToken Register(String nome, String cognome, String CF, String email, String username, String password){
+    public RegToken Register(String nome, String cognome, String CF, String email, String username, String password){
         String checkUsername = "SELECT 1 FROM UTENTI WHERE USERNAME = ?";
         String checkCF = "SELECT 1 FROM UTENTI WHERE CODICE_FISCALE = ?";
         String checkEmail = "SELECT 1 FROM UTENTI WHERE EMAIL = ?";
@@ -194,6 +194,17 @@ public class DBManager {
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nella registrazione di un utente CASE: InsertStatement not valid", e);
             return new RegToken(false, false, false,false);
+        }
+    }
+    public boolean LogOut(Token token) {
+        String deleteQuery = "DELETE FROM SESSIONI_LOGIN WHERE TOKEN = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+            stmt.setString(1, token.getToken());
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore durante il logout dell'utente", e);
+            return false;
         }
     }
 }
