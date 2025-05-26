@@ -21,9 +21,9 @@
                         <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" />
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" >
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
                      <children>
-                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field"  />
+                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
                      </children>
                   </AnchorPane>
               </items>
@@ -32,7 +32,7 @@
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
                      <children>
-                        <Label contentDisplay="CENTER" layoutX="1.0" layoutY="-6.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta"  text="Password" />
+                        <Label contentDisplay="CENTER" layoutX="1.0" layoutY="-6.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
                      </children>
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
@@ -49,5 +49,6 @@
                </font></Label>
          </children>
       </VBox>
+      <Button mnemonicParsing="false" styleClass="bottone" text="Indietro" />
    </children>
 </AnchorPane>

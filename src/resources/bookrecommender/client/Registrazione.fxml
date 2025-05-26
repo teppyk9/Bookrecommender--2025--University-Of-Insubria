@@ -13,98 +13,99 @@
    <children>
       <VBox alignment="CENTER" layoutX="152.0" layoutY="24.0" prefHeight="491.0" prefWidth="366.0">
          <children>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="366.0" styleClass="titolo" text="REGISTRAZIONE" textAlignment="CENTER" />
-            <SplitPane dividerPositions="0.29797979797979796" prefHeight="50.0" prefWidth="407.0" styleClass="split" >
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="366.0" styleClass="titolo" stylesheets="@LabB_style/src/stylesheets/Login.css" text="REGISTRAZIONE" textAlignment="CENTER" />
+            <SplitPane dividerPositions="0.29797979797979796" prefHeight="50.0" prefWidth="407.0" styleClass="split" stylesheets="@LabB_style/src/stylesheets/Login.css">
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Nome" />
+                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Nome" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" >
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" stylesheets="@LabB_style/src/stylesheets/Login.css">
                      <children>
-                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" stylesheets="@LabB_style/src/stylesheets/Login.css" />
                      </children>
                   </AnchorPane>
                </items>
             </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="195.0" prefHeight="50.0" prefWidth="407.0" styleClass="split">
+            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="195.0" prefHeight="50.0" prefWidth="407.0" styleClass="split" stylesheets="@LabB_style/src/stylesheets/Login.css">
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta"  text="Cognome" />
+                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Cognome" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" stylesheets="@LabB_style/src/stylesheets/Login.css">
+                     <children>
+                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" stylesheets="@LabB_style/src/stylesheets/Login.css" />
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="271.0" prefHeight="50.0" prefWidth="407.0" styleClass="split" stylesheets="@LabB_style/src/stylesheets/Login.css">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
+                     <children>
+                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Codice Fiscale" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" stylesheets="@LabB_style/src/stylesheets/Login.css">
+                     <children>
+                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" stylesheets="@LabB_style/src/stylesheets/Login.css" />
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="144.0" prefHeight="50.0" prefWidth="407.0" styleClass="split" stylesheets="@LabB_style/src/stylesheets/Login.css">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
+                     <children>
+                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Email" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" stylesheets="@LabB_style/src/stylesheets/Login.css">
+                     <children>
+                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" stylesheets="@LabB_style/src/stylesheets/Login.css" />
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="120.0" prefHeight="50.0" prefWidth="407.0" styleClass="split" stylesheets="@LabB_style/src/stylesheets/Login.css">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
+                     <children>
+                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Username" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" stylesheets="@LabB_style/src/stylesheets/Login.css">
+                     <children>
+                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" stylesheets="@LabB_style/src/stylesheets/Login.css" />
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.298" prefHeight="50.0" prefWidth="407.0" styleClass="split" stylesheets="@LabB_style/src/stylesheets/Login.css">
+               <items>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
+                     <children>
+                        <Label contentDisplay="CENTER" layoutX="1.0" layoutY="-6.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Password" />
                      </children>
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
                      <children>
-                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+                        <PasswordField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" stylesheets="@LabB_style/src/stylesheets/Login.css" />
                      </children>
                   </AnchorPane>
                </items>
             </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="271.0" prefHeight="50.0" prefWidth="407.0" styleClass="split" >
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta"  text="Codice Fiscale" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field"  />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="144.0" prefHeight="50.0" prefWidth="407.0" styleClass="split" >
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta"  text="Email" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" >
-                     <children>
-                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field"  />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="120.0" prefHeight="50.0" prefWidth="407.0" styleClass="split" >
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta"  text="Username" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0" >
-                     <children>
-                        <TextField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.298" prefHeight="50.0" prefWidth="407.0" styleClass="split" >
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" layoutX="1.0" layoutY="-6.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <PasswordField layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field"  />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Accedi" />
-            <Label alignment="CENTER" prefHeight="66.0" prefWidth="316.0" styleClass="reg" text="Non hai ancora un account? Registrati qui" textAlignment="CENTER">
+            <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Accedi" />
+            <Label alignment="CENTER" prefHeight="66.0" prefWidth="316.0" styleClass="reg" stylesheets="@LabB_style/src/stylesheets/Login.css" text="Hai già un account? Accedi" textAlignment="CENTER">
                <font>
                   <Font name="System Italic" size="12.0" />
                </font>
             </Label>
          </children>
       </VBox>
+      <Button mnemonicParsing="false" styleClass="bottone" text="Indietro" />
    </children>
 </AnchorPane>
