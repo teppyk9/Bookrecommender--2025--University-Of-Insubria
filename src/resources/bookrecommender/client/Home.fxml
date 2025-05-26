@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@LabB_style/src/stylesheets/home2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="507.0" prefWidth="648.0" styleClass="background" stylesheets="@LabB_style/src/stylesheets/home2.css">
+      <HBox prefHeight="507.0" prefWidth="648.0" styleClass="background">
          <children>
             <ImageView fitHeight="621.0" fitWidth="304.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@LabB_style/src/images/img_biblioteca.jpg" />
+                  <Image url="@../icons/img_biblioteca.jpg" />
                </image>
             </ImageView>
             <VBox prefHeight="518.0" prefWidth="345.0">
