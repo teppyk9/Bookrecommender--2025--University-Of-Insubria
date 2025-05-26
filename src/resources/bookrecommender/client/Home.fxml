@@ -23,8 +23,8 @@
             </ImageView>
             <VBox prefHeight="518.0" prefWidth="345.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="692.0" styleClass="titolo" stylesheets="@LabB_style/src/stylesheets/home2.css" text="Book Recommender" />
-                  <Label alignment="CENTER" prefHeight="87.0" prefWidth="345.0" styleClass="descrizione" stylesheets="@LabB_style/src/stylesheets/home2.css" text="Gestione libreria" textAlignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="692.0" styleClass="titolo" text="Book Recommender" />
+                  <Label alignment="CENTER" prefHeight="87.0" prefWidth="345.0" styleClass="descrizione" text="Gestione libreria" textAlignment="CENTER" />
                   <Separator prefWidth="300.0" valignment="BOTTOM">
                      <padding>
                         <Insets top="30.0" />
@@ -39,9 +39,9 @@
                   </Separator>
                   <VBox alignment="CENTER" prefHeight="406.0" prefWidth="345.0" spacing="40.0">
                      <children>
-                        <Button maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" stylesheets="@LabB_style/src/stylesheets/home2.css" text="Login" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" stylesheets="@LabB_style/src/stylesheets/home2.css" text="Registrazione" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" stylesheets="@LabB_style/src/stylesheets/home2.css" text="Cerca un libro" />
+                        <Button maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone"  text="Login" />
+                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone"  text="Registrazione" />
+                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" text="Cerca un libro" />
                      </children>
                   </VBox>
                </children></VBox>
