@@ -254,7 +254,7 @@ public class CercaLibroController {
 
     public void GoToMainMenu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/HomeMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/Home.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
             stage.setTitle("Home Menu");

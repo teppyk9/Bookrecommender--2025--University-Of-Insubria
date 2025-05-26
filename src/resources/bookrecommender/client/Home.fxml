@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Home.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Home.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.HomeController">
    <children>
       <HBox prefHeight="507.0" prefWidth="648.0" styleClass="background">
          <children>
@@ -39,9 +39,9 @@
                   </Separator>
                   <VBox alignment="CENTER" prefHeight="406.0" prefWidth="345.0" spacing="40.0">
                      <children>
-                        <Button maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone"  text="Login" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone"  text="Registrazione" />
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" text="Cerca un libro" />
+                        <Button fx:id="LoginButton" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#OpenLoginPage" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" text="Login" />
+                        <Button fx:id="SignUpButton" mnemonicParsing="false" onAction="#OpenSignUpPage" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" text="Registrazione" />
+                        <Button fx:id="CercaLibroBaseButton" mnemonicParsing="false" onAction="#OpenCercaLibroBasePage" prefHeight="30.0" prefWidth="115.0" styleClass="bottone" text="Cerca un libro" />
                      </children>
                   </VBox>
                </children></VBox>

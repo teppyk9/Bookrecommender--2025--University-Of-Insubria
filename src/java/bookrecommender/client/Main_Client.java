@@ -12,7 +12,7 @@ public class Main_Client extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/HomeMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/Home.fxml"));
         Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
         Scene scene = new Scene(loader.load());
         primaryStage.setTitle("Book Recommender");
