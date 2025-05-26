@@ -2,7 +2,8 @@ package bookrecommender.client;
 
 import bookrecommender.common.Libro;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 public class DettaglioLibroController {
 
