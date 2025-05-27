@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroAvanzatoController">
+    <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <AnchorPane prefHeight="32.0" prefWidth="750.0">
+            <TextField fx:id="campoRicerca" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="438.0"
+                       promptText="Cerca un libro..."/>
+        </AnchorPane>
+        <AnchorPane prefHeight="43.0" prefWidth="750.0">
+            <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" onAction="#handleClickCerca" text="Cerca">
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Button>
+            <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="61.0" mnemonicParsing="false"
+                        prefHeight="23.0" prefWidth="205.0" text="Tipo di ricerca" textFill="WHITE">
+                <items>
+                    <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" text="Titolo"/>
+                    <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" text="Autore"/>
+                    <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno"
+                              text="Autore e anno di pubblicazione"/>
+                </items>
+            </MenuButton>
+            <TextField fx:id="campoRicercaAnno" layoutX="282.0" layoutY="-1.0" onKeyPressed="#keyEnterPressed_2"
+                       prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno"/>
+            <Button fx:id="BottoneSalvaLibreria" layoutX="627.0" mnemonicParsing="false" onAction="#SalvaLibreria"
+                    prefHeight="23.0" prefWidth="118.0" text="Salva Libreria"/>
+            <Text layoutX="472.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le mie Librerie"
+                  textAlignment="CENTER" wrappingWidth="131.5">
+                <font>
+                    <Font size="17.0"/>
+                </font>
+            </Text>
+        </AnchorPane>
+        <AnchorPane prefHeight="317.0" prefWidth="750.0">
+            <HBox prefHeight="289.0" prefWidth="750.0">
+                <ListView fx:id="listaLibri" onMouseClicked="#handleListaDoppioClick_1" prefHeight="289.0"
+                          prefWidth="320.0"/>
+                <AnchorPane prefHeight="289.0" prefWidth="118.0">
+                    <VBox prefHeight="289.0" prefWidth="118.0">
+                        <AnchorPane prefHeight="96.0" prefWidth="118.0">
+                            <Button fx:id="BottoneApriLibreria" layoutX="16.0" layoutY="37.0"
+                                    mnemonicParsing="false" onAction="#ApriLibreria"
+                                    text="Apri Libreria"/>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="96.0" prefWidth="118.0">
+                            <Button fx:id="BottoneAggiungiLibro" layoutX="9.0" layoutY="37.0"
+                                    mnemonicParsing="false" onAction="#AggiungiLibro"
+                                    text="Aggiungi Libro"/>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="96.0" prefWidth="118.0">
+                            <Button fx:id="BottoneRimuoviLibro" layoutX="11.0" layoutY="37.0"
+                                    mnemonicParsing="false" onAction="#RimuoviLibro"
+                                    text="Rimuovi Libro"/>
+                        </AnchorPane>
+                    </VBox>
+                </AnchorPane>
+                <ListView fx:id="ListaLibrerie" onMouseClicked="#handleListaDoppioClick_2" prefHeight="289.0" prefWidth="318.0"/>
+            </HBox>
+        </AnchorPane>
+        <AnchorPane prefHeight="35.0" prefWidth="750.0">
+            <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="534.0"
+                    layoutY="7.0" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="23.0" prefWidth="216.0"
+                    text="Indietro"/>
+            <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" mnemonicParsing="false"
+                    onAction="#ExitApplication" prefHeight="23.0" prefWidth="84.0" text="Esci"/>
+        </AnchorPane>
+    </VBox>
+</AnchorPane>

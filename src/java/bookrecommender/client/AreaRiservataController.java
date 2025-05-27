@@ -2,7 +2,6 @@ package bookrecommender.client;
 
 import bookrecommender.common.LogRegInterface;
 import bookrecommender.common.Token;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,7 +32,19 @@ public class AreaRiservataController {
     }
 
     public void OpenCercaLibroAvanzato() {
-        System.out.println("OpenCercaLibroAvanzato called");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/CercaLibroAvanzato.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) BottoneLogOut.getScene().getWindow();
+            stage.setTitle("Cerca Libro Avanzato");
+            stage.setScene(new Scene(root));
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
+            stage.getIcons().add(icon);
+            stage.show();
+        } catch (Exception e) {
+            showAlert("Errore", "Impossibile tornare al menu principale.");
+            logger.log(Level.SEVERE, "Impossibile tornare al menu principale.", e);
+        }
     }
 
     public void OpenVisualizzaLibrerie() {
