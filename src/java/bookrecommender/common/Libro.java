@@ -27,6 +27,9 @@ public class Libro implements Serializable {
         this.annoPubblicazione = annoPubblicazione;
         this.mesePubblicazione = mesePubblicazione;
     }
+    public int getId() {
+        return id;
+    }
     public String getTitolo() {
         return titolo;
     }

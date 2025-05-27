@@ -207,4 +207,147 @@ public class DBManager {
             return false;
         }
     }
+
+    public boolean isTokenNotValid(Token token) {
+        String query = "SELECT 1 FROM SESSIONI_LOGIN WHERE TOKEN = ? AND IP_CLIENT = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, token.getToken());
+            stmt.setString(2, token.getIpClient());
+            try (ResultSet rs = stmt.executeQuery()) {
+                return !rs.next();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella validazione del token " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient(), e);
+            return true;
+        }
+    }
+
+    public boolean creaLibreria(Token token, String nome, List<Libro> libri){
+        if(isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String insertLibQuery = "INSERT INTO LIBRERIE (ID_UTENTE, TITOLO_LIBRERIA) VALUES (?, ?)";
+        String insertLibroQuery = "INSERT INTO LIBRERIA_LIBRO (IDLIBRERIA, IDLIBRO) VALUES (?, ?)";
+
+        try (PreparedStatement insertLibStmt = conn.prepareStatement(insertLibQuery, Statement.RETURN_GENERATED_KEYS)) {
+            insertLibStmt.setString(1, nome);
+            insertLibStmt.setInt(2, token.getUserId());
+
+            int rows = insertLibStmt.executeUpdate();
+            if (rows > 0) {
+                try (ResultSet generatedKeys = insertLibStmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int idLibreria = generatedKeys.getInt(1);
+                        try (PreparedStatement insertLibroStmt = conn.prepareStatement(insertLibroQuery)) {
+                            for (Libro libro : libri) {
+                                insertLibroStmt.setInt(1, idLibreria);
+                                insertLibroStmt.setInt(2, libro.getId());
+                                insertLibroStmt.addBatch();
+                            }
+                            insertLibroStmt.executeBatch();
+                        }catch (SQLException e) {
+                            logger.log(Level.SEVERE, "Errore nell'inserimento dei libri nella libreria", e);
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }else{
+                logger.log(Level.WARNING, "Nessuna riga inserita nella libreria per l'utente con ID: " + token.getUserId());
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella creazione della libreria", e);
+        }
+        return false;
+    }
+
+    public boolean eliminaLibreria(Token token, String nome) {
+        if(isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String deleteQuery = "DELETE FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+            stmt.setInt(1, token.getUserId());
+            stmt.setString(2, nome);
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nell'eliminazione della libreria", e);
+            return false;
+        }
+    }
+
+    public boolean aggiornaLibreria(Token token, String nome, List<Libro> libridel, List<Libro> libriadd) {
+        if(isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String deleteQuery = "DELETE FROM LIBRERIA_LIBRO WHERE IDLIBRERIA = (SELECT ID FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?) AND IDLIBRO = ?";
+        String insertQuery = "INSERT INTO LIBRERIA_LIBRO (IDLIBRERIA, IDLIBRO) VALUES ((SELECT ID FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?), ?)";
+
+        try (PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery);
+             PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+
+            for (Libro libro : libridel) {
+                deleteStmt.setInt(1, token.getUserId());
+                deleteStmt.setString(2, nome);
+                deleteStmt.setInt(3, libro.getId());
+                deleteStmt.addBatch();
+            }
+            for (Libro libro : libriadd) {
+                insertStmt.setInt(1, token.getUserId());
+                insertStmt.setString(2, nome);
+                insertStmt.setInt(3, libro.getId());
+                insertStmt.addBatch();
+            }
+            deleteStmt.executeBatch();
+            insertStmt.executeBatch();
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nell'aggiornamento della libreria", e);
+            return false;
+        }
+    }
+
+    public List<Libro> getLibreria(Token token, String nome) {
+        if(isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        List<Libro> libri = new ArrayList<>();
+        String query = "SELECT L.* FROM LIBRERIE R JOIN LIBRERIA_LIBRO LL ON R.ID = LL.IDLIBRERIA JOIN LIBRI L ON LL.IDLIBRO = L.ID WHERE R.ID_UTENTE = ? AND R.TITOLO_LIBRERIA = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, token.getUserId());
+            stmt.setString(2, nome);
+            resultStmt(libri, stmt);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero della libreria", e);
+        }
+        return libri;
+    }
+
+    public List<String> getLibrerie(Token token) {
+        if(isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        List<String> librerie = new ArrayList<>();
+        String query = "SELECT TITOLO_LIBRERIA FROM LIBRERIE WHERE ID_UTENTE = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, token.getUserId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    librerie.add(rs.getString("TITOLO_LIBRERIA"));
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero delle librerie", e);
+        }
+        return librerie;
+    }
 }

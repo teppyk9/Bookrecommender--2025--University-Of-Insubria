@@ -1,10 +1,12 @@
 package bookrecommender.client;
 
+import bookrecommender.common.LibInterface;
 import bookrecommender.common.Libro;
 import bookrecommender.common.SearchInterface;
+import bookrecommender.common.Token;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.rmi.registry.LocateRegistry;
@@ -42,18 +45,27 @@ public class CercaLibroAvanzatoController {
     public ListView <Libro> ListaLibrerie;
     public Button GoBackButton_MainMenu;
     public Button ExitButton;
+    public Button BottoneCreaLibreria;
+    public Text Titolo_Librerie;
+    public TextField NomeLibreria;
 
     private SearchInterface searchService;
 
     private String searchType;
 
-    private List<Libro> librerie;
+    private List<Libro> Librilibrerie;
+
+    private List<String> Librerie;
 
     private static final Logger logger = Logger.getLogger(CercaLibroController.class.getName());
 
+    private LibInterface libService;
+
+    private Token token;
+
     @FXML
     public void initialize() {
-        librerie = new ArrayList<>();
+        Librilibrerie = new ArrayList<>();
         campoRicercaAnno.setVisible(false);
         campoRicercaAnno.setDisable(true);
         ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/arrow_down_icon.png"))));
@@ -64,11 +76,13 @@ public class CercaLibroAvanzatoController {
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             searchService = (SearchInterface) registry.lookup("Search_Interface");
+            libService = (LibInterface) registry.lookup("Lib_Interface");
             showConfirmation("Connessione stabilita", "Connessione al server RMI avvenuta con successo.");
         } catch (Exception e) {
             showAlert("Errore di connessione", "Impossibile connettersi al server RMI.");
             logger.log(Level.SEVERE, "Errore di connessione al server RMI", e);
         }
+        aggiornaListaLibrerie();
         Platform.runLater(() -> {
             Node arrow = MenuTipoRicerca.lookup(".arrow");
             if (arrow != null) {
@@ -78,19 +92,23 @@ public class CercaLibroAvanzatoController {
         });
     }
 
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
     @FXML
     private void handleClickCerca() {
         String testo = campoRicerca.getText();
         String anno = campoRicercaAnno.getText();
         if (testo != null && testo.length() >= 2) {
-            aggiornaLista(testo, anno);
+            aggiornaListaCerca(testo, anno);
         } else {
             listaLibri.setItems(FXCollections.observableArrayList());
             showAlert("Errore", "Inserire almeno 2 caratteri per la ricerca.");
         }
     }
 
-    private void aggiornaLista(String titolo, String anno) {
+    private void aggiornaListaCerca(String titolo, String anno) {
         try {
             List<Libro> risultati = null;
             boolean temp = false;
@@ -132,6 +150,20 @@ public class CercaLibroAvanzatoController {
             }
         } catch (Exception e) {
             showAlert("Errore durante la ricerca", e.getMessage());
+        }
+    }
+
+    private void aggiornaListaLibrerie() {
+        try {
+            Librerie = libService.getLibs(token);
+            if (Librerie == null) {
+                showAlert("Errore", "Nessuna libreria trovata.");
+                return;
+            }
+            ObservableList<String> risultati = FXCollections.observableArrayList(Librerie);
+            ListView<String> ListaLibrerie = new ListView<>(risultati);
+        } catch (Exception e) {
+            showAlert("Errore durante il caricamento delle librerie", e.getMessage());
         }
     }
 
@@ -302,23 +334,10 @@ public class CercaLibroAvanzatoController {
     }
 
     public void RimuoviLibro() {
-        Libro selezionato = ListaLibrerie.getSelectionModel().getSelectedItem();
-        if (selezionato != null) {
-            librerie.remove(selezionato);
-            ListaLibrerie.setItems(FXCollections.observableArrayList(librerie));
-        } else {
-            showAlert("Errore", "Selezionare un libro da aggiungere alla libreria.");
-        }
     }
 
     public void AggiungiLibro() {
-        Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
-        if (selezionato != null) {
-            librerie.add(selezionato);
-            ListaLibrerie.setItems(FXCollections.observableArrayList(librerie));
-        } else {
-            showAlert("Errore", "Selezionare un libro da aggiungere alla libreria.");
-        }
+
     }
 
     public void ApriLibreria() {
@@ -327,4 +346,6 @@ public class CercaLibroAvanzatoController {
     public void SalvaLibreria() {
     }
 
+    public void CreaLibreria() {
+    }
 }

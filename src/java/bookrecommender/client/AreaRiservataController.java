@@ -36,6 +36,8 @@ public class AreaRiservataController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/CercaLibroAvanzato.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) BottoneLogOut.getScene().getWindow();
+            CercaLibroAvanzatoController cercaLibroAvanzatoController = loader.getController();
+            cercaLibroAvanzatoController.setToken(myToken);
             stage.setTitle("Cerca Libro Avanzato");
             stage.setScene(new Scene(root));
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));

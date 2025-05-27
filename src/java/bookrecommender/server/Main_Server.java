@@ -18,8 +18,10 @@ class Main_Server{
             Registry registry = LocateRegistry.createRegistry(REGISTRY_PORT);
             SearchInterfaceImpl SearchServer = new SearchInterfaceImpl(SERVER_PORT, dbManager);
             LogRegInterfaceImpl LogRegServer = new LogRegInterfaceImpl(SERVER_PORT, dbManager);
+            LibInterfaceImpl LibServer = new LibInterfaceImpl(SERVER_PORT, dbManager);
             registry.rebind("Search_Interface", SearchServer);
             registry.rebind("LogReg_Interface", LogRegServer);
+            registry.rebind("Lib_Interface", LibServer);
             System.err.println("Server ready");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Errore nell'inizializzazione del server>", e);

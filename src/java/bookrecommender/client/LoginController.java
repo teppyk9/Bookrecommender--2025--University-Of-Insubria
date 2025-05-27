@@ -61,7 +61,7 @@ public class LoginController {
     }
 
     public void TryLogin() {
-        String username = UsernameField.getText();
+        String username = UsernameField.getText().toLowerCase();
         String password = PasswordField.getText();
 
         if (username.trim().isEmpty() || password.trim().isEmpty()) {
