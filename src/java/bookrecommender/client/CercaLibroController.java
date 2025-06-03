@@ -1,46 +1,34 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-import bookrecommender.common.SearchInterface;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CercaLibroController {
 
-    @FXML private Button GoBackButton_MainMenu;
-    @FXML private Button ExitButton;
-    @FXML private MenuItem MenuCercaTitolo;
-    @FXML private MenuButton MenuTipoRicerca;
-    @FXML private MenuItem MenuCercaAutore;
-    @FXML private MenuItem MenuCercaAutoreAnno;
-    @FXML private TextField campoRicercaAnno;
-    @FXML private TextField campoRicerca;
-    @FXML private ListView<Libro> listaLibri;
-    @FXML private Button bottoneCerca;
-
-    private SearchInterface searchService;
+    @FXML public Button GoBackButton_MainMenu;
+    @FXML public Button ExitButton;
+    @FXML public MenuItem MenuCercaTitolo;
+    @FXML public MenuButton MenuTipoRicerca;
+    @FXML public MenuItem MenuCercaAutore;
+    @FXML public MenuItem MenuCercaAutoreAnno;
+    @FXML public TextField campoRicercaAnno;
+    @FXML public TextField campoRicerca;
+    @FXML public ListView<Libro> listaLibri;
+    @FXML public Button bottoneCerca;
 
     private String searchType;
-
-    private static final Logger logger = Logger.getLogger(CercaLibroController.class.getName());
 
     @FXML
     public void initialize() {
@@ -51,14 +39,6 @@ public class CercaLibroController {
         arrowImage.setFitHeight(12);
         MenuTipoRicerca.setGraphic(arrowImage);
         searchType = "";
-        try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            searchService = (SearchInterface) registry.lookup("Search_Interface");
-            showConfirmation("Connessione stabilita", "Connessione al server RMI avvenuta con successo.");
-        } catch (Exception e) {
-            showAlert("Errore di connessione", "Impossibile connettersi al server RMI.");
-            logger.log(Level.SEVERE, "Errore di connessione al server RMI", e);
-        }
         Platform.runLater(() -> {
             Node arrow = MenuTipoRicerca.lookup(".arrow");
             if (arrow != null) {
@@ -76,7 +56,7 @@ public class CercaLibroController {
             aggiornaLista(testo, anno);
         } else {
             listaLibri.setItems(FXCollections.observableArrayList());
-            showAlert("Errore", "Inserire almeno 2 caratteri per la ricerca.");
+            CliUtil.getInstance().createAlert("Errore", "Inserire almeno 2 caratteri per la ricerca.").showAndWait();
         }
     }
 
@@ -86,14 +66,14 @@ public class CercaLibroController {
             boolean temp = false;
             switch (searchType) {
                 case "Titolo":
-                    risultati = searchService.searchByName(titolo);
+                    risultati = CliUtil.getInstance().getSearchService().searchByName(titolo);
                     if(risultati != null) {
                         listaLibri.setItems(FXCollections.observableArrayList(risultati));
                         temp = true;
                     }
                     break;
                 case "Autore":
-                    risultati = searchService.searchByAuthor(titolo);
+                    risultati = CliUtil.getInstance().getSearchService().searchByAuthor(titolo);
                     if(risultati != null) {
                         listaLibri.setItems(FXCollections.observableArrayList(risultati));
                         temp = true;
@@ -101,27 +81,27 @@ public class CercaLibroController {
                     break;
                 case "AutoreAnno":
                     if(anno == null || anno.trim().isEmpty())
-                        showAlert("Errore", "Inserire un anno valido.");
+                        CliUtil.getInstance().createAlert("Errore", "Inserire un anno valido.").showAndWait();
                     else if(anno.length() > 4)
-                        showAlert("Errore", "L'anno deve essere composto da massimo 4 cifre.");
+                        CliUtil.getInstance().createAlert("Errore", "L'anno deve essere composto da massimo 4 cifre.").showAndWait();
                     else if(!anno.matches("\\d+"))
-                        showAlert("Errore", "L'anno deve essere un numero.");
+                        CliUtil.getInstance().createAlert("Errore", "L'anno deve essere un numero.").showAndWait();
                     else {
-                        risultati = searchService.searchByAuthorAndYear(titolo, Integer.parseInt(anno));
+                        risultati = CliUtil.getInstance().getSearchService().searchByAuthorAndYear(titolo, Integer.parseInt(anno));
                         temp = true;
                     }
                     if(risultati != null)
                         listaLibri.setItems(FXCollections.observableArrayList(risultati));
                     break;
                 default:
-                    showAlert("Errore", "Tipo di ricerca non selezionato.");
+                    CliUtil.getInstance().createAlert("Errore", "Tipo di ricerca non selezionato.").showAndWait();
                     break;
             }
             if((risultati == null || risultati.isEmpty()) && temp) {
-                showAlert("Nessun risultato", "Nessun libro trovato con i criteri di ricerca specificati.");
+                CliUtil.getInstance().createAlert("Nessun risultato", "Nessun libro trovato con i criteri di ricerca specificati.").showAndWait();
             }
         } catch (Exception e) {
-            showAlert("Errore durante la ricerca", e.getMessage());
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
         }
     }
 
@@ -130,60 +110,9 @@ public class CercaLibroController {
         if (event.getClickCount() == 2) {
             Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
-                mostraDettagli(selezionato);
+                CliUtil.getInstance().showLibroDetails(selezionato);
             }
         }
-    }
-
-    private void mostraDettagli(Libro libro) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibro.fxml"));
-            Parent root = loader.load();
-
-            DettaglioLibroController controller = loader.getController();
-            controller.setLibro(libro);
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-            Stage stage = new Stage();
-            stage.setTitle("Dettagli del libro");
-            stage.getIcons().add(icon);
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            showAlert("Errore", "Impossibile aprire la finestra dei dettagli.");
-            logger.log(Level.SEVERE, "Impossibile aprire la finestra dei dettagli.", e);
-        }
-    }
-
-    private void showAlert(String titolo, String messaggio) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titolo);
-        alert.setContentText(messaggio);
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        createAller(alert, stage);
-        alert.showAndWait();
-    }
-
-    private void createAller(Alert alert, Stage stage) {
-        Image icona = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_icon.png")));
-        ImageView imageView = new ImageView(icona);
-        imageView.setFitHeight(48);
-        imageView.setFitWidth(48);
-        alert.setGraphic(imageView);
-        stage.getIcons().add(icona);
-    }
-
-    private void showConfirmation(String titolo, String messaggio) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(titolo);
-        alert.setContentText(messaggio);
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_confirmation_icon.png"))));
-        imageView.setFitHeight(48);
-        imageView.setFitWidth(48);
-        alert.setGraphic(imageView);
-        stage.getIcons().add(imageView.getImage());
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
     }
 
     public void cercaTitolo() {
@@ -253,32 +182,10 @@ public class CercaLibroController {
     }
 
     public void GoToMainMenu() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/Home.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
-            stage.setTitle("Home Menu");
-            stage.setScene(new Scene(root));
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-            stage.getIcons().add(icon);
-            stage.show();
-        } catch (Exception e) {
-            showAlert("Errore", "Impossibile tornare al menu principale.");
-            logger.log(Level.SEVERE, "Impossibile tornare al menu principale.", e);
-        }
+        CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
     }
 
     public void ExitApplication() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Conferma uscita");
-        alert.setContentText("Sei sicuro di voler uscire dall'applicazione?");
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        createAller(alert, stage);
-        alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-
-        if (alert.showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
-            Platform.exit();
-            System.exit(0);
-        }
+        CliUtil.getInstance().exitApplication();
     }
 }

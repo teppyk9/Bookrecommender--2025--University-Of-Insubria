@@ -30,19 +30,6 @@ public class DBManager {
         }
     }
 
-    public List<Libro> selectLibro(String titolo, List<Libro> risultati, String query) {
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, "%" + titolo + "%");
-
-            resultStmt(risultati, stmt);
-
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella ricerca di un libro", e);
-        }
-        return risultati;
-    }
-
     public void resultStmt(List<Libro> risultati, PreparedStatement stmt) throws SQLException {
         try (ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -74,6 +61,19 @@ public class DBManager {
         String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?)";
 
         return selectLibro(author, risultati, query);
+    }
+
+    public List<Libro> selectLibro(String titolo, List<Libro> risultati, String query) {
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, "%" + titolo + "%");
+
+            resultStmt(risultati, stmt);
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella ricerca di un libro", e);
+        }
+        return risultati;
     }
 
     public List<Libro> cercaLibriPerAutoreAnno(String author, String year) {
