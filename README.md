@@ -6,9 +6,9 @@
 
 ## Autori del progetto
 
-- **Gianmarco Maffioli** – Project Manager
-- **Francesca Rolla** – UI/UX Designer
-- **Gabriele Fabbian** – Technical Documentation & Complexity Analyst
+- **Gianmarco Maffioli 757587 VA** – Project Manager
+- **Francesca Rolla 757922 VA** – UI/UX Designer
+- **Gabriele Fabbian 757923 VA** – Technical Documentation & Complexity Analyst
 
 ---
 
