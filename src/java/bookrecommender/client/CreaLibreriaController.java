@@ -1,7 +1,6 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -12,12 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CercaLibroAvanzatoController {
-
+public class CreaLibreriaController {
     public TextField campoRicerca;
     public Button bottoneCerca;
     public MenuButton MenuTipoRicerca;
@@ -25,26 +25,29 @@ public class CercaLibroAvanzatoController {
     public MenuItem MenuCercaAutore;
     public MenuItem MenuCercaAutoreAnno;
     public TextField campoRicercaAnno;
-    public ListView <Libro> listaLibri;
-    public Button BottoneApriLibreria;
-    public ListView <String> ListaLibrerie;
-    public Button GoBackButton_MainMenu;
+    public Button BottoneSalvaLibreria;
+    public ListView<Libro> listaLibri;
+    public Button BottoneAggiungiLibro;
+    public Button BottoneRimuoviLibro;
+    public ListView <Libro> ListaLibrerie;
     public Button ExitButton;
-    public Button BottoneCreaLibreria;
     public Text Titolo_Librerie;
-    public Button BottoneAggiorna;
+    public TextField NomeLibreria;
 
     private String searchType = "";
 
+    private List<Libro> LibriLibrerie;
+
     @FXML
     public void initialize() {
+        LibriLibrerie = new ArrayList<>();
         campoRicercaAnno.setVisible(false);
         campoRicercaAnno.setDisable(true);
+
         ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/arrow_down_icon.png"))));
         arrowImage.setFitWidth(12);
         arrowImage.setFitHeight(12);
         MenuTipoRicerca.setGraphic(arrowImage);
-        aggiornaListaLibrerie();
         Platform.runLater(() -> {
             Node arrow = MenuTipoRicerca.lookup(".arrow");
             if (arrow != null) {
@@ -110,20 +113,6 @@ public class CercaLibroAvanzatoController {
         }
     }
 
-    @FXML
-    private void aggiornaListaLibrerie() {
-        try {
-            List<String> librerie = CliUtil.getInstance().getLibService().getLibs(CliUtil.getInstance().getCurrentToken());
-            if (librerie == null || librerie.isEmpty()) {
-                CliUtil.getInstance().createAlert("Errore", "Nessuna libreria trovata.").showAndWait();
-                return;
-            }
-            ListaLibrerie.setItems(FXCollections.observableArrayList(librerie));
-        } catch (Exception e) {
-            CliUtil.getInstance().createAlert("Errore durante il caricamento delle librerie", e.getMessage()).showAndWait();
-        }
-    }
-
     public void handleListaDoppioClick_1(MouseEvent event) {
         if (event.getClickCount() == 2) {
             Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
@@ -135,7 +124,10 @@ public class CercaLibroAvanzatoController {
 
     public void handleListaDoppioClick_2(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
-            ApriLibreria();
+            Libro selezionato = ListaLibrerie.getSelectionModel().getSelectedItem();
+            if (selezionato != null) {
+                mostraDettagli(selezionato);
+            }
         }
     }
 
@@ -209,20 +201,41 @@ public class CercaLibroAvanzatoController {
         }
     }
 
-    public void GoToMainMenu() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/AreaRiservata.fxml", "Book Recommender");
-    }
-
     public void ExitApplication() {
-        CliUtil.getInstance().exitApplication();
+        Stage stage = (Stage) ExitButton.getScene().getWindow();
+        stage.close();
     }
 
-    public void ApriLibreria() {
-        String nomeLibreria = String.valueOf(ListaLibrerie.getSelectionModel().getSelectedItem());
-        CliUtil.getInstance().createConfirmation("Hai selezionato", nomeLibreria, false).showAndWait();
+    public void RimuoviLibro() {
+        Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
+        if(selezionato != null && LibriLibrerie.contains(selezionato)) {
+            LibriLibrerie.remove(selezionato);
+            ListaLibrerie.setItems(FXCollections.observableArrayList(LibriLibrerie));
+        }
     }
 
-    public void CreaLibreria() {
-        CliUtil.getInstance().createFXML("/bookrecommender/client/CreaLibreria.fxml", "Crea Libreria");
+    public void AggiungiLibro() {
+        Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
+        if(selezionato != null && !LibriLibrerie.contains(selezionato)) {
+            LibriLibrerie.add(selezionato);
+            ListaLibrerie.setItems(FXCollections.observableArrayList(LibriLibrerie));
+        }
+    }
+
+    public void SalvaLibreria() {
+        if(LibriLibrerie.size() > 2 && NomeLibreria.getText() != null && !NomeLibreria.getText().trim().isEmpty() && NomeLibreria.getText().length() > 5 && NomeLibreria.getText().length() < 50) {
+            try {
+                if(CliUtil.getInstance().getLibService().createLib(CliUtil.getInstance().getCurrentToken(), NomeLibreria.getText().trim(), LibriLibrerie)) {
+                    CliUtil.getInstance().createConfirmation("Successo", "Libreria salvata con successo!", false).showAndWait();
+                    Stage stage = (Stage) BottoneSalvaLibreria.getScene().getWindow();
+                    stage.close();
+                }
+                else {
+                    CliUtil.getInstance().createAlert("Errore", "Impossibile salvare la libreria.").showAndWait();
+                }
+            }catch(Exception e) {
+                CliUtil.getInstance().createAlert("Errore", "Impossibile salvare la libreria: " + e.getMessage()).showAndWait();
+            }
+        }else CliUtil.getInstance().createAlert("Errore", "La libreria deve contenere almeno 3 libri e il nome deve essere compreso tra 5 e 50 caratteri.").showAndWait();
     }
 }

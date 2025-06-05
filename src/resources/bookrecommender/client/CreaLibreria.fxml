@@ -12,10 +12,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroAvanzatoController">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaLibreriaController">
     <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <AnchorPane prefHeight="32.0" prefWidth="750.0">
             <TextField fx:id="campoRicerca" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="438.0" promptText="Cerca un libro..." />
+         <TextField fx:id="NomeLibreria" layoutX="479.0" prefHeight="25.0" prefWidth="266.0" promptText="Dai un nome alla tua libreria" />
         </AnchorPane>
         <AnchorPane prefHeight="43.0" prefWidth="750.0">
             <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" onAction="#handleClickCerca" text="Cerca">
@@ -31,7 +32,8 @@
                 </items>
             </MenuButton>
             <TextField fx:id="campoRicercaAnno" layoutX="282.0" layoutY="-1.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" />
-            <Text fx:id="Titolo_Librerie" layoutX="527.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le mie Librerie" textAlignment="CENTER" wrappingWidth="131.5">
+            <Button fx:id="BottoneSalvaLibreria" layoutX="627.0" mnemonicParsing="false" onAction="#SalvaLibreria" prefHeight="23.0" prefWidth="118.0" text="Salva Libreria" />
+            <Text fx:id="Titolo_Librerie" layoutX="472.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le mie Librerie" textAlignment="CENTER" wrappingWidth="131.5">
                 <font>
                     <Font size="17.0" />
                 </font>
@@ -43,13 +45,10 @@
                 <AnchorPane prefHeight="289.0" prefWidth="118.0">
                     <VBox prefHeight="289.0" prefWidth="118.0">
                         <AnchorPane prefHeight="96.0" prefWidth="118.0">
-                            <Button fx:id="BottoneApriLibreria" layoutX="16.0" layoutY="48.0" mnemonicParsing="false" onAction="#ApriLibreria" text="Apri Libreria" />
-                     <Button fx:id="BottoneCreaLibreria" layoutX="15.0" layoutY="14.0" mnemonicParsing="false" onAction="#CreaLibreria" text="Crea Libreria" />
+                            <Button fx:id="BottoneAggiungiLibro" layoutX="9.0" layoutY="71.0" mnemonicParsing="false" onAction="#AggiungiLibro" text="Aggiungi Libro" />
                         </AnchorPane>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                            <Button fx:id="BottoneAggiorna" layoutX="17.0" layoutY="38.0" mnemonicParsing="false"
-                                    onAction="#aggiornaListaLibrerie" prefHeight="23.0" prefWidth="84.0"
-                                    text="Aggiorna"/>
+                        <AnchorPane prefHeight="96.0" prefWidth="118.0">
+                            <Button fx:id="BottoneRimuoviLibro" layoutX="11.0" layoutY="37.0" mnemonicParsing="false" onAction="#RimuoviLibro" text="Rimuovi Libro" />
                         </AnchorPane>
                     </VBox>
                 </AnchorPane>
@@ -57,7 +56,6 @@
             </HBox>
         </AnchorPane>
         <AnchorPane prefHeight="35.0" prefWidth="750.0">
-            <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="534.0" layoutY="7.0" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="23.0" prefWidth="216.0" text="Indietro" />
             <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="23.0" prefWidth="84.0" text="Esci" />
         </AnchorPane>
     </VBox>

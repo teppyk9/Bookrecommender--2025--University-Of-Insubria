@@ -125,9 +125,24 @@ public class CliUtil {
 
             stage.setResizable(false);
             stage.show();
-            loader.getController();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Failed to load FXML: " + fxmlPath, e);
+        }
+    }
+
+    public void createFXML(String fxmlPath, String title) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.getIcons().add(icon);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Failed to create FXML: " + fxmlPath, e);
         }
     }
 

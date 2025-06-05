@@ -227,12 +227,25 @@ public class DBManager {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
             return false;
         }
+        try{
+            String checkQuery = "SELECT 1 FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?";
+            PreparedStatement stmt = conn.prepareStatement(checkQuery);
+            stmt.setInt(1, token.getUserId());
+            stmt.setString(2, nome);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                logger.log(Level.WARNING, "Libreria con nome " + nome + " già esistente per l'utente con ID: " + token.getUserId());
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
         String insertLibQuery = "INSERT INTO LIBRERIE (ID_UTENTE, TITOLO_LIBRERIA) VALUES (?, ?)";
         String insertLibroQuery = "INSERT INTO LIBRERIA_LIBRO (IDLIBRERIA, IDLIBRO) VALUES (?, ?)";
 
         try (PreparedStatement insertLibStmt = conn.prepareStatement(insertLibQuery, Statement.RETURN_GENERATED_KEYS)) {
-            insertLibStmt.setString(1, nome);
-            insertLibStmt.setInt(2, token.getUserId());
+            insertLibStmt.setInt(1, token.getUserId());
+            insertLibStmt.setString(2, nome);
 
             int rows = insertLibStmt.executeUpdate();
             if (rows > 0) {
