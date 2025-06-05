@@ -1,3 +1,5 @@
+<img src="src/resources/bookrecommender/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 300px;" alt="Icona Insubria">
+
 # BookRecommender
 
 **Progetto universitario per l'esame di Laboratorio Interdisciplinare B – Università degli Studi dell’Insubria (2025)**
