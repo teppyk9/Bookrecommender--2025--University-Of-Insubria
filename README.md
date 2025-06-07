@@ -8,7 +8,7 @@
 
 - **Gianmarco Maffioli 757587 VA** – Project Manager
 - **Francesca Rolla 757922 VA** – UI/UX Designer
-- **Gabriele Fabbian 757923 VA** – Technical Documentation & Complexity Analyst
+- **Gabriele Fabbian 755699 VA** – Technical Documentation & Complexity Analyst
 
 ---
 
