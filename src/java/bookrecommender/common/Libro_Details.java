@@ -31,6 +31,7 @@ public class Libro_Details implements Serializable {
             mEdizione += vList.get(4);
             mFinale += vList.get(5);
         }
+
     }
 
     public Hashtable<String, List<Libro>> getConsigli() {
