@@ -21,7 +21,6 @@ public class Valutazione implements Serializable {
     public String getUsername() {
         return username;
     }
-
     public List<Float> getValutazioni() {
         return valutazioni;
     }
