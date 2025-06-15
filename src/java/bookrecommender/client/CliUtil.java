@@ -32,6 +32,10 @@ public class CliUtil {
     private static final String RMI_HOST = "localhost";
     private static final int RMI_PORT = 1099;
 
+    private static final Image starFull = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-full.png")));
+    private static final Image starEmpty = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-empty.png")));
+    private static final Image starHalf = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-half.png")));
+
     private CliUtil() {
         // Al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
     }
@@ -206,5 +210,17 @@ public class CliUtil {
             Platform.exit();
             System.exit(0);
         }
+    }
+
+    public Image getStarFull() {
+        return starFull;
+    }
+
+    public Image getStarEmpty() {
+        return starEmpty;
+    }
+
+    public Image getStarHalf() {
+        return starHalf;
     }
 }

@@ -8,8 +8,8 @@ import java.util.List;
 public class Libro_Details implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private Hashtable<String, List<Libro>> consigli;
-    private List<Valutazione> valutazioni;
+    private final Hashtable<String, List<Libro>> consigli;
+    private final List<Valutazione> valutazioni;
     private float mStile, mContenuto, mGradevolezza, mOriginalita, mEdizione, mFinale;
 
 

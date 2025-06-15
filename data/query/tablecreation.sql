@@ -1,60 +1,127 @@
-CREATE TABLE LIBRI(
-    ID serial PRIMARY KEY,
-    TITOLO text NOT NULL,
-    AUTORE text NOT NULL,
-    DESCRIZIONE text,
-    CATEGORIA text,
-    EDITORE text,
-    PREZZO decimal (3,1),
-    ANNOPUBBLICAZIONE smallint,
-    MESEPUBBLICAZIONE smallint
+create table libri
+(
+    id                serial
+        primary key,
+    titolo            text not null,
+    autore            text not null,
+    descrizione       text,
+    categoria         text,
+    editore           text,
+    prezzo            numeric(3, 1),
+    annopubblicazione smallint,
+    mesepubblicazione smallint
 );
 
-CREATE TABLE UTENTI (
-    ID SERIAL PRIMARY KEY,
-    USERNAME TEXT UNIQUE NOT NULL,
-    NOME TEXT NOT NULL,
-    COGNOME TEXT NOT NULL,
-    CODICE_FISCALE TEXT UNIQUE NOT NULL,
-    EMAIL text UNIQUE NOT NULL,
-    PASSWORD TEXT NOT NULL
+alter table libri
+    owner to postgres;
+
+create table utenti
+(
+    id             serial
+        primary key,
+    username       text not null
+        unique,
+    nome           text not null,
+    cognome        text not null,
+    codice_fiscale text not null
+        unique,
+    email          text not null
+        unique,
+    password       text not null
 );
 
+alter table utenti
+    owner to postgres;
 
-CREATE TABLE VALUTAZIONI(
-    IDLIBRO int REFERENCES LIBRI(ID),
-    USERNAME text REFERENCES UTENTI(USERNAME),
-    C_STILE text,
-    V_STILE SMALLINT NOT NULL CHECK (V_STILE BETWEEN 1 AND 5),
-    C_CONTENUTO text,
-    V_CONTENUTO SMALLINT NOT NULL CHECK (V_STILE BETWEEN 1 AND 5),
-    C_GRADEVOLEZZA text,
-    V_GRADEVOLEZZA SMALLINT NOT NULL CHECK (V_STILE BETWEEN 1 AND 5),
-    C_ORIGINALITA text,
-    V_ORIGINALITA SMALLINT NOT NULL CHECK (V_STILE BETWEEN 1 AND 5),
-    C_EDIZIONE text,
-    V_EDIZIONE SMALLINT NOT NULL CHECK (V_STILE BETWEEN 1 AND 5),
-    C_FINALE text,
-    V_FINALE numeric GENERATED ALWAYS AS ((V_STILE + V_CONTENUTO + V_GRADEVOLEZZA + V_ORIGINALITA + V_EDIZIONE) / 5) STORED
+create table valutazioni
+(
+    idlibro        integer
+        references libri,
+    id_utente      integer
+        references utenti,
+    c_stile        text,
+    v_stile        smallint not null
+        constraint valutazioni_v_stile_check
+            check ((v_stile >= 1) AND (v_stile <= 5))
+        constraint valutazioni_v_stile_check1
+            check ((v_stile >= 1) AND (v_stile <= 5))
+        constraint valutazioni_v_stile_check2
+            check ((v_stile >= 1) AND (v_stile <= 5))
+        constraint valutazioni_v_stile_check3
+            check ((v_stile >= 1) AND (v_stile <= 5))
+        constraint valutazioni_v_stile_check4
+            check ((v_stile >= 1) AND (v_stile <= 5)),
+    c_contenuto    text,
+    v_contenuto    smallint not null,
+    c_gradevolezza text,
+    v_gradevolezza smallint not null,
+    c_originalita  text,
+    v_originalita  smallint not null,
+    c_edizione     text,
+    v_edizione     smallint not null,
+    c_finale       text,
+    v_finale       numeric generated always as ((
+        ((((v_stile + v_contenuto) + v_gradevolezza) + v_originalita) + v_edizione) / 5)) stored
 );
 
-CREATE TABLE CONSIGLI(
-    IDLIBRO int REFERENCES LIBRI(ID) NOT NULL,
-    USERNAME text REFERENCES UTENTI(USERNAME) NOT NULL,
-    LIB_1 int REFERENCES LIBRI(ID),
-    LIB_2 int REFERENCES LIBRI(ID),
-    LIB_3 int REFERENCES LIBRI(ID)
+alter table valutazioni
+    owner to postgres;
+
+create table consigli
+(
+    idlibro   integer not null
+        references libri,
+    id_utente integer not null
+        references utenti,
+    lib_1     integer
+        references libri,
+    lib_2     integer
+        references libri,
+    lib_3     integer
+        references libri
 );
 
-CREATE TABLE LIBRERIE (
-    ID SERIAL PRIMARY KEY,
-    USERNAME text REFERENCES UTENTI(USERNAME),
-    TITOLO_LIBRERIA text NOT NULL
+alter table consigli
+    owner to postgres;
+
+create table librerie
+(
+    id              serial
+        primary key,
+    id_utente       integer
+        references utenti,
+    titolo_libreria text not null
 );
 
+alter table librerie
+    owner to postgres;
 
-CREATE TABLE LIBRERIA_LIBRO (
-    IDLIBRERIA INT REFERENCES LIBRERIE(ID) ON DELETE CASCADE,
-    IDLIBRO INT REFERENCES LIBRI(ID),
-    PRIMARY KEY (IDLIBRERIA, IDLIBRO)
+create table libreria_libro
+(
+    idlibreria integer not null
+        references librerie
+            on delete cascade,
+    idlibro    integer not null
+        references libri,
+    primary key (idlibreria, idlibro)
 );
+
+alter table libreria_libro
+    owner to postgres;
+
+create table sessioni_login
+(
+    id         serial
+        primary key,
+    idutente   integer
+        references utenti
+            on delete cascade,
+    ip_client  text not null,
+    token      text not null
+        unique,
+    login_time timestamp default CURRENT_TIMESTAMP
+);
+
+alter table sessioni_login
+    owner to postgres;
+

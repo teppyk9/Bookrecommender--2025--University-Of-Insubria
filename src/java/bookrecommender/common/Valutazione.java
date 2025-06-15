@@ -8,9 +8,9 @@ public class Valutazione implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String username;
-    private List<Float> valutazioni;
-    private List<String> commenti;
+    private final String username;
+    private final List<Float> valutazioni;
+    private final List<String> commenti;
 
     public Valutazione(String u, List<Float> v, List<String> c) {
         this.username = u;
@@ -26,5 +26,10 @@ public class Valutazione implements Serializable {
     }
     public List<String> getCommenti() {
         return commenti;
+    }
+
+    @Override
+    public String toString() {
+        return ("Recensione di " + username);
     }
 }

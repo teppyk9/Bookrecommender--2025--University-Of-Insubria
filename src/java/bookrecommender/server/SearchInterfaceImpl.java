@@ -1,6 +1,7 @@
 package bookrecommender.server;
 
 import bookrecommender.common.Libro;
+import bookrecommender.common.Libro_Details;
 import bookrecommender.common.SearchInterface;
 
 import java.io.Serial;
@@ -41,5 +42,10 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
             System.out.println("Searching for books by author: " + author + " and year: " + year + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
         return dbManager.cercaLibriPerAutoreAnno(author, String.valueOf(year));
+    }
+
+    @Override
+    public Libro_Details getDetails(int id) throws RemoteException {
+        return null;
     }
 }
