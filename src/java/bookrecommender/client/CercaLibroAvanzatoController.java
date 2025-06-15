@@ -140,7 +140,7 @@ public class CercaLibroAvanzatoController {
     }
 
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().showLibroAdvancedDetails(libro);
+        CliUtil.getInstance().showValutazione(libro);
     }
 
     public void cercaTitolo() {

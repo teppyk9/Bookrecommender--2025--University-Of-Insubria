@@ -252,4 +252,24 @@ public class CliUtil {
             logger.log(Level.SEVERE, "Impossibile aprire la finestra dei dettagli avanzati.", e);
         }
     }
+
+    public void showValutazione(Libro libro) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/Valutazione.fxml"));
+            Parent root = loader.load();
+            ValutazioneController controller = loader.getController();
+            controller.setLibro(libro);
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
+            Stage stage = new Stage();
+            stage.setTitle("Valutazione del Libro");
+            stage.getIcons().add(icon);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            createAlert("Errore", "Impossibile aprire la finestra di valutazione.").showAndWait();
+            logger.log(Level.SEVERE, "Impossibile aprire la finestra di valutazione.", e);
+        }
+    }
+
 }

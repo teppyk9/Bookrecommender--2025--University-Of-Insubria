@@ -3,6 +3,7 @@ package bookrecommender.server;
 import bookrecommender.common.LibInterface;
 import bookrecommender.common.Libro;
 import bookrecommender.common.Token;
+import bookrecommender.common.Valutazione;
 
 import java.io.Serial;
 import java.rmi.RemoteException;
@@ -68,5 +69,15 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         return null;
     }
         return dbManager.getLibrerie(token);
+    }
+
+    @Override
+    public boolean addValutazione(Token token, Valutazione valutazione) throws RemoteException {
+        try{
+            System.out.println("Aggiunta valutazione da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.addValutazione(token, valutazione);
     }
 }

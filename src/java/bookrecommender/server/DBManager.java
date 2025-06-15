@@ -82,7 +82,7 @@ public class DBManager {
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, "%" + author + "%");
-            stmt.setString(2,"%" + year + "%");
+            stmt.setString(2, "%" + year + "%");
 
             resultStmt(risultati, stmt);
 
@@ -122,13 +122,13 @@ public class DBManager {
                             insertStmt.setString(3, token);
                             rows = insertStmt.executeUpdate();
                         }
-                        if(rows>0) {
+                        if (rows > 0) {
                             return new Token(token, userId, ipClient);
                         } else {
                             return null;
                         }
-                    }else return null;
-                }else return null;
+                    } else return null;
+                } else return null;
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nel login di un utente", e);
@@ -143,7 +143,7 @@ public class DBManager {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(tokenBytes);
     }
 
-    public RegToken Register(String nome, String cognome, String CF, String email, String username, String password){
+    public RegToken Register(String nome, String cognome, String CF, String email, String username, String password) {
         String checkUsername = "SELECT 1 FROM UTENTI WHERE USERNAME = ?";
         String checkCF = "SELECT 1 FROM UTENTI WHERE CODICE_FISCALE = ?";
         String checkEmail = "SELECT 1 FROM UTENTI WHERE EMAIL = ?";
@@ -161,9 +161,9 @@ public class DBManager {
             checkEmailStmt.setString(1, email);
 
 
-            try(ResultSet rsU = checkUStmt.executeQuery();
-                ResultSet rsCF = checkCFStmt.executeQuery();
-                ResultSet rsEmail = checkEmailStmt.executeQuery()) {
+            try (ResultSet rsU = checkUStmt.executeQuery();
+                 ResultSet rsCF = checkCFStmt.executeQuery();
+                 ResultSet rsEmail = checkEmailStmt.executeQuery()) {
 
                 boolean existsUsername = rsU.next();
                 boolean existsCF = rsCF.next();
@@ -171,9 +171,9 @@ public class DBManager {
                 if (existsUsername || existsCF || existsEmail) {
                     return new RegToken(existsUsername, existsCF, existsEmail, false);
                 }
-            }catch (SQLException e) {
+            } catch (SQLException e) {
                 logger.log(Level.SEVERE, "Errore nella registrazione di un utente CASE: ResultSet not valid", e);
-                return new RegToken(false, false, false,false);
+                return new RegToken(false, false, false, false);
             }
 
             insertStmt.setString(1, username);
@@ -184,17 +184,18 @@ public class DBManager {
             insertStmt.setString(6, password);
 
             int rows = insertStmt.executeUpdate();
-            if(rows > 0) {
-                return new RegToken(true, true, true,true); // Registrazione avvenuta con successo
+            if (rows > 0) {
+                return new RegToken(true, true, true, true); // Registrazione avvenuta con successo
             } else {
-                return new RegToken(false, false, false,false); // Errore durante la registrazione
+                return new RegToken(false, false, false, false); // Errore durante la registrazione
             }
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nella registrazione di un utente CASE: InsertStatement not valid", e);
-            return new RegToken(false, false, false,false);
+            return new RegToken(false, false, false, false);
         }
     }
+
     public boolean LogOut(Token token) {
         String deleteQuery = "DELETE FROM SESSIONI_LOGIN WHERE TOKEN = ?";
         try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
@@ -221,18 +222,18 @@ public class DBManager {
         }
     }
 
-    public boolean creaLibreria(Token token, String nome, List<Libro> libri){
-        if(isTokenNotValid(token)) {
+    public boolean creaLibreria(Token token, String nome, List<Libro> libri) {
+        if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
             return false;
         }
-        try{
+        try {
             String checkQuery = "SELECT 1 FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?";
             PreparedStatement stmt = conn.prepareStatement(checkQuery);
             stmt.setInt(1, token.getUserId());
             stmt.setString(2, nome);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 logger.log(Level.WARNING, "Libreria con nome " + nome + " già esistente per l'utente con ID: " + token.getUserId());
                 return false;
             }
@@ -258,14 +259,14 @@ public class DBManager {
                                 insertLibroStmt.addBatch();
                             }
                             insertLibroStmt.executeBatch();
-                        }catch (SQLException e) {
+                        } catch (SQLException e) {
                             logger.log(Level.SEVERE, "Errore nell'inserimento dei libri nella libreria", e);
                             return false;
                         }
                         return true;
                     }
                 }
-            }else{
+            } else {
                 logger.log(Level.WARNING, "Nessuna riga inserita nella libreria per l'utente con ID: " + token.getUserId());
                 return false;
             }
@@ -276,7 +277,7 @@ public class DBManager {
     }
 
     public boolean eliminaLibreria(Token token, String nome) {
-        if(isTokenNotValid(token)) {
+        if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
             return false;
         }
@@ -293,7 +294,7 @@ public class DBManager {
     }
 
     public boolean aggiornaLibreria(Token token, String nome, List<Libro> libridel, List<Libro> libriadd) {
-        if(isTokenNotValid(token)) {
+        if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
             return false;
         }
@@ -325,7 +326,7 @@ public class DBManager {
     }
 
     public List<Libro> getLibreria(Token token, String nome) {
-        if(isTokenNotValid(token)) {
+        if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
             return null;
         }
@@ -343,7 +344,7 @@ public class DBManager {
     }
 
     public List<String> getLibrerie(Token token) {
-        if(isTokenNotValid(token)) {
+        if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
             return null;
         }
@@ -396,9 +397,9 @@ public class DBManager {
                         rs.getString("c_edizione"),
                         rs.getString("c_finale")
                 );
-                valutazioni.add(new Valutazione(rs.getString("username"), valori, commenti));
+                valutazioni.add(new Valutazione(rs.getString("username"), valori, commenti, id));
             }
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nel recupero delle valutazioni per il libro con ID: " + id, e);
         }
 
@@ -429,10 +430,51 @@ public class DBManager {
                 );
                 consigli.computeIfAbsent(username, k -> new ArrayList<>()).add(libro);
             }
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nel recupero dei consigli per il libro con ID: " + id, e);
         }
 
         return new Libro_Details(consigli, valutazioni);
+    }
+
+    public boolean addValutazione(Token token, Valutazione valutazione) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        List<String> commenti = valutazione.getCommenti();
+        List<Float> valutazioni = valutazione.getValutazioni();
+        String insertQuery = """
+                INSERT INTO valutazioni (idlibro, id_utente, v_stile, c_stile, v_contenuto, c_contenuto,
+                                         v_gradevolezza, c_gradevolezza, v_originalita, c_originalita,
+                                         v_edizione, c_edizione, c_finale)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""";
+        try (PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
+            stmt.setInt(1, valutazione.getIdLibro());
+            stmt.setInt(2, token.getUserId());
+            stmt.setFloat(3, valutazioni.get(0));
+            stmt.setString(4, commenti.get(0));
+            stmt.setFloat(5, valutazioni.get(1));
+            stmt.setString(6, commenti.get(1));
+            stmt.setFloat(7, valutazioni.get(2));
+            stmt.setString(8, commenti.get(2));
+            stmt.setFloat(9, valutazioni.get(3));
+            stmt.setString(10, commenti.get(3));
+            stmt.setFloat(11, valutazioni.get(4));
+            stmt.setString(12, commenti.get(4));
+            stmt.setString(13, commenti.get(5));
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                logger.log(Level.INFO, "Valutazione aggiunta con successo per il libro con ID: " + valutazione.getIdLibro() + " da parte dell'utente con ID: " + token.getUserId());
+                return true;
+            } else {
+                logger.log(Level.WARNING, "Nessuna riga inserita nella tabella delle valutazioni per il libro con ID: " + valutazione.getIdLibro() + " da parte dell'utente con ID: " + token.getUserId());
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nell'aggiunta della valutazione per il libro con ID: " + valutazione.getIdLibro(), e);
+            return false;
+        }
     }
 }
