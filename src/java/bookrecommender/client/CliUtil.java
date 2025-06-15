@@ -35,6 +35,8 @@ public class CliUtil {
     private static final Image starFull = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-full.png")));
     private static final Image starEmpty = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-empty.png")));
     private static final Image starHalf = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-half.png")));
+    private static final Image starQuarter = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-1-4.png")));
+    private static final Image starThreeQuarters = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-3-4.png")));
 
     private CliUtil() {
         // Al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
@@ -222,5 +224,32 @@ public class CliUtil {
 
     public Image getStarHalf() {
         return starHalf;
+    }
+
+    public Image getStarQuarter() {
+        return starQuarter;
+    }
+
+    public Image getStarThreeQuarters() {
+        return starThreeQuarters;
+    }
+
+    public void showLibroAdvancedDetails(Libro libro) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibroAvanzato.fxml"));
+            Parent root = loader.load();
+            DettaglioLibroAvanzatoController controller = loader.getController();
+            controller.setLibro(libro);
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
+            Stage stage = new Stage();
+            stage.setTitle("Dettagli Avanzati del Libro");
+            stage.getIcons().add(icon);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            createAlert("Errore", "Impossibile aprire la finestra dei dettagli avanzati.").showAndWait();
+            logger.log(Level.SEVERE, "Impossibile aprire la finestra dei dettagli avanzati.", e);
+        }
     }
 }

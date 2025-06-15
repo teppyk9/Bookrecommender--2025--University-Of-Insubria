@@ -1,13 +1,12 @@
 package bookrecommender.server;
 
-import bookrecommender.common.Libro;
-import bookrecommender.common.RegToken;
-import bookrecommender.common.Token;
+import bookrecommender.common.*;
 
 import java.security.SecureRandom;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -362,5 +361,78 @@ public class DBManager {
             logger.log(Level.SEVERE, "Errore nel recupero delle librerie", e);
         }
         return librerie;
+    }
+
+    public Libro_Details getDetails(int id) {
+        List<Valutazione> valutazioni = new ArrayList<>();
+        Hashtable<String, List<Libro>> consigli = new Hashtable<>();
+
+        String queryValutazioni = """
+            SELECT u.username, v.v_stile, v.c_stile, v.v_contenuto, v.c_contenuto,
+                   v.v_gradevolezza, v.c_gradevolezza, v.v_originalita, v.c_originalita,
+                   v.v_edizione, v.c_edizione, v.v_finale, v.c_finale
+            FROM valutazioni v
+            JOIN utenti u ON v.id_utente = u.id
+            WHERE v.idlibro = ?
+        """;
+
+        try (PreparedStatement psValutazioni = conn.prepareStatement(queryValutazioni)) {
+            psValutazioni.setInt(1, id);
+            ResultSet rs = psValutazioni.executeQuery();
+            while (rs.next()) {
+                List<Float> valori = List.of(
+                        rs.getFloat("v_stile"),
+                        rs.getFloat("v_contenuto"),
+                        rs.getFloat("v_gradevolezza"),
+                        rs.getFloat("v_originalita"),
+                        rs.getFloat("v_edizione"),
+                        rs.getFloat("v_finale")
+                );
+                List<String> commenti = List.of(
+                        rs.getString("c_stile"),
+                        rs.getString("c_contenuto"),
+                        rs.getString("c_gradevolezza"),
+                        rs.getString("c_originalita"),
+                        rs.getString("c_edizione"),
+                        rs.getString("c_finale")
+                );
+                valutazioni.add(new Valutazione(rs.getString("username"), valori, commenti));
+            }
+        }catch(SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero delle valutazioni per il libro con ID: " + id, e);
+        }
+
+        String queryConsigli = """
+            SELECT u.username, l.id, l.titolo, l.autore, l.descrizione, l.categoria,
+                   l.editore, l.prezzo, l.annopubblicazione, l.mesepubblicazione
+            FROM consigli c
+            JOIN utenti u ON c.id_utente = u.id
+            JOIN libri l ON l.id IN (c.lib_1, c.lib_2, c.lib_3)
+            WHERE c.idlibro = ?
+        """;
+
+        try (PreparedStatement psConsigli = conn.prepareStatement(queryConsigli)) {
+            psConsigli.setInt(1, id);
+            ResultSet rs = psConsigli.executeQuery();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                Libro libro = new Libro(
+                        rs.getInt("id"),
+                        rs.getString("titolo"),
+                        rs.getString("autore"),
+                        rs.getString("descrizione"),
+                        rs.getString("categoria"),
+                        rs.getString("editore"),
+                        rs.getFloat("prezzo"),
+                        rs.getShort("annopubblicazione"),
+                        rs.getShort("mesepubblicazione")
+                );
+                consigli.computeIfAbsent(username, k -> new ArrayList<>()).add(libro);
+            }
+        }catch(SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero dei consigli per il libro con ID: " + id, e);
+        }
+
+        return new Libro_Details(consigli, valutazioni);
     }
 }

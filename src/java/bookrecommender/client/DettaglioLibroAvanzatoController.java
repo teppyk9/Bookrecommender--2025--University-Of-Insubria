@@ -122,12 +122,15 @@ public class DettaglioLibroAvanzatoController {
     private void setStar(ImageView star1, ImageView star2, ImageView star3, ImageView star4, ImageView star5, float voto) {
         ImageView[] stars = {star1, star2, star3, star4, star5};
         for (int i = 0; i < stars.length; i++) {
-            if (i < voto) {
-               if( voto - i >= 0.5) {
-                   stars[i].setImage(CliUtil.getInstance().getStarHalf());
-               } else {
-                   stars[i].setImage(CliUtil.getInstance().getStarFull());
-               }
+            float diff = voto - i;
+            if (diff >= 1) {
+                stars[i].setImage(CliUtil.getInstance().getStarFull());
+            } else if (diff >= 0.75) {
+                stars[i].setImage(CliUtil.getInstance().getStarThreeQuarters());
+            } else if (diff >= 0.5) {
+                stars[i].setImage(CliUtil.getInstance().getStarHalf());
+            } else if (diff >= 0.25) {
+                stars[i].setImage(CliUtil.getInstance().getStarQuarter());
             } else {
                 stars[i].setImage(CliUtil.getInstance().getStarEmpty());
             }

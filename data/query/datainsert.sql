@@ -16,24 +16,87 @@ INSERT INTO UTENTI (USERNAME, NOME, COGNOME, CODICE_FISCALE, EMAIL, PASSWORD) VA
 ('sara_s', 'Sara', 'Sartori', 'SRTSRA90C30L219X', 'sara@example.com', 'securePass'),
 ('anna89', 'Anna', 'Verdi', 'VRDANN89M45F205H', 'anna@example.com', 'abc12345');
 
-INSERT INTO VALUTAZIONI (IDLIBRO, USERNAME, C_STILE, V_STILE, C_CONTENUTO, V_CONTENUTO, C_GRADEVOLEZZA, V_GRADEVOLEZZA, C_ORIGINALITA, V_ORIGINALITA, C_EDIZIONE, V_EDIZIONE, C_FINALE) VALUES
-(1, 'mario123', 'Scrittura epica', 5, 'Trama coinvolgente', 5, 'Piacevolissimo', 5, 'Molto originale', 5, 'Ottima edizione', 5, 'Capolavoro'),
-(2, 'luca_b', 'Stile diretto', 4, 'Messaggio forte', 5, 'Molto interessante', 4, 'Inquietante e originale', 5, 'Buona edizione', 4, 'Distopico'),
-(3, 'sara_s', 'Lento ma raffinato', 4, 'Contenuti profondi', 4, 'Gradevole', 3, 'Molto originale', 5, 'Ben curato', 4, 'Ottimo testo'),
-(4, 'anna89', 'Stile per ragazzi', 4, 'Trama leggera', 4, 'Molto gradevole', 4, 'Originale per l’epoca', 4, 'Buona stampa', 4, 'Magico'),
-(5, 'mario123', 'Stile semplice', 3, 'Temi profondi', 4, 'Molto personale', 4, 'Classico', 3, 'Edizione essenziale', 3, 'Filosofico');
+INSERT INTO librerie (id, id_utente, titolo_libreria) VALUES
+(1, 1, 'Libreria_1'),
+(2, 2, 'Libreria_2'),
+(3, 3, 'Libreria_3'),
+(6, 1, 'Libreria_6');
 
-INSERT INTO CONSIGLI (IDLIBRO, USERNAME, LIB_1, LIB_2, LIB_3) VALUES
-(1, 'mario123', 4, 2, 5),
-(2, 'luca_b', 3, 1, NULL),
-(3, 'sara_s', 5, NULL, NULL);
+INSERT INTO libreria_libro (idlibreria, idlibro) VALUES
+(1, 47095),
+(1, 87310),
+(1, 6213),
+(1, 66965),
+(1, 5685),
+(2, 47789),
+(2, 44708),
+(2, 51170),
+(2, 61087),
+(2, 64620),
+(3, 22175),
+(3, 86462),
+(3, 52664),
+(3, 42756),
+(3, 12742),
+(4, 48802),
+(4, 86913),
+(4, 13309),
+(4, 43341),
+(4, 37707),
+(5, 78857),
+(5, 5344),
+(5, 31025),
+(5, 37016),
+(5, 7618),
+(6, 93755),
+(6, 13334),
+(6, 65869),
+(6, 30107),
+(6, 1952);
 
-INSERT INTO LIBRERIE (USERNAME, TITOLO_LIBRERIA) VALUES
-('mario123', 'Fantasy preferiti'),
-('sara_s', 'Classici da leggere'),
-('anna89', 'La mia libreria');
+INSERT INTO valutazioni (
+    idlibro, id_utente, c_stile, v_stile, c_contenuto, v_contenuto,
+    c_gradevolezza, v_gradevolezza, c_originalita, v_originalita,
+    c_edizione, v_edizione, c_finale
+) VALUES
+      (13309, 4, 'Stile valido', 3, 'Contenuto interessante', 1, 'Gradevole', 2, 'Originale', 1, 'Buona edizione', 2,'Bel libro'),
+      (31025, 5, 'Stile valido', 4, 'Contenuto interessante', 3, 'Gradevole', 4, 'Originale', 5, 'Buona edizione', 1,'Bel libro'),
+      (37707, 4, 'Stile valido', 5, 'Contenuto interessante', 4, 'Gradevole', 5, 'Originale', 2, 'Buona edizione', 2,'Bel libro'),
+      (1952, 1, 'Stile valido', 2, 'Contenuto interessante', 5, 'Gradevole', 2, 'Originale', 4, 'Buona edizione', 3,'Bel libro'),
+      (87310, 1, 'Stile valido', 2, 'Contenuto interessante', 4, 'Gradevole', 2, 'Originale', 4, 'Buona edizione', 2,'Bel libro'),
+      (42756, 3, 'Stile valido', 4, 'Contenuto interessante', 1, 'Gradevole', 3, 'Originale', 3, 'Buona edizione', 4,'Bel libro'),
+      (12742, 3, 'Stile valido', 4, 'Contenuto interessante', 4, 'Gradevole', 5, 'Originale', 4, 'Buona edizione', 1,'Bel libro'),
+      (61087, 2, 'Stile valido', 3, 'Contenuto interessante', 3, 'Gradevole', 4, 'Originale', 4, 'Buona edizione', 1,'Bel libro'),
+      (52664, 3, 'Stile valido', 5, 'Contenuto interessante', 5, 'Gradevole', 4, 'Originale', 5, 'Buona edizione', 4,'Bel libro'),
+      (86913, 4, 'Stile valido', 1, 'Contenuto interessante', 4, 'Gradevole', 1, 'Originale', 4, 'Buona edizione', 3,'Bel libro');
 
-INSERT INTO LIBRERIA_LIBRO (IDLIBRERIA, IDLIBRO) VALUES
-(1, 1), (1, 4),
-(2, 2), (2, 5),
-(3, 3), (3, 1);
+INSERT INTO consigli (idlibro, id_utente, lib_1, lib_2, lib_3) VALUES
+(37707, 4, 86913, 43341, 48802),
+(52664, 3, 12742, 22175, 86462),
+(65869, 1, 87310, 6213, 30107),
+(44708, 2, 47789, 61087, 64620),
+(51170, 2, 61087, 64620, 44708),
+(12742, 3, 86462, 22175, 52664),
+(86913, 4, 48802, 43341, 37707),
+(86913, 4, 43341, 37707, 13309),
+(51170, 2, 64620, 47789, 44708),
+(64620, 2, 47789, 51170, 44708);
+
+INSERT INTO libreria_libro (idlibreria, idlibro) VALUES (5,42756);
+
+INSERT INTO valutazioni (
+    idlibro, id_utente, c_stile, v_stile, c_contenuto, v_contenuto,
+    c_gradevolezza, v_gradevolezza, c_originalita, v_originalita,
+    c_edizione, v_edizione, c_finale
+) VALUES
+      (42756, 5, 'Stile valido', 4, 'Contenuto interessante', 2, 'Gradevole', 3, 'Originale', 3, 'Buona edizione', 4,'Bel libro');
+
+
+INSERT INTO libreria_libro (idlibreria, idlibro) VALUES (2,42756);
+
+INSERT INTO valutazioni (
+    idlibro, id_utente, c_stile, v_stile, c_contenuto, v_contenuto,
+    c_gradevolezza, v_gradevolezza, c_originalita, v_originalita,
+    c_edizione, v_edizione, c_finale
+) VALUES
+    (42756, 2, 'Stile valido', 2, 'Contenuto interessante', 4, 'Gradevole', 4, 'Originale', 4, 'Buona edizione', 2,'Bel libro');

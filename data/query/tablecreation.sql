@@ -60,8 +60,8 @@ create table valutazioni
     c_edizione     text,
     v_edizione     smallint not null,
     c_finale       text,
-    v_finale       numeric generated always as ((
-        ((((v_stile + v_contenuto) + v_gradevolezza) + v_originalita) + v_edizione) / 5)) stored
+    v_finale       numeric(3, 2) generated always as ((
+        (((((v_stile + v_contenuto) + v_gradevolezza) + v_originalita) + v_edizione))::numeric / 5.0)) stored
 );
 
 alter table valutazioni

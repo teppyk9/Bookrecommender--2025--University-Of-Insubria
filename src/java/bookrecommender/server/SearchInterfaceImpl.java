@@ -46,6 +46,9 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
 
     @Override
     public Libro_Details getDetails(int id) throws RemoteException {
-        return null;
+        try{
+            System.out.println("Getting details for book with ID: " + id + " From client " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        return dbManager.getDetails(id);
     }
 }
