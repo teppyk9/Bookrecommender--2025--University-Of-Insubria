@@ -110,7 +110,7 @@ public class CercaLibroController {
         if (event.getClickCount() == 2) {
             Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
-                CliUtil.getInstance().showLibroDetails(selezionato);
+                CliUtil.getInstance().showLibroAdvancedDetails(selezionato);
             }
         }
     }

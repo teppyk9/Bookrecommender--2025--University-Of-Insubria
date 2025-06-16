@@ -182,24 +182,6 @@ public class CliUtil {
         return alert;
     }
 
-    public void showLibroDetails(Libro libro) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibro.fxml"));
-            Parent root = loader.load();
-            DettaglioLibroController controller = loader.getController();
-            controller.setLibro(libro);
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-            Stage stage = new Stage();
-            stage.setTitle("Dettagli del libro");
-            stage.getIcons().add(icon);
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            createAlert("Errore", "Impossibile aprire la finestra dei dettagli.").showAndWait();
-            logger.log(Level.SEVERE, "Impossibile aprire la finestra dei dettagli.", e);
-        }
-    }
-
     public void exitApplication() {
         if (createConfirmation("Conferma uscita", "Sei sicuro di voler uscire dall'applicazione?", true).showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
             if(currentToken != null) {
@@ -236,9 +218,9 @@ public class CliUtil {
 
     public void showLibroAdvancedDetails(Libro libro) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibroAvanzato.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibro.fxml"));
             Parent root = loader.load();
-            DettaglioLibroAvanzatoController controller = loader.getController();
+            DettaglioLibroController controller = loader.getController();
             controller.setLibro(libro);
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
             Stage stage = new Stage();
