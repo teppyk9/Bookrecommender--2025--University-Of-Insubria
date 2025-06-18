@@ -28,8 +28,8 @@ public class CliUtil {
     private SearchInterface searchService;
     private LibInterface libService;
 
-    private static final String RMI_HOST = "localhost";
-    private static final int RMI_PORT = 1099;
+    private static String RMI_HOST;
+    private static int RMI_PORT;
 
     private static final Image programIcon = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/program_icon.png")));
     private static final Image starFull = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-full.png")));
@@ -64,6 +64,28 @@ public class CliUtil {
             throw new IllegalStateException("PrimaryStage not initialized.");
         }
         return primaryStage;
+    }
+
+    public void setServer(String host, int port) {
+        if (host != null && !host.isEmpty() && port > 0 && port <= 65535) {
+            logger.log(Level.INFO, "Setting RMI host to: " + host + " and port to: " + port);
+            RMI_HOST = host;
+            RMI_PORT = port;
+        } else {
+            logger.log(Level.WARNING, "Invalid RMI host or port. Host: " + host + ", Port: " + port);
+        }
+    }
+
+    public boolean testConnection() {
+        try {
+            Registry registry = LocateRegistry.getRegistry(RMI_HOST, RMI_PORT);
+            registry.list();
+            logger.log(Level.INFO, "Connection to RMI server successful.");
+            return true;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Failed to connect to RMI server at " + RMI_HOST + ":" + RMI_PORT, e);
+            return false;
+        }
     }
 
     public Token getCurrentToken() {
@@ -119,6 +141,15 @@ public class CliUtil {
             Parent root = loader.load();
             Stage stage;
             switch(fxml) {
+                case CONNESSIONE:
+                    stage = getPrimaryStage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle(fxml.getTitle());
+                    stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/server_connection.png"))));
+                    stage.setResizable(false);
+                    stage.show();
+                    stage.getScene().getRoot().requestFocus();
+                    return;
                 case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO:
                     stage = getPrimaryStage();
                     break;
@@ -162,7 +193,7 @@ public class CliUtil {
             }
             stage.setScene(new Scene(root));
             stage.setTitle(fxml.getTitle());
-            stage.getIcons().add(programIcon);
+            stage.getIcons().setAll(programIcon);
             stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
@@ -175,12 +206,11 @@ public class CliUtil {
         alert.setTitle(titolo);
         alert.setContentText(messaggio);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        Image icona = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_icon.png")));
-        ImageView imageView = new ImageView(icona);
+        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_icon.png"))));
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         alert.setGraphic(imageView);
-        stage.getIcons().add(icona);
+        stage.getIcons().setAll(imageView.getImage());
         return alert;
     }
 
@@ -193,7 +223,7 @@ public class CliUtil {
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         alert.setGraphic(imageView);
-        stage.getIcons().add(imageView.getImage());
+        stage.getIcons().setAll(imageView.getImage());
         if (binary) {
             alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
         }

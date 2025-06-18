@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.2"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bookrecommender.server.ServerControlController"
+            prefWidth="600" prefHeight="400"
+            stylesheets="@../stylesheets/ServerControl.css">
+    <top>
+        <ToolBar>
+            <Button text="Stop Server" fx:id="stopServerButton" onAction="#stopServer"/>
+        </ToolBar>
+    </top>
+    <center>
+        <TextArea fx:id="logArea" editable="false" wrapText="true" />
+    </center>
+</BorderPane>

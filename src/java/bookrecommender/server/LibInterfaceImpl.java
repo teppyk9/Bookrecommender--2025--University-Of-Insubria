@@ -16,8 +16,8 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     private static final long serialVersionUID = 1L;
     private final DBManager dbManager;
 
-    protected LibInterfaceImpl(int port, DBManager dbManager) throws RemoteException {
-        super(port);
+    protected LibInterfaceImpl(DBManager dbManager) throws RemoteException {
+        super();
         this.dbManager = dbManager;
     }
 

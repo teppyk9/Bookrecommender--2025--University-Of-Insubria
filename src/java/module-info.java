@@ -9,6 +9,7 @@ module bookrecommender {
     requires java.desktop;
 
     opens bookrecommender.client to javafx.fxml;
+    opens bookrecommender.server to javafx.fxml;
     exports bookrecommender.client;
     exports bookrecommender.common;
     exports bookrecommender.server;

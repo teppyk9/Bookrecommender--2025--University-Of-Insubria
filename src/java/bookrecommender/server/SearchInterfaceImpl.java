@@ -15,8 +15,8 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     private static final long serialVersionUID = 1L;
 
     private final DBManager dbManager;
-    protected SearchInterfaceImpl(int port, DBManager dbManager) throws RemoteException {
-        super(port);
+    protected SearchInterfaceImpl(DBManager dbManager) throws RemoteException {
+        super();
         this.dbManager = dbManager;
     }
 

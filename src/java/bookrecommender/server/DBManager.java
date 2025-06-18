@@ -12,20 +12,42 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBManager {
-    private static final String URL = "jdbc:postgresql://localhost:5432/bookrecommender";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "1234";
+
+    // jdbc:postgresql://localhost:5432/bookrecommender
+    // postgres
+    // 1234
+
+    private static String URL;
+    private static String USER;
+    private static String PASSWORD;
 
     private static Connection conn;
 
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
 
     public DBManager() {
+        //al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
+    }
+
+    public void setConnection(String url, String user, String password) {
+        URL = url;
+        USER = user;
+        PASSWORD = password;
+    }
+
+    public boolean connect() {
         try {
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella creazione di DBManager", e);
+            if (conn == null || conn.isClosed()) {
+                conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                logger.log(Level.INFO, "Connessione al database avvenuta con successo.");
+            } else {
+                logger.log(Level.WARNING, "Connessione già esistente.");
+            }
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella connessione al database", e);
+            conn = null;
+            return false;
         }
     }
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bookrecommender.client.ConnessioneController">
+   <Label layoutX="122.0" layoutY="25.0" text="Collegati al server">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Label>
+   <AnchorPane layoutX="75.0" layoutY="55.0" prefHeight="73.0" prefWidth="250.0">
+      <Label layoutX="23.0" layoutY="82.0" text="PORT:" AnchorPane.leftAnchor="20.0" />
+      <TextField fx:id="hostField" alignment="CENTER" layoutX="81.0" layoutY="34.0" onKeyPressed="#resetLabel" text="localhost" AnchorPane.rightAnchor="20.0" />
+      <Label layoutX="20.0" layoutY="38.0" text="HOST:" AnchorPane.leftAnchor="20.0" />
+      <TextField fx:id="portField" alignment="CENTER" layoutX="87.0" layoutY="78.0" onKeyPressed="#resetLabel" text="1099" AnchorPane.rightAnchor="20.0" />
+   </AnchorPane>
+   <Button fx:id="confermaButton" layoutX="291.0" layoutY="185.0" mnemonicParsing="false" onAction="#conferma" text="Conferma" AnchorPane.rightAnchor="40.0" />
+   <Button fx:id="testButton" layoutX="76.0" layoutY="185.0" mnemonicParsing="false" onAction="#test" text="Test" AnchorPane.leftAnchor="40.0" />
+   <Label fx:id="testLabel" layoutX="89.0" layoutY="189.0" />
+</AnchorPane>

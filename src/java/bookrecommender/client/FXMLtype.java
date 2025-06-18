@@ -1,6 +1,7 @@
 package bookrecommender.client;
 
 public enum FXMLtype {
+    CONNESSIONE("/bookrecommender/client/Connessione.fxml", "Connessione al server"),
     HOME("/bookrecommender/client/Home.fxml", "Home"),
     LOGIN("/bookrecommender/client/Login.fxml", "Login"),
     REGISTRAZIONE("/bookrecommender/client/Registrazione.fxml", "Registrazione"),

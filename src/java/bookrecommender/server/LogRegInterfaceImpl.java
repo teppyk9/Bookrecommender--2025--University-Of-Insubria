@@ -15,8 +15,8 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     private static final long serialVersionUID = 1L;
     private final DBManager dbManager;
 
-    protected LogRegInterfaceImpl(int port, DBManager dbManager) throws RemoteException {
-        super(port);
+    protected LogRegInterfaceImpl(DBManager dbManager) throws RemoteException {
+        super();
         this.dbManager = dbManager;
     }
 

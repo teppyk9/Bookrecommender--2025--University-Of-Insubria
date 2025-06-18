@@ -1,0 +1,20 @@
+.terminal-text-area {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 13px;
+
+    -fx-control-inner-background: #1e1e1e;
+    -fx-background-color: transparent;
+    -fx-text-fill: #00ff00;
+
+    -fx-highlight-fill: #555555;
+    -fx-highlight-text-fill: #ffffff;
+
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+
+    -fx-padding: 6px;
+}
+
+.terminal-text-area .caret {
+    -fx-stroke: #00ff00;
+}
