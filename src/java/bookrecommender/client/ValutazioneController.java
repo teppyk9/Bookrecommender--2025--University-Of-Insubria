@@ -78,7 +78,7 @@ public class ValutazioneController {
                         Float.parseFloat(votoOriginalita.getText()), Float.parseFloat(votoEdizione.getText())),
                 List.of(testoStile.getText(), testoContenuto.getText(), testoGradevolezza.getText(),
                         testoOriginalita.getText(), testoEdizione.getText(), testoFinale.getText()),
-                libro.getId()
+                libro
         );
         try{
             if (CliUtil.getInstance().getLibService().addValutazione(CliUtil.getInstance().getCurrentToken(), valutazione)) {

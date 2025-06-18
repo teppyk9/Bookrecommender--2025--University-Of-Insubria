@@ -364,7 +364,7 @@ public class DBManager {
         return librerie;
     }
 
-    public Libro_Details getDetails(int id) {
+    public Libro_Details getDetails(Libro libro) {
         List<Valutazione> valutazioni = new ArrayList<>();
         Hashtable<String, List<Libro>> consigli = new Hashtable<>();
 
@@ -378,7 +378,7 @@ public class DBManager {
         """;
 
         try (PreparedStatement psValutazioni = conn.prepareStatement(queryValutazioni)) {
-            psValutazioni.setInt(1, id);
+            psValutazioni.setInt(1, libro.getId());
             ResultSet rs = psValutazioni.executeQuery();
             while (rs.next()) {
                 List<Float> valori = List.of(
@@ -397,10 +397,10 @@ public class DBManager {
                         rs.getString("c_edizione"),
                         rs.getString("c_finale")
                 );
-                valutazioni.add(new Valutazione(rs.getString("username"), valori, commenti, id));
+                valutazioni.add(new Valutazione(rs.getString("username"), valori, commenti, libro));
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nel recupero delle valutazioni per il libro con ID: " + id, e);
+            logger.log(Level.SEVERE, "Errore nel recupero delle valutazioni per il libro con ID: " + libro.getId(), e);
         }
 
         String queryConsigli = """
@@ -413,11 +413,11 @@ public class DBManager {
         """;
 
         try (PreparedStatement psConsigli = conn.prepareStatement(queryConsigli)) {
-            psConsigli.setInt(1, id);
+            psConsigli.setInt(1, libro.getId());
             ResultSet rs = psConsigli.executeQuery();
             while (rs.next()) {
                 String username = rs.getString("username");
-                Libro libro = new Libro(
+                Libro libroC = new Libro(
                         rs.getInt("id"),
                         rs.getString("titolo"),
                         rs.getString("autore"),
@@ -428,10 +428,10 @@ public class DBManager {
                         rs.getShort("annopubblicazione"),
                         rs.getShort("mesepubblicazione")
                 );
-                consigli.computeIfAbsent(username, k -> new ArrayList<>()).add(libro);
+                consigli.computeIfAbsent(username, k -> new ArrayList<>()).add(libroC);
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nel recupero dei consigli per il libro con ID: " + id, e);
+            logger.log(Level.SEVERE, "Errore nel recupero dei consigli per il libro con ID: " + libro.getId(), e);
         }
 
         return new Libro_Details(consigli, valutazioni);

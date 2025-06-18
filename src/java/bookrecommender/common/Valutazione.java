@@ -9,15 +9,15 @@ public class Valutazione implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final String username;
-    private final int idLibro;
+    private final Libro libro;
     private final List<Float> valutazioni;
     private final List<String> commenti;
 
-    public Valutazione(String u, List<Float> v, List<String> c, int idLibro) {
+    public Valutazione(String u, List<Float> v, List<String> c, Libro l) {
         this.username = u;
         this.valutazioni = v;
         this.commenti = c;
-        this.idLibro = idLibro;
+        this.libro = l;
     }
 
     public String getUsername() {
@@ -36,7 +36,9 @@ public class Valutazione implements Serializable {
     }
 
     public int getIdLibro() {
-        return idLibro;
+        return libro.getId();
     }
-
+    public Libro getLibro() {
+        return libro;
+    }
 }

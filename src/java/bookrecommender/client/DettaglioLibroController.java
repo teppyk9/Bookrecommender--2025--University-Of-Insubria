@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.rmi.RemoteException;
-import java.util.Hashtable;
 import java.util.List;
 
 public class DettaglioLibroController {
@@ -101,47 +100,35 @@ public class DettaglioLibroController {
         }
 
         try {
-            details = CliUtil.getInstance().getSearchService().getDetails(libro.getId());
+            details = CliUtil.getInstance().getSearchService().getDetails(libro);
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore di connessione", "Impossibile recuperare i dettagli del libro.").showAndWait();
         }
 
-        setStar(starTotal1, starTotal2, starTotal3, starTotal4, starTotal5, details.getmFinale());
+        CliUtil.getInstance().setStar(starTotal1, starTotal2, starTotal3, starTotal4, starTotal5, details.getmFinale());
         votoTotal.setText(String.format("%.1f", details.getmFinale()));
-        setStar(starStile1, starStile2, starStile3, starStile4, starStile5, details.getmStile());
+        CliUtil.getInstance().setStar(starStile1, starStile2, starStile3, starStile4, starStile5, details.getmStile());
         votoStile.setText(String.format("%.1f", details.getmStile()));
-        setStar(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5, details.getmContenuto());
+        CliUtil.getInstance().setStar(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5, details.getmContenuto());
         votoContenuto.setText(String.format("%.1f", details.getmContenuto()));
-        setStar(starGradevolezza1, starGradevolezza2, starGradevolezza3, starGradevolezza4, starGradevolezza5, details.getmGradevolezza());
+        CliUtil.getInstance().setStar(starGradevolezza1, starGradevolezza2, starGradevolezza3, starGradevolezza4, starGradevolezza5, details.getmGradevolezza());
         votoGradevolezza.setText(String.format("%.1f", details.getmGradevolezza()));
-        setStar(starOriginalita1, starOriginalita2, starOriginalita3, starOriginalita4, starOriginalita5, details.getmOriginalita());
+        CliUtil.getInstance().setStar(starOriginalita1, starOriginalita2, starOriginalita3, starOriginalita4, starOriginalita5, details.getmOriginalita());
         votoOriginalita.setText(String.format("%.1f", details.getmOriginalita()));
-        setStar(starEdizione1, starEdizione2, starEdizione3, starEdizione4, starEdizione5, details.getmEdizione());
+        CliUtil.getInstance().setStar(starEdizione1, starEdizione2, starEdizione3, starEdizione4, starEdizione5, details.getmEdizione());
         votoEdizione.setText(String.format("%.1f", details.getmEdizione()));
 
         listaValutazioni.setItems(FXCollections.observableArrayList(details.getValutazioni()));
         listaConsigli.setItems(FXCollections.observableArrayList(details.getConsigli().values().stream().flatMap(List::stream).toList()));
     }
 
-    private void setStar(ImageView star1, ImageView star2, ImageView star3, ImageView star4, ImageView star5, float voto) {
-        ImageView[] stars = {star1, star2, star3, star4, star5};
-        for (int i = 0; i < stars.length; i++) {
-            float diff = voto - i;
-            if (diff >= 1) {
-                stars[i].setImage(CliUtil.getInstance().getStarFull());
-            } else if (diff >= 0.75) {
-                stars[i].setImage(CliUtil.getInstance().getStarThreeQuarters());
-            } else if (diff >= 0.5) {
-                stars[i].setImage(CliUtil.getInstance().getStarHalf());
-            } else if (diff >= 0.25) {
-                stars[i].setImage(CliUtil.getInstance().getStarQuarter());
-            } else {
-                stars[i].setImage(CliUtil.getInstance().getStarEmpty());
+    public void clickValutazione(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 2) {
+            Valutazione selezionato = listaValutazioni.getSelectionModel().getSelectedItem();
+            if (selezionato != null) {
+                CliUtil.getInstance().showValutazione(selezionato);
             }
         }
-    }
-
-    public void clickValutazione(MouseEvent mouseEvent) {
     }
 
     public void clickConsiglio(MouseEvent mouseEvent) {

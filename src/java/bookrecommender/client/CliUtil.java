@@ -204,18 +204,6 @@ public class CliUtil {
         return starEmpty;
     }
 
-    public Image getStarHalf() {
-        return starHalf;
-    }
-
-    public Image getStarQuarter() {
-        return starQuarter;
-    }
-
-    public Image getStarThreeQuarters() {
-        return starThreeQuarters;
-    }
-
     public void showLibroAdvancedDetails(Libro libro) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibro.fxml"));
@@ -233,14 +221,59 @@ public class CliUtil {
             createAlert("Errore", "Impossibile aprire la finestra dei dettagli avanzati.").showAndWait();
             logger.log(Level.SEVERE, "Impossibile aprire la finestra dei dettagli avanzati.", e);
         }
+        libro = null;
     }
 
-    public void showValutazione(Libro libro) {
+    public void showCreaValutazione(Libro libro) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/Valutazione.fxml"));
             Parent root = loader.load();
             ValutazioneController controller = loader.getController();
             controller.setLibro(libro);
+            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
+            Stage stage = new Stage();
+            stage.setTitle("Crea valutazione del Libro");
+            stage.getIcons().add(icon);
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            createAlert("Errore", "Impossibile aprire la finestra di valutazione.").showAndWait();
+            logger.log(Level.SEVERE, "Impossibile aprire la finestra di valutazione.", e);
+        }
+        libro = null;
+    }
+
+    public void setStar(ImageView star1, ImageView star2, ImageView star3, ImageView star4, ImageView star5, float voto) {
+        ImageView[] stars = {star1, star2, star3, star4, star5};
+        for (int i = 0; i < stars.length; i++) {
+            float diff = voto - i;
+            if (diff >= 1) {
+                stars[i].setImage(starFull);
+            } else if (diff >= 0.75) {
+                stars[i].setImage(starThreeQuarters);
+            } else if (diff >= 0.5) {
+                stars[i].setImage(starHalf);
+            } else if (diff >= 0.25) {
+                stars[i].setImage(starQuarter);
+            } else {
+                stars[i].setImage(starEmpty);
+            }
+        }
+        star1 = null;
+        star2 = null;
+        star3 = null;
+        star4 = null;
+        star5 = null;
+        stars = null;
+    }
+
+    public void showValutazione(Valutazione valutazione) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/VisualizzaValutazione.fxml"));
+            Parent root = loader.load();
+            VisualizzaValutazioneController controller = loader.getController();
+            controller.setValutazione(valutazione);
             Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
             Stage stage = new Stage();
             stage.setTitle("Valutazione del Libro");
@@ -252,6 +285,7 @@ public class CliUtil {
             createAlert("Errore", "Impossibile aprire la finestra di valutazione.").showAndWait();
             logger.log(Level.SEVERE, "Impossibile aprire la finestra di valutazione.", e);
         }
+        valutazione = null;
     }
 
 }

@@ -8,5 +8,5 @@ public interface SearchInterface extends Remote {
     List<Libro> searchByName(String title) throws RemoteException;
     List<Libro> searchByAuthor(String author) throws RemoteException;
     List<Libro> searchByAuthorAndYear(String author, int year) throws RemoteException;
-    Libro_Details getDetails(int id) throws RemoteException;
+    Libro_Details getDetails(Libro libro) throws RemoteException;
 }
