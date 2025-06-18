@@ -140,7 +140,7 @@ public class CercaLibroAvanzatoController {
     }
 
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().showLibroAdvancedDetails(libro);
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, libro);
     }
 
     public void cercaTitolo() {
@@ -210,7 +210,7 @@ public class CercaLibroAvanzatoController {
     }
 
     public void GoToMainMenu() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/AreaRiservata.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
     }
 
     public void ExitApplication() {
@@ -223,6 +223,6 @@ public class CercaLibroAvanzatoController {
     }
 
     public void CreaLibreria() {
-        CliUtil.getInstance().createFXML("/bookrecommender/client/CreaLibreria.fxml", "Crea Libreria");
+        CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null);
     }
 }

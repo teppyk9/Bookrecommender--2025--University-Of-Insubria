@@ -32,11 +32,11 @@ public class RegistrazioneController {
     }
 
     public void GoBackMainMenu() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
 
     public void GoToLoginPage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Login.fxml", "Login");
+        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null);
     }
 
     public void TryReg() {
@@ -104,7 +104,7 @@ public class RegistrazioneController {
             RegToken result = CliUtil.getInstance().getLogRegService().Register(nome, cognome, cf, email, username, password1);
             if (result.RegistrationAvailable()) {
                 CliUtil.getInstance().createConfirmation("Registrazione riuscita", "Benvenuto " + username + "!", false).showAndWait();
-                CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+                CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
             } else{
                 if(result.isUsernameAvailable()) {
                     CliUtil.getInstance().createAlert("Errore", "Username già utilizzata").showAndWait();

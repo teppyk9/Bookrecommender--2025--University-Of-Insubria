@@ -132,7 +132,7 @@ public class CreaLibreriaController {
     }
 
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().showLibroAdvancedDetails(libro);
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, libro);
     }
 
     public void cercaTitolo() {

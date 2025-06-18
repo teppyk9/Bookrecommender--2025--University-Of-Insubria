@@ -110,7 +110,7 @@ public class CercaLibroController {
         if (event.getClickCount() == 2) {
             Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
-                CliUtil.getInstance().showLibroAdvancedDetails(selezionato);
+                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, selezionato);
             }
         }
     }
@@ -182,7 +182,7 @@ public class CercaLibroController {
     }
 
     public void GoToMainMenu() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
 
     public void ExitApplication() {

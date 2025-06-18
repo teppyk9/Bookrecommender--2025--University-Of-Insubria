@@ -8,14 +8,14 @@ public class HomeController {
     public Button CercaLibroBaseButton;
 
     public void OpenLoginPage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Login.fxml", "Login");
+        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null);
     }
 
     public void OpenSignUpPage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Registrazione.fxml", "Registrazione");
+        CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null);
     }
 
     public void OpenCercaLibroBasePage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/CercaLibro.fxml", "Cerca Libro");
+        CliUtil.getInstance().buildStage(FXMLtype.CERCA, null);
     }
 }

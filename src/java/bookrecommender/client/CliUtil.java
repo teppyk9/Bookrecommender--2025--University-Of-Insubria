@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 public class CliUtil {
 
     private static final Logger logger = Logger.getLogger(CliUtil.class.getName());
-    private static CliUtil instance;
 
     private Stage primaryStage;
     private Token currentToken;
@@ -32,6 +31,7 @@ public class CliUtil {
     private static final String RMI_HOST = "localhost";
     private static final int RMI_PORT = 1099;
 
+    private static final Image programIcon = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/program_icon.png")));
     private static final Image starFull = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-full.png")));
     private static final Image starEmpty = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-empty.png")));
     private static final Image starHalf = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/icons/star-half.png")));
@@ -42,11 +42,12 @@ public class CliUtil {
         // Al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
     }
 
-    public static synchronized CliUtil getInstance() {
-        if (instance == null) {
-            instance = new CliUtil();
-        }
-        return instance;
+    private static class Holder {
+        private static final CliUtil INSTANCE = new CliUtil();
+    }
+
+    public static CliUtil getInstance() {
+        return Holder.INSTANCE;
     }
 
     public void init(Stage stage) {
@@ -112,43 +113,60 @@ public class CliUtil {
         return libService;
     }
 
-    public void loadFXML(String fxmlPath, String title) {
+    public void buildStage(FXMLtype fxml, Object obj) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml.getPath()));
             Parent root = loader.load();
+            Stage stage;
+            switch(fxml) {
+                case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO:
+                    stage = getPrimaryStage();
+                    break;
+                case CREALIBRERIA:
+                    stage = new Stage();
+                    break;
+                case DETTAGLIOlIBRO:
+                    DettaglioLibroController dettaglioLibroController = loader.getController();
+                    stage = new Stage();
+                    if(obj instanceof Libro) {
+                        dettaglioLibroController.setLibro((Libro) obj);
+                    } else {
+                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        return;
+                    }
+                    break;
+                case CREAVALUTAZIONE:
+                    ValutazioneController valutazioneController = loader.getController();
+                    if(obj instanceof Libro) {
+                        stage = new Stage();
+                        valutazioneController.setLibro((Libro) obj);
+                    } else {
+                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        return;
+                    }
+                    break;
 
-            Stage stage = getPrimaryStage();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle(title);
-
-            try {
-                Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-                stage.getIcons().setAll(icon);
-            } catch (NullPointerException e) {
-                logger.log(Level.WARNING, "Program icon not found, skipping.", e);
+                case VALUTAZIONE:
+                    VisualizzaValutazioneController visualizzaValutazioneController = loader.getController();
+                    if(obj instanceof Valutazione) {
+                        stage = new Stage();
+                        visualizzaValutazioneController.setValutazione((Valutazione) obj);
+                    } else {
+                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Valutazione object, got " + obj.getClass().getName());
+                        return;
+                    }
+                    break;
+                default:
+                    logger.log(Level.SEVERE, "Unsupported FXML type: " + fxml.name());
+                    return;
             }
-
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to load FXML: " + fxmlPath, e);
-        }
-    }
-
-    public void createFXML(String fxmlPath, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.getIcons().add(icon);
             stage.setScene(new Scene(root));
+            stage.setTitle(fxml.getTitle());
+            stage.getIcons().add(programIcon);
             stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to create FXML: " + fxmlPath, e);
+            logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name(), e);
         }
     }
 
@@ -204,46 +222,6 @@ public class CliUtil {
         return starEmpty;
     }
 
-    public void showLibroAdvancedDetails(Libro libro) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/DettaglioLibro.fxml"));
-            Parent root = loader.load();
-            DettaglioLibroController controller = loader.getController();
-            controller.setLibro(libro);
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-            Stage stage = new Stage();
-            stage.setTitle("Dettagli Avanzati del Libro");
-            stage.getIcons().add(icon);
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
-            createAlert("Errore", "Impossibile aprire la finestra dei dettagli avanzati.").showAndWait();
-            logger.log(Level.SEVERE, "Impossibile aprire la finestra dei dettagli avanzati.", e);
-        }
-        libro = null;
-    }
-
-    public void showCreaValutazione(Libro libro) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/Valutazione.fxml"));
-            Parent root = loader.load();
-            ValutazioneController controller = loader.getController();
-            controller.setLibro(libro);
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-            Stage stage = new Stage();
-            stage.setTitle("Crea valutazione del Libro");
-            stage.getIcons().add(icon);
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
-            createAlert("Errore", "Impossibile aprire la finestra di valutazione.").showAndWait();
-            logger.log(Level.SEVERE, "Impossibile aprire la finestra di valutazione.", e);
-        }
-        libro = null;
-    }
-
     public void setStar(ImageView star1, ImageView star2, ImageView star3, ImageView star4, ImageView star5, float voto) {
         ImageView[] stars = {star1, star2, star3, star4, star5};
         for (int i = 0; i < stars.length; i++) {
@@ -260,32 +238,6 @@ public class CliUtil {
                 stars[i].setImage(starEmpty);
             }
         }
-        star1 = null;
-        star2 = null;
-        star3 = null;
-        star4 = null;
-        star5 = null;
-        stars = null;
-    }
-
-    public void showValutazione(Valutazione valutazione) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/bookrecommender/client/VisualizzaValutazione.fxml"));
-            Parent root = loader.load();
-            VisualizzaValutazioneController controller = loader.getController();
-            controller.setValutazione(valutazione);
-            Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/program_icon.png")));
-            Stage stage = new Stage();
-            stage.setTitle("Valutazione del Libro");
-            stage.getIcons().add(icon);
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
-            createAlert("Errore", "Impossibile aprire la finestra di valutazione.").showAndWait();
-            logger.log(Level.SEVERE, "Impossibile aprire la finestra di valutazione.", e);
-        }
-        valutazione = null;
     }
 
 }

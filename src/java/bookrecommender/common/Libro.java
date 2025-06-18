@@ -6,15 +6,15 @@ import java.io.Serializable;
 public class Libro implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    public int id;
-    public String titolo;
-    public String autore;
-    public String descrizione;
-    public String categoria;
-    public String editore;
-    public float prezzo;
-    public short annoPubblicazione;
-    public short mesePubblicazione;
+    private final int id;
+    private final String titolo;
+    private final String autore;
+    private final String descrizione;
+    private final String categoria;
+    private final String editore;
+    private final float prezzo;
+    private final short annoPubblicazione;
+    private final short mesePubblicazione;
 
     public Libro(int id, String titolo, String autore, String descrizione, String categoria, String editore, float prezzo, short annoPubblicazione, short mesePubblicazione) {
         this.id = id;

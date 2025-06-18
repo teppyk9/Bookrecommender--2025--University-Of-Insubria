@@ -12,7 +12,7 @@ public class AreaRiservataController {
     }
 
     public void OpenCercaLibroAvanzato() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/CercaLibroAvanzato.fxml", "Cerca Libro Avanzato");
+        CliUtil.getInstance().buildStage(FXMLtype.CERCA_AVANZATO, null);
     }
 
     public void OpenVisualizzaLibrerie() {
@@ -31,6 +31,6 @@ public class AreaRiservataController {
             CliUtil.getInstance().createAlert("Errore di Logout", e.getMessage());
         }
         CliUtil.getInstance().setCurrentToken(null);
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
 }
