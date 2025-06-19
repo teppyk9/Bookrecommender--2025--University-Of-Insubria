@@ -13,14 +13,6 @@ import java.util.logging.Logger;
 
 public class DBManager {
 
-    // jdbc:postgresql://localhost:5432/bookrecommender
-    // postgres
-    // 1234
-
-    private static String URL;
-    private static String USER;
-    private static String PASSWORD;
-
     private static Connection conn;
 
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
@@ -29,19 +21,27 @@ public class DBManager {
         //al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
     }
 
-    public void setConnection(String url, String user, String password) {
-        URL = url;
-        USER = user;
-        PASSWORD = password;
+    public boolean tryConnection(String url, String user, String password) {
+        if (url == null || user == null || password == null) {
+            logger.log(Level.SEVERE, "Parametri di connessione non impostati.");
+            return false;
+        }
+        try (Connection ignored = DriverManager.getConnection(url, user, password)) {
+            logger.log(Level.INFO, "Test connessione al database avvenuto con successo.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella connessione al database", e);
+            return false;
+        }
     }
 
-    public boolean connect() {
+    public boolean connect(String url, String user, String password) {
         try {
             if (conn == null || conn.isClosed()) {
-                conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                conn = DriverManager.getConnection(url, user, password);
                 logger.log(Level.INFO, "Connessione al database avvenuta con successo.");
             } else {
-                logger.log(Level.WARNING, "Connessione già esistente.");
+                logger.log(Level.WARNING, "Tentativo di riconnessione al database già connesso.");
             }
             return true;
         } catch (SQLException e) {

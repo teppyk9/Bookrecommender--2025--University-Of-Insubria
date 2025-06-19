@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.2"
+<?import javafx.scene.text.TextFlow?>
+<AnchorPane stylesheets="@../stylesheets/ServerControl.css"
+            xmlns="http://javafx.com/javafx/11.0.14-internal"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="bookrecommender.server.ServerControlController"
-            prefWidth="600" prefHeight="400"
-            stylesheets="@../stylesheets/ServerControl.css">
-    <top>
-        <ToolBar>
-            <Button text="Stop Server" fx:id="stopServerButton" onAction="#stopServer"/>
-        </ToolBar>
-    </top>
-    <center>
-        <TextArea fx:id="logArea" editable="false" wrapText="true" />
-    </center>
-</BorderPane>
+            fx:controller="bookrecommender.server.ServerControlController">
+    <BorderPane prefHeight="400" prefWidth="800">
+        <top>
+            <ToolBar BorderPane.alignment="TOP_LEFT">
+                <Button fx:id="stopServerButton"
+                        onAction="#stopServer"
+                        text="Stop Server" />
+                <Button fx:id="saveLogsButton"
+                        onAction="#saveLogs"
+                        text="Save Logs" />
+            </ToolBar>
+        </top>
+        <center>
+            <ScrollPane fx:id="logScrollPane"
+                        fitToWidth="true"
+                        fitToHeight="true">
+                <content>
+                    <TextFlow fx:id="logFlow"
+                              styleClass="terminal-text-area" />
+                </content>
+            </ScrollPane>
+        </center>
+    </BorderPane>
+</AnchorPane>

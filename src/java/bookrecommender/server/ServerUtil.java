@@ -15,18 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ServerUtil {
+
     private Stage primaryStage;
 
-    private int registryPort;
-
     private DBManager dbManager;
-
-    private Registry registry;
-    private SearchInterfaceImpl SearchServer;
-    private LogRegInterfaceImpl LogRegServer;
-    private LibInterfaceImpl LibServer;
-
-    //1099
 
     private static final Logger logger = Logger.getLogger(ServerUtil.class.getName());
 
@@ -46,13 +38,13 @@ public class ServerUtil {
         if (this.primaryStage == null) {
             this.primaryStage = stage;
         } else {
-            logger.log(Level.WARNING, "PrimaryStage already initialized.");
+            logger.log(Level.WARNING, "PrimaryStage già inizializzato.");
         }
     }
 
     public Stage getPrimaryStage() {
         if (primaryStage == null) {
-            logger.log(Level.SEVERE, "PrimaryStage has not been initialized. Call init() first.");
+            logger.log(Level.SEVERE, "PrimaryStage non inizializzato.");
         }
         return primaryStage;
     }
@@ -61,63 +53,61 @@ public class ServerUtil {
         if (dbManager == null) {
             dbManager = new DBManager();
         } else {
-            logger.log(Level.WARNING, "DBManager already initialized.");
+            logger.log(Level.WARNING, "DBManager già inizializzato.");
         }
     }
 
-    public static boolean isTcpPortAvailable() {
-        try (ServerSocket ss = new ServerSocket(ServerUtil.getInstance().registryPort)) {
+    public boolean isTcpPortAvailable(int portNumber) {
+        try (ServerSocket ss = new ServerSocket(portNumber)) {
             ss.setReuseAddress(true);
+            logger.info("Test sulla porta TCP " + portNumber + " riuscito.");
             return true;
         } catch (IOException e) {
+            logger.log(Level.WARNING, "Test sulla porta TCP " + portNumber + " fallito: " + e.getMessage());
             return false;
         }
     }
 
-    public boolean tryDBConnection(String url, String user, String password){
-        dbManager.setConnection(url, user, password);
-        if (!dbManager.connect()) {
-            logger.log(Level.SEVERE, "Database connection failed.");
-            return false;
-        } else {
-            logger.log(Level.INFO, "Database connection established.");
-            return true;
-        }
+    public boolean tryConnectToDb(String url, String user, String password) {
+        return dbManager.tryConnection(url, user, password);
     }
 
-    public void setPort(int port) {
-        registryPort = port;
+    public boolean connectToDb(String url, String user, String password){
+        return dbManager.connect(url, user, password);
     }
 
-    public void setServer() {
+    public boolean setServer(int port) {
         dbManager.svuotaSessioniLogin();
         try {
-            registry = LocateRegistry.createRegistry(registryPort);
-            SearchServer = new SearchInterfaceImpl(dbManager);
-            LogRegServer = new LogRegInterfaceImpl(dbManager);
-            LibServer = new LibInterfaceImpl(dbManager);
-            registry.rebind("Search_Interface", SearchServer);
-            registry.rebind("LogReg_Interface", LogRegServer);
-            registry.rebind("Lib_Interface", LibServer);
-            System.err.println("Server ready");
+            Registry registry = LocateRegistry.createRegistry(port);
+            SearchInterfaceImpl searchServer = new SearchInterfaceImpl(dbManager);
+            LogRegInterfaceImpl logRegServer = new LogRegInterfaceImpl(dbManager);
+            LibInterfaceImpl libServer = new LibInterfaceImpl(dbManager);
+            registry.rebind("Search_Interface", searchServer);
+            registry.rebind("LogReg_Interface", logRegServer);
+            registry.rebind("Lib_Interface", libServer);
+            logger.info("Server ready");
+            return true;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Errore nell'inizializzazione del server>", e);
+            return false;
         }
     }
 
-    public void loadFXML(String fxmlFile, String title) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+    public void loadFXML(String fxmlFile, String title, boolean newWindow) {
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
-            Stage stage = getPrimaryStage();
+            Stage stage = newWindow
+                    ? new Stage()
+                    : primaryStage;
             stage.setScene(new Scene(root));
             stage.setTitle(title);
-            stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/server_connection.png"))));
             stage.setResizable(false);
+            stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/server/icons/server_connection.png"))));
             stage.show();
-            stage.getScene().getRoot().requestFocus();
-        }catch(Exception e) {
-            logger.log(Level.SEVERE, "Error loading FXML file", e);
+        }catch (IOException e){
+            logger.log(Level.SEVERE, "Errore nel caricamento del file FXML: " + fxmlFile, e);
         }
     }
 }

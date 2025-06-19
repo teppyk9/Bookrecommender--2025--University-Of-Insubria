@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="250" prefWidth="400" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.server.ServerConfigController">
+<AnchorPane prefHeight="250" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.server.ServerConfigController">
     <VBox alignment="CENTER" layoutX="8.0" layoutY="30.0" prefHeight="178.0" prefWidth="367.0" spacing="10" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="30.0">
         <GridPane hgap="10" vgap="10">
             <columnConstraints>
@@ -31,12 +31,11 @@
 
             <Label text="DB Pass:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <PasswordField fx:id="dbPasswordField" onKeyPressed="#resetLabel" text="1234" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-            <HBox alignment="CENTER_RIGHT" spacing="10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
-                <Button fx:id="testDbButton" onAction="#testDB" text="Test DB" />
-                <Button fx:id="confirmButton" defaultButton="true" onAction="#confirm" text="Conferma" />
-            </HBox>
+             <Button fx:id="testDbButton" onAction="#testDB" text="Test DB" GridPane.columnIndex="2" GridPane.rowIndex="3" />
         </GridPane>
     </VBox>
-   <Label fx:id="testLabel" layoutX="103.0" layoutY="204.0" prefHeight="17.0" prefWidth="265.0" text="TEST" />
+
+      <HBox alignment="CENTER_RIGHT" layoutX="69.0" layoutY="209.0" spacing="10" />
+   <Label fx:id="testLabel" layoutX="45.0" layoutY="202.0" prefHeight="17.0" prefWidth="227.0" text="TEST" />
+       <Button fx:id="confirmButton" defaultButton="true" layoutX="291.0" layoutY="197.0" onAction="#confirm" text="Conferma" />
 </AnchorPane>

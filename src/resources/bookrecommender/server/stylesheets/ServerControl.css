@@ -18,3 +18,20 @@
 .terminal-text-area .caret {
     -fx-stroke: #00ff00;
 }
+.terminal-text-area {
+    -fx-font-family: "Consolas", monospace;
+    -fx-font-size: 13px;
+    -fx-background-color: #1e1e1e;
+    -fx-background-insets: 0;
+    -fx-padding: 6px;
+}
+
+.info {
+    -fx-fill: #00ff00;
+}
+.warning {
+    -fx-fill: #de41cb;
+}
+.severe {
+    -fx-fill: #ff0000;
+}

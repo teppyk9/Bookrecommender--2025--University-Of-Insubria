@@ -35,12 +35,12 @@ alter table utenti
 
 create table valutazioni
 (
-    idlibro        integer
+    idlibro          integer
         references libri,
-    id_utente      integer
+    id_utente        integer
         references utenti,
-    c_stile        text,
-    v_stile        smallint not null
+    c_stile          text,
+    v_stile          smallint not null
         constraint valutazioni_v_stile_check
             check ((v_stile >= 1) AND (v_stile <= 5))
         constraint valutazioni_v_stile_check1
@@ -51,17 +51,18 @@ create table valutazioni
             check ((v_stile >= 1) AND (v_stile <= 5))
         constraint valutazioni_v_stile_check4
             check ((v_stile >= 1) AND (v_stile <= 5)),
-    c_contenuto    text,
-    v_contenuto    smallint not null,
-    c_gradevolezza text,
-    v_gradevolezza smallint not null,
-    c_originalita  text,
-    v_originalita  smallint not null,
-    c_edizione     text,
-    v_edizione     smallint not null,
-    c_finale       text,
-    v_finale       numeric(3, 2) generated always as ((
-        (((((v_stile + v_contenuto) + v_gradevolezza) + v_originalita) + v_edizione))::numeric / 5.0)) stored
+    c_contenuto      text,
+    v_contenuto      smallint not null,
+    c_gradevolezza   text,
+    v_gradevolezza   smallint not null,
+    c_originalita    text,
+    v_originalita    smallint not null,
+    c_edizione       text,
+    v_edizione       smallint not null,
+    c_finale         text,
+    v_finale         numeric(3, 2) generated always as ((
+        (((((v_stile + v_contenuto) + v_gradevolezza) + v_originalita) + v_edizione))::numeric / 5.0)) stored,
+    valutazione_time timestamp default CURRENT_TIMESTAMP
 );
 
 alter table valutazioni
@@ -69,16 +70,17 @@ alter table valutazioni
 
 create table consigli
 (
-    idlibro   integer not null
+    idlibro        integer not null
         references libri,
-    id_utente integer not null
+    id_utente      integer not null
         references utenti,
-    lib_1     integer
+    lib_1          integer
         references libri,
-    lib_2     integer
+    lib_2          integer
         references libri,
-    lib_3     integer
-        references libri
+    lib_3          integer
+        references libri,
+    consiglio_time timestamp default CURRENT_TIMESTAMP
 );
 
 alter table consigli
@@ -90,7 +92,8 @@ create table librerie
         primary key,
     id_utente       integer
         references utenti,
-    titolo_libreria text not null
+    titolo_libreria text not null,
+    libreria_time   timestamp default CURRENT_TIMESTAMP
 );
 
 alter table librerie

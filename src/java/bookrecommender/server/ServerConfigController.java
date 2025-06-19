@@ -1,10 +1,13 @@
 package bookrecommender.server;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class ServerConfigController {
     public TextField portField;
@@ -16,13 +19,17 @@ public class ServerConfigController {
     public Button confirmButton;
     public Label testLabel;
 
-    private boolean portOk = false;
-    private boolean dbOk   = false;
-
     @FXML
     private void initialize() {
-        confirmButton.setDisable(true);
-        testLabel.setText("Test porta e DB per iniziare");
+        testLabel.setText("");
+        ServerUtil.getInstance().setDBManager();
+        Platform.runLater(() -> {
+            Stage stage = (Stage) testLabel.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+        });
     }
 
     @FXML
@@ -31,34 +38,24 @@ public class ServerConfigController {
         int port;
         try {
             port = Integer.parseInt(txt);
-            if (port < 0 || port > 65535)
-            {
+            if (port < 0 || port > 65535) {
                 testLabel.setStyle("-fx-text-fill: red;");
                 testLabel.setText("Porta deve essere tra 0 e 65535!");
-                portOk = false;
-                updateConfirmState();
                 return;
             }
         } catch (NumberFormatException ex) {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("Porta non valida!");
-            portOk = false;
-            updateConfirmState();
             return;
         }
 
-        ServerUtil.getInstance().setPort(port);
-
-        if (ServerUtil.isTcpPortAvailable()) {
+        if (ServerUtil.getInstance().isTcpPortAvailable(port)) {
             testLabel.setStyle("-fx-text-fill: green;");
             testLabel.setText("Porta " + port + " libera");
-            portOk = true;
         } else {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("Porta " + port + " già in uso");
-            portOk = false;
         }
-        updateConfirmState();
     }
 
     @FXML
@@ -70,36 +67,68 @@ public class ServerConfigController {
         if (url.isEmpty() || user.isEmpty()) {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("URL e utente DB obbligatori");
-            dbOk = false;
-            updateConfirmState();
             return;
         }
-        ServerUtil.getInstance().setDBManager();
-        if (ServerUtil.getInstance().tryDBConnection(url, user, pass)) {
+        if (ServerUtil.getInstance().tryConnectToDb(url, user, pass)) {
             testLabel.setStyle("-fx-text-fill: green;");
             testLabel.setText("Connessione al DB riuscita");
-            dbOk = true;
         } else {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("Connessione al DB fallita");
-            dbOk = false;
         }
-        updateConfirmState();
     }
 
     @FXML
     private void confirm() {
-        if (!portOk || !dbOk) {
+        String url  = dbUrlField.getText().trim();
+        String user = dbUserField.getText().trim();
+        String pass = dbPasswordField.getText();
+        String portatxt = portField.getText().trim();
+        int port;
+        try{
+            port = Integer.parseInt(portatxt);
+        }catch(NumberFormatException ex){
+            testLabel.setStyle("-fx-text-fill: red;");
+            testLabel.setText("Porta non valida!");
+            return;
+        }
+        if(port < 0 || port > 65535) {
+            testLabel.setStyle("-fx-text-fill: red;");
+            testLabel.setText("Porta deve essere tra 0 e 65535!");
+            return;
+        }
+        if (url.isEmpty() || user.isEmpty()) {
+            testLabel.setStyle("-fx-text-fill: red;");
+            testLabel.setText("URL e utente DB obbligatori");
+            return;
+        }
+        if (!ServerUtil.getInstance().tryConnectToDb(url, user, pass) || !ServerUtil.getInstance().isTcpPortAvailable(port)) {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("Testa prima porta e DB");
             return;
         }
-        ServerUtil.getInstance().setServer();
-        ServerUtil.getInstance().loadFXML("/bookrecommender/server/fxml/ServerControl.fxml","SERVER");
-    }
-
-    private void updateConfirmState() {
-        confirmButton.setDisable(!(portOk && dbOk));
+        if(ServerUtil.getInstance().connectToDb(url, user, pass)) {
+            if(ServerUtil.getInstance().setServer(port)) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Successo");
+                alert.setContentText("Database e server configurati correttamente");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/server/icons/alert_confirmation_icon.png"))));
+                imageView.setFitHeight(48);
+                imageView.setFitWidth(48);
+                alert.setGraphic(imageView);
+                stage.getIcons().setAll(imageView.getImage());
+                Stage mainStage = (Stage) confirmButton.getScene().getWindow();
+                mainStage.close();
+                alert.showAndWait();
+            }else {
+                testLabel.setStyle("-fx-text-fill: red;");
+                testLabel.setText("Errore nella configurazione del server");
+            }
+        } else {
+            testLabel.setStyle("-fx-text-fill: red;");
+            testLabel.setText("Errore nella configurazione del database");
+        }
     }
 
     public void resetLabel() {
