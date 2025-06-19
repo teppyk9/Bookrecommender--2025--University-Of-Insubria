@@ -10,42 +10,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
-    <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <TextField fx:id="campoRicerca" onKeyPressed="#keyEnterPressed_1" prefHeight="32.0" prefWidth="405.0" promptText="Cerca un libro..." />
-            <TextField fx:id="campoRicercaAnno" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" />
-        </HBox>
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" onAction="#handleClickCerca" text="Cerca">
+<AnchorPane prefHeight="510.0" prefWidth="671.0" styleClass="background" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
+    <VBox alignment="CENTER" layoutX="82.28571428571429" layoutY="44.0" opacity="0.88" prefHeight="437.0" prefWidth="512.0" spacing="10.0" styleClass="box" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="82.0" AnchorPane.rightAnchor="78.0" AnchorPane.topAnchor="44.0">
+        <HBox maxWidth="-Infinity" prefHeight="53.0" prefWidth="491.0" styleClass="box">
+            <TextField fx:id="campoRicerca" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#keyEnterPressed_1" prefHeight="33.0" prefWidth="472.0" promptText="Cerca un libro..." />
+            <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" onAction="#handleClickCerca" prefHeight="33.0" prefWidth="43.0" styleClass="cerca" text="Cerca">
                 <opaqueInsets>
                     <Insets />
                 </opaqueInsets>
           </Button>
-            <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" mnemonicParsing="false" prefHeight="23.0" prefWidth="205.0" text="Tipo di ricerca" textFill="WHITE">
-                <items>
-                    <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" text="Titolo" />
-                    <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" text="Autore" />
-                    <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" text="Autore e anno di pubblicazione" />
-                </items>
-                <HBox.margin>
-                    <Insets left="299.0" />
-                </HBox.margin>
-            </MenuButton>
         </HBox>
-        <ListView fx:id="listaLibri" onMouseClicked="#handleListaDoppioClick" />
-        <VBox prefHeight="200.0" prefWidth="100.0">
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER"
-                        mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="23.0" prefWidth="216.0"
-                        text="Indietro">
-                    <HBox.margin>
-                        <Insets right="300.0"/>
-                    </HBox.margin>
-                </Button>
-                <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                        onAction="#ExitApplication" prefHeight="23.0" prefWidth="84.0" text="Esci"/>
-            </HBox>
-        </VBox>
+        <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="491.0">
+         <children>
+               <TextField fx:id="campoRicercaAnno" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyEnterPressed_2" prefHeight="30.0" prefWidth="138.0" promptText="Inserisci l'anno" />
+               <MenuButton fx:id="MenuTipoRicerca" mnemonicParsing="false" prefHeight="30.0" prefWidth="165.0" styleClass="MenuTipo" text="Tipo di ricerca" textFill="WHITE">
+                   <items>
+                       <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" styleClass="tendina" text="Titolo" />
+                       <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" text="Autore" />
+                       <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" text="Autore e anno di pubblicazione" />
+                   </items>
+               </MenuButton>
+         </children>
+        </HBox>
+        <ListView fx:id="listaLibri" onMouseClicked="#handleListaDoppioClick" prefHeight="259.0" prefWidth="475.0" styleClass="list" />
+        <VBox prefHeight="53.0" prefWidth="600.0" />
     </VBox>
+       <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="55.0" styleClass="indietro" />
 </AnchorPane>

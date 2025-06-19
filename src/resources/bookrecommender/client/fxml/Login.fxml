@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Login.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.LoginController">
    <children>
       <VBox alignment="CENTER" layoutX="142.0" layoutY="14.0" prefHeight="491.0" prefWidth="366.0">
          <children>
@@ -48,13 +48,13 @@
                <font>
                   <Font name="System Italic" size="12.0" />
                </font></Label>
-            <Text fx:id="ErrorToLogin" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username o Passowrd Errati!" textAlignment="CENTER">
+            <Text fx:id="ErrorToLogin" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errore" text="Username o Passowrd Errati!" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
          </children>
       </VBox>
-      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" styleClass="bottone" text="Indietro" />
+      <Button fx:id="GoBackButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="49.0" styleClass="indietro" />
    </children>
 </AnchorPane>
