@@ -2,10 +2,13 @@ package bookrecommender.client;
 
 import bookrecommender.common.RegToken;
 
+import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.regex.Pattern;
 
 public class RegistrazioneController {
@@ -29,14 +32,21 @@ public class RegistrazioneController {
             AccediTextField.setUnderline(false);
         AccediTextField.setCursor(Cursor.DEFAULT);
         });
+        Platform.runLater(() -> {
+            Stage stage = (Stage) AccediButton.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+        });
     }
 
     public void GoBackMainMenu() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
 
     public void GoToLoginPage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Login.fxml", "Login");
+        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null);
     }
 
     public void TryReg() {
@@ -104,7 +114,7 @@ public class RegistrazioneController {
             RegToken result = CliUtil.getInstance().getLogRegService().Register(nome, cognome, cf, email, username, password1);
             if (result.RegistrationAvailable()) {
                 CliUtil.getInstance().createConfirmation("Registrazione riuscita", "Benvenuto " + username + "!", false).showAndWait();
-                CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+                CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
             } else{
                 if(result.isUsernameAvailable()) {
                     CliUtil.getInstance().createAlert("Errore", "Username già utilizzata").showAndWait();

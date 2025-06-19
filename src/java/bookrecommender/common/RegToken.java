@@ -6,10 +6,10 @@ import java.io.Serializable;
 public class RegToken implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    boolean UsernameAvailable;
-    boolean CFAvailable;
-    boolean EmailAvailable;
-    boolean Check;
+    private final boolean UsernameAvailable;
+    private final boolean CFAvailable;
+    private final boolean EmailAvailable;
+    private final boolean Check;
 
     public RegToken(boolean User, boolean CF, boolean Email, boolean All) {
         UsernameAvailable = User;

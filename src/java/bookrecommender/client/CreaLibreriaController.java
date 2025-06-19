@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -44,7 +45,7 @@ public class CreaLibreriaController {
         campoRicercaAnno.setVisible(false);
         campoRicercaAnno.setDisable(true);
 
-        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/arrow_down_icon.png"))));
+        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png"))));
         arrowImage.setFitWidth(12);
         arrowImage.setFitHeight(12);
         MenuTipoRicerca.setGraphic(arrowImage);
@@ -132,7 +133,7 @@ public class CreaLibreriaController {
     }
 
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().showLibroAdvancedDetails(libro);
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, libro);
     }
 
     public void cercaTitolo() {

@@ -1,4 +1,4 @@
-<img src="src/resources/bookrecommender/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 300px;" alt="Icona Insubria">
+<img src="src/resources/bookrecommender/client/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 300px;" alt="Icona Insubria">
 
 # BookRecommender
 

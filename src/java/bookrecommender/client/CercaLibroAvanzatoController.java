@@ -12,7 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,7 +42,7 @@ public class CercaLibroAvanzatoController {
     public void initialize() {
         campoRicercaAnno.setVisible(false);
         campoRicercaAnno.setDisable(true);
-        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/arrow_down_icon.png"))));
+        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png"))));
         arrowImage.setFitWidth(12);
         arrowImage.setFitHeight(12);
         MenuTipoRicerca.setGraphic(arrowImage);
@@ -51,6 +53,14 @@ public class CercaLibroAvanzatoController {
                 arrow.setVisible(false);
                 arrow.setManaged(false);
             }
+            Stage stage = (Stage) BottoneApriLibreria.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                try {
+                    CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
+                }catch (RemoteException ignored) {}
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
     @FXML
@@ -140,7 +150,7 @@ public class CercaLibroAvanzatoController {
     }
 
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().showLibroAdvancedDetails(libro);
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, libro);
     }
 
     public void cercaTitolo() {
@@ -210,7 +220,7 @@ public class CercaLibroAvanzatoController {
     }
 
     public void GoToMainMenu() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/AreaRiservata.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
     }
 
     public void ExitApplication() {
@@ -223,6 +233,6 @@ public class CercaLibroAvanzatoController {
     }
 
     public void CreaLibreria() {
-        CliUtil.getInstance().createFXML("/bookrecommender/client/CreaLibreria.fxml", "Crea Libreria");
+        CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null);
     }
 }

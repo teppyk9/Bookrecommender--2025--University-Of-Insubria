@@ -1,21 +1,35 @@
 package bookrecommender.client;
 
+import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
 
 public class HomeController {
     public Button LoginButton;
     public Button SignUpButton;
     public Button CercaLibroBaseButton;
 
+    public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) LoginButton.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+        });
+    }
+
     public void OpenLoginPage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Login.fxml", "Login");
+        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null);
     }
 
     public void OpenSignUpPage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Registrazione.fxml", "Registrazione");
+        CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null);
     }
 
     public void OpenCercaLibroBasePage() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/CercaLibro.fxml", "Cerca Libro");
+        CliUtil.getInstance().buildStage(FXMLtype.CERCA, null);
     }
 }

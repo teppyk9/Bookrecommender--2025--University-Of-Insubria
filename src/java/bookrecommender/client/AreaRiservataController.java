@@ -1,6 +1,9 @@
 package bookrecommender.client;
 
+import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
 import java.rmi.RemoteException;
 
 public class AreaRiservataController {
@@ -9,10 +12,20 @@ public class AreaRiservataController {
     public Button BottoneLogOut;
 
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) BottoneLogOut.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                try {
+                    CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
+                }catch (RemoteException ignored) {}
+                Platform.exit();
+                System.exit(0);
+            });
+        });
     }
 
     public void OpenCercaLibroAvanzato() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/CercaLibroAvanzato.fxml", "Cerca Libro Avanzato");
+        CliUtil.getInstance().buildStage(FXMLtype.CERCA_AVANZATO, null);
     }
 
     public void OpenVisualizzaLibrerie() {
@@ -31,6 +44,6 @@ public class AreaRiservataController {
             CliUtil.getInstance().createAlert("Errore di Logout", e.getMessage());
         }
         CliUtil.getInstance().setCurrentToken(null);
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
 }

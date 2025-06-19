@@ -1,11 +1,16 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Token;
+import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
+
 public class LoginController {
 
     public javafx.scene.control.PasswordField PasswordField;
@@ -26,6 +31,13 @@ public class LoginController {
         NonHaiUnAccountFiled.setOnMouseExited(event -> {
             NonHaiUnAccountFiled.setUnderline(false);
             NonHaiUnAccountFiled.setCursor(Cursor.DEFAULT);
+        });
+        Platform.runLater(() -> {
+            Stage stage = (Stage) AccediButton.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
 
@@ -51,7 +63,7 @@ public class LoginController {
                 CliUtil.getInstance().setCurrentToken(token);
                 token = null;
                 CliUtil.getInstance().createConfirmation("Login riuscito", "Benvenuto " + username + "!",false).showAndWait();
-                CliUtil.getInstance().loadFXML("/bookrecommender/client/AreaRiservata.fxml", "Area Riservata");
+                CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
             } else {
                 ErrorToLogin.setVisible(true);
                 ErrorToLogin.setManaged(true);
@@ -64,11 +76,11 @@ public class LoginController {
 
     public void GoToRegisterPage(MouseEvent mouseEvent) {
         if(mouseEvent.getClickCount() == 1 || mouseEvent.getClickCount() == 2) {
-            CliUtil.getInstance().loadFXML("/bookrecommender/client/Registrazione.fxml", "Registrazione");
+            CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null);
         }
     }
 
     public void GoBackMainMenu() {
-        CliUtil.getInstance().loadFXML("/bookrecommender/client/Home.fxml", "Book Recommender");
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
 }

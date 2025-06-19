@@ -10,21 +10,24 @@ import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterface {
     @Serial
     private static final long serialVersionUID = 1L;
     private final DBManager dbManager;
+    private final Logger logger;
 
-    protected LibInterfaceImpl(int port, DBManager dbManager) throws RemoteException {
-        super(port);
+    protected LibInterfaceImpl(DBManager dbManager) throws RemoteException {
+        super();
         this.dbManager = dbManager;
+        this.logger = Logger.getLogger(LibInterfaceImpl.class.getName());
     }
 
     @Override
     public boolean createLib(Token token, String nome, List<Libro> libri) throws RemoteException {
         try {
-            System.out.println("Creazione libreria: " + nome + " da parte di " + token.getUserId() + "con IP: " + getClientHost());
+            logger.info("Creazione libreria: " + nome + " da parte di " + token.getUserId() + "con IP: " + getClientHost());
         }catch(ServerNotActiveException e){
             return false;
         }
@@ -34,7 +37,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean deleteLib(Token token, String nome) throws RemoteException {
         try {
-            System.out.println("Eliminazione libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Eliminazione libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
@@ -44,7 +47,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean updateLib(Token token, String nome, List<Libro> libridel, List<Libro> libriadd) throws RemoteException {
         try {
-            System.out.println("Aggiornamento libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Aggiornamento libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
@@ -54,7 +57,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public List<Libro> getLib(Token token, String nome) throws RemoteException {
     try {
-        System.out.println("Recupero libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        logger.info("Recupero libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
     } catch (ServerNotActiveException e) {
         return null;
     }
@@ -64,7 +67,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public List<String> getLibs(Token token) throws RemoteException {
     try {
-        System.out.println("Recupero librerie da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        logger.info("Recupero librerie da parte di " + token.getUserId() + " con IP: " + getClientHost());
     } catch (ServerNotActiveException e) {
         return null;
     }
@@ -74,7 +77,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean addValutazione(Token token, Valutazione valutazione) throws RemoteException {
         try{
-            System.out.println("Aggiunta valutazione da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Aggiunta valutazione da parte di " + token.getUserId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }

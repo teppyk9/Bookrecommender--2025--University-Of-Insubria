@@ -12,20 +12,55 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBManager {
-    private static final String URL = "jdbc:postgresql://localhost:5432/bookrecommender";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "1234";
 
     private static Connection conn;
 
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
 
     public DBManager() {
+        //al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
+    }
+
+    public boolean tryConnection(String url, String user, String password) {
+        if (url == null || user == null || password == null) {
+            logger.log(Level.SEVERE, "Parametri di connessione non impostati.");
+            return false;
+        }
+        try (Connection ignored = DriverManager.getConnection(url, user, password)) {
+            logger.log(Level.INFO, "Test connessione al database avvenuto con successo.");
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella connessione al database", e);
+            return false;
+        }
+    }
+
+    public boolean connect(String url, String user, String password) {
         try {
-            Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella creazione di DBManager", e);
+            if (conn == null || conn.isClosed()) {
+                conn = DriverManager.getConnection(url, user, password);
+                logger.log(Level.INFO, "Connessione al database avvenuta con successo.");
+            } else {
+                logger.log(Level.WARNING, "Tentativo di riconnessione al database già connesso.");
+            }
+            return true;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella connessione al database", e);
+            conn = null;
+            return false;
+        }
+    }
+
+    public void closeConnection() {
+        if (conn != null) {
+            try {
+                conn.close();
+                logger.log(Level.INFO, "Connessione al database chiusa con successo.");
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Errore nella chiusura della connessione al database", e);
+            }
+        } else {
+            logger.log(Level.WARNING, "Nessuna connessione al database da chiudere.");
         }
     }
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="250" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.server.ServerConfigController">
+    <VBox alignment="CENTER" layoutX="8.0" layoutY="30.0" prefHeight="178.0" prefWidth="367.0" spacing="10" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="30.0">
+        <GridPane hgap="10" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" maxWidth="112.0" minWidth="81.0" prefWidth="81.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="182.0" minWidth="151.0" prefWidth="182.0" />
+                <ColumnConstraints prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints valignment="CENTER" />
+                <RowConstraints valignment="CENTER" />
+                <RowConstraints valignment="CENTER" />
+                <RowConstraints valignment="CENTER" />
+                <RowConstraints valignment="CENTER" />
+            </rowConstraints>
+
+            <Label text="Porta RMI:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="portField" onKeyPressed="#resetLabel" promptText="1099" text="1099" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Button fx:id="testPortButton" onAction="#testPort" text="Test Porta" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+
+            <Label text="DB URL:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="dbUrlField" onKeyPressed="#resetLabel" prefHeight="25.0" prefWidth="273.0" promptText="jdbc:mysql://localhost:3306/mydb" text="jdbc:postgresql://localhost:5432/bookrecommender" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+
+            <Label text="DB User:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="dbUserField" onKeyPressed="#resetLabel" text="postgres" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+            <Label text="DB Pass:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <PasswordField fx:id="dbPasswordField" onKeyPressed="#resetLabel" text="1234" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+             <Button fx:id="testDbButton" onAction="#testDB" text="Test DB" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+        </GridPane>
+    </VBox>
+
+      <HBox alignment="CENTER_RIGHT" layoutX="69.0" layoutY="209.0" spacing="10" />
+   <Label fx:id="testLabel" layoutX="45.0" layoutY="202.0" prefHeight="17.0" prefWidth="227.0" text="TEST" />
+       <Button fx:id="confirmButton" defaultButton="true" layoutX="291.0" layoutY="197.0" onAction="#confirm" text="Conferma" />
+</AnchorPane>
