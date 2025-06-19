@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 
 public class ServerConfigController {
     public TextField portField;
@@ -96,7 +95,7 @@ public class ServerConfigController {
             return;
         }
         ServerUtil.getInstance().setServer();
-        ServerUtil.getInstance().loadFXML("/bookrecommender/server/ServerControl.fxml","SERVER");
+        ServerUtil.getInstance().loadFXML("/bookrecommender/server/fxml/ServerControl.fxml","SERVER");
     }
 
     private void updateConfirmState() {

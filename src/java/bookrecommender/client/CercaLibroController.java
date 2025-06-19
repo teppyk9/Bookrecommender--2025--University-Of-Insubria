@@ -34,7 +34,7 @@ public class CercaLibroController {
     public void initialize() {
         campoRicercaAnno.setVisible(false);
         campoRicercaAnno.setDisable(true);
-        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/arrow_down_icon.png"))));
+        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png"))));
         arrowImage.setFitWidth(12);
         arrowImage.setFitHeight(12);
         MenuTipoRicerca.setGraphic(arrowImage);

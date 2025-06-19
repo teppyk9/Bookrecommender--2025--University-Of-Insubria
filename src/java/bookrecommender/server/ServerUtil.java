@@ -112,7 +112,7 @@ public class ServerUtil {
             Stage stage = getPrimaryStage();
             stage.setScene(new Scene(root));
             stage.setTitle(title);
-            stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/server_connection.png"))));
+            stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/server_connection.png"))));
             stage.setResizable(false);
             stage.show();
             stage.getScene().getRoot().requestFocus();

@@ -20,7 +20,7 @@ public class ServerControlController {
         alert.setTitle("Conferma Uscita");
         alert.setContentText("Sei sicuro di voler fermare il server?");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/icons/alert_confirmation_icon.png"))));
+        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_confirmation_icon.png"))));
         imageView.setFitWidth(48);
         imageView.setFitHeight(48);
         alert.setGraphic(imageView);
