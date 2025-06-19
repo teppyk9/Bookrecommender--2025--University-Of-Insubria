@@ -11,7 +11,8 @@ public enum FXMLtype {
     CREALIBRERIA("/bookrecommender/client/fxml/CreaLibreria.fxml", "Crea Libreria"),
     DETTAGLIOlIBRO("/bookrecommender/client/fxml/DettaglioLibro.fxml", "Dettaglio Libro"),
     CREAVALUTAZIONE("/bookrecommender/client/fxml/Valutazione.fxml", "Crea Valutazione"),
-    VALUTAZIONE("/bookrecommender/client/fxml/VisualizzaValutazione.fxml", "Visualizza Valutazione");
+    VALUTAZIONE("/bookrecommender/client/fxml/VisualizzaValutazione.fxml", "Visualizza Valutazione"),
+    AGGIUNGICONSIGLIO("/bookrecommender/client/fxml/AggiungiConsiglio.fxml", "Aggiungi Consiglio");
 
     private final String path;
     private final String title;

@@ -117,6 +117,5 @@ public class VisualizzaValutazioneController {
         } else {
             finaleTextArea.setText(commenti.get(5));
         }
-        valutazione = null;
     }
 }

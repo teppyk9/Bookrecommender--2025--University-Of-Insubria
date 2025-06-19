@@ -3,6 +3,7 @@ package bookrecommender.server;
 import bookrecommender.common.Libro;
 import bookrecommender.common.Libro_Details;
 import bookrecommender.common.SearchInterface;
+import bookrecommender.common.Token;
 
 import java.io.Serial;
 import java.rmi.RemoteException;
@@ -54,5 +55,18 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
             logger.info("Getting details for book with ID: " + libro.getId() + " From client " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
         return dbManager.getDetails(libro);
+    }
+    @Override
+    public List<Libro> searchByName(Token token, String title) throws RemoteException {
+        return List.of();
+    }
+    @Override
+    public List<Libro> searchByAuthor(Token token, String author) throws RemoteException {
+        return List.of();
+    }
+
+    @Override
+    public List<Libro> searchByAuthorAndYear(Token token, String author, int year) throws RemoteException {
+        return List.of();
     }
 }

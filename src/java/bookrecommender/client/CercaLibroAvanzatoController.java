@@ -4,6 +4,7 @@ import bookrecommender.common.Libro;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -35,6 +36,7 @@ public class CercaLibroAvanzatoController {
     public Button BottoneCreaLibreria;
     public Text Titolo_Librerie;
     public Button BottoneAggiorna;
+    public Button consiglioButton;
 
     private String searchType = "";
 
@@ -234,5 +236,9 @@ public class CercaLibroAvanzatoController {
 
     public void CreaLibreria() {
         CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null);
+    }
+
+    public void addConsiglio() {
+        CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGICONSIGLIO, listaLibri.getSelectionModel().getSelectedItem());
     }
 }

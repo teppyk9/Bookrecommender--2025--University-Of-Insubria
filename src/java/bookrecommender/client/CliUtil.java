@@ -222,6 +222,16 @@ public class CliUtil {
                         return;
                     }
                     break;
+                    case AGGIUNGICONSIGLIO:
+                    AggiungiConsiglioController aggiungiConsiglioController = loader.getController();
+                    if(obj instanceof Libro) {
+                        stage = new Stage();
+                        aggiungiConsiglioController.setLibro((Libro) obj);
+                    } else {
+                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        return;
+                    }
+                    break;
                 default:
                     logger.log(Level.SEVERE, "Unsupported FXML type: " + fxml.name());
                     return;

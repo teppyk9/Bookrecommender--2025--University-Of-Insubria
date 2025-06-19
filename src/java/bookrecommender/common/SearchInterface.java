@@ -9,4 +9,7 @@ public interface SearchInterface extends Remote {
     List<Libro> searchByAuthor(String author) throws RemoteException;
     List<Libro> searchByAuthorAndYear(String author, int year) throws RemoteException;
     Libro_Details getDetails(Libro libro) throws RemoteException;
+    List<Libro> searchByName(Token token, String title) throws RemoteException;
+    List<Libro> searchByAuthor(Token token, String author) throws RemoteException;
+    List<Libro> searchByAuthorAndYear(Token token, String author, int year) throws RemoteException;
 }
