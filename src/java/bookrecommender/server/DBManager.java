@@ -51,6 +51,19 @@ public class DBManager {
         }
     }
 
+    public void closeConnection() {
+        if (conn != null) {
+            try {
+                conn.close();
+                logger.log(Level.INFO, "Connessione al database chiusa con successo.");
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Errore nella chiusura della connessione al database", e);
+            }
+        } else {
+            logger.log(Level.WARNING, "Nessuna connessione al database da chiudere.");
+        }
+    }
+
     public void resultStmt(List<Libro> risultati, PreparedStatement stmt) throws SQLException {
         try (ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {

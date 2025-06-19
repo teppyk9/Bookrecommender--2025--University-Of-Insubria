@@ -12,7 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,6 +53,14 @@ public class CercaLibroAvanzatoController {
                 arrow.setVisible(false);
                 arrow.setManaged(false);
             }
+            Stage stage = (Stage) BottoneApriLibreria.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                try {
+                    CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
+                }catch (RemoteException ignored) {}
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
     @FXML

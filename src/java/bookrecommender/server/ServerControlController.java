@@ -60,6 +60,7 @@ public class ServerControlController {
         Platform.runLater(() -> {
             Stage stage = ServerUtil.getInstance().getPrimaryStage();
             stage.setOnCloseRequest(event -> {
+                ServerUtil.getInstance().closeServer();
                 Platform.exit();
                 System.exit(0);
             });
@@ -76,6 +77,7 @@ public class ServerControlController {
         alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
+                ServerUtil.getInstance().closeServer();
                 Platform.exit();
                 System.exit(0);
             }

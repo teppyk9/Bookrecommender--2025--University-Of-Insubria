@@ -11,7 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,6 +47,11 @@ public class CercaLibroController {
                 arrow.setVisible(false);
                 arrow.setManaged(false);
             }
+            Stage stage = (Stage) bottoneCerca.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
 

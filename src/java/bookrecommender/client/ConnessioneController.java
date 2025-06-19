@@ -1,11 +1,10 @@
 package bookrecommender.client;
 
 import javafx.application.Platform;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
 
 public class ConnessioneController {
     public TextField hostField;
@@ -18,6 +17,13 @@ public class ConnessioneController {
         hostField.setText("localhost");
         portField.setText("1099");
         testLabel.setText("");
+        Platform.runLater(() -> {
+            Stage stage = (Stage) testButton.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+        });
     }
 
     public void conferma() {
@@ -37,6 +43,7 @@ public class ConnessioneController {
                 Stage stage = (Stage) confermaButton.getScene().getWindow();
                 stage.close();
                 if (CliUtil.getInstance().createConfirmation("Connessione riuscita", "La connessione al server è stata stabilita con successo. Continuare?", true).showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
+                    CliUtil.getInstance().setMonitorService();
                     CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
                 } else {
                     Platform.exit();
@@ -82,4 +89,5 @@ public class ConnessioneController {
         testLabel.setText("");
         testLabel.setStyle("-fx-text-fill: black;");
     }
+
 }

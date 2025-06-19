@@ -10,9 +10,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +29,7 @@ public class CliUtil {
     private LogRegInterface logRegService;
     private SearchInterface searchService;
     private LibInterface libService;
+    private MonitorInterface monitorService;
 
     private static String RMI_HOST;
     private static int RMI_PORT;
@@ -56,6 +59,24 @@ public class CliUtil {
         } else {
             logger.log(Level.WARNING, "PrimaryStage already initialized.");
         }
+    }
+
+    public void softRestart() {
+        Platform.runLater(() -> {
+            for (Window w : new ArrayList<>(Window.getWindows())) {
+                if (w instanceof Stage s) {
+                    s.close();
+                }
+            }
+            this.currentToken = null;
+            this.logRegService = null;
+            this.searchService = null;
+            this.libService = null;
+            this.monitorService = null;
+            RMI_HOST = null;
+            RMI_PORT = 0;
+            buildStage(FXMLtype.CONNESSIONE, null);
+        });
     }
 
     public Stage getPrimaryStage() {
@@ -135,6 +156,20 @@ public class CliUtil {
         return libService;
     }
 
+    public void setMonitorService() {
+        if (monitorService == null) {
+            try {
+                Registry registry = LocateRegistry.getRegistry(RMI_HOST, RMI_PORT);
+                monitorService = (MonitorInterface) registry.lookup("Monitor_Interface");
+                ClientListenerImpl listener = new ClientListenerImpl();
+                monitorService.registerListener(listener);
+                logger.log(Level.INFO, "MonitorInterface RMI service connected.");
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, "Error connecting to MonitorInterface RMI service", e);
+            }
+        }
+    }
+
     public void buildStage(FXMLtype fxml, Object obj) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml.getPath()));
@@ -210,6 +245,7 @@ public class CliUtil {
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         alert.setGraphic(imageView);
+        alert.getButtonTypes().setAll(ButtonType.OK);
         stage.getIcons().setAll(imageView.getImage());
         return alert;
     }
@@ -226,7 +262,8 @@ public class CliUtil {
         stage.getIcons().setAll(imageView.getImage());
         if (binary) {
             alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-        }
+        }else
+            alert.getButtonTypes().setAll(ButtonType.OK);
         return alert;
     }
 

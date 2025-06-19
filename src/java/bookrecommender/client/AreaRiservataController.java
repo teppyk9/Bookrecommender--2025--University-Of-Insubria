@@ -1,6 +1,9 @@
 package bookrecommender.client;
 
+import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
 import java.rmi.RemoteException;
 
 public class AreaRiservataController {
@@ -9,6 +12,16 @@ public class AreaRiservataController {
     public Button BottoneLogOut;
 
     public void initialize() {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) BottoneLogOut.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                try {
+                    CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
+                }catch (RemoteException ignored) {}
+                Platform.exit();
+                System.exit(0);
+            });
+        });
     }
 
     public void OpenCercaLibroAvanzato() {

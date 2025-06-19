@@ -19,8 +19,7 @@ public class ServerConfigController {
     public Button confirmButton;
     public Label testLabel;
 
-    @FXML
-    private void initialize() {
+    public void initialize() {
         testLabel.setText("");
         ServerUtil.getInstance().setDBManager();
         Platform.runLater(() -> {

@@ -20,6 +20,8 @@ public class ServerUtil {
 
     private DBManager dbManager;
 
+    private MonitorInterfaceImpl monitorServer;
+
     private static final Logger logger = Logger.getLogger(ServerUtil.class.getName());
 
     private ServerUtil() {
@@ -83,14 +85,26 @@ public class ServerUtil {
             SearchInterfaceImpl searchServer = new SearchInterfaceImpl(dbManager);
             LogRegInterfaceImpl logRegServer = new LogRegInterfaceImpl(dbManager);
             LibInterfaceImpl libServer = new LibInterfaceImpl(dbManager);
+            monitorServer = new MonitorInterfaceImpl();
             registry.rebind("Search_Interface", searchServer);
             registry.rebind("LogReg_Interface", logRegServer);
             registry.rebind("Lib_Interface", libServer);
+            registry.rebind("Monitor_Interface", monitorServer);
             logger.info("Server ready");
             return true;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Errore nell'inizializzazione del server>", e);
             return false;
+        }
+    }
+
+    public void closeServer() {
+        try {
+            dbManager.closeConnection();
+            monitorServer.notifyShutdown();
+            logger.info("Server closed successfully.");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Errore durante la chiusura del server: ", e);
         }
     }
 

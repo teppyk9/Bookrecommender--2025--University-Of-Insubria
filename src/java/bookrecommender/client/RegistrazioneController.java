@@ -2,10 +2,13 @@ package bookrecommender.client;
 
 import bookrecommender.common.RegToken;
 
+import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.regex.Pattern;
 
 public class RegistrazioneController {
@@ -28,6 +31,13 @@ public class RegistrazioneController {
         AccediTextField.setOnMouseExited(event -> {
             AccediTextField.setUnderline(false);
         AccediTextField.setCursor(Cursor.DEFAULT);
+        });
+        Platform.runLater(() -> {
+            Stage stage = (Stage) AccediButton.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
 

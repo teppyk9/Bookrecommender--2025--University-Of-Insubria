@@ -1,11 +1,16 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Token;
+import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
+
 public class LoginController {
 
     public javafx.scene.control.PasswordField PasswordField;
@@ -26,6 +31,13 @@ public class LoginController {
         NonHaiUnAccountFiled.setOnMouseExited(event -> {
             NonHaiUnAccountFiled.setUnderline(false);
             NonHaiUnAccountFiled.setCursor(Cursor.DEFAULT);
+        });
+        Platform.runLater(() -> {
+            Stage stage = (Stage) AccediButton.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
 
