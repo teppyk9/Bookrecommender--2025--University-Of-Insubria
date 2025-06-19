@@ -512,4 +512,52 @@ public class DBManager {
             return false;
         }
     }
+
+    public boolean addConsiglio(Token token, List<Libro> libri) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        if (libri.size() < 2) {
+            logger.log(Level.WARNING, "Numero di libri per il consiglio inferiore a 2");
+            return false;
+        }
+        if (libri.size() > 4) {
+            logger.log(Level.WARNING, "Numero di libri per il consiglio superiore a 4, verranno considerati solo i primi 4");
+            libri = libri.subList(0, 4);
+        }
+        if (libri.size() < 4) {
+            for (int i = libri.size(); i < 4; i++) {
+                libri.add(null);
+            }
+        }
+        String insertQuery = """
+                INSERT INTO consigli (idlibro, id_utente, lib_1, lib_2, lib_3)
+                VALUES (?, ?, ?, ?, ?)""";
+        try (PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
+            stmt.setInt(1, libri.get(0).getId());
+            stmt.setInt(2, token.getUserId());
+            stmt.setInt(3, libri.get(1).getId());
+            if(libri.get(2) == null)
+                stmt.setNull(4, Types.INTEGER);
+            else
+                stmt.setInt(4, libri.get(2).getId());
+            if(libri.get(3) == null)
+                stmt.setNull(5, Types.INTEGER);
+            else
+                stmt.setInt(5, libri.get(3).getId());
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                logger.log(Level.INFO, "Consiglio aggiunto con successo per il libro con ID: " + libri.get(0).getId() + " da parte dell'utente con ID: " + token.getUserId());
+                return true;
+            } else {
+                logger.log(Level.WARNING, "Nessuna riga inserita nella tabella dei consigli per il libro con ID: " + libri.get(0).getId() + " da parte dell'utente con ID: " + token.getUserId());
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nell'aggiunta del consiglio per il libro con ID: " + libri.get(0).getId(), e);
+            return false;
+        }
+    }
 }

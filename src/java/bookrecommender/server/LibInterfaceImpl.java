@@ -83,4 +83,14 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
         return dbManager.addValutazione(token, valutazione);
     }
+
+    @Override
+    public boolean addConsiglio(Token token, List<Libro> libri) throws RemoteException {
+        try{
+            logger.info("Aggiunta consigli da parte di " + token.getUserId() + " con IP: " + getClientHost() + " a libro: " + libri.get(0).getId());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.addConsiglio(token, libri);
+    }
 }
