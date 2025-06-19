@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/AreaRiservata.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.AreaRiservataController">
+   <children>
+      <VBox layoutY="1.0" prefHeight="510.0" prefWidth="650.0">
+         <children>
+            <AnchorPane prefHeight="97.0" prefWidth="650.0">
+               <children>
+                  <Text id="titolo" layoutX="97.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Benvenuto nell'area riservata!" textAlignment="CENTER" wrappingWidth="455.13671875">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <HBox prefHeight="207.0" prefWidth="650.0">
+               <children>
+                  <AnchorPane prefHeight="207.0" prefWidth="216.0">
+                     <children>
+                        <Button fx:id="BottoneCercaLibroAvanzato" layoutX="49.0" layoutY="88.0" mnemonicParsing="false" onAction="#OpenCercaLibroAvanzato" text="Cerca Un Libro" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="207.0" prefWidth="216.0">
+                     <children>
+                        <Button fx:id="BottoneVisualizzaLibrerie" layoutX="41.0" layoutY="88.0" mnemonicParsing="false" onAction="#OpenVisualizzaLibrerie" text="Visualizza Librerie" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="207.0" prefWidth="216.0">
+                     <children>
+                        <Button fx:id="BottoneLogOut" layoutX="71.0" layoutY="88.0" mnemonicParsing="false" onAction="#LogOut" text="LogOut" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

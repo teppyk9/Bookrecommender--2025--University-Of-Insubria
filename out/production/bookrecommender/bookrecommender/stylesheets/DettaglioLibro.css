@@ -1,0 +1,87 @@
+/* File: DettaglioLibro.css */
+
+/* Stile generale dell'AnchorPane */
+.anchor-pane {
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 10;
+}
+
+/* Label principali */
+.label {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Titolo */
+#titoloLabel {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2a2a2a;
+}
+
+/* Etichette secondarie */
+#autoreLabel, #categoriaLabel, #editoreLabel,
+#prezzoLabel, #annoLabel, #meseLabel {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+}
+
+/* Descrizione */
+#descrizioneArea {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #ffffff;
+}
+
+/* Liste (valutazioni e consigli) */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+    -fx-control-inner-background: #ffffff;
+}
+
+/* Etichette valutazione sezione destra */
+.label[text="Media Valutazione"],
+.label[text="Stile"],
+.label[text="Contenuto"],
+.label[text="Gradevolezza"],
+.label[text="Originalità"] {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #444444;
+}
+
+/* Valori dei voti */
+#votoTotal, #votoStile, #votoContenuto, #votoGradevolezza, #votoOriginalita , #votoEdizione{
+    -fx-font-size: 13px;
+    -fx-alignment: center;
+    -fx-text-fill: #333333;
+    -fx-border-color: #bbbbbb;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-background-color: #eeeeee;
+}
+
+/* Stelle (opzionale: si può dare un colore di sfondo trasparente o giallo) */
+.image-view {
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 2, 0.0, 0, 1);
+}
+
+/* Hover su liste (opzionale) */
+.list-view .list-cell:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Celle selezionate */
+.list-view .list-cell:selected {
+    -fx-background-color: #c0d8ff;
+    -fx-text-fill: black;
+}

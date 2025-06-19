@@ -1,0 +1,31 @@
+.titolo{
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #264D73;
+}
+.background{
+    -fx-background-color: #4a0022;
+
+}
+
+.descrizione{
+    -fx-font-size: 17px;
+
+    -fx-text-fill: #c7e7f5;
+    -fx-font-family: "Century Gothic";
+    -fx-alignment: center;
+}
+
+.bottone{
+    -fx-background-color: rgba(38, 77, 115, 0.91);
+    -fx-text-fill: #c7e7f5;
+    -fx-background-radius: 6px;
+    -fx-padding: 8 16;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+}
+
+.bottone:hover{
+    -fx-background-color: #3773ca;
+}
