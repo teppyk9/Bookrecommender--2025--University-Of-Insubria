@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Registrazione.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.RegistrazioneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Registrazione.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.RegistrazioneController">
    <children>
       <VBox alignment="CENTER" layoutX="152.0" layoutY="24.0" prefHeight="491.0" prefWidth="366.0">
          <children>
@@ -46,7 +46,7 @@
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Codice Fiscale" />
+                        <Label contentDisplay="CENTER" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Codice Fiscale" wrapText="true" />
                      </children>
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
@@ -74,7 +74,7 @@
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" />
+                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" textAlignment="CENTER" />
                      </children>
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
@@ -102,7 +102,7 @@
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
                      <children>
-                        <Label contentDisplay="CENTER" layoutX="1.0" layoutY="-6.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Ripeti Password" />
+                        <Label contentDisplay="CENTER" layoutX="-2.0" layoutY="-6.0" prefHeight="49.0" prefWidth="108.0" styleClass="etichetta" text="Ripeti Password" wrapText="true" />
                      </children>
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
@@ -113,13 +113,13 @@
                </items>
             </SplitPane>
             <Button fx:id="AccediButton" mnemonicParsing="false" onAction="#TryReg" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Registrati" />
-            <Label fx:id="AccediTextField" alignment="CENTER" onMouseClicked="#GoToLoginPage" prefHeight="66.0" prefWidth="316.0" styleClass="reg" text="Hai già un account? Accedi" textAlignment="CENTER">
+            <Label fx:id="AccediTextField" alignment="CENTER" onMouseClicked="#GoToLoginPage" prefHeight="41.0" prefWidth="316.0" styleClass="reg" text="Hai già un account? Accedi" textAlignment="CENTER">
                <font>
                   <Font name="System Italic" size="12.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" styleClass="bottone" text="Indietro" />
+      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="45.0" styleClass="indietro" />
    </children>
 </AnchorPane>

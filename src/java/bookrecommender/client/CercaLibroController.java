@@ -13,14 +13,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 
 public class CercaLibroController {
 
     @FXML public Button GoBackButton_MainMenu;
-    @FXML public Button ExitButton;
     @FXML public MenuItem MenuCercaTitolo;
     @FXML public MenuButton MenuTipoRicerca;
     @FXML public MenuItem MenuCercaAutore;
@@ -55,8 +53,7 @@ public class CercaLibroController {
         });
     }
 
-    @FXML
-    private void handleClickCerca() {
+    public void handleClickCerca() {
         String testo = campoRicerca.getText();
         String anno = campoRicercaAnno.getText();
         if (testo != null && testo.length() >= 2) {
@@ -192,7 +189,4 @@ public class CercaLibroController {
         CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
 
-    public void ExitApplication() {
-        CliUtil.getInstance().exitApplication();
-    }
 }

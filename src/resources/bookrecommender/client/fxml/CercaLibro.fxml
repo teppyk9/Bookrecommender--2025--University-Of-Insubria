@@ -1,51 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/17.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
-    <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <TextField fx:id="campoRicerca" onKeyPressed="#keyEnterPressed_1" prefHeight="32.0" prefWidth="405.0" promptText="Cerca un libro..." />
-            <TextField fx:id="campoRicercaAnno" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" />
-        </HBox>
-        <HBox prefHeight="100.0" prefWidth="200.0">
-            <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" onAction="#handleClickCerca" text="Cerca">
-                <opaqueInsets>
-                    <Insets />
-                </opaqueInsets>
-          </Button>
-            <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" mnemonicParsing="false" prefHeight="23.0" prefWidth="205.0" text="Tipo di ricerca" textFill="WHITE">
-                <items>
-                    <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" text="Titolo" />
-                    <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" text="Autore" />
-                    <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" text="Autore e anno di pubblicazione" />
-                </items>
-                <HBox.margin>
-                    <Insets left="299.0" />
-                </HBox.margin>
-            </MenuButton>
-        </HBox>
-        <ListView fx:id="listaLibri" onMouseClicked="#handleListaDoppioClick" />
-        <VBox prefHeight="200.0" prefWidth="100.0">
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER"
-                        mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="23.0" prefWidth="216.0"
-                        text="Indietro">
-                    <HBox.margin>
-                        <Insets right="300.0"/>
-                    </HBox.margin>
-                </Button>
-                <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                        onAction="#ExitApplication" prefHeight="23.0" prefWidth="84.0" text="Esci"/>
-            </HBox>
+<AnchorPane opacity="0.98" prefHeight="510.0" prefWidth="671.0" styleClass="background" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
+    <children>
+        <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="55.0" styleClass="indietro" />
+        <VBox layoutX="175.0" layoutY="14.0" prefHeight="47.0" prefWidth="321.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="98.0" prefWidth="321.0" styleClass="titolo" text="Cerca Libro" />
+            </children>
         </VBox>
-    </VBox>
+        <HBox alignment="BOTTOM_LEFT" layoutX="78.0" layoutY="99.0" opacity="0.87" prefHeight="31.0" prefWidth="514.0" styleClass="ricerca">
+            <children>
+                <TextField fx:id="campoRicerca" onKeyPressed="#keyEnterPressed_1" prefHeight="31.0" prefWidth="479.0" promptText="Cerca un libro..." styleClass="barraRicerca">
+                    <font>
+                        <Font name="Century Gothic Bold" size="1.0" />
+                    </font>
+                </TextField>
+                <Button fx:id="bottoneCerca" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleClickCerca" prefHeight="32.0" prefWidth="29.0" styleClass="cerca" text="Cerca" />
+            </children>
+        </HBox>
+        <VBox layoutX="283.0" layoutY="157.0" prefHeight="338.0" prefWidth="310.0">
+            <children>
+                <ListView fx:id="listaLibri" onMouseClicked="#handleListaDoppioClick" opacity="0.87" prefHeight="338.0" prefWidth="310.0" styleClass="listaLibri" />
+            </children>
+        </VBox>
+        <MenuButton fx:id="MenuTipoRicerca" layoutX="78.0" layoutY="157.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="186.0" styleClass="sceltaRicerca" text="Tipologia ricerca">
+            <items>
+                <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" styleClass="sceltaRicerca" text="Titolo" />
+                <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" styleClass="sceltaRicerca" text="Autore" />
+                <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" styleClass="sceltaRicerca" text="Autore e Anno di Pubblicazione" />
+            </items>
+        </MenuButton>
+        <TextField fx:id="campoRicercaAnno" layoutX="78.0" layoutY="227.0" onKeyPressed="#keyEnterPressed_2" opacity="0.87" prefHeight="27.0" prefWidth="186.0" promptText="Anno.." styleClass="barraRicerca" />
+    </children>
 </AnchorPane>
