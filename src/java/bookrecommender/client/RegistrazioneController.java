@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.regex.Pattern;
 
 public class RegistrazioneController {
@@ -126,7 +125,6 @@ public class RegistrazioneController {
                     CliUtil.getInstance().createAlert("Errore", "Codice Fiscale già utilizzato").showAndWait();
                 }
             }
-            result = null;
         } catch (Exception e) {
             CliUtil.getInstance().createAlert("Errore", "Impossibile completare la registrazione. Riprova più tardi.\n " + e).showAndWait();
         }

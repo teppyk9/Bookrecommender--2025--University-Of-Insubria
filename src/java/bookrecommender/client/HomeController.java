@@ -4,8 +4,6 @@ import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
-
 public class HomeController {
     public Button LoginButton;
     public Button SignUpButton;
