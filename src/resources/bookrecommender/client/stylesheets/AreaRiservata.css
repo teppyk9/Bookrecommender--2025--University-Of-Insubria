@@ -1,26 +1,38 @@
 .background {
-    -fx-background-color: #4a0022;
-}
-.titolo{
-    -fx-font-size: 30px;
-    -fx-font-weight: bold;
-    -fx-font-family: "Century Gothic";
-    -fx-text-fill: #264D73;
+    -fx-background-image: url("../icons/img_biblioteca.jpg");
 }
 
-.button{
-    -fx-background-color: rgba(38, 77, 115, 0.91);
-    -fx-text-fill: #c7e7f5;
+.box {
+    -fx-background-color: #4a0022;
+
+}
+.titolo {
+    -fx-text-fill: #264D73;
+    -fx-font-size: 35px;
     -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-alignment: center;
+
+}
+
+.bottone{
+    -fx-background-color:  #264D73;
+    -fx-text-fill: #c7e7f5;
     -fx-background-radius: 6px;
     -fx-padding: 8 16;
+    -fx-font-size: 15px;
     -fx-font-family: "Century Gothic";
 }
-.button:hover {
-    -fx-background-color: #1565c0;
+.bottone:hover {
+    -fx-background-color: #c7e7f5;
+    -fx-text-fill: #264D73;
+    -fx-animated: zoom;
 }
 
-.reg{
+
+
+.descrizione{
     -fx-text-fill: #c7e7f5;
     -fx-font-family: "Century Gothic", "Harlow Solid Italic";
+    -fx-font-size: 14px;
 }
