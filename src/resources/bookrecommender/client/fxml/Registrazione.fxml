@@ -3,123 +3,33 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Registrazione.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.RegistrazioneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Registrazione.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.RegistrazioneController">
    <children>
-      <VBox alignment="CENTER" layoutX="152.0" layoutY="24.0" prefHeight="491.0" prefWidth="366.0">
-         <children>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="366.0" styleClass="titolo" text="REGISTRAZIONE" textAlignment="CENTER" />
-            <SplitPane dividerPositions="0.29797979797979796" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Nome" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <TextField fx:id="NomeField" layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="195.0" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Cognome" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <TextField fx:id="CognomeField" layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="271.0" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Codice Fiscale" wrapText="true" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <TextField fx:id="CFFiled" layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="144.0" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Email" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <TextField fx:id="EmailField" layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.29797979797979796" layoutX="10.0" layoutY="120.0" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" textAlignment="CENTER" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <TextField fx:id="UsernameFiled" layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.298" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" layoutX="1.0" layoutY="-6.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <PasswordField fx:id="PasswordField1" layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.298" layoutX="10.0" layoutY="345.0" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" layoutX="-2.0" layoutY="-6.0" prefHeight="49.0" prefWidth="108.0" styleClass="etichetta" text="Ripeti Password" wrapText="true" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <PasswordField fx:id="PasswordField2" layoutY="2.0" onKeyPressed="#RegAction" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <Button fx:id="AccediButton" mnemonicParsing="false" onAction="#TryReg" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Registrati" />
-            <Label fx:id="AccediTextField" alignment="CENTER" onMouseClicked="#GoToLoginPage" prefHeight="41.0" prefWidth="316.0" styleClass="reg" text="Hai già un account? Accedi" textAlignment="CENTER">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
       <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="45.0" styleClass="indietro" />
+      <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="28.0" prefHeight="26.0" prefWidth="366.0" styleClass="titolo" text="REGISTRAZIONE" textAlignment="CENTER" />
+      <TextField fx:id="NomeField" layoutX="182.0" layoutY="115.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+      <Label contentDisplay="CENTER" layoutX="76.0" layoutY="117.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Nome" />
+      <TextField fx:id="CognomeField" layoutX="182.0" layoutY="191.0" prefHeight="38.0" prefWidth="185.0" styleClass="field" />
+      <Label contentDisplay="CENTER" layoutX="76.0" layoutY="193.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Cognome" />
+      <TextField fx:id="CFFiled" layoutX="182.0" layoutY="262.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+      <Label contentDisplay="CENTER" layoutX="76.0" layoutY="262.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Codice Fiscale" wrapText="true" />
+      <Label contentDisplay="CENTER" layoutX="426.0" layoutY="117.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" textAlignment="CENTER" />
+      <TextField fx:id="UsernameFiled" layoutX="533.0" layoutY="115.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+      <PasswordField fx:id="PasswordField1" layoutX="533.0" layoutY="190.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+      <Label contentDisplay="CENTER" layoutX="426.0" layoutY="186.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
+      <PasswordField fx:id="PasswordField2" layoutX="533.0" layoutY="266.0" onKeyPressed="#RegAction" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+      <Label contentDisplay="CENTER" layoutX="425.0" layoutY="256.0" prefHeight="49.0" prefWidth="108.0" styleClass="etichetta" text="Ripeti Password" wrapText="true" />
+      <Label contentDisplay="CENTER" layoutX="77.0" layoutY="331.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Email" />
+      <TextField fx:id="EmailField" layoutX="182.0" layoutY="329.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+      <Button fx:id="AccediButton" layoutX="571.0" layoutY="331.0" mnemonicParsing="false" onAction="#TryReg" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Registrati" />
+      <Label fx:id="AccediTextField" alignment="CENTER" layoutX="514.0" layoutY="371.0" onMouseClicked="#GoToLoginPage" prefHeight="41.0" prefWidth="230.0" styleClass="reg" text="Hai già un account? Accedi" textAlignment="CENTER">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
