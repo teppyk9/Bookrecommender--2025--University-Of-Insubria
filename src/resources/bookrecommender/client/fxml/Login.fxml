@@ -10,21 +10,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="650.0" styleClass="background" stylesheets="@../stylesheets/Login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.LoginController">
    <children>
-      <VBox alignment="CENTER" layoutX="142.0" layoutY="14.0" prefHeight="491.0" prefWidth="366.0">
+      <VBox alignment="CENTER" layoutX="217.0" prefHeight="450.0" prefWidth="366.0">
          <children>
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="366.0" styleClass="titolo" text="LOGIN" textAlignment="CENTER" />
-            <SplitPane dividerPositions="0.29797979797979796" prefHeight="50.0" prefWidth="407.0" styleClass="split">
+            <SplitPane dividerPositions="0.29797979797979796" prefHeight="50.0" prefWidth="326.0" styleClass="split">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
                      <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" />
+                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="108.0" styleClass="etichetta" text="Username" />
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
+                <AnchorPane prefHeight="50.0" prefWidth="160.0">
                      <children>
-                        <TextField fx:id="UsernameField" layoutY="2.0" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+                        <TextField fx:id="UsernameField" layoutY="2.0" prefHeight="38.0" prefWidth="177.0" styleClass="field" />
                      </children>
                   </AnchorPane>
               </items>
@@ -38,7 +38,7 @@
                   </AnchorPane>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
                      <children>
-                        <PasswordField fx:id="PasswordField" layoutY="2.0" onKeyPressed="#EnterController" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+                        <PasswordField fx:id="PasswordField" layoutY="2.0" onKeyPressed="#EnterController" prefHeight="38.0" prefWidth="177.0" styleClass="field" />
                      </children>
                   </AnchorPane>
                </items>

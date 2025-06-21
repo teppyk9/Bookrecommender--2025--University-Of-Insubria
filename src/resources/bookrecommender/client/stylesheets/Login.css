@@ -36,15 +36,16 @@
     -fx-padding: 8 16;
 }
 .bottone{
-    -fx-background-color: rgba(38, 77, 115, 0.91);
+    -fx-background-color: #264D73;
     -fx-text-fill: #c7e7f5;
     -fx-background-radius: 6px;
     -fx-padding: 8 16;
     -fx-font-size: 15px;
     -fx-font-family: "Century Gothic";
 }
-.button:hover {
-    -fx-background-color: transparent;
+.bottone:hover {
+    -fx-background-color: #c7e7f5;
+    -fx-text-fill: #264D73;
     -fx-animated: zoom;
 }
 
@@ -70,5 +71,5 @@
     -fx-font-family: "Century Gothic";
     -fx-font-weight: bold;
     -fx-font-size: 18px;
-    -fx-effect: underline;
+    -fx-animated: underline;
 }
