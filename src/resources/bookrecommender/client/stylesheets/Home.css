@@ -9,6 +9,10 @@
 
 }
 
+.box{
+    -fx-background-image: url("../icons/img_biblioteca.jpg");
+}
+
 .descrizione{
     -fx-font-size: 17px;
 
