@@ -85,6 +85,88 @@
     -fx-font-family: "Century Gothic";
 }
 
+.listaLibri .list-cell {
+    -fx-background-color: #264D73;
+    -fx-text-fill: #c7e7f5;
+    -fx-font-size: 14px;
+    -fx-font-family: "Century Gothic";
+}
+
+.listaLibri .list-cell:selected {
+    -fx-background-color: #4a0022;
+    -fx-text-fill: #c7e7f5;
+    -fx-font-size: 14px;
+    -fx-font-family: "Century Gothic";
+}
+
+.listaLibri .list-cell:hover {
+    -fx-animated: zoom;
+    -fx-font-weight: bold;
+}
+
+/* LIST VIEW: scroll-bar */
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-pref-width: 10px;   /* larghezza barra verticale */
+    -fx-pref-height: 10px;  /* altezza barra orizzontale */
+}
+
+.scroll-bar .track {
+    -fx-background-color: #c7e7f5;
+    -fx-background-radius: 4px;
+    -fx-border-width: 0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-size: cover;
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+    -fx-pref-width: 24px;
+    -fx-pref-height: 24px;
+    -fx-border-width: 0;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #264D73;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-shape: "null"; /* rimuove la forma predefinita */
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+.scroll-bar .increment-button:hover,
+.scroll-bar .decrement-button:hover {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-shape: "null"; /* rimuove la forma predefinita */
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+.scroll-bar .increment-button:selected,
+.scroll-bar .decrement-button:selected {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-shape: "null"; /* rimuove la forma predefinita */
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
 /* MENU TENDINA */
 .sceltaRicerca {
     -fx-background-color: #4a0022;
