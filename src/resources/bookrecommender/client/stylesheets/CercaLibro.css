@@ -26,8 +26,6 @@
     -fx-text-shadow:  #4a0022 2px 2px 2px;
 }
 
-
-
 /* BOTTONI */
 
 .indietro {
@@ -94,6 +92,7 @@
     -fx-font-size: 14px;
     -fx-font-family: "Century Gothic";
     -fx-font-weight: bold;
+    -fx-border-radius: 0px;
 
 }
 
@@ -101,6 +100,7 @@
     -fx-text-fill: #c7e7f5;
     -fx-font-size: 14px;
     -fx-font-family: "Century Gothic";
+    -fx-border-radius: 0px;
 }
 
 
@@ -108,6 +108,7 @@
     -fx-background-color: #4a0022;
     -fx-border-color: #4a0022;
     -fx-border-width: 1px;
+    -fx-border-radius: 0px;
 }
 
 .menu-button .menu-item {
@@ -115,10 +116,12 @@
     -fx-text-fill: #c7e7f5;
     -fx-font-size: 14px;
     -fx-font-family: "Century Gothic";
+    -fx-border-radius: 0px;
 }
 
 .menu-button .menu-item:focused,
 .menu-button .menu-item:hover {
     -fx-background-color: #264D73;
     -fx-text-fill: #c7e7f5;
+    -fx-border-radius: 0px;
 }
