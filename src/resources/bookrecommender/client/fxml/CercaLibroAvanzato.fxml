@@ -28,14 +28,14 @@
          <Font size="17.0" />
       </font>
    </Text>
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="422.0" layoutY="79.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="281.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="422.0" layoutY="79.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="295.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
           <items>
               <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" text="Titolo" />
               <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" text="Autore" />
               <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" text="Autore e anno di pubblicazione" />
           </items>
       </MenuButton>
-      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="712.0" layoutY="78.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="33.0" styleClass="cerca">
+      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="723.0" layoutY="81.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="33.0" styleClass="cerca">
           <opaqueInsets>
               <Insets />
           </opaqueInsets>
