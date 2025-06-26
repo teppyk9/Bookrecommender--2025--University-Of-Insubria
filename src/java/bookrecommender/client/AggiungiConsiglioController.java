@@ -30,6 +30,7 @@ public class AggiungiConsiglioController {
     public Button aggiungiButton;
     public Button rimuoviButton;
     public Button salvaButton;
+    public Button Bottone_GetAllBooks;
 
     private String searchType = "";
 
@@ -240,7 +241,7 @@ public class AggiungiConsiglioController {
         }
         try {
             if(CliUtil.getInstance().getLibService().addConsiglio(CliUtil.getInstance().getCurrentToken(), libriConsigliati)) {
-                CliUtil.getInstance().createAlert("Successo", "Consiglio salvato con successo!").showAndWait();
+                CliUtil.getInstance().createConfirmation("Successo", "Consiglio salvato con successo!",true).showAndWait();
                 GoToMainMenu();
             }
             else {
@@ -250,6 +251,16 @@ public class AggiungiConsiglioController {
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore", "Impossibile salvare il consiglio: " + e.getMessage()).showAndWait();
             GoToMainMenu();
+        }
+    }
+
+    public void getAllBooks() {
+        try {
+            List<Libro> libri = CliUtil.getInstance().getSearchService().getAllBooks(CliUtil.getInstance().getCurrentToken());
+            libri.remove(myLibro);
+            listaLibri.setItems(FXCollections.observableArrayList(libri));
+        }catch (RemoteException e) {
+            CliUtil.getInstance().createAlert(e.getLocalizedMessage(), "Errore durante la ricerca di tutti i tuoi libri").showAndWait();
         }
     }
 }

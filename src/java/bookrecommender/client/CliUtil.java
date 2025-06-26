@@ -211,7 +211,6 @@ public class CliUtil {
                         return;
                     }
                     break;
-
                 case VALUTAZIONE:
                     VisualizzaValutazioneController visualizzaValutazioneController = loader.getController();
                     if(obj instanceof Valutazione) {
@@ -222,13 +221,23 @@ public class CliUtil {
                         return;
                     }
                     break;
-                    case AGGIUNGICONSIGLIO:
+                case AGGIUNGICONSIGLIO:
                     AggiungiConsiglioController aggiungiConsiglioController = loader.getController();
                     if(obj instanceof Libro) {
                         stage = new Stage();
                         aggiungiConsiglioController.setLibro((Libro) obj);
                     } else {
                         logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        return;
+                    }
+                    break;
+                case VISUALIZZALIBRERIA:
+                    VisualizzaLibreriaController visualizzaLibreriaController = loader.getController();
+                    if(obj instanceof String) {
+                        stage = new Stage();
+                        visualizzaLibreriaController.setLibreria((String) obj);
+                    } else {
+                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected String object, got " + obj.getClass().getName());
                         return;
                     }
                     break;

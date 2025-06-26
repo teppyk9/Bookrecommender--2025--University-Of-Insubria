@@ -58,15 +58,32 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     public List<Libro> searchByName(Token token, String title) throws RemoteException {
-        return null;
+        try{
+            logger.info("Searching for books with title: " + title + " From client " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        return dbManager.cercaLibriPerTitolo(token,title);
     }
 
     public List<Libro> searchByAuthor(Token token, String author) throws RemoteException {
-        return null;
+        try{
+            logger.info("Searching for books with author: " + author + " From client " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        return dbManager.cercaLibriPerAutore(token, author);
     }
 
 
     public List<Libro> searchByAuthorAndYear(Token token, String author, int year) throws RemoteException {
-        return null;
+        try {
+            logger.info("Searching for books by author: " + author + " and year: " + year + " From client " + getClientHost());
+        }catch (ServerNotActiveException ignored){}
+        return dbManager.cercaLibriPerAutoreAnno(token, author, String.valueOf(year));
+    }
+
+    @Override
+    public List<Libro> getAllBooks(Token token) throws RemoteException {
+        try{
+            logger.info("Searching for books from client " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        return dbManager.cercaTuttiLibriUtente(token);
     }
 }

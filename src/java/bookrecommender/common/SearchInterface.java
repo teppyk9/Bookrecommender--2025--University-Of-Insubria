@@ -12,4 +12,5 @@ public interface SearchInterface extends Remote {
     List<Libro> searchByName(Token token, String title) throws RemoteException;
     List<Libro> searchByAuthor(Token token, String author) throws RemoteException;
     List<Libro> searchByAuthorAndYear(Token token, String author, int year) throws RemoteException;
+    List<Libro> getAllBooks(Token token) throws RemoteException;
 }

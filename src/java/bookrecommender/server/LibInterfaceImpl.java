@@ -45,13 +45,13 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     }
 
     @Override
-    public boolean updateLib(Token token, String nome, List<Libro> libridel, List<Libro> libriadd) throws RemoteException {
+    public List<Integer> updateLib(Token token, String nome, List<Libro> libriUp) throws RemoteException {
         try {
             logger.info("Aggiornamento libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
-            return false;
+            return List.of(0);
         }
-        return dbManager.aggiornaLibreria(token, nome, libridel, libriadd);
+        return dbManager.aggiornaLibreria(token, nome, libriUp);
     }
 
     @Override
@@ -92,5 +92,15 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
             return false;
         }
         return dbManager.addConsiglio(token, libri);
+    }
+
+    @Override
+    public boolean modifyLibName(Token token, String oldName, String newName) throws RemoteException {
+        try{
+            logger.info("Modifica del nome della libreria " + oldName + " con il nome: " + newName + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.modificaNomeLibreria(token, oldName, newName);
     }
 }

@@ -4,7 +4,6 @@ import bookrecommender.common.Libro;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -29,14 +28,12 @@ public class CercaLibroAvanzatoController {
     public MenuItem MenuCercaAutoreAnno;
     public TextField campoRicercaAnno;
     public ListView <Libro> listaLibri;
-    public Button BottoneApriLibreria;
     public ListView <String> ListaLibrerie;
     public Button GoBackButton_MainMenu;
     public Button ExitButton;
     public Button BottoneCreaLibreria;
     public Text Titolo_Librerie;
     public Button BottoneAggiorna;
-    public Button consiglioButton;
 
     private String searchType = "";
 
@@ -55,7 +52,7 @@ public class CercaLibroAvanzatoController {
                 arrow.setVisible(false);
                 arrow.setManaged(false);
             }
-            Stage stage = (Stage) BottoneApriLibreria.getScene().getWindow();
+            Stage stage = (Stage) BottoneCreaLibreria.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
                 try {
                     CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
@@ -231,14 +228,11 @@ public class CercaLibroAvanzatoController {
 
     public void ApriLibreria() {
         String nomeLibreria = String.valueOf(ListaLibrerie.getSelectionModel().getSelectedItem());
-        CliUtil.getInstance().createConfirmation("Hai selezionato", nomeLibreria, false).showAndWait();
+        CliUtil.getInstance().buildStage(FXMLtype.VISUALIZZALIBRERIA, nomeLibreria);
     }
 
     public void CreaLibreria() {
         CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null);
     }
 
-    public void addConsiglio() {
-        CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGICONSIGLIO, listaLibri.getSelectionModel().getSelectedItem());
-    }
 }
