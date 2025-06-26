@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class VisualizzaLibreriaController {
     public TextField campoRicerca;
@@ -46,7 +47,7 @@ public class VisualizzaLibreriaController {
     private List<Libro> LibriLibrerie;
     private List<Libro> OriginalLibri;
 
-    private boolean isModify = false;
+    private ListView<Libro> lastSelectedView;
 
     @FXML
     public void initialize() {
@@ -61,6 +62,12 @@ public class VisualizzaLibreriaController {
         arrowImage.setFitWidth(12);
         arrowImage.setFitHeight(12);
         MenuTipoRicerca.setGraphic(arrowImage);
+        listaLibri.getSelectionModel().selectedItemProperty().addListener((o, oldV, newV) -> {
+            if (newV != null) lastSelectedView = listaLibri;
+        });
+        ListaLibrerie.getSelectionModel().selectedItemProperty().addListener((o, oldV, newV) -> {
+            if (newV != null) lastSelectedView = ListaLibrerie;
+        });
         Platform.runLater(() -> {
             Node arrow = MenuTipoRicerca.lookup(".arrow");
             if (arrow != null) {
@@ -69,9 +76,9 @@ public class VisualizzaLibreriaController {
             }
             Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
-                if(isModify) {
+                if(hannoDifferenze(OriginalLibri, LibriLibrerie) || !NomeLibreria.getText().isEmpty()) {
                     CliUtil.getInstance().createConfirmation("Conferma uscita", "Tutte le modifiche andranno perse!\nSei sicuro di voler uscire?", true).showAndWait().ifPresent(response -> {
-                        if (response == ButtonType.OK) {
+                        if (response == ButtonType.YES) {
                             stage.close();
                         } else {
                             event.consume();
@@ -87,7 +94,7 @@ public class VisualizzaLibreriaController {
         Titolo_Librerie.setText(LibName);
         try {
             LibriLibrerie = CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLibreria);
-            OriginalLibri = LibriLibrerie;
+            OriginalLibri = new ArrayList<>(LibriLibrerie);
             ListaLibrerie.setItems(FXCollections.observableArrayList(LibriLibrerie));
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore", "Impossibile caricare la libreria: " + e.getMessage()).showAndWait();
@@ -160,8 +167,8 @@ public class VisualizzaLibreriaController {
         }
     }
 
-    public void handleListaDoppioClick_2(MouseEvent mouseEvent) {
-        if (mouseEvent.getClickCount() == 2) {
+    public void handleListaDoppioClick_2(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             Libro selezionato = ListaLibrerie.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
                 mostraDettagli(selezionato);
@@ -170,7 +177,7 @@ public class VisualizzaLibreriaController {
     }
 
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, libro);
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, libro);
     }
 
     public void cercaTitolo() {
@@ -241,22 +248,26 @@ public class VisualizzaLibreriaController {
 
     public void ExitApplication() {
         Stage stage = (Stage) ExitButton.getScene().getWindow();
-        stage.close();
+        if(hannoDifferenze(OriginalLibri, LibriLibrerie) || !NomeLibreria.getText().isEmpty()) {
+            CliUtil.getInstance().createConfirmation("Conferma uscita", "Tutte le modifiche andranno perse!\nSei sicuro di voler uscire?", true).showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES) {
+                    stage.close();
+                }
+            });
+        }else
+            stage.close();
     }
 
     public void RimuoviLibro() {
-        if(!isModify)
-            isModify = true;
-        Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
-        if(selezionato != null && LibriLibrerie.contains(selezionato)) {
+        if (lastSelectedView == null) return;
+        Libro selezionato = lastSelectedView.getSelectionModel().getSelectedItem();
+        if (selezionato != null && LibriLibrerie.contains(selezionato)) {
             LibriLibrerie.remove(selezionato);
             ListaLibrerie.setItems(FXCollections.observableArrayList(LibriLibrerie));
         }
     }
 
     public void AggiungiLibro() {
-        if(!isModify)
-            isModify = true;
         Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
         if(selezionato != null && !LibriLibrerie.contains(selezionato)) {
             LibriLibrerie.add(selezionato);
@@ -285,14 +296,13 @@ public class VisualizzaLibreriaController {
                 return;
             }
         }
-        if(isModify && hannoDifferenze(OriginalLibri, LibriLibrerie) && LibriLibrerie.size() >= 3) {
+        if(hannoDifferenze(OriginalLibri, LibriLibrerie) && LibriLibrerie.size() >= 3) {
             List <Integer> risultati;
             try {
                 risultati = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), LibName, LibriLibrerie);
                 if(risultati.get(0) == 1) {
                     CliUtil.getInstance().createConfirmation("Successo", "Libreria '" + LibName + "' modificata con successo.", false).showAndWait();
                     OriginalLibri = new ArrayList<>(LibriLibrerie);
-                    isModify = false;
                     NomeLibreria.setDisable(true);
                     NomeLibreria.setEditable(false);
                     NomeLibreria.setVisible(false);
@@ -303,16 +313,16 @@ public class VisualizzaLibreriaController {
                         int codice = risultati.get(i + 1);
                         switch (codice) {
                             case 0:
-                                sb.append("Il libro con id ").append(idLibro).append(" ha valutazioni associate.");
+                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha valutazioni associate.");
                                 break;
                             case 1:
-                                sb.append("Il libro con id ").append(idLibro).append(" è stato utilizzato come consiglio.");
+                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" è stato utilizzato come consiglio.");
                                 break;
                             case 2:
-                                sb.append("Il libro con id ").append(idLibro).append(" ha libri consigliati ad esso associati.");
+                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha libri consigliati ad esso associati.");
                                 break;
                             default:
-                                sb.append("Il libro con id ").append(idLibro).append(" ha codice errore sconosciuto: ").append(codice).append(".");
+                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha codice errore sconosciuto: ").append(codice).append(".");
                         }
                         if (i + 2 < risultati.size()) {
                             sb.append(System.lineSeparator());
@@ -334,7 +344,7 @@ public class VisualizzaLibreriaController {
 
     public void eliminaLibreria() {
         CliUtil.getInstance().createConfirmation("Conferma eliminazione", "Sei sicuro di voler eliminare la libreria '" + LibName + "'?", true).showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
+            if (response == ButtonType.YES) {
                 try {
                     if (CliUtil.getInstance().getLibService().deleteLib(CliUtil.getInstance().getCurrentToken(), LibName)) {
                         CliUtil.getInstance().createConfirmation("Successo", "Libreria eliminata con successo.",false).showAndWait();
@@ -351,7 +361,7 @@ public class VisualizzaLibreriaController {
     public void aggiungiConsiglio() {
         Libro selezionato = ListaLibrerie.getSelectionModel().getSelectedItem();
         if(selezionato!= null && OriginalLibri.contains(selezionato)) {
-            CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGICONSIGLIO, selezionato);
+            CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, selezionato);
         }else
             CliUtil.getInstance().createAlert("Errore", "Selezionare un libro valido dalla libreria.").showAndWait();
     }
@@ -360,9 +370,10 @@ public class VisualizzaLibreriaController {
         if (list1.size() != list2.size()) {
             return true;
         }
-        Set<Libro> set2 = new HashSet<>(list2);
+
+        Set<Libro> set = new HashSet<>(list2);
         for (Libro libro : list1) {
-            if (!set2.contains(libro)) {
+            if (!set.contains(libro)) {
                 return true;
             }
         }

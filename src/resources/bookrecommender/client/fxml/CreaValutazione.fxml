@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
             prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="bookrecommender.client.ValutazioneController">
+            fx:controller="bookrecommender.client.CreaValutazioneController">
    <VBox prefHeight="450.0" prefWidth="800.0">
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <Label layoutX="24.0" layoutY="22.0" style="-fx-font-weight: bold;" text="Valuta questo libro!">

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AggiungiConsiglioController {
+public class CreaConsiglioController {
     public TextField campoRicerca;
     public Button bottoneCerca;
     public MenuButton MenuTipoRicerca;
@@ -201,7 +201,7 @@ public class AggiungiConsiglioController {
         }
     }
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, libro);
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, libro);
     }
 
     public void aggiungiLibro() {

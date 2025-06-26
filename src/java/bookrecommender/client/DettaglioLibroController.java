@@ -126,7 +126,7 @@ public class DettaglioLibroController {
         if (mouseEvent.getClickCount() == 2) {
             Valutazione selezionato = listaValutazioni.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
-                CliUtil.getInstance().buildStage(FXMLtype.VALUTAZIONE, selezionato);
+                CliUtil.getInstance().buildStage(FXMLtype.VISUALIZZAVALUTAZIONE, selezionato);
             }
         }
     }

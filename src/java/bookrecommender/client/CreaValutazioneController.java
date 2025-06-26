@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public class ValutazioneController {
+public class CreaValutazioneController {
 
     public Button BottoneSalva;
     public Label messaggioErrore;

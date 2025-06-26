@@ -26,6 +26,14 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     @Override
+    public Libro getLibro(int id) throws RemoteException {
+        try {
+            logger.info("Searching book with ID: " + id + " From client " + getClientHost());
+        }catch (ServerNotActiveException ignored){}
+        return dbManager.getLibro(id);
+    }
+
+    @Override
     public List<Libro> searchByName(String title) throws RemoteException {
         try {
             logger.info("Searching for books with title: " + title + " From client " + getClientHost());

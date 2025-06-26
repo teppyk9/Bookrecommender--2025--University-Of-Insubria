@@ -9,10 +9,10 @@ public enum FXMLtype {
     CERCA("/bookrecommender/client/fxml/CercaLibro.fxml", "Cerca Libro"),
     CERCA_AVANZATO("/bookrecommender/client/fxml/CercaLibroAvanzato.fxml", "Cerca Libro Avanzato"),
     CREALIBRERIA("/bookrecommender/client/fxml/CreaLibreria.fxml", "Crea Libreria"),
-    DETTAGLIOlIBRO("/bookrecommender/client/fxml/DettaglioLibro.fxml", "Dettaglio Libro"),
-    CREAVALUTAZIONE("/bookrecommender/client/fxml/Valutazione.fxml", "Crea Valutazione"),
-    VALUTAZIONE("/bookrecommender/client/fxml/VisualizzaValutazione.fxml", "Visualizza Valutazione"),
-    AGGIUNGICONSIGLIO("/bookrecommender/client/fxml/AggiungiConsiglio.fxml", "Aggiungi Consiglio"),
+    DETTAGLIOLIBRO("/bookrecommender/client/fxml/DettaglioLibro.fxml", "Dettaglio Libro"),
+    CREAVALUTAZIONE("/bookrecommender/client/fxml/CreaValutazione.fxml", "Crea Valutazione"),
+    VISUALIZZAVALUTAZIONE("/bookrecommender/client/fxml/VisualizzaValutazione.fxml", "Visualizza Valutazione"),
+    CREACONSIGLIO("/bookrecommender/client/fxml/CreaConsiglio.fxml", "Aggiungi Consiglio"),
     VISUALIZZALIBRERIA("/bookrecommender/client/fxml/VisualizzaLibreria.fxml", "Visualizza Libreria");
 
     private final String path;
