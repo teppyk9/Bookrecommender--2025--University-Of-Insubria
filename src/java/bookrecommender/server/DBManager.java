@@ -560,4 +560,28 @@ public class DBManager {
             return false;
         }
     }
+
+    public List<Libro> cercaLibriPerTitolo(Token token, String titolo) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        List<Libro> risultati = new ArrayList<>();
+        String query = """
+                SELECT DISTINCT l.*
+                FROM libri AS l
+                JOIN libreria_libro AS ll
+                  ON ll.idlibro = l.id
+                JOIN librerie AS lr
+                  ON lr.id = ll.idlibreria
+                WHERE lr.id_utente = ?
+                  AND l.titolo ILIKE '%' || ? || '%';""";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + titolo + "%");
+            resultStmt(risultati, stmt);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella ricerca di un libro con titolo: " + titolo, e);
+        }
+        return null;
+    }
 }

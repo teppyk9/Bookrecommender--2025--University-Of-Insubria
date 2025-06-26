@@ -56,17 +56,17 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
         } catch (ServerNotActiveException ignored) {}
         return dbManager.getDetails(libro);
     }
-    @Override
+
     public List<Libro> searchByName(Token token, String title) throws RemoteException {
-        return List.of();
-    }
-    @Override
-    public List<Libro> searchByAuthor(Token token, String author) throws RemoteException {
-        return List.of();
+        return null;
     }
 
-    @Override
+    public List<Libro> searchByAuthor(Token token, String author) throws RemoteException {
+        return null;
+    }
+
+
     public List<Libro> searchByAuthorAndYear(Token token, String author, int year) throws RemoteException {
-        return List.of();
+        return null;
     }
 }
