@@ -1,106 +1,165 @@
 
-.colori{
-    color: #4a0022;
-    color: #c7e7f5;
-}
+/*.colori{
+    color: #FCF7F8;
+    color: #A31621;
+}*/
 
 /* CONTAINERS */
 .background{
-    -fx-background-color: #4a0022;
-    -fx-background-image: url("../icons/img_biblioteca.jpg");
+    -fx-background-color: #A31621;
 }
 
-
-.ricerca{
-    -fx-background-color: #4a0022; /* colore hbox*/
-    -fx-border-radius: 6; /* bordo arrotondato */
-}
-
-/* TEXTS */
-
+/* TEXT*/
 .titolo{
     -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-font-family: "Century Gothic";
-    -fx-text-fill: #264D73;
-    -fx-text-shadow:  #4a0022 2px 2px 2px;
+    -fx-fill: #FCF7F8;
+    -fx-effect: dropshadow(gaussian, #A31621, 2, 0, 0, 0);
+
 }
 
-/* BOTTONI */
-
-.indietro {
-    -fx-background-color: transparent;
-    -fx-border: none;
-    -handle: cursor;
-    -fx-background-image: url("../icons/indietro1.png");
+.descrizione{
+    -fx-font-size: 14px;
+    -fx-font-family: "Century Gothic",cursive;
+    -fx-fill: #FCF7F8;
+    -fx-font-weight: bold;
 }
 
-.indietro:hover {
-    -fx-animated: zoom ;
-    -fx-background-color: none;
+
+
+/* BOTTNI */
+.bottone{
+    -fx-background-color: #FCF7F8;
+    -fx-text-fill: #A31621;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 12;
+    -fx-background-radius: 6px;
+    -fx-padding: 8 16;
+}
+
+.bottone:hover{
+    -fx-animated: zoom;
+    -fx-font-weight: bold;
+}
+.indietro{
+    -fx-background-color: #A31621;
+    -fx-background-image: url('../icons/indietro.png');
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+
+.indietro:hover{
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
 }
 
 .cerca{
     -fx-background-image: url("../icons/cerca.png");
-    -fx-border: none;
-    -handle: cursor;
-    -fx-background-color: transparent;
+    -fx-background-color: #A31621;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
 }
 
 .cerca:hover{
-    -fx-animated: zoom;
-    -fx-background-color: none;
+    -fx-background-color: #A31621;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
 
-/* FIELDS */
-
+/* BARRE DI RICERCA */
 .barraRicerca {
-    -fx-background-color: #4a0022;
-    -fx-text-fill: #c7e7f5;
-    -fx-font-size: 14px;
+    -fx-background-color: #FCF7F8;
+    -fx-text-fill: #A31621;
+    -fx-font-size: 12px;
     -fx-font-family: "Century Gothic";
-    -fx-font-weight: bold;
-    -fx-prompt-text-fill: #c7e7f5 ;
+    -fx-prompt-text-fill: #A31621;
 }
 
 .barraRicerca .text-field{
-    -fx-fill: #c7e7f5;   /* colore del testo inserito */
-    -fx-font-size: 16px; /* size del testo inserito */
+    -fx-fill: #A31621;   /* colore del testo inserito */
+    -fx-font-size: 12px; /* size del testo inserito */
+    -fx-font-weight: bold;
 }
 
 .barraRicerca .prompt-text{
-    -fx-fill: #c7e7f5;   /* colore del prompt text */
-    -fx-font-size: 14px; /* size del prompt text */
+    -fx-fill: #A31621;   /* colore del prompt text */
+    -fx-font-size: 12px; /* size del prompt text */
+}
+
+/* MENU A TENDINA */
+.sceltaRicerca {
+    -fx-background-color: #FCF7F8;
+    -fx-text-fill: #A31621;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+
+    -fx-border-radius: 0px;
+
+}
+
+.sceltaRicerca .label{
+    -fx-text-fill: #A31621;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-border-radius: 0px;
 }
 
 
-/* LISTA LIBRI */
+.menu-button .context-menu {
+    -fx-background-color: #FCF7F8;
+    -fx-border-color: #FCF7F8;
+    -fx-border-width: 1px;
+    -fx-border-radius: 0px;
 
-.listaLibri {
-    -fx-background-color: #264D73;
-    -fx-text-fill: #c7e7f5;
-    -fx-font-size: 14px;
-    -fx-opacity: 0.87;
+}
+
+.menu-button .menu-item {
+    -fx-background-color: #FCF7F8;
+    -fx-text-fill: #A31621;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-border-radius: 0px;
+}
+
+.menu-button .menu-item:focused,
+.menu-button .menu-item:hover {
+    -fx-background-color: #FCF7F8;
+    -fx-text-fill: #A31621;
+    -fx-border-radius: 0px;
+    -fx-font-weight: bold;
+}
+
+/* LIST VIEW*/
+
+.lista {
+    -fx-background-color: #b3424b;
+    -fx-text-fill: #FCF7F8;
+    -fx-font-size: 12px;
+    /*-fx-opacity: 0.2;*/
     -fx-font-weight: bold;
     -fx-font-family: "Century Gothic";
+    -fx-background-radius: 6px;
 }
 
-.listaLibri .list-cell {
-    -fx-background-color: #264D73;
-    -fx-text-fill: #c7e7f5;
-    -fx-font-size: 14px;
+.lista .list-cell {
+    -fx-background-color: #b3424b;
+    -fx-text-fill: #FCF7F8;
+    -fx-font-size: 12px;
     -fx-font-family: "Century Gothic";
 }
 
-.listaLibri .list-cell:selected {
-    -fx-background-color: #4a0022;
-    -fx-text-fill: #c7e7f5;
-    -fx-font-size: 14px;
+.lista .list-cell:selected {
+    -fx-background-color: #FCF7F8;
+    -fx-text-fill: #A31621;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
     -fx-font-family: "Century Gothic";
 }
 
-.listaLibri .list-cell:hover {
-    -fx-animated: zoom;
+.lista .list-cell:hover {
     -fx-font-weight: bold;
 }
 
@@ -113,7 +172,7 @@
 }
 
 .scroll-bar .track {
-    -fx-background-color: #c7e7f5;
+    -fx-background-color: #FCF7F8;
     -fx-background-radius: 4px;
     -fx-border-width: 0;
 }
@@ -128,7 +187,7 @@
 }
 
 .scroll-bar .thumb:hover {
-    -fx-background-color: #264D73;
+    -fx-background-color: #A31621;
 }
 
 .scroll-bar .increment-button,
@@ -167,43 +226,4 @@
     -fx-pref-width: 0;
     -fx-pref-height: 0;
 }
-/* MENU TENDINA */
-.sceltaRicerca {
-    -fx-background-color: #4a0022;
-    -fx-text-fill: #c7e7f5;
-    -fx-font-size: 14px;
-    -fx-font-family: "Century Gothic";
-    -fx-font-weight: bold;
-    -fx-border-radius: 0px;
 
-}
-
-.sceltaRicerca .label{
-    -fx-text-fill: #c7e7f5;
-    -fx-font-size: 14px;
-    -fx-font-family: "Century Gothic";
-    -fx-border-radius: 0px;
-}
-
-
-.menu-button .context-menu {
-    -fx-background-color: #4a0022;
-    -fx-border-color: #4a0022;
-    -fx-border-width: 1px;
-    -fx-border-radius: 0px;
-}
-
-.menu-button .menu-item {
-    -fx-background-color: #4a0022;
-    -fx-text-fill: #c7e7f5;
-    -fx-font-size: 14px;
-    -fx-font-family: "Century Gothic";
-    -fx-border-radius: 0px;
-}
-
-.menu-button .menu-item:focused,
-.menu-button .menu-item:hover {
-    -fx-background-color: #264D73;
-    -fx-text-fill: #c7e7f5;
-    -fx-border-radius: 0px;
-}
