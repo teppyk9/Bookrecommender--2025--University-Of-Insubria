@@ -191,7 +191,7 @@ public class CliUtil {
                 case CREALIBRERIA:
                     stage = new Stage();
                     break;
-                case DETTAGLIOlIBRO:
+                case DETTAGLIOLIBRO:
                     DettaglioLibroController dettaglioLibroController = loader.getController();
                     stage = new Stage();
                     if(obj instanceof Libro) {
@@ -202,7 +202,7 @@ public class CliUtil {
                     }
                     break;
                 case CREAVALUTAZIONE:
-                    ValutazioneController valutazioneController = loader.getController();
+                    CreaValutazioneController valutazioneController = loader.getController();
                     if(obj instanceof Libro) {
                         stage = new Stage();
                         valutazioneController.setLibro((Libro) obj);
@@ -211,7 +211,7 @@ public class CliUtil {
                         return;
                     }
                     break;
-                case VALUTAZIONE:
+                case VISUALIZZAVALUTAZIONE:
                     VisualizzaValutazioneController visualizzaValutazioneController = loader.getController();
                     if(obj instanceof Valutazione) {
                         stage = new Stage();
@@ -221,8 +221,8 @@ public class CliUtil {
                         return;
                     }
                     break;
-                case AGGIUNGICONSIGLIO:
-                    AggiungiConsiglioController aggiungiConsiglioController = loader.getController();
+                case CREACONSIGLIO:
+                    CreaConsiglioController aggiungiConsiglioController = loader.getController();
                     if(obj instanceof Libro) {
                         stage = new Stage();
                         aggiungiConsiglioController.setLibro((Libro) obj);

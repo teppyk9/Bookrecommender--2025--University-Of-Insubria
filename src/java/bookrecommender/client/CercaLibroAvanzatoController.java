@@ -149,7 +149,7 @@ public class CercaLibroAvanzatoController {
     }
 
     private void mostraDettagli(Libro libro) {
-        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOlIBRO, libro);
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, libro);
     }
 
     public void cercaTitolo() {

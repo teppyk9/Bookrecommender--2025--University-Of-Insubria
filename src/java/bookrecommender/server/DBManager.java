@@ -255,6 +255,32 @@ public class DBManager {
         }
     }
 
+    public Libro getLibro(int id) {
+        String query = "SELECT * FROM LIBRI WHERE ID = ? ";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            Libro libro;
+            try (ResultSet rs = stmt.executeQuery()) {
+                rs.next();
+                libro = new Libro(
+                        rs.getInt("ID"),
+                        rs.getString("TITOLO"),
+                        rs.getString("AUTORE"),
+                        rs.getString("DESCRIZIONE"),
+                        rs.getString("CATEGORIA"),
+                        rs.getString("EDITORE"),
+                        rs.getFloat("PREZZO"),
+                        rs.getShort("ANNOPUBBLICAZIONE"),
+                        rs.getShort("MESEPUBBLICAZIONE")
+                );
+            }
+            return libro;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero del libro con ID: " + id, e);
+            return null;
+        }
+    }
+
     public boolean creaLibreria(Token token, String nome, List<Libro> libri) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
