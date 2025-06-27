@@ -131,6 +131,7 @@ public class DettaglioLibroController {
         }
     }
 
-    public void clickConsiglio(MouseEvent mouseEvent) {
+    public void clickConsiglio() {
+        //da implementare!!!!!!
     }
 }

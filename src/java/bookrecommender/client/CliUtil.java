@@ -286,20 +286,6 @@ public class CliUtil {
         return alert;
     }
 
-    public void exitApplication() {
-        if (createConfirmation("Conferma uscita", "Sei sicuro di voler uscire dall'applicazione?", true).showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
-            if(currentToken != null) {
-                try {
-                    logRegService.LogOut(currentToken);
-                }catch(Exception e) {
-                    createAlert("Errore di Logout", e.getMessage()).showAndWait();
-                }
-            }
-            Platform.exit();
-            System.exit(0);
-        }
-    }
-
     public Image getStarFull() {
         return starFull;
     }

@@ -4,8 +4,6 @@ import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
-
 public class ConnessioneController {
     public TextField hostField;
     public TextField portField;

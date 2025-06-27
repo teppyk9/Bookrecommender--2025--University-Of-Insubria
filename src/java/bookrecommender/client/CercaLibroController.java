@@ -3,48 +3,31 @@ package bookrecommender.client;
 import bookrecommender.common.Libro;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Objects;
 
-public class CercaLibroController {
+public class CercaLibroController extends AbstractSearchController{
 
-    @FXML public Button GoBackButton_MainMenu;
-    @FXML public MenuItem MenuCercaTitolo;
-    @FXML public MenuButton MenuTipoRicerca;
-    @FXML public MenuItem MenuCercaAutore;
-    @FXML public MenuItem MenuCercaAutoreAnno;
-    @FXML public TextField campoRicercaAnno;
-    @FXML public TextField campoRicerca;
-    @FXML public ListView<Libro> listaLibri;
-    @FXML public Button bottoneCerca;
+    @FXML private MenuItem MenuCercaTitolo;
+    @FXML private MenuButton MenuTipoRicerca;
+    @FXML private MenuItem MenuCercaAutore;
+    @FXML private MenuItem MenuCercaAutoreAnno;
+    @FXML private TextField campoRicercaAnno;
+    @FXML private TextField campoRicerca;
+    @FXML private ListView<Libro> listaLibri;
+    @FXML private Button bottoneCerca;
 
-    private String searchType;
+    private String searchType = "";
 
     @FXML
     public void initialize() {
-        campoRicercaAnno.setVisible(false);
-        campoRicercaAnno.setDisable(true);
-        ImageView arrowImage = new ImageView( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png"))));
-        arrowImage.setFitWidth(12);
-        arrowImage.setFitHeight(12);
-        MenuTipoRicerca.setGraphic(arrowImage);
-        searchType = "";
+        initCommon();
         Platform.runLater(() -> {
-            Node arrow = MenuTipoRicerca.lookup(".arrow");
-            if (arrow != null) {
-                arrow.setVisible(false);
-                arrow.setManaged(false);
-            }
             Stage stage = (Stage) bottoneCerca.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
                 Platform.exit();
@@ -53,59 +36,73 @@ public class CercaLibroController {
         });
     }
 
-    public void handleClickCerca() {
-        String testo = campoRicerca.getText();
-        String anno = campoRicercaAnno.getText();
-        if (testo != null && testo.length() >= 2) {
-            aggiornaLista(testo, anno);
-        } else {
-            listaLibri.setItems(FXCollections.observableArrayList());
-            CliUtil.getInstance().createAlert("Errore", "Inserire almeno 2 caratteri per la ricerca.").showAndWait();
+    @Override protected TextField getCampoRicerca(){
+        return campoRicerca;
+    }
+
+    @Override protected TextField getCampoRicercaAnno(){
+        return campoRicercaAnno;
+    }
+
+    @Override protected ListView<Libro> getListaRisultati(){
+        return listaLibri;
+    }
+
+    @Override protected String getSearchType(){
+        return searchType;
+    }
+
+    @Override protected void setSearchType(String type){
+        this.searchType = type;
+    }
+
+    @Override protected MenuButton getMenuTipoRicerca(){
+        return MenuTipoRicerca;
+    }
+
+    @Override protected MenuItem getItemTitolo(){
+        return MenuCercaTitolo;
+    }
+
+    @Override protected MenuItem getItemAutore(){
+        return MenuCercaAutore;
+    }
+
+    @Override protected MenuItem getItemAutoreAnno(){
+        return MenuCercaAutoreAnno;
+    }
+
+    @Override protected void mostraDettagli(Libro libro){
+        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, libro);
+    }
+
+    @Override
+    protected List<Libro> searchByTitle(String testo){
+        try{
+            return CliUtil.getInstance().getSearchService().searchByName(testo);
+        }catch(RemoteException e){
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
         }
     }
 
-    private void aggiornaLista(String titolo, String anno) {
-        try {
-            List<Libro> risultati = null;
-            boolean temp = false;
-            switch (searchType) {
-                case "Titolo":
-                    risultati = CliUtil.getInstance().getSearchService().searchByName(titolo);
-                    if(risultati != null) {
-                        listaLibri.setItems(FXCollections.observableArrayList(risultati));
-                        temp = true;
-                    }
-                    break;
-                case "Autore":
-                    risultati = CliUtil.getInstance().getSearchService().searchByAuthor(titolo);
-                    if(risultati != null) {
-                        listaLibri.setItems(FXCollections.observableArrayList(risultati));
-                        temp = true;
-                    }
-                    break;
-                case "AutoreAnno":
-                    if(anno == null || anno.trim().isEmpty())
-                        CliUtil.getInstance().createAlert("Errore", "Inserire un anno valido.").showAndWait();
-                    else if(anno.length() > 4)
-                        CliUtil.getInstance().createAlert("Errore", "L'anno deve essere composto da massimo 4 cifre.").showAndWait();
-                    else if(!anno.matches("\\d+"))
-                        CliUtil.getInstance().createAlert("Errore", "L'anno deve essere un numero.").showAndWait();
-                    else {
-                        risultati = CliUtil.getInstance().getSearchService().searchByAuthorAndYear(titolo, Integer.parseInt(anno));
-                        temp = true;
-                    }
-                    if(risultati != null)
-                        listaLibri.setItems(FXCollections.observableArrayList(risultati));
-                    break;
-                default:
-                    CliUtil.getInstance().createAlert("Errore", "Tipo di ricerca non selezionato.").showAndWait();
-                    break;
-            }
-            if((risultati == null || risultati.isEmpty()) && temp) {
-                CliUtil.getInstance().createAlert("Nessun risultato", "Nessun libro trovato con i criteri di ricerca specificati.").showAndWait();
-            }
-        } catch (Exception e) {
+    @Override
+    protected List<Libro> searchByAuthor(String testo){
+        try{
+            return CliUtil.getInstance().getSearchService().searchByAuthor(testo);
+        }catch(RemoteException e){
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
+        }
+    }
+
+    @Override
+    protected List<Libro> searchByAuthorAndYear(String testo, int anno){
+        try{
+            return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
+        }catch(RemoteException e){
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
         }
     }
 
@@ -119,74 +116,8 @@ public class CercaLibroController {
         }
     }
 
-    public void cercaTitolo() {
-        MenuTipoRicerca.getItems().remove(MenuCercaTitolo);
-        switch(searchType) {
-            case "Autore":
-                MenuTipoRicerca.getItems().add(MenuCercaAutore);
-                break;
-            case "AutoreAnno":
-                MenuTipoRicerca.getItems().add(MenuCercaAutoreAnno);
-                campoRicercaAnno.setDisable(true);
-                campoRicercaAnno.setVisible(false);
-                break;
-            default:
-                break;
-        }
-        searchType = "Titolo";
-        MenuTipoRicerca.setText("Titolo");
-    }
-
-    public void cercaAutore() {
-        MenuTipoRicerca.getItems().remove(MenuCercaAutore);
-        switch(searchType) {
-            case "Titolo":
-                MenuTipoRicerca.getItems().add(MenuCercaTitolo);
-                break;
-            case "AutoreAnno":
-                MenuTipoRicerca.getItems().add(MenuCercaAutoreAnno);
-                campoRicercaAnno.setDisable(true);
-                campoRicercaAnno.setVisible(false);
-                break;
-            default:
-                break;
-        }
-        searchType = "Autore";
-        MenuTipoRicerca.setText("Autore");
-    }
-
-    public void cercaAutoreAnno() {
-        MenuTipoRicerca.getItems().remove(MenuCercaAutoreAnno);
-        switch(searchType) {
-            case "Titolo":
-                MenuTipoRicerca.getItems().add(MenuCercaTitolo);
-                break;
-            case "Autore":
-                MenuTipoRicerca.getItems().add(MenuCercaAutore);
-                break;
-            default:
-                break;
-        }
-        searchType = "AutoreAnno";
-        MenuTipoRicerca.setText("Autore e Anno");
-        campoRicercaAnno.setDisable(false);
-        campoRicercaAnno.setVisible(true);
-    }
-
-    public void keyEnterPressed_1(KeyEvent keyEvent) {
-        if(keyEvent.getCode().getName().equals("Enter")) {
-            handleClickCerca();
-        }
-    }
-
-    public void keyEnterPressed_2(KeyEvent keyEvent) {
-        if(keyEvent.getCode().getName().equals("Enter")) {
-            handleClickCerca();
-        }
-    }
-
-    public void GoToMainMenu() {
+    @FXML
+    private void GoToMainMenu() {
         CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
     }
-
 }

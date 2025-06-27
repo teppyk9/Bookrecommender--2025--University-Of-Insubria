@@ -9,8 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
-
 public class LoginController {
 
     public javafx.scene.control.PasswordField PasswordField;
@@ -61,7 +59,6 @@ public class LoginController {
             Token token = CliUtil.getInstance().getLogRegService().TryLogin(username, password);
             if (token != null) {
                 CliUtil.getInstance().setCurrentToken(token);
-                token = null;
                 CliUtil.getInstance().createConfirmation("Login riuscito", "Benvenuto " + username + "!",false).showAndWait();
                 CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
             } else {
