@@ -95,16 +95,16 @@ BookRecommender/
 
 1. Assicurati di avere un'istanza di **PostgreSQL** attiva.
 2. Crea un database vuoto (es. `bookrecommenderdb`).
-3. Vai nella cartella `data/query/`.
-4. Esegui i file SQL presenti con un client PostgreSQL come `psql`, **pgAdmin**, o un tool Java.
-5. Assicurati di inserire in DBManager e DatabaseUpdater le credenziali corrette.
-
----
-
-### 2. Inserimento dati iniziali da CSV
-
-1. Vai alla cartella `src/java/databaseUpdater`.
-2. Compila ed esegui `DatabaseUpdater.java`, che importerà i dati da `data/Libri.dati.csv` nel database.
+3. Vai nella cartella `data`.
+4. Esegui il file SQL `tablecreation.sql` con un client PostgreSQL come `psql`, **pgAdmin**, o un tool Java.
+5. Esegui in ordine: 
+   - `libri.sql`
+   - `utenti.sql`
+   - `librerie.sql`
+   - `libreria_libro.sql`
+   - `consigli.sql`
+   - `valutazioni.sql`
+6. Assicurati di inserire all'avvio del server le credenziali corrette.
 
 ---
 

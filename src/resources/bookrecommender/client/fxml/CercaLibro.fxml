@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
     <children>
         <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="55.0" styleClass="indietro" />
-        <MenuButton fx:id="MenuTipoRicerca" layoutX="69.0" layoutY="99.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="186.0" styleClass="sceltaRicerca" text="Tipologia ricerca">
+        <MenuButton fx:id="MenuTipoRicerca" layoutX="50.0" layoutY="99.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="186.0" styleClass="sceltaRicerca" text="Tipologia ricerca">
             <items>
-                <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" styleClass="sceltaRicerca" text="Titolo" />
-                <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" styleClass="sceltaRicerca" text="Autore" />
-                <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" styleClass="sceltaRicerca" text="Autore e Anno di Pubblicazione" />
+                <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" styleClass="sceltaRicerca" text="Titolo" />
+                <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore" />
+                <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore e Anno di Pubblicazione" />
             </items>
         </MenuButton>
-        <TextField fx:id="campoRicercaAnno" layoutX="69.0" layoutY="157.0" onKeyPressed="#keyEnterPressed_2" prefHeight="27.0" prefWidth="186.0" promptText="Anno.." styleClass="barraRicerca" />
-          <ListView fx:id="listaLibri" layoutX="264.0" layoutY="157.0" onMouseClicked="#handleListaDoppioClick" opacity="0.87" prefHeight="255.0" prefWidth="479.0" styleClass="lista" />
+        <TextField fx:id="campoRicercaAnno" layoutX="50.0" layoutY="157.0" onKeyPressed="#keyEnterPressed_2" prefHeight="27.0" prefWidth="186.0" promptText="Anno.." styleClass="barraRicerca" />
+        <TableView fx:id="tableView" layoutX="249.0" layoutY="157.0" prefHeight="255.0" prefWidth="494.0" styleClass="lista">
+            <columns>
+                <TableColumn fx:id="titoloCol" editable="false" prefWidth="263.0" text="Titolo" />
+                <TableColumn fx:id="autoreCol" editable="false" prefWidth="105.0" text="Autore" />
+                <TableColumn fx:id="annoCol" editable="false" prefWidth="52.5" text="Anno" />
+                <TableColumn fx:id="recensioniCol" editable="false" prefWidth="72.5" text="Recensioni" />
+            </columns>
+        </TableView>
       <Text layoutX="316.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Cerca Libro" />
-          <TextField fx:id="campoRicerca" layoutX="264.0" layoutY="99.0" onKeyPressed="#keyEnterPressed_1" prefHeight="31.0" prefWidth="479.0" promptText="Cerca un libro..." styleClass="barraRicerca">
+          <TextField fx:id="campoRicerca" layoutX="249.0" layoutY="99.0" onKeyPressed="#keyEnterPressed_1" prefHeight="31.0" prefWidth="494.0" promptText="Cerca un libro..." styleClass="barraRicerca">
               <font>
                   <Font name="Century Gothic" size="1.0" />
               </font>
