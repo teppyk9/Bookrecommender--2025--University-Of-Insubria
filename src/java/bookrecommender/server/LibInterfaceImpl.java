@@ -103,4 +103,9 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
         return dbManager.modificaNomeLibreria(token, oldName, newName);
     }
+
+    @Override
+    public boolean isLibPresent(Token token, Libro libro) throws RemoteException {
+        return dbManager.utenteContieneLibro(token.getUserId(), libro.getId());
+    }
 }

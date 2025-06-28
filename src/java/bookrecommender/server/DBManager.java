@@ -568,6 +568,10 @@ public class DBManager {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
             return false;
         }
+        if(!utenteContieneLibro(token.getUserId(), valutazione.getIdLibro())) {
+            logger.log(Level.WARNING, "L'utente con ID: " + token.getUserId() + " non ha il libro con ID: " + valutazione.getIdLibro() + " nelle sue librerie.");
+            return false;
+        }
         List<String> commenti = valutazione.getCommenti();
         List<Float> valutazioni = valutazione.getValutazioni();
         String insertQuery = """
@@ -789,5 +793,49 @@ public class DBManager {
             logger.log(Level.SEVERE, "Errore durante la modifica del nome della libreria \"" + nomeAttuale + "\" per utente id " + token.getUserId(), e);
             return false;
         }
+    }
+
+    public boolean utenteContieneLibro(int userId, int bookId){
+        String sql = """
+                SELECT EXISTS (
+                SELECT 1
+                FROM librerie l
+                JOIN libreria_libro ll ON l.id = ll.idlibreria
+                WHERE l.id_utente = ? AND ll.idlibro = ?
+                )""";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setInt(2, bookId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBoolean(1);
+                }
+            }
+        }catch(SQLException e){
+            logger.log(Level.SEVERE, "Errore nel controllo se l'utente con ID: " + userId + " contiene il libro con ID: " + bookId, e);
+        }
+        return false;
+    }
+
+    public boolean haValConsAss(int idLibro){
+        String sql = """
+                SELECT
+                ( EXISTS (SELECT 1 FROM valutazioni WHERE idlibro = ?)
+                OR EXISTS (SELECT 1 FROM consigli WHERE idlibro = ?)
+                ) AS presente
+                """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idLibro);
+            ps.setInt(2, idLibro);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBoolean("presente");
+                }
+            }
+        }catch(SQLException e){
+            logger.log(Level.SEVERE, "Errore nel controllo se il libro con ID: " + idLibro + " ha valutazioni, consigli o associazioni", e);
+        }
+        return false;
     }
 }

@@ -13,4 +13,5 @@ public interface LibInterface extends Remote {
     boolean addValutazione (Token token, Valutazione valutazione) throws RemoteException;
     boolean addConsiglio (Token token, List<Libro> libri) throws RemoteException;
     boolean modifyLibName (Token token, String oldName, String newName) throws RemoteException;
+    boolean isLibPresent (Token token, Libro libro) throws RemoteException;
 }

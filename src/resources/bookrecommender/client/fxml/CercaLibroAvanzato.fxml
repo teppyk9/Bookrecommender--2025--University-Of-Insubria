@@ -6,6 +6,8 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -18,28 +20,59 @@
               <Font size="17.0" />
           </font>
       </Text>
-       <ListView fx:id="listaLibri" layoutX="422.0" layoutY="175.0" onMouseClicked="#handleListaDoppioClick_1" prefHeight="237.0" prefWidth="337.0" styleClass="lista" />
-       <ListView fx:id="ListaLibrerie" layoutX="38.0" layoutY="175.0" onMouseClicked="#handleListaDoppioClick_2" prefHeight="237.0" prefWidth="337.0" styleClass="lista" />
-   <Button fx:id="BottoneCreaLibreria" layoutX="99.0" layoutY="94.0" mnemonicParsing="false" onAction="#CreaLibreria" styleClass="bottone" text="Crea Libreria" />
-          <Button fx:id="BottoneAggiorna" layoutX="226.0" layoutY="94.0" mnemonicParsing="false" onAction="#aggiornaListaLibrerie" prefHeight="31.0" prefWidth="107.0" styleClass="bottone" text="Aggiorna" />
-   <Separator layoutX="376.0" layoutY="61.0" orientation="VERTICAL" prefHeight="385.0" prefWidth="46.0" />
-   <Text fx:id="Titolo_Librerie1" layoutX="99.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descrizione" text="Visualizza le tue librerie" textAlignment="CENTER" wrappingWidth="215.50003051757812">
+       <ListView fx:id="ListaLibrerie" layoutX="38.0" layoutY="175.0" onMouseClicked="#handleListaDoppioClick_2" prefHeight="237.0" prefWidth="141.0" styleClass="lista" />
+   <Button fx:id="BottoneCreaLibreria" layoutX="38.0" layoutY="78.0" mnemonicParsing="false" onAction="#CreaLibreria" styleClass="bottone" text="Crea Libreria" />
+          <Button fx:id="BottoneAggiorna" layoutX="38.0" layoutY="119.0" mnemonicParsing="false" onAction="#aggiornaListaLibrerie" prefHeight="31.0" prefWidth="107.0" styleClass="bottone" text="Aggiorna" />
+   <Separator layoutX="207.0" layoutY="45.0" orientation="VERTICAL" prefHeight="385.0" prefWidth="46.0" />
+   <Text fx:id="Titolo_Librerie1" layoutX="14.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="descrizione" text="Visualizza le tue librerie" textAlignment="CENTER" wrappingWidth="215.50003051757812">
       <font>
          <Font size="17.0" />
       </font>
    </Text>
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="422.0" layoutY="79.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="295.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="326.0" layoutY="82.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="267.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
           <items>
-              <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" onAction="#cercaTitolo" text="Titolo" />
-              <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" onAction="#cercaAutore" text="Autore" />
-              <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" onAction="#cercaAutoreAnno" text="Autore e anno di pubblicazione" />
+              <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
+              <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
+              <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" text="Autore e anno di pubblicazione" />
           </items>
       </MenuButton>
-      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="725.0" layoutY="81.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="33.0" styleClass="cerca">
+      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="657.0" layoutY="81.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="33.0" styleClass="cerca">
           <opaqueInsets>
               <Insets />
           </opaqueInsets>
       </Button>
-      <TextField fx:id="campoRicercaAnno" layoutX="688.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="70.0" promptText="Anno..." styleClass="barraRicerca" />
-      <TextField fx:id="campoRicerca" layoutX="422.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="barraRicerca" />
+      <TextField fx:id="campoRicercaAnno" layoutX="615.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="70.0" promptText="Anno..." styleClass="barraRicerca" />
+      <TextField fx:id="campoRicerca" layoutX="326.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="barraRicerca" />
+    <TableView
+            fx:id="tableView"
+            layoutX="256.0" layoutY="175.0"
+            prefHeight="237.0" prefWidth="503.0">
+        <columns>
+            <TableColumn
+                    fx:id="titoloCol"
+                    text="Titolo"
+                    prefWidth="237.0"
+                    editable="false" />
+            <TableColumn
+                    fx:id="autoreCol"
+                    text="Autore"
+                    prefWidth="86.0"
+                    editable="false" />
+            <TableColumn
+                    fx:id="annoCol"
+                    text="Anno"
+                    prefWidth="54.5"
+                    editable="false" />
+            <TableColumn
+                    fx:id="recensioniCol"
+                    text="Recensioni"
+                    prefWidth="66.5"
+                    editable="false" />
+            <TableColumn
+                    fx:id="aggiungiCol"
+                    text="Aggiungi"
+                    prefWidth="58.0"
+                    editable="false" />
+        </columns>
+    </TableView>
 </AnchorPane>

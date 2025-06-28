@@ -94,4 +94,9 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
         } catch (ServerNotActiveException ignored) {}
         return dbManager.cercaTuttiLibriUtente(token);
     }
+
+    @Override
+    public boolean hasValRec(Libro libro) throws RemoteException {
+        return dbManager.haValConsAss(libro.getId());
+    }
 }
