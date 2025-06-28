@@ -1,13 +1,16 @@
 .background {
-   -fx-background-color: #A31621;
+    -fx-background-color: #FCF7F8;
+    -fx-background-image: url('../icons/copertina.jpeg');
+
 }
 
 .box {
-    -fx-background-color: #FCF7F8;
+    -fx-background-color: #A31621; /* Semi-transparent overlay */
+
 
 }
 .titolo {
-    -fx-text-fill: #A31621;
+    -fx-text-fill: #FCF7F8;
     -fx-font-size: 35px;
     -fx-font-weight: bold;
     -fx-font-family: "Century Gothic";
@@ -16,12 +19,13 @@
 }
 
 .bottone{
-    -fx-background-color:  #A31621;
-    -fx-text-fill: #FCF7F8;
+    -fx-background-color:  #FCF7F8;
+    -fx-text-fill: #A31621;
     -fx-background-radius: 6px;
     -fx-padding: 8 16;
     -fx-font-size: 15px;
     -fx-font-family: "Century Gothic";
+
 }
 .bottone:hover {
     -fx-font-weight: bold;
@@ -30,7 +34,10 @@
 
 
 .descrizione{
-    -fx-text-fill: #b3424b;
+    -fx-text-fill: #FCF7F8;
     -fx-font-family: "Century Gothic", "Harlow Solid Italic";
     -fx-font-size: 14px;
 }
+
+
+
