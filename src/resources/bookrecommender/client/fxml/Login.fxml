@@ -3,58 +3,29 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.LoginController">
    <children>
-      <VBox alignment="CENTER" layoutX="217.0" prefHeight="450.0" prefWidth="366.0">
-         <children>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="78.0" prefWidth="366.0" styleClass="titolo" text="LOGIN" textAlignment="CENTER" />
-            <SplitPane dividerPositions="0.29797979797979796" prefHeight="50.0" prefWidth="326.0" styleClass="split">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="108.0" styleClass="etichetta" text="Username" />
-                     </children>
-                  </AnchorPane>
-                <AnchorPane prefHeight="50.0" prefWidth="160.0">
-                     <children>
-                        <TextField fx:id="UsernameField" layoutY="2.0" prefHeight="38.0" prefWidth="177.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-              </items>
-            </SplitPane>
-            <SplitPane dividerPositions="0.298" prefHeight="50.0" prefWidth="407.0" styleClass="split">
-               <items>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="48.0" prefWidth="106.0">
-                     <children>
-                        <Label contentDisplay="CENTER" layoutX="1.0" layoutY="-6.0" prefHeight="47.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="35.0" prefWidth="197.0">
-                     <children>
-                        <PasswordField fx:id="PasswordField" layoutY="2.0" onKeyPressed="#EnterController" prefHeight="38.0" prefWidth="177.0" styleClass="field" />
-                     </children>
-                  </AnchorPane>
-               </items>
-            </SplitPane>
-            <Button fx:id="AccediButton" mnemonicParsing="false" onAction="#TryLogin" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Accedi" />
-            <Label fx:id="NonHaiUnAccountFiled" alignment="CENTER" onMouseClicked="#GoToRegisterPage" prefHeight="66.0" prefWidth="316.0" styleClass="reg" text="Non hai ancora un account? Registrati qui" textAlignment="CENTER">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font></Label>
-            <Text fx:id="ErrorToLogin" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errore" text="Username o Passowrd Errati!" textAlignment="CENTER">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-         </children>
-      </VBox>
-      <Button fx:id="GoBackButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="49.0" styleClass="indietro" />
+      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="49.0" styleClass="indietro" />
+      <Label contentDisplay="CENTER" layoutX="235.0" layoutY="132.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" />
+      <TextField fx:id="UsernameField" layoutX="340.0" layoutY="130.0" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
+      <Label contentDisplay="CENTER" layoutX="235.0" layoutY="206.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
+      <PasswordField fx:id="PasswordField" layoutX="340.0" layoutY="200.0" onKeyPressed="#EnterController" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
+      <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="61.0" prefHeight="33.0" prefWidth="366.0" styleClass="titolo" text="LOGIN" textAlignment="CENTER" />
+      <Button fx:id="AccediButton" layoutX="341.0" layoutY="266.0" mnemonicParsing="false" onAction="#TryLogin" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Accedi" />
+      <Label fx:id="NonHaiUnAccountFiled" alignment="CENTER" layoutX="242.0" layoutY="314.0" onMouseClicked="#GoToRegisterPage" prefHeight="66.0" prefWidth="316.0" styleClass="reg" text="Non hai ancora un account? Registrati qui" textAlignment="CENTER">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Text fx:id="ErrorToLogin" fill="WHITE" layoutX="278.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errore" text="Username o Passowrd Errati!" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
