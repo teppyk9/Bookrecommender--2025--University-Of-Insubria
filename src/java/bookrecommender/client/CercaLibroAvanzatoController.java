@@ -37,6 +37,7 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     @FXML private Button BottoneCreaLibreria;
 
     private String searchType = "";
+    private boolean privateSearch = false;
 
     public void initialize() {
         initTableColumns();
@@ -159,7 +160,11 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     @Override
     protected List<Libro> searchByTitle(String testo){
         try{
-            return CliUtil.getInstance().getSearchService().searchByName(testo);
+            if(privateSearch) {
+                return CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo);
+            }else {
+                return CliUtil.getInstance().getSearchService().searchByName(testo);
+            }
         }catch(RemoteException e){
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
@@ -169,7 +174,11 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     @Override
     protected List<Libro> searchByAuthor(String testo){
         try{
-            return CliUtil.getInstance().getSearchService().searchByAuthor(testo);
+            if(privateSearch) {
+                return CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo);
+            }else {
+                return CliUtil.getInstance().getSearchService().searchByAuthor(testo);
+            }
         }catch(RemoteException e){
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
@@ -179,7 +188,11 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     @Override
     protected List<Libro> searchByAuthorAndYear(String testo, int anno){
         try{
-            return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
+            if(privateSearch) {
+                return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno);
+            }else {
+                return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
+            }
         }catch(RemoteException e){
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
@@ -223,4 +236,7 @@ public class CercaLibroAvanzatoController extends SearchEngine{
         CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
     }
 
+    public void setRicerca() {
+        privateSearch = !privateSearch;
+    }
 }
