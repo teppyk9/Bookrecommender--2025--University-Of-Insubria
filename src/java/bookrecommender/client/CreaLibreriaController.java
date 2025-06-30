@@ -1,32 +1,34 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreaLibreriaController extends AbstractSearchController {
+public class CreaLibreriaController extends SearchEngine {
+    @FXML private TreeTableView <Libro>tableView;
+    @FXML private TreeTableColumn <Libro, String> titoloCol;
+    @FXML private TreeTableColumn <Libro, String>autoreCol;
+    @FXML private TreeTableColumn <Libro, Integer> annoCol;
+    @FXML private TreeTableColumn <Libro, Void> azioniCol;
+    @FXML private TreeTableView <Libro> risTableView;
+    @FXML private TreeTableColumn <Libro, String> risTitoloCol;
+    @FXML private TreeTableColumn <Libro, String> risAutoreCol;
+    @FXML private TreeTableColumn <Libro, Integer> risAnnoCol;
+    @FXML private TreeTableColumn <Libro, Void> risAzioniCol;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
     @FXML private MenuItem MenuCercaTitolo;
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
-    @FXML private ListView<Libro> listaLibri;
 
     @FXML private Button BottoneSalvaLibreria;
     @FXML private Button ExitButton;
-    @FXML private ListView<Libro> ListaLibrerie;
     @FXML private TextField NomeLibreria;
 
     private String searchType = "";
@@ -35,7 +37,11 @@ public class CreaLibreriaController extends AbstractSearchController {
     @FXML
     public void initialize() {
         libriLibreria = new ArrayList<>();
-        initCommon();
+        initBasicSearch();
+        initSAddRemCol();
+        initOActionCol(false);
+        initOTableView();
+        initTreeTableViews();
     }
 
     @Override protected TextField getCampoRicerca(){
@@ -46,37 +52,35 @@ public class CreaLibreriaController extends AbstractSearchController {
         return campoRicercaAnno;
     }
 
-    @Override protected ListView<Libro> getListaRisultati(){
-        return listaLibri;
-    }
-
     @Override protected String getSearchType(){
         return searchType;
     }
 
-    @Override protected void setSearchType(String type){
-        this.searchType = type;
-    }
+    @Override protected void setSearchType(String type){this.searchType = type;}
+
+    @Override protected TreeTableView<Libro> getSTreeTableView() {return tableView;}
+
+    @Override protected TreeTableColumn<Libro, String> getSTitoloCol() {return titoloCol;}
+
+    @Override protected TreeTableColumn<Libro, String> getSAutoreCol() {return autoreCol;}
+
+    @Override protected TreeTableColumn<Libro, Integer> getSAnnoCol() {return annoCol;}
+
+    @Override protected TreeTableColumn<Libro, Void> getSRecensioniCol() {return null;}
+
+    @Override protected TreeTableColumn<Libro, Void> getSAggiungiAdvCol() {return null;}
+
+    @Override protected TreeTableColumn<Libro, Void> getSAddRemCol() {return azioniCol;}
 
     @Override protected MenuButton getMenuTipoRicerca(){
         return MenuTipoRicerca;
     }
 
-    @Override protected MenuItem getItemTitolo(){
-        return MenuCercaTitolo;
-    }
+    @Override protected MenuItem getMenuCercaTitolo() {return MenuCercaTitolo;}
 
-    @Override protected MenuItem getItemAutore(){
-        return MenuCercaAutore;
-    }
+    @Override protected MenuItem getMenuCercaAutore() {return MenuCercaAutore;}
 
-    @Override protected MenuItem getItemAutoreAnno(){
-        return MenuCercaAutoreAnno;
-    }
-
-    @Override protected void mostraDettagli(Libro libro){
-        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, libro);
-    }
+    @Override protected MenuItem getMenuCercaAutoreAnno() {return MenuCercaAutoreAnno;}
 
     @Override
     protected List<Libro> searchByTitle(String testo){
@@ -108,42 +112,15 @@ public class CreaLibreriaController extends AbstractSearchController {
         }
     }
 
-    @FXML
-    private void handleListaDoppioClick_1(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            Libro selezionato = listaLibri.getSelectionModel().getSelectedItem();
-            if (selezionato != null) {
-                mostraDettagli(selezionato);
-            }
-        }
-    }
+    @Override protected TreeTableView<Libro> getOTreeTableView() {return risTableView;}
 
-    @FXML
-    private void handleListaDoppioClick_2(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            Libro sel = ListaLibrerie.getSelectionModel().getSelectedItem();
-            if (sel != null)
-                listaLibri.setItems(FXCollections.observableArrayList(libriLibreria));
-        }
-    }
+    @Override protected TreeTableColumn<Libro, String> getOTitoloCol() {return risTitoloCol;}
 
-    @FXML
-    private void AggiungiLibro() {
-        Libro sel = listaLibri.getSelectionModel().getSelectedItem();
-        if (sel != null && !libriLibreria.contains(sel)) {
-            libriLibreria.add(sel);
-            ListaLibrerie.setItems(FXCollections.observableArrayList(libriLibreria));
-        }
-    }
+    @Override protected TreeTableColumn<Libro, String> getOAutoreCol() {return risAutoreCol;}
 
-    @FXML
-    private void RimuoviLibro() {
-        Libro sel = ListaLibrerie.getSelectionModel().getSelectedItem();
-        if (sel != null) {
-            libriLibreria.remove(sel);
-            ListaLibrerie.setItems(FXCollections.observableArrayList(libriLibreria));
-        }
-    }
+    @Override protected TreeTableColumn<Libro, Integer> getOAnnoCol() {return risAnnoCol;}
+
+    @Override protected TreeTableColumn<Libro, Void> getOActionCol() {return risAzioniCol;}
 
     @FXML
     private void SalvaLibreria() {

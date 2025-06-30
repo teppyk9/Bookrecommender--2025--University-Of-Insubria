@@ -42,6 +42,7 @@ public abstract class SearchEngine {
     protected abstract TreeTableColumn<Libro, String> getOTitoloCol();
     protected abstract TreeTableColumn<Libro, String> getOAutoreCol();
     protected abstract TreeTableColumn<Libro, Integer> getOAnnoCol();
+    protected abstract TreeTableColumn<Libro, Void> getOActionCol();
 
     protected void initBasicSearch() {
         getSTreeTableView().setShowRoot(false);
@@ -132,7 +133,6 @@ public abstract class SearchEngine {
                     } catch (RemoteException e) {
                         CliUtil.getInstance().createAlert("Errore","Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
                     }
-                    CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, l);
                 });
                 libreria.setOnAction(evt -> {
                     Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
@@ -151,20 +151,141 @@ public abstract class SearchEngine {
 
     protected void initSAddRemCol(){
         getSAddRemCol().setCellFactory(col -> new TreeTableCell<>() {
+            private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png") ), 16, 16, true, true)));
+            {
+                MenuItem aggiungi = new MenuItem("Aggiungi");
+                MenuItem rimuovi = new MenuItem("Rimuovi");
+                menu.getItems().addAll(aggiungi, rimuovi);
+
+                aggiungi.setOnAction(evt -> {
+                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                    if(!containsLibro(getOTreeTableView().getRoot(),l)) { //errore sulla rimozione
+                        if (getOTreeTableView().getRoot() == null) {
+                            TreeItem<Libro> rootItem = new TreeItem<>();
+                            getOTreeTableView().setRoot(rootItem);
+                        }
+                        getOTreeTableView().getRoot().getChildren().add(new TreeItem<>(l));
+                    }
+                });
+                rimuovi.setOnAction(evt -> {
+                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                    if(containsLibro(getOTreeTableView().getRoot(), l))
+                        getOTreeTableView().getRoot().getChildren().removeIf(item -> item.getValue().equals(l));
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : menu);
+                setAlignment(Pos.CENTER);
+            }
         });
     }
 
-    protected void initTreeTableViewSearch(){
-        getSTreeTableView().setRowFactory(tv -> {
-            TreeTableRow<Libro> row = new TreeTableRow<>();
-            row.setOnMouseClicked(evt -> {
-                if (evt.getClickCount() == 2 && !row.isEmpty()) {
-                    Libro sel = row.getItem();
-                    CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, sel);
+    /**
+     * Inizializza la colonna di azione (OActionCol) impostandone il CellFactory in base al tipo di menu desiderato.
+     * <ul>
+     *   <li>Se <code>type</code> è <code>true</code>, ogni cella conterrà un <code>MenuButton</code>
+     *       con le voci:
+     *       <ul>
+     *         <li><strong>Valuta</strong>: apre la finestra per inserire una valutazione sul libro corrente;</li>
+     *         <li><strong>Crea Consiglio</strong>: apre la finestra per creare un consiglio sul libro corrente;</li>
+     *         <li><strong>Rimuovi</strong>: rimuove il libro corrente dal <code>TreeTableView</code>.</li>
+     *       </ul>
+     *       L'icona mostrata è una freccia rivolta verso il basso.</li>
+     *   <li>Se <code>type</code> è <code>false</code>, ogni cella avrà solo la voce:
+     *       <ul>
+     *         <li><strong>Rimuovi</strong>: rimuove il libro corrente dal <code>TreeTableView</code>.</li>
+     *       </ul>
+     *       L'icona mostrata è un cerchio rosso con meno.</li>
+     * </ul>
+     * In entrambi i casi, l'aggiornamento della grafica della cella avviene nel metodo
+     * <code>updateItem(Void, boolean)</code>, che imposta allineamento e graphic a seconda che la cella sia vuota.
+     *
+     * @param type se <code>true</code> viene creato un menu completo (valuta, consiglia, rimuovi);
+     *             se <code>false</code> viene creato un menu minimale (solo rimuovi)
+     */
+    protected void initOActionCol(boolean type){
+        if(type){
+            getOActionCol().setCellFactory(col -> new TreeTableCell<>() {
+                private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png") ), 16, 16, true, true)));
+                {
+                    MenuItem valuta = new MenuItem("Valuta");
+                    MenuItem consiglia = new MenuItem("Crea Consiglio");
+                    MenuItem rimuovi = new MenuItem("Rimuovi");
+                    menu.getItems().addAll(valuta, consiglia, rimuovi);
+
+                    valuta.setOnAction(evt -> {
+                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                        CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, l);
+                    });
+
+                    consiglia.setOnAction(evt -> {
+                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                        CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, l);
+                    });
+
+                    rimuovi.setOnAction(evt -> {
+                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                        if(containsLibro(getOTreeTableView().getRoot(), l))
+                            getOTreeTableView().getRoot().getChildren().removeIf(item -> item.getValue().equals(l));
+                    });
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setGraphic(empty ? null : menu);
+                    setAlignment(Pos.CENTER);
                 }
             });
-            return row;
+        } else {
+            getOActionCol().setCellFactory(col -> new TreeTableCell<>() {
+                private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/minus-circle-red.png") ), 16, 16, true, true)));
+                {
+                    MenuItem rimuovi = new MenuItem("Rimuovi");
+                    menu.getItems().add(rimuovi);
+
+                    rimuovi.setOnAction(evt -> {
+                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                        if(containsLibro(getOTreeTableView().getRoot(), l))
+                            getOTreeTableView().getRoot().getChildren().removeIf(item -> item.getValue().equals(l));
+                    });
+                }
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setGraphic(empty ? null : menu);
+                    setAlignment(Pos.CENTER);
+                }
+            });
+        }
+    }
+
+    protected void initOTableView() {
+        getOTreeTableView().setShowRoot(false);
+        getOTitoloCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue().getTitolo()));
+        getOAutoreCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue().getAutore()));
+        getOAnnoCol().setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>((int) cellData.getValue().getValue().getAnnoPubblicazione()));
+    }
+
+    protected void initTreeTableViews(){
+        getSTreeTableView().setRowFactory(tv -> initTables());
+        if(getOTreeTableView() != null){
+            getOTreeTableView().setRowFactory(tv -> initTables());
+        }
+    }
+
+    private TreeTableRow<Libro> initTables(){
+        TreeTableRow<Libro> row = new TreeTableRow<>();
+        row.setOnMouseClicked(evt -> {
+            if (evt.getClickCount() == 2 && !row.isEmpty()) {
+                Libro sel = row.getItem();
+                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, sel);
+            }
         });
+        return row;
     }
 
     private void switchType(String key, String text) {
@@ -240,5 +361,20 @@ public abstract class SearchEngine {
             return false;
         }
         return true;
+    }
+
+    private boolean containsLibro(TreeItem<Libro> node, Libro target) {
+        if (node == null || target == null) {
+            return false;
+        }
+        if (node.getValue().equals(target)) {
+            return true; //errore sulla rimozione
+        }
+        for (TreeItem<Libro> child : node.getChildren()) {
+            if (containsLibro(child, target)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

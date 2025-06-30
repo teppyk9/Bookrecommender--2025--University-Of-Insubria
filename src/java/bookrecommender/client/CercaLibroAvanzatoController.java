@@ -37,7 +37,7 @@ public class CercaLibroAvanzatoController extends SearchEngine{
         initBasicSearch();
         initSRecensioniCol();
         initSAggiungiAdvCol();
-        initTreeTableViewSearch();
+        initTreeTableViews();
         aggiornaListaLibrerie();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCreaLibreria.getScene().getWindow();
@@ -181,6 +181,9 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     protected TreeTableColumn<Libro, Integer> getOAnnoCol() {
         return null;
     }
+
+    @Override
+    protected TreeTableColumn<Libro, Void> getOActionCol() {return null;}
 
     @FXML
     private void aggiornaListaLibrerie() {

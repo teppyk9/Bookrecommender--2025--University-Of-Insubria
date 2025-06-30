@@ -31,7 +31,7 @@ public class CercaLibroController extends SearchEngine{
     public void initialize() {
         initBasicSearch();
         initSRecensioniCol();
-        initTreeTableViewSearch();
+        initTreeTableViews();
         Platform.runLater(() -> {
             Stage stage = (Stage) MenuTipoRicerca.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
@@ -165,6 +165,9 @@ public class CercaLibroController extends SearchEngine{
     protected TreeTableColumn<Libro, Integer> getOAnnoCol() {
         return null;
     }
+
+    @Override
+    protected TreeTableColumn<Libro, Void> getOActionCol() {return null;}
 
     @FXML
     private void GoToMainMenu() {

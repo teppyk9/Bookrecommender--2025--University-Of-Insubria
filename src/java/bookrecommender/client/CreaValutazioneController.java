@@ -2,6 +2,7 @@ package bookrecommender.client;
 
 import bookrecommender.common.Libro;
 import bookrecommender.common.Valutazione;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -55,6 +56,7 @@ public class CreaValutazioneController {
     private Libro libro;
 
     public void initialize() {
+        messaggioErrore.setText("");
         configuraValutazione(List.of(starStile1, starStile2, starStile3, starStile4, starStile5), votoStile);
         configuraValutazione(List.of(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5), votoContenuto);
         configuraValutazione(List.of(starGradevolezza1, starGradevolezza2, starGradevolezza3, starGradevolezza4, starGradevolezza5), votoGradevolezza);
@@ -67,8 +69,13 @@ public class CreaValutazioneController {
     }
 
     public void SalvaValutazione() {
-        if (Integer.parseInt(votoStile.getText()) == 0 || Integer.parseInt(votoContenuto.getText()) == 0 || Integer.parseInt(votoGradevolezza.getText()) == 0 ||
-                Integer.parseInt(votoOriginalita.getText()) == 0 || Integer.parseInt(votoEdizione.getText()) == 0) {
+        try {
+            if (Integer.parseInt(votoStile.getText()) == 0 || Integer.parseInt(votoContenuto.getText()) == 0 || Integer.parseInt(votoGradevolezza.getText()) == 0 ||
+                    Integer.parseInt(votoOriginalita.getText()) == 0 || Integer.parseInt(votoEdizione.getText()) == 0) {
+                messaggioErrore.setText("Completa tutte le valutazioni prima di salvare.");
+                return;
+            }
+        }catch (NumberFormatException e) {
             messaggioErrore.setText("Completa tutte le valutazioni prima di salvare.");
             return;
         }
@@ -111,6 +118,7 @@ public class CreaValutazioneController {
             stella.setOnMouseEntered(e -> aggiornaStelle(index + 1, stelle));
             stella.setOnMouseExited(e -> aggiornaStelle(valore[0], stelle));
             stella.setOnMouseClicked(e -> {
+                resetMessaggioErrore();
                 valore[0] = index + 1;
                 labelVoto.setText(String.valueOf(valore[0]));
                 aggiornaStelle(valore[0], stelle);
@@ -118,4 +126,8 @@ public class CreaValutazioneController {
         }
     }
 
+    @FXML
+    private void resetMessaggioErrore() {
+        messaggioErrore.setText("");
+    }
 }
