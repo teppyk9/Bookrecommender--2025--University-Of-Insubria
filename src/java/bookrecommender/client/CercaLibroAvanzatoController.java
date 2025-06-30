@@ -1,21 +1,15 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Objects;
 
 public class CercaLibroAvanzatoController extends SearchEngine{
 
@@ -26,12 +20,12 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
 
-    @FXML private TableView<Libro> tableView;
-    @FXML private TableColumn<Libro, String> titoloCol;
-    @FXML private TableColumn<Libro, String> autoreCol;
-    @FXML private TableColumn<Libro, Integer> annoCol;
-    @FXML private TableColumn<Libro, Void> recensioniCol;
-    @FXML private TableColumn<Libro, Void> aggiungiCol;
+    @FXML private TreeTableView<Libro> tableView;
+    @FXML private TreeTableColumn<Libro, String> titoloCol;
+    @FXML private TreeTableColumn<Libro, String> autoreCol;
+    @FXML private TreeTableColumn<Libro, Integer> annoCol;
+    @FXML private TreeTableColumn<Libro, Void> recensioniCol;
+    @FXML private TreeTableColumn<Libro, Void> aggiungiCol;
 
     @FXML private ListView<String> ListaLibrerie;
     @FXML private Button BottoneCreaLibreria;
@@ -40,45 +34,10 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     private boolean privateSearch = false;
 
     public void initialize() {
-        initTableColumns();
-        aggiungiCol.setCellFactory(col -> new TableCell<>() {
-            private final Button btn = new Button();
-            {
-                btn.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/plus-circle-green.png")), 16, 16, true, true)));
-                btn.setStyle("-fx-background-color: transparent;");
-                btn.setOnMouseEntered(e -> {
-                    ScaleTransition st = new ScaleTransition(Duration.millis(100), btn);
-                    st.setToX(1.2);
-                    st.setToY(1.2);
-                    st.playFromStart();
-                });
-                btn.setOnMouseExited(e -> {
-                    ScaleTransition st = new ScaleTransition(Duration.millis(100), btn);
-                    st.setToX(1.0);
-                    st.setToY(1.0);
-                    st.playFromStart();
-                });
-                btn.setOnAction(evt -> {
-                    Libro libro = getTableView().getItems().get(getIndex());
-                    try {
-                        if(CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), libro))
-                            CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, libro);
-                        else{
-                            CliUtil.getInstance().createAlert("Errore", "Il libro non è presente in nessuna libreria.").showAndWait();
-                        }
-                    } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore", "Impossibile aggiungere il libro: " + e.getMessage()).showAndWait();
-                    }
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
-                setAlignment(Pos.CENTER);
-            }
-
-        });
+        initBasicSearch();
+        initSRecensioniCol();
+        initSAggiungiAdvCol();
+        initTreeTableViewSearch();
         aggiornaListaLibrerie();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCreaLibreria.getScene().getWindow();
@@ -133,39 +92,47 @@ public class CercaLibroAvanzatoController extends SearchEngine{
     }
 
     @Override
-    protected TableView<Libro> getTableView() {
+    protected TreeTableView<Libro> getSTreeTableView() {
         return tableView;
     }
 
     @Override
-    protected TableColumn<Libro, String> getTitoloCol() {
+    protected TreeTableColumn<Libro, String> getSTitoloCol() {
         return titoloCol;
     }
 
     @Override
-    protected TableColumn<Libro, String> getAutoreCol() {
+    protected TreeTableColumn<Libro, String> getSAutoreCol() {
         return autoreCol;
     }
 
     @Override
-    protected TableColumn<Libro, Integer> getAnnoCol() {
+    protected TreeTableColumn<Libro, Integer> getSAnnoCol() {
         return annoCol;
     }
 
     @Override
-    protected TableColumn<Libro, Void> getRecensioniCol() {
+    protected TreeTableColumn<Libro, Void> getSRecensioniCol() {
         return recensioniCol;
     }
 
     @Override
+    protected TreeTableColumn<Libro, Void> getSAggiungiAdvCol() {
+        return aggiungiCol;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, Void> getSAddRemCol() {
+        return null;
+    }
+
+    @Override
     protected List<Libro> searchByTitle(String testo){
-        try{
-            if(privateSearch) {
-                return CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo);
-            }else {
-                return CliUtil.getInstance().getSearchService().searchByName(testo);
-            }
-        }catch(RemoteException e){
+        try {
+            return privateSearch
+                    ? CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo)
+                    : CliUtil.getInstance().getSearchService().searchByName(testo);
+        } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
         }
@@ -173,13 +140,11 @@ public class CercaLibroAvanzatoController extends SearchEngine{
 
     @Override
     protected List<Libro> searchByAuthor(String testo){
-        try{
-            if(privateSearch) {
-                return CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo);
-            }else {
-                return CliUtil.getInstance().getSearchService().searchByAuthor(testo);
-            }
-        }catch(RemoteException e){
+        try {
+            return privateSearch
+                    ? CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo)
+                    : CliUtil.getInstance().getSearchService().searchByAuthor(testo);
+        } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
         }
@@ -187,16 +152,34 @@ public class CercaLibroAvanzatoController extends SearchEngine{
 
     @Override
     protected List<Libro> searchByAuthorAndYear(String testo, int anno){
-        try{
-            if(privateSearch) {
-                return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno);
-            }else {
-                return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
-            }
-        }catch(RemoteException e){
+        try {
+            return privateSearch
+                    ? CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno)
+                    : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
+        } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
         }
+    }
+
+    @Override
+    protected TreeTableView<Libro> getOTreeTableView() {
+        return null;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, String> getOTitoloCol() {
+        return null;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, String> getOAutoreCol() {
+        return null;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, Integer> getOAnnoCol() {
+        return null;
     }
 
     @FXML

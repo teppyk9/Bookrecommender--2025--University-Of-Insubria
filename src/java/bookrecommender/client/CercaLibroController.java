@@ -19,17 +19,19 @@ public class CercaLibroController extends SearchEngine{
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
 
-    @FXML private TableView<Libro> tableView;
-    @FXML private TableColumn<Libro, String> titoloCol;
-    @FXML private TableColumn<Libro, String> autoreCol;
-    @FXML private TableColumn<Libro, Integer> annoCol;
-    @FXML private TableColumn<Libro, Void> recensioniCol;
+    @FXML private TreeTableView<Libro> tableView;
+    @FXML private TreeTableColumn<Libro, String> titoloCol;
+    @FXML private TreeTableColumn<Libro, String> autoreCol;
+    @FXML private TreeTableColumn<Libro, Integer> annoCol;
+    @FXML private TreeTableColumn<Libro, Void> recensioniCol;
 
     private String searchType = "";
 
     @FXML
     public void initialize() {
-        initTableColumns();
+        initBasicSearch();
+        initSRecensioniCol();
+        initTreeTableViewSearch();
         Platform.runLater(() -> {
             Stage stage = (Stage) MenuTipoRicerca.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
@@ -80,28 +82,38 @@ public class CercaLibroController extends SearchEngine{
     }
 
     @Override
-    protected TableView<Libro> getTableView() {
+    protected TreeTableView<Libro> getSTreeTableView() {
         return tableView;
     }
 
     @Override
-    protected TableColumn<Libro, String> getTitoloCol() {
+    protected TreeTableColumn<Libro, String> getSTitoloCol() {
         return titoloCol;
     }
 
     @Override
-    protected TableColumn<Libro, String> getAutoreCol() {
+    protected TreeTableColumn<Libro, String> getSAutoreCol() {
         return autoreCol;
     }
 
     @Override
-    protected TableColumn<Libro, Integer> getAnnoCol() {
+    protected TreeTableColumn<Libro, Integer> getSAnnoCol() {
         return annoCol;
     }
 
     @Override
-    protected TableColumn<Libro, Void> getRecensioniCol() {
+    protected TreeTableColumn<Libro, Void> getSRecensioniCol() {
         return recensioniCol;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, Void> getSAggiungiAdvCol() {
+        return null;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, Void> getSAddRemCol() {
+        return null;
     }
 
     @Override
@@ -132,6 +144,26 @@ public class CercaLibroController extends SearchEngine{
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
         }
+    }
+
+    @Override
+    protected TreeTableView<Libro> getOTreeTableView() {
+        return null;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, String> getOTitoloCol() {
+        return null;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, String> getOAutoreCol() {
+        return null;
+    }
+
+    @Override
+    protected TreeTableColumn<Libro, Integer> getOAnnoCol() {
+        return null;
     }
 
     @FXML

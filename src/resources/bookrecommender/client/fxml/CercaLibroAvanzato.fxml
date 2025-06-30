@@ -7,9 +7,9 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -44,14 +44,14 @@
       </Button>
       <TextField fx:id="campoRicercaAnno" layoutX="615.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="70.0" promptText="Anno..." styleClass="barraRicerca" />
       <TextField fx:id="campoRicerca" layoutX="326.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="barraRicerca" />
-    <TableView fx:id="tableView" layoutX="256.0" layoutY="175.0" prefHeight="237.0" prefWidth="503.0">
-        <columns>
-            <TableColumn fx:id="titoloCol" editable="false" prefWidth="237.0" text="Titolo" />
-            <TableColumn fx:id="autoreCol" editable="false" prefWidth="86.0" text="Autore" />
-            <TableColumn fx:id="annoCol" editable="false" prefWidth="54.5" text="Anno" />
-            <TableColumn fx:id="recensioniCol" editable="false" prefWidth="66.5" text="Recensioni" />
-            <TableColumn fx:id="aggiungiCol" editable="false" prefWidth="58.0" text="Aggiungi" />
-        </columns>
-    </TableView>
    <CheckBox fx:id="checkRicerca" layoutX="593.0" layoutY="42.0" mnemonicParsing="false" onAction="#setRicerca" style="-fx-background-color: white; -fx-background-radius: 6; -fx-border-radius: 6; -fx-border-width: 1; -fx-padding: 2;" text="Cerca nelle tue librerie" />
+   <TreeTableView fx:id="tableView" layoutX="258.0" layoutY="157.0" prefHeight="261.0" prefWidth="514.0">
+     <columns>
+       <TreeTableColumn fx:id="titoloCol" prefWidth="211.0" text="Titolo" />
+       <TreeTableColumn fx:id="autoreCol" prefWidth="86.5" text="Autore" />
+         <TreeTableColumn fx:id="annoCol" prefWidth="47.0" text="Anno" />
+         <TreeTableColumn fx:id="recensioniCol" prefWidth="66.5" text="Recensioni" />
+         <TreeTableColumn fx:id="aggiungiCol" prefWidth="102.0" text="Aggiungi" />
+     </columns>
+   </TreeTableView>
 </AnchorPane>
