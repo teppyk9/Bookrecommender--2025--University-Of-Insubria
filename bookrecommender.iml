@@ -25,13 +25,13 @@
     <orderEntry type="library" exported="" name="opencsv-5.9" level="project" />
     <orderEntry type="library" name="apache.commons.lang3" level="application" />
     <orderEntry type="library" name="checkerframework.checker.qual" level="application" />
-    <orderEntry type="library" name="opencsv" level="application" />
-    <orderEntry type="library" name="openjfx.javafx.base" level="application" />
-    <orderEntry type="library" name="openjfx.javafx.controls" level="application" />
-    <orderEntry type="library" name="openjfx.javafx.fxml" level="application" />
-    <orderEntry type="library" name="openjfx.javafx.graphics" level="application" />
+    <orderEntry type="library" name="opencsv" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.base" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.controls" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.fxml" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.graphics" level="project" />
     <orderEntry type="library" name="openjfx.javafx.media" level="application" />
     <orderEntry type="library" name="openjfx.javafx.web" level="application" />
-    <orderEntry type="library" name="postgresql" level="application" />
+    <orderEntry type="library" name="postgresql" level="project" />
   </component>
 </module>
