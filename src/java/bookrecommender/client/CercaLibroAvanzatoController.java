@@ -6,12 +6,9 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -20,7 +17,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 
-public class CercaLibroAvanzatoController{
+public class CercaLibroAvanzatoController extends SearchEngine{
 
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
@@ -35,57 +32,15 @@ public class CercaLibroAvanzatoController{
     @FXML private TableColumn<Libro, Integer> annoCol;
     @FXML private TableColumn<Libro, Void> recensioniCol;
     @FXML private TableColumn<Libro, Void> aggiungiCol;
+
     @FXML private ListView<String> ListaLibrerie;
     @FXML private Button BottoneCreaLibreria;
 
     private String searchType = "";
+    private boolean privateSearch = false;
 
     public void initialize() {
-        campoRicercaAnno.setVisible(false);
-        campoRicercaAnno.setDisable(true);
-        ImageView arrow = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 12, 12, true, true));
-        MenuTipoRicerca.setGraphic(arrow);
-        Platform.runLater(() -> {
-            Node a = MenuTipoRicerca.lookup(".arrow");
-            if (a != null) {
-                a.setVisible(false);
-                a.setManaged(false);
-            }
-        });
-
-        MenuCercaTitolo.setOnAction(e -> switchType("Titolo", "Titolo"));
-        MenuCercaAutore.setOnAction(e -> switchType("Autore", "Autore"));
-        MenuCercaAutoreAnno.setOnAction(e -> {
-            switchType("AutoreAnno", "Autore e Anno");
-            campoRicercaAnno.setVisible(true);
-            campoRicercaAnno.setDisable(false);
-        });
-        titoloCol.setCellValueFactory(new PropertyValueFactory<>("titolo"));
-        autoreCol.setCellValueFactory(new PropertyValueFactory<>("autore"));
-        annoCol.setCellValueFactory(new PropertyValueFactory<>("annoPubblicazione"));
-
-        recensioniCol.setCellFactory(col -> new TableCell<>() {
-            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
-            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    Libro libro = getTableView().getItems().get(getIndex());
-                    boolean has = false;
-                    try {
-                        has = CliUtil.getInstance().getSearchService().hasValRec(libro);
-                    } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore", "Impossibile verificare le recensioni: " + e.getMessage()).showAndWait();
-                    }
-                    setGraphic(has ? check : noCheck);
-                    setAlignment(Pos.CENTER);
-                }
-            }
-        });
-
+        initTableColumns();
         aggiungiCol.setCellFactory(col -> new TableCell<>() {
             private final Button btn = new Button();
             {
@@ -124,17 +79,6 @@ public class CercaLibroAvanzatoController{
             }
 
         });
-
-        tableView.setRowFactory(tv -> {
-            TableRow<Libro> row = new TableRow<>();
-            row.setOnMouseClicked(evt -> {
-                if (evt.getClickCount() == 2 && ! row.isEmpty()) {
-                    Libro sel = row.getItem();
-                    CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, sel);
-                }
-            });
-            return row;
-        });
         aggiornaListaLibrerie();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCreaLibreria.getScene().getWindow();
@@ -148,68 +92,111 @@ public class CercaLibroAvanzatoController{
         });
     }
 
-    private void switchType(String key, String text) {
-        MenuTipoRicerca.getItems().setAll(MenuCercaTitolo, MenuCercaAutore, MenuCercaAutoreAnno);
-        campoRicercaAnno.setVisible(false);
-        campoRicercaAnno.setDisable(true);
-        this.searchType = key;
-        MenuTipoRicerca.setText(text);
-        switch (key) {
-            case "Titolo":
-                MenuTipoRicerca.getItems().remove(MenuCercaTitolo);
-                break;
-            case "Autore":
-                MenuTipoRicerca.getItems().remove(MenuCercaAutore);
-                break;
-            case "AutoreAnno":
-                MenuTipoRicerca.getItems().remove(MenuCercaAutoreAnno);
-                break;
-        }
+    @Override
+    protected TextField getCampoRicerca() {
+        return campoRicerca;
     }
 
-    @FXML
-    private void handleClickCerca() {
-        String testo = campoRicerca.getText();
-        String anno  = campoRicercaAnno.getText();
-        if (testo == null || testo.length() < 2) {
-            tableView.setItems(FXCollections.emptyObservableList());
-            CliUtil.getInstance().createAlert("Errore", "Inserire almeno 2 caratteri per la ricerca.").showAndWait();
-            return;
-        }
-        List<Libro> risultati;
-        try {
-            switch (searchType) {
-                case "Titolo":
-                    risultati = CliUtil.getInstance().getSearchService().searchByName(testo);
-                    break;
-                case "Autore":
-                    risultati = CliUtil.getInstance().getSearchService().searchByAuthor(testo);
-                    break;
-                case "AutoreAnno":
-                    if (!validateYear(anno)) return;
-                    risultati = CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, Integer.parseInt(anno));
-                    break;
-                default:
-                    CliUtil.getInstance().createAlert("Errore", "Tipo di ricerca non selezionato.").showAndWait();
-                    return;
+    @Override
+    protected TextField getCampoRicercaAnno() {
+        return campoRicercaAnno;
+    }
+
+    @Override
+    protected MenuButton getMenuTipoRicerca() {
+        return MenuTipoRicerca;
+    }
+
+    @Override
+    protected MenuItem getMenuCercaTitolo() {
+        return MenuCercaTitolo;
+    }
+
+    @Override
+    protected MenuItem getMenuCercaAutore() {
+        return MenuCercaAutore;
+    }
+
+    @Override
+    protected MenuItem getMenuCercaAutoreAnno() {
+        return MenuCercaAutoreAnno;
+    }
+
+    @Override
+    protected String getSearchType() {
+        return searchType;
+    }
+
+    @Override
+    protected void setSearchType(String type) {
+        searchType = type;
+    }
+
+    @Override
+    protected TableView<Libro> getTableView() {
+        return tableView;
+    }
+
+    @Override
+    protected TableColumn<Libro, String> getTitoloCol() {
+        return titoloCol;
+    }
+
+    @Override
+    protected TableColumn<Libro, String> getAutoreCol() {
+        return autoreCol;
+    }
+
+    @Override
+    protected TableColumn<Libro, Integer> getAnnoCol() {
+        return annoCol;
+    }
+
+    @Override
+    protected TableColumn<Libro, Void> getRecensioniCol() {
+        return recensioniCol;
+    }
+
+    @Override
+    protected List<Libro> searchByTitle(String testo){
+        try{
+            if(privateSearch) {
+                return CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo);
+            }else {
+                return CliUtil.getInstance().getSearchService().searchByName(testo);
             }
-            if (risultati != null && !risultati.isEmpty()) {
-                tableView.setItems(FXCollections.observableArrayList(risultati));
-            } else {
-                tableView.setItems(FXCollections.emptyObservableList());
-                CliUtil.getInstance().createAlert("Nessun risultato", "Nessun libro trovato.").showAndWait();
-            }
-        } catch (Exception e) {
+        }catch(RemoteException e){
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
         }
     }
 
-    private boolean validateYear(String anno) {
-        if (anno == null || anno.trim().isEmpty() || !anno.matches("\\d{1,4}")) {
-            CliUtil.getInstance().createAlert("Errore", "Inserire un anno valido (fino a 4 cifre).").showAndWait();
-            return false;
+    @Override
+    protected List<Libro> searchByAuthor(String testo){
+        try{
+            if(privateSearch) {
+                return CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo);
+            }else {
+                return CliUtil.getInstance().getSearchService().searchByAuthor(testo);
+            }
+        }catch(RemoteException e){
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
         }
-        return true;
+    }
+
+    @Override
+    protected List<Libro> searchByAuthorAndYear(String testo, int anno){
+        try{
+            if(privateSearch) {
+                return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno);
+            }else {
+                return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
+            }
+        }catch(RemoteException e){
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
+        }
     }
 
     @FXML
@@ -232,18 +219,6 @@ public class CercaLibroAvanzatoController{
     }
 
     @FXML
-    private void keyEnterPressed_1(KeyEvent e) {
-        if ("Enter".equals(e.getCode().getName()))
-            handleClickCerca();
-    }
-
-    @FXML
-    private void keyEnterPressed_2(KeyEvent e) {
-        if ("Enter".equals(e.getCode().getName()))
-            handleClickCerca();
-    }
-
-    @FXML
     private void handleListaDoppioClick_2(MouseEvent e) {
         if (e.getClickCount() == 2)
             ApriLibreria();
@@ -261,4 +236,7 @@ public class CercaLibroAvanzatoController{
         CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
     }
 
+    public void setRicerca() {
+        privateSearch = !privateSearch;
+    }
 }
