@@ -12,16 +12,26 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:3.42.0" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:17.0.8" level="project" />
-    <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.7.3" level="project" />
-    <orderEntry type="library" name="opencsv-5.9" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.checkerframework:checker-qual:3.42.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-base:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-base:win:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-controls:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-controls:win:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-fxml:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-fxml:win:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-graphics:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.openjfx:javafx-graphics:win:17.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.postgresql:postgresql:42.7.3" level="project" />
+    <orderEntry type="library" exported="" name="opencsv-5.9" level="project" />
+    <orderEntry type="library" name="apache.commons.lang3" level="application" />
+    <orderEntry type="library" name="checkerframework.checker.qual" level="application" />
+    <orderEntry type="library" name="opencsv" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.base" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.controls" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.fxml" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.graphics" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.media" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.web" level="application" />
+    <orderEntry type="library" name="postgresql" level="application" />
   </component>
 </module>
