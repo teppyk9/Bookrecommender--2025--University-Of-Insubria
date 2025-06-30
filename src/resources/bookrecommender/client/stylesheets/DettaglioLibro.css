@@ -1,41 +1,54 @@
-/* File: DettaglioLibro.css */
+/* CONTAINER */
+.background {
+    -fx-background-color: #A31621; /* Colore di sfondo principale */
 
-/* Stile generale dell'AnchorPane */
-.anchor-pane {
-    -fx-background-color: #f5f5f5;
-    -fx-padding: 10;
+
 }
 
-/* Label principali */
-.label {
-    -fx-font-family: "Segoe UI", sans-serif;
-    -fx-font-size: 14px;
-    -fx-text-fill: #333333;
-}
 
-/* Titolo */
+
+/* TEXT */
 #titoloLabel {
-    -fx-font-size: 20px;
+    -fx-font-family: "Century Gothic";
     -fx-font-weight: bold;
-    -fx-text-fill: #2a2a2a;
+    -fx-underline: true;
+    -fx-font-size: 23px;
+    -fx-text-fill: #FCF7F8;
 }
 
-/* Etichette secondarie */
+.etichettaLabel{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 14px;
+    -fx-text-fill: #FCF7F8;
+    -fx-font-weight: bold;
+}
+
+
+/* label x informazioni libro*/
 #autoreLabel, #categoriaLabel, #editoreLabel,
 #prezzoLabel, #annoLabel, #meseLabel {
     -fx-font-size: 14px;
-    -fx-text-fill: #555555;
+    -fx-text-fill: #FCF7F8;
+    -fx-font-family: "Century Gothic";
+    /*-fx-border-color: white;*/
 }
 
-/* Descrizione */
 #descrizioneArea {
-    -fx-font-family: "Segoe UI", sans-serif;
-    -fx-font-size: 13px;
-    -fx-text-fill: #333333;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-background-color: #ffffff;
+    -fx-background-color: #a31621; /* Colore di sfondo della descrizione */
+    -fx-control-inner-background: #a31621;
+    -fx-control-inner-background-alt: #a31621;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+
+    -fx-border-color: #a31621;
+    -fx-border-radius: 0;
+
+    -fx-focus-color: #a31621;
+    -fx-faint-focus-color: #a31621;
+
+    -fx-highlight-fill: #a31621;
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+    -fx-padding: 0;
 }
 
 /* Liste (valutazioni e consigli) */
