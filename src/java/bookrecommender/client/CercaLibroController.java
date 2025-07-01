@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
-import java.util.List;
-
-public class CercaLibroController extends SearchEngine{
+public class CercaLibroController extends TableViewEngine {
 
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
@@ -19,19 +16,17 @@ public class CercaLibroController extends SearchEngine{
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
 
-    @FXML private TreeTableView<Libro> tableView;
-    @FXML private TreeTableColumn<Libro, String> titoloCol;
-    @FXML private TreeTableColumn<Libro, String> autoreCol;
-    @FXML private TreeTableColumn<Libro, Integer> annoCol;
-    @FXML private TreeTableColumn<Libro, Void> recensioniCol;
-
-    private String searchType = "";
+    @FXML private TableView<Libro> tableView;
+    @FXML private TableColumn<Libro, String> titoloCol;
+    @FXML private TableColumn<Libro, String> autoreCol;
+    @FXML private TableColumn<Libro, Integer> annoCol;
+    @FXML private TableColumn<Libro, Void> recensioniCol;
 
     @FXML
     public void initialize() {
         initBasicSearch();
         initSRecensioniCol();
-        initTreeTableViews();
+        initTableViews();
         Platform.runLater(() -> {
             Stage stage = (Stage) MenuTipoRicerca.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
@@ -72,102 +67,65 @@ public class CercaLibroController extends SearchEngine{
     }
 
     @Override
-    protected String getSearchType() {
-        return searchType;
-    }
-
-    @Override
-    protected void setSearchType(String type) {
-        searchType = type;
-    }
-
-    @Override
-    protected TreeTableView<Libro> getSTreeTableView() {
+    protected TableView<Libro> getSTableView() {
         return tableView;
     }
 
     @Override
-    protected TreeTableColumn<Libro, String> getSTitoloCol() {
+    protected TableColumn<Libro, String> getSTitoloCol() {
         return titoloCol;
     }
 
     @Override
-    protected TreeTableColumn<Libro, String> getSAutoreCol() {
+    protected TableColumn<Libro, String> getSAutoreCol() {
         return autoreCol;
     }
 
     @Override
-    protected TreeTableColumn<Libro, Integer> getSAnnoCol() {
+    protected TableColumn<Libro, Integer> getSAnnoCol() {
         return annoCol;
     }
 
     @Override
-    protected TreeTableColumn<Libro, Void> getSRecensioniCol() {
+    protected TableColumn<Libro, Void> getSRecensioniCol() {
         return recensioniCol;
     }
 
     @Override
-    protected TreeTableColumn<Libro, Void> getSAggiungiAdvCol() {
+    protected TableColumn<Libro, Void> getSAggiungiAdvCol() {
         return null;
     }
 
     @Override
-    protected TreeTableColumn<Libro, Void> getSAddRemCol() {
+    protected TableColumn<Libro, Void> getSAddRemCol() {
         return null;
     }
 
     @Override
-    protected List<Libro> searchByTitle(String testo){
-        try{
-            return CliUtil.getInstance().getSearchService().searchByName(testo);
-        }catch(RemoteException e){
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
-            return null;
-        }
-    }
-
-    @Override
-    protected List<Libro> searchByAuthor(String testo){
-        try{
-            return CliUtil.getInstance().getSearchService().searchByAuthor(testo);
-        }catch(RemoteException e){
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
-            return null;
-        }
-    }
-
-    @Override
-    protected List<Libro> searchByAuthorAndYear(String testo, int anno){
-        try{
-            return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
-        }catch(RemoteException e){
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
-            return null;
-        }
-    }
-
-    @Override
-    protected TreeTableView<Libro> getOTreeTableView() {
+    protected TableView<Libro> getOTableView() {
         return null;
     }
 
     @Override
-    protected TreeTableColumn<Libro, String> getOTitoloCol() {
+    protected TableColumn<Libro, String> getOTitoloCol() {
         return null;
     }
 
     @Override
-    protected TreeTableColumn<Libro, String> getOAutoreCol() {
+    protected TableColumn<Libro, String> getOAutoreCol() {
         return null;
     }
 
     @Override
-    protected TreeTableColumn<Libro, Integer> getOAnnoCol() {
+    protected TableColumn<Libro, Integer> getOAnnoCol() {
         return null;
     }
 
     @Override
-    protected TreeTableColumn<Libro, Void> getOActionCol() {return null;}
+    protected TableColumn<Libro, Void> getOActionCol() {return null;}
+
+    @Override
+    protected boolean getSearchType() {return false;}
 
     @FXML
     private void GoToMainMenu() {

@@ -4,14 +4,7 @@ import bookrecommender.common.Libro;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -21,48 +14,45 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class VisualizzaLibreriaController extends AbstractSearchController{
+public class VisualizzaLibreriaController extends TableViewEngine{
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
     @FXML private MenuItem MenuCercaTitolo;
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
-    @FXML private ListView<Libro> listaLibri;
-
-    @FXML private ListView<Libro> ListaLibrerie;
+    @FXML private TableView <Libro>tableView;
+    @FXML private TableColumn <Libro, String> titoloCol;
+    @FXML private TableColumn <Libro, String>autoreCol;
+    @FXML private TableColumn <Libro, Integer> annoCol;
+    @FXML private TableColumn <Libro, Void> azioniCol;
+    @FXML private TableView <Libro> risTableView;
+    @FXML private TableColumn <Libro, String> risTitoloCol;
+    @FXML private TableColumn <Libro, String> risAutoreCol;
+    @FXML private TableColumn <Libro, Integer> risAnnoCol;
+    @FXML private TableColumn <Libro, Void> risAzioniCol;
     @FXML private TextField NomeLibreria;
     @FXML private Text Titolo_Librerie;
     @FXML private Button BottoneCambiaNome;
     @FXML private Button BottoneEliminaLibreria;
 
-    private String searchType = "";
     private String LibName;
-    private List<Libro> LibriLibrerie;
     private List<Libro> OriginalLibri;
-    private ListView<Libro> lastSelectedView;
 
     @FXML
     public void initialize() {
         OriginalLibri = new ArrayList<>();
-        LibriLibrerie = new ArrayList<>();
         NomeLibreria.setDisable(true);
         NomeLibreria.setEditable(false);
         NomeLibreria.setVisible(false);
-        initCommon();
-        listaLibri.getSelectionModel().selectedItemProperty().addListener((o, oldV, newV) -> {
-            if (newV != null) lastSelectedView = listaLibri;
-        });
-        ListaLibrerie.getSelectionModel().selectedItemProperty().addListener((o, oldV, newV) -> {
-            if (newV != null) lastSelectedView = ListaLibrerie;
-        });
+        initBasicSearch();
+        initSAddRemCol();
+        initOActionCol(true);
+        initOTableView();
+        initTableViews();
         Platform.runLater(() -> {
-            Node a = MenuTipoRicerca.lookup(".arrow");
-            if (a != null) {
-                a.setVisible(false);
-                a.setManaged(false);
-            }
-            saveFlag();
+            Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
+            stage.setOnCloseRequest(event -> saveFlag(stage));
         });
     }
 
@@ -70,9 +60,8 @@ public class VisualizzaLibreriaController extends AbstractSearchController{
         LibName = nomeLibreria;
         Titolo_Librerie.setText(LibName);
         try {
-            LibriLibrerie = CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLibreria);
-            OriginalLibri = new ArrayList<>(LibriLibrerie);
-            ListaLibrerie.setItems(FXCollections.observableArrayList(LibriLibrerie));
+            OriginalLibri = new ArrayList<>(CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLibreria));
+            risTableView.setItems(FXCollections.observableArrayList(OriginalLibri));
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore", "Impossibile caricare la libreria: " + e.getMessage()).showAndWait();
         }
@@ -86,103 +75,57 @@ public class VisualizzaLibreriaController extends AbstractSearchController{
         return campoRicercaAnno;
     }
 
-    @Override protected ListView<Libro> getListaRisultati(){
-        return listaLibri;
-    }
-
-    @Override protected String getSearchType(){
-        return searchType;
-    }
-
-    @Override protected void setSearchType(String type){
-        this.searchType = type;
+    @Override protected boolean getSearchType(){
+        return false;
     }
 
     @Override protected MenuButton getMenuTipoRicerca(){
         return MenuTipoRicerca;
     }
 
-    @Override protected MenuItem getItemTitolo(){
-        return MenuCercaTitolo;
-    }
+    @Override protected MenuItem getMenuCercaTitolo() {return MenuCercaTitolo;}
 
-    @Override protected MenuItem getItemAutore(){
-        return MenuCercaAutore;
-    }
+    @Override protected MenuItem getMenuCercaAutore() {return MenuCercaAutore;}
 
-    @Override protected MenuItem getItemAutoreAnno(){
-        return MenuCercaAutoreAnno;
-    }
+    @Override protected MenuItem getMenuCercaAutoreAnno() {return MenuCercaAutoreAnno;}
 
-    @Override protected void mostraDettagli(Libro libro){
-        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, libro);
-    }
+    @Override protected TableView<Libro> getSTableView() {return tableView;}
 
-    @Override
-    protected List<Libro> searchByTitle(String testo){
-        try{
-            return CliUtil.getInstance().getSearchService().searchByName(testo);
-        }catch(RemoteException e){
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
-            return null;
-        }
-    }
+    @Override protected TableColumn<Libro, String> getSTitoloCol() {return titoloCol;}
 
-    @Override
-    protected List<Libro> searchByAuthor(String testo){
-        try{
-            return CliUtil.getInstance().getSearchService().searchByAuthor(testo);
-        }catch(RemoteException e){
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
-            return null;
-        }
-    }
+    @Override protected TableColumn<Libro, String> getSAutoreCol() {return autoreCol;}
 
-    @Override
-    protected List<Libro> searchByAuthorAndYear(String testo, int anno){
-        try{
-            return CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
-        }catch(RemoteException e){
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
-            return null;
-        }
-    }
-    @FXML
-    private void handleListaDoppioClick_1(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            Libro sel = listaLibri.getSelectionModel().getSelectedItem();
-            if (sel != null)
-                mostraDettagli(sel);
-        }
-    }
+    @Override protected TableColumn<Libro, Integer> getSAnnoCol() {return annoCol;}
 
-    @FXML
-    private void handleListaDoppioClick_2(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            Libro sel = ListaLibrerie.getSelectionModel().getSelectedItem();
-            if (sel != null)
-                mostraDettagli(sel);
-        }
-    }
+    @Override protected TableColumn<Libro, Void> getSRecensioniCol() {return null;}
+
+    @Override protected TableColumn<Libro, Void> getSAggiungiAdvCol() {return null;}
+
+    @Override protected TableColumn<Libro, Void> getSAddRemCol() {return azioniCol;}
+
+    @Override protected TableView<Libro> getOTableView() {return risTableView;}
+
+    @Override protected TableColumn<Libro, String> getOTitoloCol() {return risTitoloCol;}
+
+    @Override protected TableColumn<Libro, String> getOAutoreCol() {return risAutoreCol;}
+
+    @Override protected TableColumn<Libro, Integer> getOAnnoCol() {return risAnnoCol;}
+
+    @Override protected TableColumn<Libro, Void> getOActionCol() {return risAzioniCol;}
 
     @FXML
     private void ExitApplication() {
-        saveFlag();
+        saveFlag((Stage) BottoneCambiaNome.getScene().getWindow());
     }
 
-    private void saveFlag() {
-        Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
-        stage.setOnCloseRequest(event -> {
-            if (hannoDifferenze(OriginalLibri, LibriLibrerie) || !NomeLibreria.getText().isEmpty()) {
-                CliUtil.getInstance().createConfirmation("Conferma uscita", "Tutte le modifiche andranno perse!\nSei sicuro di voler uscire?", true).showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.YES) {
-                        stage.close();
-                    } else {
-                        event.consume();
-                    }
-                });
-            }
-        });
+    private void saveFlag(Stage stage) {
+        if (hannoDifferenze(OriginalLibri, new ArrayList<>(risTableView.getItems())) || !NomeLibreria.getText().isEmpty()) {
+            CliUtil.getInstance().createConfirmation("Conferma uscita", "Tutte le modifiche andranno perse!\nSei sicuro di voler uscire?", true).showAndWait().ifPresent(response -> {
+                if (response == ButtonType.YES)
+                    stage.close();
+            });
+        }else
+            stage.close();
     }
 
     @FXML
@@ -211,24 +154,6 @@ public class VisualizzaLibreriaController extends AbstractSearchController{
     }
 
     @FXML
-    private void AggiungiLibro() {
-        Libro sel = listaLibri.getSelectionModel().getSelectedItem();
-        if (sel != null && !LibriLibrerie.contains(sel)) {
-            LibriLibrerie.add(sel);
-            ListaLibrerie.setItems(FXCollections.observableArrayList(LibriLibrerie));
-        }
-    }
-
-    @FXML
-    private void RimuoviLibro() {
-        Libro sel = lastSelectedView.getSelectionModel().getSelectedItem();
-        if (sel != null && LibriLibrerie.contains(sel)) {
-            LibriLibrerie.remove(sel);
-            ListaLibrerie.setItems(FXCollections.observableArrayList(LibriLibrerie));
-        }
-    }
-
-    @FXML
     private void SalvaLibreria() {
         if (!NomeLibreria.getText().isEmpty() && NomeLibreria.getText().trim().length() >= 5 && NomeLibreria.getText().trim().length() <= 50) {
             try {
@@ -239,12 +164,14 @@ public class VisualizzaLibreriaController extends AbstractSearchController{
             }
             LibName = NomeLibreria.getText().trim();
             Titolo_Librerie.setText(LibName);
+            NomeLibreria.setText("");
             NomeLibreria.setDisable(true);
             NomeLibreria.setEditable(false);
             NomeLibreria.setVisible(false);
             CliUtil.getInstance().createConfirmation("Successo", "Libreria rinominata con successo.", false).showAndWait();
             return;
         }
+        List<Libro> LibriLibrerie = new ArrayList<>(risTableView.getItems());
         if (hannoDifferenze(OriginalLibri, LibriLibrerie) && LibriLibrerie.size() >= 3) {
             try {
                 List<Integer> risultati = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), LibName, LibriLibrerie);
@@ -282,26 +209,6 @@ public class VisualizzaLibreriaController extends AbstractSearchController{
             CliUtil.getInstance().createAlert("Errore", "La libreria deve contenere almeno 3 libri.").showAndWait();
         } else {
             CliUtil.getInstance().createAlert("Errore", "Nessuna modifica effettuata.").showAndWait();
-        }
-    }
-
-    @FXML
-    private void aggiungiConsiglio() {
-        Libro sel = ListaLibrerie.getSelectionModel().getSelectedItem();
-        if (sel != null && OriginalLibri.contains(sel)) {
-            CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, sel);
-        } else {
-            CliUtil.getInstance().createAlert("Errore", "Selezionare un libro valido dalla libreria.").showAndWait();
-        }
-    }
-
-    @FXML
-    private void valutaLibro() {
-        Libro sel = ListaLibrerie.getSelectionModel().getSelectedItem();
-        if (sel != null && OriginalLibri.contains(sel)) {
-            CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, sel);
-        } else {
-            CliUtil.getInstance().createAlert("Errore", "Selezionare un libro valido dalla libreria.").showAndWait();
         }
     }
 

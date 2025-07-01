@@ -4,6 +4,8 @@ import bookrecommender.common.Libro;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,36 +18,40 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class SearchEngine {
+public abstract class TableViewEngine {
     protected abstract TextField getCampoRicerca();
     protected abstract TextField getCampoRicercaAnno();
     protected abstract MenuButton getMenuTipoRicerca();
     protected abstract MenuItem getMenuCercaTitolo();
     protected abstract MenuItem getMenuCercaAutore();
     protected abstract MenuItem getMenuCercaAutoreAnno();
-    protected abstract String getSearchType();
-    protected abstract void setSearchType(String type);
 
-    protected abstract TreeTableView<Libro> getSTreeTableView();
-    protected abstract TreeTableColumn<Libro, String> getSTitoloCol();
-    protected abstract TreeTableColumn<Libro, String> getSAutoreCol();
-    protected abstract TreeTableColumn<Libro, Integer> getSAnnoCol();
-    protected abstract TreeTableColumn<Libro, Void> getSRecensioniCol();
-    protected abstract TreeTableColumn<Libro, Void> getSAggiungiAdvCol();
-    protected abstract TreeTableColumn<Libro, Void> getSAddRemCol();
+    protected abstract TableView<Libro> getSTableView();
+    protected abstract TableColumn<Libro, String> getSTitoloCol();
+    protected abstract TableColumn<Libro, String> getSAutoreCol();
+    protected abstract TableColumn<Libro, Integer> getSAnnoCol();
+    protected abstract TableColumn<Libro, Void> getSRecensioniCol();
+    protected abstract TableColumn<Libro, Void> getSAggiungiAdvCol();
+    protected abstract TableColumn<Libro, Void> getSAddRemCol();
 
-    protected abstract List<Libro> searchByTitle(String testo);
-    protected abstract List<Libro> searchByAuthor(String testo);
-    protected abstract List<Libro> searchByAuthorAndYear(String testo, int anno);
+    protected abstract TableView<Libro> getOTableView();
+    protected abstract TableColumn<Libro, String> getOTitoloCol();
+    protected abstract TableColumn<Libro, String> getOAutoreCol();
+    protected abstract TableColumn<Libro, Integer> getOAnnoCol();
+    protected abstract TableColumn<Libro, Void> getOActionCol();
 
-    protected abstract TreeTableView<Libro> getOTreeTableView();
-    protected abstract TreeTableColumn<Libro, String> getOTitoloCol();
-    protected abstract TreeTableColumn<Libro, String> getOAutoreCol();
-    protected abstract TreeTableColumn<Libro, Integer> getOAnnoCol();
-    protected abstract TreeTableColumn<Libro, Void> getOActionCol();
+    /**
+     * Determina l'ambito delle ricerche in base al token dell'utente.
+     *
+     * @return {@code true} se la ricerca utilizza il token associato all'utente
+     *         per interrogare solo le sue librerie;
+     *         {@code false} se la ricerca viene effettuata sull'intero database.
+     */
+    protected abstract boolean getSearchType();
+
+    private String searchType = "";
 
     protected void initBasicSearch() {
-        getSTreeTableView().setShowRoot(false);
         getCampoRicercaAnno().setVisible(false);
         getCampoRicercaAnno().setDisable(true);
         ImageView arrow = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 12, 12, true, true));
@@ -67,20 +73,18 @@ public abstract class SearchEngine {
         });
 
         getSTitoloCol().setCellValueFactory(cellData ->
-                new ReadOnlyStringWrapper(cellData.getValue().getValue().getTitolo())
+                new ReadOnlyStringWrapper(cellData.getValue().getTitolo())
         );
-
         getSAutoreCol().setCellValueFactory(cellData ->
-                new ReadOnlyStringWrapper(cellData.getValue().getValue().getAutore())
+                new ReadOnlyStringWrapper(cellData.getValue().getAutore())
         );
-
         getSAnnoCol().setCellValueFactory(cellData ->
-                new ReadOnlyObjectWrapper<>((int) cellData.getValue().getValue().getAnnoPubblicazione())
+                new ReadOnlyObjectWrapper<>((int) cellData.getValue().getAnnoPubblicazione())
         );
     }
 
     protected void initSRecensioniCol(){
-        getSRecensioniCol().setCellFactory(col -> new TreeTableCell<>() {
+        getSRecensioniCol().setCellFactory(col -> new TableCell<>() {
             private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
             private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
             @Override
@@ -89,7 +93,7 @@ public abstract class SearchEngine {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                    Libro l = getTableView().getItems().get(getIndex());
                     boolean has = false;
                     try {
                         has = CliUtil.getInstance().getSearchService().hasValRec(l);
@@ -104,8 +108,8 @@ public abstract class SearchEngine {
     }
 
     protected void initSAggiungiAdvCol(){
-        getSAggiungiAdvCol().setCellFactory(col -> new TreeTableCell<>() {
-            private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/plus-circle-green.png") ), 16, 16, true, true)));
+        getSAggiungiAdvCol().setCellFactory(col -> new TableCell<>() {
+            private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/plus-circle-green.png")), 16, 16, true, true)));
             {
                 MenuItem recensisci = new MenuItem("Recensisci");
                 MenuItem consigli = new MenuItem("Aggiungi Consigli");
@@ -113,30 +117,30 @@ public abstract class SearchEngine {
                 menu.getItems().addAll(recensisci, consigli, libreria);
 
                 recensisci.setOnAction(evt -> {
-                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
+                    Libro l = getTableView().getItems().get(getIndex());
                     try {
-                        if(CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), l))
+                        if (CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), l))
                             CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, l);
                         else
                             CliUtil.getInstance().createAlert("Errore", "Il libro non è presente in nessuna libreria.").showAndWait();
                     } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore","Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                        CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
                     }
                 });
                 consigli.setOnAction(evt -> {
-                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                    try{
-                        if(CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), l))
+                    Libro l = getTableView().getItems().get(getIndex());
+                    try {
+                        if (CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), l))
                             CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, l);
                         else
                             CliUtil.getInstance().createAlert("Errore", "Il libro non è presente in nessuna libreria.").showAndWait();
                     } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore","Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                        CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
                     }
                 });
                 libreria.setOnAction(evt -> {
-                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                    // va creata l'interfaccia per aggiungere un libro a una libreria
+                    Libro l = getTableView().getItems().get(getIndex());
+                    //da implementare
                 });
             }
 
@@ -150,27 +154,30 @@ public abstract class SearchEngine {
     }
 
     protected void initSAddRemCol(){
-        getSAddRemCol().setCellFactory(col -> new TreeTableCell<>() {
-            private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png") ), 16, 16, true, true)));
+        getSAddRemCol().setCellFactory(col -> new TableCell<>() {
+            private final MenuButton menu = new MenuButton("", new ImageView(new Image(
+                    Objects.requireNonNull(getClass().getResourceAsStream(
+                            "/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
             {
                 MenuItem aggiungi = new MenuItem("Aggiungi");
                 MenuItem rimuovi = new MenuItem("Rimuovi");
                 menu.getItems().addAll(aggiungi, rimuovi);
 
                 aggiungi.setOnAction(evt -> {
-                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                    if(!containsLibro(getOTreeTableView().getRoot(),l)) { //errore sulla rimozione
-                        if (getOTreeTableView().getRoot() == null) {
-                            TreeItem<Libro> rootItem = new TreeItem<>();
-                            getOTreeTableView().setRoot(rootItem);
-                        }
-                        getOTreeTableView().getRoot().getChildren().add(new TreeItem<>(l));
+                    Libro l = getTableView().getItems().get(getIndex());
+                    TableView<Libro> target = getOTableView();
+                    ObservableList<Libro> items = target.getItems();
+                    if (items == null) {
+                        items = FXCollections.observableArrayList();
+                        target.setItems(items);
                     }
+                    if (!containsLibro(items, l)) items.add(l);
                 });
                 rimuovi.setOnAction(evt -> {
-                    Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                    if(containsLibro(getOTreeTableView().getRoot(), l))
-                        getOTreeTableView().getRoot().getChildren().removeIf(item -> item.getValue().equals(l));
+                    Libro l = getTableView().getItems().get(getIndex());
+                    TableView<Libro> target = getOTableView();
+                    ObservableList<Libro> items = target.getItems();
+                    if (containsLibro(items, l)) items.removeIf(item -> item.equals(l));
                 });
             }
 
@@ -191,12 +198,12 @@ public abstract class SearchEngine {
      *       <ul>
      *         <li><strong>Valuta</strong>: apre la finestra per inserire una valutazione sul libro corrente;</li>
      *         <li><strong>Crea Consiglio</strong>: apre la finestra per creare un consiglio sul libro corrente;</li>
-     *         <li><strong>Rimuovi</strong>: rimuove il libro corrente dal <code>TreeTableView</code>.</li>
+     *         <li><strong>Rimuovi</strong>: rimuove il libro corrente dal <code>TableView</code>.</li>
      *       </ul>
      *       L'icona mostrata è una freccia rivolta verso il basso.</li>
      *   <li>Se <code>type</code> è <code>false</code>, ogni cella avrà solo la voce:
      *       <ul>
-     *         <li><strong>Rimuovi</strong>: rimuove il libro corrente dal <code>TreeTableView</code>.</li>
+     *         <li><strong>Rimuovi</strong>: rimuove il libro corrente dal <code>TableView</code>.</li>
      *       </ul>
      *       L'icona mostrata è un cerchio rosso con meno.</li>
      * </ul>
@@ -208,28 +215,22 @@ public abstract class SearchEngine {
      */
     protected void initOActionCol(boolean type){
         if(type){
-            getOActionCol().setCellFactory(col -> new TreeTableCell<>() {
-                private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png") ), 16, 16, true, true)));
+            getOActionCol().setCellFactory(col -> new TableCell<>() {
+                private final MenuButton menu = new MenuButton("", new ImageView(new Image(
+                        Objects.requireNonNull(getClass().getResourceAsStream(
+                                "/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
                 {
                     MenuItem valuta = new MenuItem("Valuta");
                     MenuItem consiglia = new MenuItem("Crea Consiglio");
                     MenuItem rimuovi = new MenuItem("Rimuovi");
                     menu.getItems().addAll(valuta, consiglia, rimuovi);
 
-                    valuta.setOnAction(evt -> {
-                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                        CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, l);
-                    });
-
-                    consiglia.setOnAction(evt -> {
-                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                        CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, l);
-                    });
-
+                    valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, getTableView().getItems().get(getIndex())));
+                    consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, getTableView().getItems().get(getIndex())));
                     rimuovi.setOnAction(evt -> {
-                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                        if(containsLibro(getOTreeTableView().getRoot(), l))
-                            getOTreeTableView().getRoot().getChildren().removeIf(item -> item.getValue().equals(l));
+                        Libro l = getTableView().getItems().get(getIndex());
+                        ObservableList<Libro> items = getOTableView().getItems();
+                        if (containsLibro(items, l)) items.removeIf(item -> item.equals(l));
                     });
                 }
 
@@ -241,18 +242,20 @@ public abstract class SearchEngine {
                 }
             });
         } else {
-            getOActionCol().setCellFactory(col -> new TreeTableCell<>() {
-                private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/minus-circle-red.png") ), 16, 16, true, true)));
+            getOActionCol().setCellFactory(col -> new TableCell<>() {
+                private final MenuButton menu = new MenuButton("", new ImageView(new Image(
+                        Objects.requireNonNull(getClass().getResourceAsStream(
+                                "/bookrecommender/client/icons/minus-circle-red.png")), 16, 16, true, true)));
                 {
                     MenuItem rimuovi = new MenuItem("Rimuovi");
                     menu.getItems().add(rimuovi);
-
                     rimuovi.setOnAction(evt -> {
-                        Libro l = getTreeTableView().getTreeItem(getIndex()).getValue();
-                        if(containsLibro(getOTreeTableView().getRoot(), l))
-                            getOTreeTableView().getRoot().getChildren().removeIf(item -> item.getValue().equals(l));
+                        Libro l = getTableView().getItems().get(getIndex());
+                        ObservableList<Libro> items = getOTableView().getItems();
+                        if (containsLibro(items, l)) items.removeIf(item -> item.equals(l));
                     });
                 }
+
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
@@ -264,25 +267,27 @@ public abstract class SearchEngine {
     }
 
     protected void initOTableView() {
-        getOTreeTableView().setShowRoot(false);
-        getOTitoloCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue().getTitolo()));
-        getOAutoreCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getValue().getAutore()));
-        getOAnnoCol().setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>((int) cellData.getValue().getValue().getAnnoPubblicazione()));
+        getOTitoloCol().setCellValueFactory(cellData ->
+                new ReadOnlyStringWrapper(cellData.getValue().getTitolo())
+        );
+        getOAutoreCol().setCellValueFactory(cellData ->
+                new ReadOnlyStringWrapper(cellData.getValue().getAutore())
+        );
+        getOAnnoCol().setCellValueFactory(cellData ->
+                new ReadOnlyObjectWrapper<>((int) cellData.getValue().getAnnoPubblicazione())
+        );
     }
 
-    protected void initTreeTableViews(){
-        getSTreeTableView().setRowFactory(tv -> initTables());
-        if(getOTreeTableView() != null){
-            getOTreeTableView().setRowFactory(tv -> initTables());
-        }
+    protected void initTableViews(){
+        getSTableView().setRowFactory(tv -> initRows());
+        if(getOTableView() != null) getOTableView().setRowFactory(tv -> initRows());
     }
 
-    private TreeTableRow<Libro> initTables(){
-        TreeTableRow<Libro> row = new TreeTableRow<>();
+    private TableRow<Libro> initRows(){
+        TableRow<Libro> row = new TableRow<>();
         row.setOnMouseClicked(evt -> {
             if (evt.getClickCount() == 2 && !row.isEmpty()) {
-                Libro sel = row.getItem();
-                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, sel);
+                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, row.getItem());
             }
         });
         return row;
@@ -292,7 +297,7 @@ public abstract class SearchEngine {
         getMenuTipoRicerca().getItems().setAll(getMenuCercaTitolo(), getMenuCercaAutore(), getMenuCercaAutoreAnno());
         getCampoRicercaAnno().setVisible(false);
         getCampoRicercaAnno().setDisable(true);
-        setSearchType(key);
+        searchType = key;
         getMenuTipoRicerca().setText(text);
         switch (key) {
             case "Titolo":
@@ -312,13 +317,13 @@ public abstract class SearchEngine {
         String testo = getCampoRicerca().getText();
         String anno = getCampoRicercaAnno().getText();
         if (testo == null || testo.length() < 2) {
-            getSTreeTableView().setRoot(new TreeItem<>());
+            getSTableView().setItems(FXCollections.observableArrayList());
             CliUtil.getInstance().createAlert("Errore", "Inserire almeno 2 caratteri per la ricerca.").showAndWait();
             return;
         }
         List<Libro> risultati;
         try {
-            switch (getSearchType()) {
+            switch (searchType) {
                 case "Titolo": risultati = searchByTitle(testo); break;
                 case "Autore": risultati = searchByAuthor(testo); break;
                 case "AutoreAnno":
@@ -329,14 +334,8 @@ public abstract class SearchEngine {
                     CliUtil.getInstance().createAlert("Errore", "Tipo di ricerca non selezionato.").showAndWait();
                     return;
             }
-            TreeItem<Libro> root = new TreeItem<>();
-            if (risultati != null && !risultati.isEmpty()) {
-                for (Libro l : risultati) root.getChildren().add(new TreeItem<>(l));
-            } else {
-                CliUtil.getInstance().createAlert("Nessun risultato", "Nessun libro trovato.").showAndWait();
-            }
-            root.setExpanded(true);
-            getSTreeTableView().setRoot(root);
+            ObservableList<Libro> data = FXCollections.observableArrayList(risultati);
+            getSTableView().setItems(data);
         } catch (Exception e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
         }
@@ -354,7 +353,6 @@ public abstract class SearchEngine {
             handleClickCerca();
     }
 
-
     private boolean validateYear(String anno) {
         if (anno == null || anno.trim().isEmpty() || !anno.matches("\\d{1,4}")) {
             CliUtil.getInstance().createAlert("Errore", "Inserire un anno valido (fino a 4 cifre).").showAndWait();
@@ -363,18 +361,41 @@ public abstract class SearchEngine {
         return true;
     }
 
-    private boolean containsLibro(TreeItem<Libro> node, Libro target) {
-        if (node == null || target == null) {
-            return false;
+    private boolean containsLibro(List<Libro> list, Libro target) {
+        if (list == null || target == null) return false;
+        return list.stream().anyMatch(item -> Objects.equals(item, target));
+    }
+
+    private List<Libro> searchByTitle(String testo){
+        try {
+            return getSearchType()
+                    ? CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo)
+                    : CliUtil.getInstance().getSearchService().searchByName(testo);
+        } catch (RemoteException e) {
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
         }
-        if (node.getValue().equals(target)) {
-            return true; //errore sulla rimozione
+    }
+
+    private List<Libro> searchByAuthor(String testo){
+        try {
+            return getSearchType()
+                    ? CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo)
+                    : CliUtil.getInstance().getSearchService().searchByAuthor(testo);
+        } catch (RemoteException e) {
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
         }
-        for (TreeItem<Libro> child : node.getChildren()) {
-            if (containsLibro(child, target)) {
-                return true;
-            }
+    }
+
+    private List<Libro> searchByAuthorAndYear(String testo, int anno){
+        try {
+            return getSearchType()
+                    ? CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno)
+                    : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
+        } catch (RemoteException e) {
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            return null;
         }
-        return false;
     }
 }

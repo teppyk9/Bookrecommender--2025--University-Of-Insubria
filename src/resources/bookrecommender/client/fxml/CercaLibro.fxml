@@ -4,12 +4,12 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
     <children>
         <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="55.0" styleClass="indietro" />
@@ -21,14 +21,14 @@
             </items>
         </MenuButton>
         <TextField fx:id="campoRicercaAnno" layoutX="50.0" layoutY="157.0" onKeyPressed="#keyEnterPressed_2" prefHeight="27.0" prefWidth="186.0" promptText="Anno.." styleClass="barraRicerca" />
-        <TreeTableView fx:id="tableView" layoutX="258.0" layoutY="157.0" prefHeight="261.0" prefWidth="514.0">
+        <TableView fx:id="tableView" layoutX="258.0" layoutY="157.0" prefHeight="261.0" prefWidth="514.0">
             <columns>
-                <TreeTableColumn fx:id="titoloCol" prefWidth="264.5" text="Titolo" />
-                <TreeTableColumn fx:id="autoreCol" prefWidth="130.0" text="Autore" />
-                <TreeTableColumn fx:id="annoCol" prefWidth="52.5" text="Anno" />
-                <TreeTableColumn fx:id="recensioniCol" prefWidth="66.0" text="Recensioni" />
+                <TableColumn fx:id="titoloCol" prefWidth="264.5" text="Titolo" />
+                <TableColumn fx:id="autoreCol" prefWidth="130.0" text="Autore" />
+                <TableColumn fx:id="annoCol" prefWidth="52.5" text="Anno" />
+                <TableColumn fx:id="recensioniCol" prefWidth="66.0" text="Recensioni" />
             </columns>
-        </TreeTableView>
+        </TableView>
       <Text layoutX="316.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Cerca Libro" />
           <TextField fx:id="campoRicerca" layoutX="249.0" layoutY="99.0" onKeyPressed="#keyEnterPressed_1" prefHeight="31.0" prefWidth="494.0" promptText="Cerca un libro..." styleClass="barraRicerca">
               <font>

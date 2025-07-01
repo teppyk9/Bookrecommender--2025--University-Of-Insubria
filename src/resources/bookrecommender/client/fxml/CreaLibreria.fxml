@@ -5,14 +5,12 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <AnchorPane prefHeight="450.0" prefWidth="800.0" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaLibreriaController">
     <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
         <AnchorPane prefHeight="32.0" prefWidth="750.0">
@@ -37,22 +35,22 @@
         </AnchorPane>
         <AnchorPane prefHeight="317.0" prefWidth="750.0">
             <HBox prefHeight="309.0" prefWidth="780.0">
-                <TreeTableView fx:id="tableView" layoutX="258.0" layoutY="157.0" prefHeight="289.0" prefWidth="390.0">
+                <TableView fx:id="tableView" layoutX="258.0" layoutY="157.0" prefHeight="289.0" prefWidth="390.0">
                     <columns>
-                        <TreeTableColumn fx:id="titoloCol" prefWidth="215.0" text="Titolo" />
-                        <TreeTableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="90.0" text="Autore" />
-                        <TreeTableColumn fx:id="annoCol" prefWidth="44.0" text="Anno" />
-                        <TreeTableColumn fx:id="azioniCol" prefWidth="40.0" text="Azioni" />
+                        <TableColumn fx:id="titoloCol" prefWidth="215.0" text="Titolo" />
+                        <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="90.0" text="Autore" />
+                        <TableColumn fx:id="annoCol" prefWidth="44.0" text="Anno" />
+                        <TableColumn fx:id="azioniCol" prefWidth="40.0" text="Azioni" />
                     </columns>
-                </TreeTableView>
-                <TreeTableView fx:id="risTableView" layoutX="258.0" layoutY="157.0" prefHeight="289.0" prefWidth="390.0">
+                </TableView>
+                <TableView fx:id="risTableView" layoutX="258.0" layoutY="157.0" prefHeight="289.0" prefWidth="390.0">
                     <columns>
-                        <TreeTableColumn fx:id="risTitoloCol" prefWidth="215.0" text="Titolo" />
-                        <TreeTableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="90.0" text="Autore" />
-                        <TreeTableColumn fx:id="risAnnoCol" prefWidth="44.0" text="Anno" />
-                        <TreeTableColumn fx:id="risAzioniCol" prefWidth="40.0" text="Azioni" />
+                        <TableColumn fx:id="risTitoloCol" prefWidth="215.0" text="Titolo" />
+                        <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="90.0" text="Autore" />
+                        <TableColumn fx:id="risAnnoCol" prefWidth="44.0" text="Anno" />
+                        <TableColumn fx:id="risAzioniCol" prefWidth="40.0" text="Azioni" />
                     </columns>
-                </TreeTableView>
+                </TableView>
             </HBox>
         </AnchorPane>
         <AnchorPane prefHeight="35.0" prefWidth="750.0">
