@@ -1,22 +1,36 @@
 /* CONTAINER */
-.background {
-    -fx-background-color: #A31621; /* Colore di sfondo principale */
+.background { /* ok */
+    -fx-background-image: url("../icons/copertina_chiara.jpeg");
 
 
 }
 
-
+.box{ /* ok */
+    -fx-background-color: rgba(163, 22, 33, 0.71); /* Colore di sfondo chiaro */
+    -fx-background-radius: 10px; /* Angoli arrotondati */
+}
 
 /* TEXT */
-#titoloLabel {
+
+.sottotitolo{ /* ok */
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-fill: #fcf7f8; /* Colore del testo */
+    -fx-text-alignment: center;
+
+}
+
+
+#titoloLabel  { /* ok */
     -fx-font-family: "Century Gothic";
     -fx-font-weight: bold;
-    -fx-underline: true;
     -fx-font-size: 23px;
-    -fx-text-fill: #FCF7F8;
+    -fx-text-fill: #a31621;
+    -fx-alignment: center;
 }
 
-.etichettaLabel{
+.etichettaLabel{ /* ok */
     -fx-font-family: "Century Gothic";
     -fx-font-size: 14px;
     -fx-text-fill: #FCF7F8;
@@ -24,77 +38,228 @@
 }
 
 
-/* label x informazioni libro*/
+/* label x informazioni libro*/ /* ok */
 #autoreLabel, #categoriaLabel, #editoreLabel,
-#prezzoLabel, #annoLabel, #meseLabel {
+#prezzoLabel, #annoLabel, #meseLabel{
     -fx-font-size: 14px;
     -fx-text-fill: #FCF7F8;
     -fx-font-family: "Century Gothic";
-    /*-fx-border-color: white;*/
+    -fx-border-color: transparent;
+    -fx-text-alignment: center-left;
+}
+#descrizioneArea {
+    -fx-font-size: 14px;
+    -fx-text-fill: #FCF7F8;
+    -fx-font-family: "Century Gothic";
+    -fx-border-color: transparent;
+    -fx-alignment: top-left;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-label-padding: 0,0,0,0; /* Rimuove il padding */
+
 }
 
-#descrizioneArea {
-    -fx-background-color: #a31621; /* Colore di sfondo della descrizione */
-    -fx-control-inner-background: #a31621;
-    -fx-control-inner-background-alt: #a31621;
+/*scroll bar descrizione area*/
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-control-inner-background: transparent;
+}
+
+/* Contenuto interno dello ScrollPane trasparente */
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .corner,
+.scroll-pane .scroll-bar .corner,
+.scroll-pane .scroll-bar .corner {
+    -fx-border-color: transparent;
     -fx-background-insets: 0;
+    -fx-border-width: 0;
     -fx-background-radius: 0;
-
-    -fx-border-color: #a31621;
     -fx-border-radius: 0;
+}
 
-    -fx-focus-color: #a31621;
-    -fx-faint-focus-color: #a31621;
-
-    -fx-highlight-fill: #a31621;
-    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+/* ScrollPane: scrollbar verticale minimal  */
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #a31621;
+    -fx-opacity: 0.3;
+    -fx-pref-width: 4px;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+.scroll-pane .scroll-bar:vertical:hover {
+    -fx-background-color: #fcf7f8;
+    -fx-opacity: 1;
+}
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-pref-width: 4px;
+    -fx-pref-height: 24px;
+    -fx-background-radius: 2px;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+.scroll-pane .scroll-bar:vertical:hover .thumb {
+    -fx-background-color: #a31621;
+    -fx-opacity: 1;
+}
+.scroll-pane .scroll-bar .increment-arrow,
+.scroll-pane .scroll-bar .decrement-arrow,
+.scroll-pane .scroll-bar .increment-button,
+.scroll-pane .scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-opacity: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+}
+.scroll-pane,
+.scroll-pane .scroll-bar,
+.scroll-pane .scroll-bar .track {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
     -fx-padding: 0;
 }
-
-/* Liste (valutazioni e consigli) */
-.list-view {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #cccccc;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-padding: 5;
-    -fx-control-inner-background: #ffffff;
-}
-
-/* Etichette valutazione sezione destra */
-.label[text="Media Valutazione"],
-.label[text="Stile"],
-.label[text="Contenuto"],
-.label[text="Gradevolezza"],
-.label[text="Originalità"] {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #444444;
+.scroll-pane .corner {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 /* Valori dei voti */
 #votoTotal, #votoStile, #votoContenuto, #votoGradevolezza, #votoOriginalita , #votoEdizione{
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-alignment: center;
-    -fx-text-fill: #333333;
-    -fx-border-color: #bbbbbb;
+    -fx-text-fill: #fcf7f8;
+    -fx-border-color: #a31621;
     -fx-border-radius: 50%;
     -fx-background-radius: 50%;
-    -fx-background-color: #eeeeee;
+    -fx-background-color: #a31621;
 }
 
-/* Stelle (opzionale: si può dare un colore di sfondo trasparente o giallo) */
+/* stelle */
 .image-view {
     -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 2, 0.0, 0, 1);
 }
 
+/* LISTE CONSIGLI E VALUTAZIONI*/
+
+.list-view {
+    -fx-background-color: #A31621; /* Colore di sfondo della lista */
+    -fx-border-color: #A31621; /* Colore del bordo della lista */
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+    -fx-control-inner-background: #A31621; /* Colore di sfondo interno della lista */
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 12px;
+    -fx-text-fill: #FCF7F8; /* Colore del testo */
+}
+
 /* Hover su liste (opzionale) */
 .list-view .list-cell:hover {
-    -fx-background-color: #e0e0e0;
+    -fx-font-weight: bold, underline;
 }
 
 /* Celle selezionate */
 .list-view .list-cell:selected {
-    -fx-background-color: #c0d8ff;
-    -fx-text-fill: black;
+    -fx-background-color: #fcf7f8; /* Colore di sfondo della cella selezionata */
+    -fx-text-fill: #A31621; /* Colore del testo della cella selezionata */
+    -fx-opacity: 0.8; /* Opacità dello sfondo della cella selezionata */
+
+}
+
+
+
+/* Scrollbar molto fine e poco visibile */
+.list-view .scroll-bar:horizontal,
+.list-view .scroll-bar:vertical {
+    -fx-background-color: #a31621;
+    -fx-opacity: 0.3;
+    -fx-pref-width: 4px;
+    -fx-pref-height: 4px;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+/* Colore barra quando ci passi sopra */
+.list-view .scroll-bar:horizontal:hover,
+.list-view .scroll-bar:vertical:hover {
+    -fx-background-color: #fcf7f8;
+    -fx-opacity: 1;
+}
+
+/* Thumb (cursore) invisibile di default */
+.list-view .scroll-bar .thumb {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-pref-width: 4px;
+    -fx-pref-height: 24px;
+    -fx-background-radius: 2px;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+/* Thumb (cursore) visibile solo su hover della scrollbar */
+.list-view .scroll-bar:horizontal:hover .thumb,
+.list-view .scroll-bar:vertical:hover .thumb {
+    -fx-background-color: #a31621;
+    -fx-opacity: 1;
+}
+
+/* Niente freccine */
+.list-view .scroll-bar .increment-arrow,
+.list-view .scroll-bar .decrement-arrow,
+.list-view .scroll-bar .increment-button,
+.list-view .scroll-bar .decrement-button {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-opacity: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+}
+
+/* Elimina bordi e quadratino bianco */
+.list-view,
+.list-view .scroll-bar,
+.list-view .scroll-bar .track {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+}
+
+.list-view .corner {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
