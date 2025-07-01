@@ -40,6 +40,7 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
         initSRecensioniCol();
         initSAggiungiAdvCol();
         initTableViews();
+        aggiornaListaLibrerie();
         initAutoRefresh();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCreaLibreria.getScene().getWindow();

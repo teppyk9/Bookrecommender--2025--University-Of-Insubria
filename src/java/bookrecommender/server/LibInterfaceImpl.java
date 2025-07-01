@@ -9,6 +9,7 @@ import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -106,6 +107,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     @Override
     public boolean isLibPresent(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Info presenza nelle librerie per libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
         return dbManager.utenteContieneLibro(token.getUserId(), libro.getId());
+    }
+
+    @Override
+    public LocalDate getCreationDate(Token token, String nome) throws RemoteException {
+        try{
+            logger.info("Recupero data di creazione per la libreria " + nome  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return null;
+        }
+        return dbManager.dataCreazioneLibreria(token, nome);
     }
 }

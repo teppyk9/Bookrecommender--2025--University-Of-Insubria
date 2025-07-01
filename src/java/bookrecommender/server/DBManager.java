@@ -4,6 +4,8 @@ import bookrecommender.common.*;
 
 import java.security.SecureRandom;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -837,5 +839,37 @@ public class DBManager {
             logger.log(Level.SEVERE, "Errore nel controllo se il libro con ID: " + idLibro + " ha valutazioni, consigli o associazioni", e);
         }
         return false;
+    }
+
+    public LocalDate dataCreazioneLibreria(Token token, String nome){
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        final String SQL =
+                "SELECT libreria_time " +
+                        "  FROM librerie " +
+                        " WHERE id_utente = ? " +
+                        "   AND titolo_libreria = ?";
+
+        int userId = token.getUserId();
+
+        try (PreparedStatement ps = conn.prepareStatement(SQL)) {
+
+            ps.setInt (1, userId);
+            ps.setString(2, nome);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Timestamp ts = rs.getTimestamp("libreria_time");
+                    return ts.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            logger.warning("Libreria non trovata per utente id " + userId + " con nome: " + nome + " - " + e.getMessage());
+            return null;
+        }
     }
 }

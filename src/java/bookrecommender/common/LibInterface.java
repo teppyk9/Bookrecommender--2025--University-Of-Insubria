@@ -2,6 +2,7 @@ package bookrecommender.common;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface LibInterface extends Remote {
@@ -14,4 +15,5 @@ public interface LibInterface extends Remote {
     boolean addConsiglio (Token token, List<Libro> libri) throws RemoteException;
     boolean modifyLibName (Token token, String oldName, String newName) throws RemoteException;
     boolean isLibPresent (Token token, Libro libro) throws RemoteException;
+    LocalDate getCreationDate(Token token, String nome) throws RemoteException;
 }

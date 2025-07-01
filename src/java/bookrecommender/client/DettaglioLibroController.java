@@ -6,7 +6,6 @@ import bookrecommender.common.Valutazione;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -21,7 +20,7 @@ public class DettaglioLibroController {
     public Label prezzoLabel;
     public Label annoLabel;
     public Label meseLabel;
-    public TextArea descrizioneArea;
+    public Label descrizioneArea;
     public ImageView starTotal1;
     public ImageView starTotal2;
     public ImageView starTotal3;
@@ -65,7 +64,6 @@ public class DettaglioLibroController {
 
     public void setLibro(Libro libro){
         descrizioneArea.setWrapText(true);
-        descrizioneArea.setEditable(false);
         titoloLabel.setText(libro.getTitolo());
         autoreLabel.setText(libro.getAutore());
         if(libro.getCategoria() == null || libro.getCategoria().isEmpty()) {
@@ -131,7 +129,12 @@ public class DettaglioLibroController {
         }
     }
 
-    public void clickConsiglio() {
-        //da implementare!!!!!!
+    public void clickConsiglio(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() == 2) {
+            Libro selezionato = listaConsigli.getSelectionModel().getSelectedItem();
+            if (selezionato != null) {
+                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, selezionato);
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class LoginController {
 
-    public javafx.scene.control.PasswordField PasswordField;
+    public PasswordField PasswordField;
     public Button AccediButton;
     public Label NonHaiUnAccountFiled;
     public Text ErrorToLogin;
@@ -31,6 +31,7 @@ public class LoginController {
             NonHaiUnAccountFiled.setCursor(Cursor.DEFAULT);
         });
         Platform.runLater(() -> {
+            UsernameField.requestFocus();
             Stage stage = (Stage) AccediButton.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
                 Platform.exit();

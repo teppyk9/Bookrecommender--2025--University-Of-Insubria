@@ -250,7 +250,8 @@ public abstract class TableViewEngine {
                 });
                 libreria.setOnAction(evt -> {
                     Libro l = getTableView().getItems().get(getIndex());
-                    //da implementare
+                    if(l != null)
+                        CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGILIBROLIBRERIA,l);
                 });
             }
 

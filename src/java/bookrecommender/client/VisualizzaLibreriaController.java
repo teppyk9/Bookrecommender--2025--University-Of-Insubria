@@ -157,7 +157,8 @@ public class VisualizzaLibreriaController extends TableViewEngine{
     private void SalvaLibreria() {
         if (!NomeLibreria.getText().isEmpty() && NomeLibreria.getText().trim().length() >= 5 && NomeLibreria.getText().trim().length() <= 50) {
             try {
-                CliUtil.getInstance().getLibService().modifyLibName(CliUtil.getInstance().getCurrentToken(), LibName, NomeLibreria.getText().trim());
+                if(!CliUtil.getInstance().getLibService().modifyLibName(CliUtil.getInstance().getCurrentToken(), LibName, NomeLibreria.getText().trim()))
+                    CliUtil.getInstance().createAlert("Errore", "Impossibile modificare il nome della libreria.").showAndWait();
             } catch (Exception e) {
                 CliUtil.getInstance().createAlert("Errore", "Impossibile modificare il nome della libreria: " + e.getMessage()).showAndWait();
                 return;

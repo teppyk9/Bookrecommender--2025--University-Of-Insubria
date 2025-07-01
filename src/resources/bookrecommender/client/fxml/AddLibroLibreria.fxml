@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="450" prefWidth="800" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="bookrecommender.client.AddLibroLibreriaController">
+    <VBox spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+
+        <TreeTableView fx:id="treeTableView" VBox.vgrow="ALWAYS">
+            <columns>
+                <TreeTableColumn fx:id="nameColumn" prefWidth="312.0" text="Nome Libreria" />
+                <TreeTableColumn fx:id="countColumn" prefWidth="123.0" text="Qt. libri" />
+                <TreeTableColumn fx:id="presentColumn" text="Presente" />
+                <TreeTableColumn fx:id="dateColumn" prefWidth="264.0" text="Data Creazione" />
+            </columns>
+        </TreeTableView>
+
+        <Button fx:id="addButton" disable="true" onAction="#handleAddBook" text="Aggiungi Libro" />
+    </VBox>
+</AnchorPane>

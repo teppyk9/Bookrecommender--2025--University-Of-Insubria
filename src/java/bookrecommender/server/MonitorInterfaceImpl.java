@@ -16,11 +16,6 @@ public class MonitorInterfaceImpl extends UnicastRemoteObject implements Monitor
     }
 
     @Override
-    public boolean ping() throws RemoteException {
-        return true;
-    }
-
-    @Override
     public void registerListener(ServerListener listener) throws RemoteException {
         listeners.add(listener);
     }
