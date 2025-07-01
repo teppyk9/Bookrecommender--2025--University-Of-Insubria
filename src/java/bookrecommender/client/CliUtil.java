@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CliUtil {
+public final class CliUtil {
 
     private static final Logger logger = Logger.getLogger(CliUtil.class.getName());
 
