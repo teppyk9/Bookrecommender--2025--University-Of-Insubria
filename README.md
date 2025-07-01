@@ -1,3 +1,6 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+
 <img src="src/resources/bookrecommender/client/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 300px;" alt="Icona Insubria">
 
 # BookRecommender
@@ -46,45 +49,46 @@ In alternativa, se il progetto è già configurato con Maven o Gradle, sarà suf
 
 ```
 BookRecommender/
+├── autori.txt
+├── bookrecommender.iml
+├── LICENSE
+├── log_creazione_db
+├── README.md
 ├── data/
-│   ├── [*.dati.csv] — Dati di libri, utenti, valutazioni, librerie, consigli
-│   └── query/
-│       ├── tablecreation.sql — Script di creazione tabelle
-│       ├── datainsert.sql — Popolamento tabelle
-│       ├── login_tableCreation.sql — Tabelle per login
-│       └── newRules.sql — Regole o vincoli addizionali
-│
+│   ├── tablecreation.sql          — Script di creazione tabelle
+│   └── dump/
+│       ├── consigli.sql
+│       ├── libreria_libro.sql
+│       ├── librerie.sql
+│       ├── libri.sql
+│       ├── utenti.sql
+│       └── valutazioni.sql
 ├── src/
 │   ├── java/
-│   │   ├── databaseUpdater/
-│   │   │   └── DBUp.java — Programma per importare i dati da Libri.dati.csv
-│   │   │
-│   │   ├── bookrecommender/
-│   │   │   ├── client/
-│   │   │   │   ├── Main_Client.java — Punto di avvio client
-│   │   │   │   ├── CliUtil.java — Singleton con costanti e metodi utili
-│   │   │   │   ├── [Controller].java — Controller per ogni FXML
-│   │   │   │
-│   │   │   ├── common/
-│   │   │   │   ├── Libro.java — Classe serializzabile del libro
-│   │   │   │   ├── Token.java / RegToken.java — Token di sessione
-│   │   │   │   └── [Interfacce RMI] — Interfacce per comunicazione client-server
-│   │   │   │
-│   │   │   └── server/
-│   │   │       ├── Main_Server.java — Avvio del server
-│   │   │       ├── DBManager.java — Connessione al database
-│   │   │       └── [Impl].java — Implementazioni delle interfacce `common`
-│   │
+│   │   └── bookrecommender/
+│   │       ├── client/
+│   │       │   ├── AddLibroLibreriaController.java
+│   │       │   ├── AreaRiservataController.java
+│   │       │   ├── … (altri controller e classi client)
+│   │       ├── common/
+│   │       │   ├── Libro.java
+│   │       │   └── Token.java, RegToken.java
+│   │       └── server/
+│   │           ├── DBManager.java
+│   │           ├── Main_Server.java
+│   │           └── … (implementazioni server)
 │   └── resources/
 │       └── bookrecommender/
 │           ├── client/
-│           │   └── [*.fxml] — Interfaccia grafica del client (Login, Home, Registrazione, ecc.)
-│           ├── icons/
-│           │   └── [*.png/*.jpg] — Icone per alert, frecce, immagini decorative
-│           └── stylesheets/
-│               └── [*.css] — Fogli di stile associati ai vari FXML
-│
-└── doc/ Documentazione
+│           │   ├── fxml/         — *.fxml (Login, Home, ecc.)
+│           │   ├── icons/        — *.png, *.jpg
+│           │   └── stylesheets/  — *.css
+│           └── server/
+│               ├── fxml/
+│               ├── icons/
+│               └── stylesheets/
+└── doc/
+
 ```
 
 ---
