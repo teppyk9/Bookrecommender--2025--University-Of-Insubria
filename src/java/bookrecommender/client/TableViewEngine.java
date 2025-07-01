@@ -19,25 +19,130 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class TableViewEngine {
+    /**
+     * Restituisce il campo di input per il testo della ricerca.
+     *
+     * @return il TextField usato per inserire il testo di ricerca
+     */
     protected abstract TextField getCampoRicerca();
+
+    /**
+     * Restituisce il campo di input per l’anno della ricerca.
+     *
+     * @return il TextField usato per inserire l’anno di ricerca
+     */
     protected abstract TextField getCampoRicercaAnno();
+
+    /**
+     * Restituisce il MenuButton per selezionare il tipo di ricerca.
+     *
+     * @return il MenuButton che mostra le opzioni di ricerca
+     */
     protected abstract MenuButton getMenuTipoRicerca();
+
+    /**
+     * Restituisce il MenuItem per avviare la ricerca per titolo.
+     *
+     * @return il MenuItem associato alla ricerca per titolo
+     */
     protected abstract MenuItem getMenuCercaTitolo();
+
+    /**
+     * Restituisce il MenuItem per avviare la ricerca per autore.
+     *
+     * @return il MenuItem associato alla ricerca per autore
+     */
     protected abstract MenuItem getMenuCercaAutore();
+
+    /**
+     * Restituisce il MenuItem per avviare la ricerca per autore e anno.
+     *
+     * @return il MenuItem associato alla ricerca per autore e anno
+     */
     protected abstract MenuItem getMenuCercaAutoreAnno();
 
+    /**
+     * Restituisce la TableView contenente i risultati di ricerca primari.
+     *
+     * @return la TableView dei libri trovati
+     */
     protected abstract TableView<Libro> getSTableView();
+
+    /**
+     * Restituisce la colonna {@code Titolo} nella TableView dei risultati.
+     *
+     * @return la TableColumn per il titolo del libro
+     */
     protected abstract TableColumn<Libro, String> getSTitoloCol();
+
+    /**
+     * Restituisce la colonna {@code Autore} nella TableView dei risultati.
+     *
+     * @return la TableColumn per l’autore del libro
+     */
     protected abstract TableColumn<Libro, String> getSAutoreCol();
+
+    /**
+     * Restituisce la colonna {@code Anno} nella TableView dei risultati.
+     *
+     * @return la TableColumn per l’anno di pubblicazione
+     */
     protected abstract TableColumn<Libro, Integer> getSAnnoCol();
+
+    /**
+     * Restituisce la colonna delle recensioni nella TableView dei risultati.
+     *
+     * @return la TableColumn che mostra lo stato delle recensioni
+     */
     protected abstract TableColumn<Libro, Void> getSRecensioniCol();
+
+    /**
+     * Restituisce la colonna dei comandi di aggiunta/avviso nella TableView.
+     *
+     * @return la TableColumn con i pulsanti di azione avanzata
+     */
     protected abstract TableColumn<Libro, Void> getSAggiungiAdvCol();
+
+    /**
+     * Restituisce la colonna dei comandi di nella TableView.
+     *
+     * @return la TableColumn con le opzioni associate ai libri
+     */
     protected abstract TableColumn<Libro, Void> getSAddRemCol();
 
+    /**
+     * Restituisce la TableView secondaria.
+     *
+     * @return la TableView secondaria
+     */
     protected abstract TableView<Libro> getOTableView();
+
+    /**
+     * Restituisce la colonna {@code Titolo} nella TableView secondaria.
+     *
+     * @return la TableColumn per il titolo nella TableView secondaria
+     */
     protected abstract TableColumn<Libro, String> getOTitoloCol();
+
+    /**
+     * Restituisce la colonna {@code Autore} nella TableView secondaria.
+     *
+     * @return la TableColumn per l’autore nella TableView secondaria
+     */
     protected abstract TableColumn<Libro, String> getOAutoreCol();
+
+    /**
+     * Restituisce la colonna {@code Anno} nella TableView secondaria.
+     *
+     * @return la TableColumn per l’anno nella TableView secondaria
+     */
     protected abstract TableColumn<Libro, Integer> getOAnnoCol();
+
+    /**
+     * Restituisce la colonna di azioni nella TableView secondaria.
+     *
+     * @return la TableColumn con i comandi aggiuntivi
+     */
     protected abstract TableColumn<Libro, Void> getOActionCol();
 
     /**
@@ -49,6 +154,11 @@ public abstract class TableViewEngine {
      */
     protected abstract boolean getSearchType();
 
+    /**
+     * Campo che rappresenta il tipo di ricerca selezionato.
+     * <p>
+     * Può assumere i valori {@code Titolo}, {@code Autore} o {@code AutoreAnno}.
+     */
     private String searchType = "";
 
     protected void initBasicSearch() {
