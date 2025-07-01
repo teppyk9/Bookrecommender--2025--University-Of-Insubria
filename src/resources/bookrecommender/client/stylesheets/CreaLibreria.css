@@ -1,0 +1,202 @@
+.background{
+    -fx-background-color: #fcf7f8;
+}
+
+.titolo{
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-fill: #a31621;
+}
+
+.bottone{
+    -fx-background-color: #a31621;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 12;
+    -fx-background-radius: 6px;
+}
+
+.bottone:hover{
+    -fx-animated: zoom;
+    -fx-font-weight: bold;
+}
+
+.indietro{
+    -fx-background-color: transarent;
+    -fx-background-image: url('../icons/indietro_r.png');
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+
+.indietro:hover{
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+.cerca{
+    -fx-background-image: url("../icons/cerca_r.png");
+    -fx-background-color: transparent;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+
+.cerca:hover{
+    -fx-background-color: transparent;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+/* MENU A TENDINA */
+.sceltaRicerca {
+    -fx-background-color: #A31621;
+    -fx-text-fill: #FCF7F8;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-border-radius: 0px;
+
+}
+
+.sceltaRicerca .label{
+    -fx-text-fill: #fcf7f8;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-border-radius: 0px;
+}
+
+
+.menu-button .context-menu {
+    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-border-color: rgba(163, 22, 33, 0.68);
+    -fx-border-width: 1px;
+    -fx-border-radius: 0px;
+
+}
+
+.menu-button .menu-item {
+    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-text-fill: #fcf7f8;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-border-radius: 0px;
+}
+
+.menu-button .menu-item:focused,
+.menu-button .menu-item:hover {
+    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-text-fill: #fcf7f8;
+    -fx-border-radius: 0px;
+    -fx-font-weight: bold;
+}
+
+.field {
+    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-text-fill: #fcf7f8;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-prompt-text-fill: #fcf7f8;
+}
+
+.field .text-field{
+    -fx-fill: #fcf7f8;   /* colore del testo inserito */
+    -fx-font-size: 12px; /* size del testo inserito */
+    -fx-font-weight: bold;
+}
+
+.field .prompt-text{
+    -fx-fill: #fcf7f8;   /* colore del prompt text */
+    -fx-font-size: 12px; /* size del prompt text */
+}
+
+
+/* TableView */
+.table-view { /* sfondo tabella, predefinito*/
+    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-table-cell-border-color: transparent;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 12px;
+    -fx-text-fill: #fcf7f8;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.table-view .column-header-background { /* intestazione tabella (colonne) */
+    -fx-background-color: #A31621;
+    -fx-background-radius: 6px 6px 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler { /* intestazione tabella (colonne) e riempimento */
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label { /* etichetta intestazione tabella (colonne) */
+    -fx-text-fill: #fcf7f8;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.table-row-cell { /* celle della tabella */
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 12px;
+    -fx-text-fill: #fcf7f8;
+}
+
+.table-row-cell:filled:selected,
+.table-row-cell:filled:focused:selected { /* riga selezionata */
+    -fx-background-color: #A31621;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:filled:hover { /* riga al passaggio del mouse */
+    -fx-text-fill: #fcf7f8;
+    -fx-background-color: #A31621;
+}
+
+.table-cell { /* celle della tabella */
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: transparent;
+    -fx-padding: 4 8;
+    -fx-background-color: transparent;
+}
+
+/* ScrollBar personalizzata */
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6px;
+    -fx-pref-height: 6px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button { /* elimina frecce scrollbar*/
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-opacity: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+}
+
+.scroll-bar .thumb { /* cursore della scrollbar */
+    -fx-background-color: rgba(163,22,33,0.18);
+    -fx-background-radius: 4px;
+    -fx-min-height: 20px;
+    -fx-min-width: 20px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #A31621;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
