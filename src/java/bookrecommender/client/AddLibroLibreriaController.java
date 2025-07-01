@@ -84,6 +84,19 @@ public class AddLibroLibreriaController{
             return new ReadOnlyObjectWrapper<>(null);
         });
 
+        treeTableView.setRowFactory(tv -> {
+            TreeTableRow<Object> row = new TreeTableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    Object v = row.getItem();
+                    if (v instanceof Libro) {
+                        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, v);
+                    }
+                }
+            });
+            return row;
+        });
+
         treeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null && newSel.getValue() instanceof String nomeLib) {
                 addButton.setDisable(libPresent.getOrDefault(nomeLib, true));
