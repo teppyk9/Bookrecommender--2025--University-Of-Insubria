@@ -10,17 +10,34 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
+/**
+ * Classe responsabile della gestione della connessione al database, dell'esecuzione delle query e della manipolazione dei dati relativi a libri e utenti.
+ * Utilizzata nel lato server dell'applicazione BookRecommender.
+ */
 public class DBManager {
 
+    /** Connessione condivisa al database, usata dalle varie operazioni del DBManager. */
     private static Connection conn;
 
+    /** Logger per la registrazione di eventi, errori e messaggi di debug della classe DBManager. */
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
 
+    /**
+     * Costruttore vuoto della classe DBManager.
+     * Attualmente non inizializza risorse ma può essere esteso per configurazioni future.
+     */
     public DBManager() {
         //al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
     }
 
+    /**
+     * Prova a connettersi al database con i parametri specificati.
+     * Non mantiene la connessione aperta: serve solo per verificare la validità dei parametri.
+     * @param url      URL del database (es. jdbc:postgresql://localhost:5432/miodb)
+     * @param user     Nome utente per accedere al database
+     * @param password Password dell'utente
+     * @return true se la connessione di test ha successo, false altrimenti
+     */
     public boolean tryConnection(String url, String user, String password) {
         if (url == null || user == null || password == null) {
             logger.log(Level.SEVERE, "Parametri di connessione non impostati.");
@@ -35,6 +52,13 @@ public class DBManager {
         }
     }
 
+    /**
+     * Apre una connessione persistente al database se non già aperta.
+     * @param url      URL del database
+     * @param user     Nome utente del database
+     * @param password Password dell'utente
+     * @return true se la connessione è avvenuta correttamente, false altrimenti
+     */
     public boolean connect(String url, String user, String password) {
         try {
             if (conn == null || conn.isClosed()) {
@@ -51,6 +75,9 @@ public class DBManager {
         }
     }
 
+    /**
+     * Chiude la connessione attualmente aperta al database, se esistente.
+     */
     public void closeConnection() {
         if (conn != null) {
             try {
@@ -64,6 +91,13 @@ public class DBManager {
         }
     }
 
+    /**
+     * Esegue un PreparedStatement e popola una lista di oggetti {@link Libro}
+     * con i risultati ottenuti dal ResultSet.
+     * @param risultati Lista da riempire con i libri estratti
+     * @param stmt      Statement SQL già preparato da eseguire
+     * @throws SQLException In caso di errore nell'esecuzione del PreparedStatement
+     */
     public void resultStmt(List<Libro> risultati, PreparedStatement stmt) throws SQLException {
         try (ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -83,6 +117,11 @@ public class DBManager {
         }
     }
 
+    /**
+     * Cerca libri il cui titolo contiene la stringa fornita (case-insensitive)
+     * @param titolo Titolo o parte del titolo da cercare
+     * @return Lista di libri che soddisfano il criterio di ricerca
+     */
     public List<Libro> cercaLibriPerTitolo(String titolo) {
         List<Libro> risultati = new ArrayList<>();
         String query = "SELECT * FROM LIBRI WHERE LOWER(TITOLO) LIKE LOWER(?)";
@@ -90,6 +129,11 @@ public class DBManager {
         return selectLibro(titolo, risultati, query);
     }
 
+    /**
+     * Cerca libri scritti da autori il cui nome contiene la stringa fornita (case-insensitive)
+     * @param author Nome o parte del nome dell'autore
+     * @return Lista di libri scritti dall'autore specificato
+     */
     public List<Libro> cercaLibriPerAutore(String author) {
         List<Libro> risultati = new ArrayList<>();
         String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?)";
@@ -97,6 +141,14 @@ public class DBManager {
         return selectLibro(author, risultati, query);
     }
 
+    /**
+     * Esegue una query parametrica per cercare libri in base a un titolo/autore,
+     * popolando la lista fornita.
+     * @param titolo    Parametro di ricerca (titolo o autore)
+     * @param risultati Lista da riempire con i risultati
+     * @param query     Query SQL parametrica da eseguire
+     * @return Lista di libri risultanti dalla query
+     */
     public List<Libro> selectLibro(String titolo, List<Libro> risultati, String query) {
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -110,6 +162,12 @@ public class DBManager {
         return risultati;
     }
 
+    /**
+     * Cerca libri in base all'autore e all'anno di pubblicazione.
+     * @param author Nome dell'autore
+     * @param year   Anno di pubblicazione come stringa (anche parziale)
+     * @return Lista di libri che corrispondono ai criteri
+     */
     public List<Libro> cercaLibriPerAutoreAnno(String author, String year) {
         List<Libro> risultati = new ArrayList<>();
         String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) AND CAST(ANNOPUBBLICAZIONE AS TEXT) LIKE ?";
@@ -127,6 +185,11 @@ public class DBManager {
         return risultati;
     }
 
+    /**
+     * Svuota completamente la tabella delle sessioni di login,
+     * resettando anche il contatore degli ID.
+     * Utile per test o per azzerare lo stato delle sessioni.
+     */
     public void svuotaSessioniLogin() {
         String sql = "TRUNCATE TABLE SESSIONI_LOGIN RESTART IDENTITY";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -136,6 +199,14 @@ public class DBManager {
         }
     }
 
+    /**
+     * Esegue il login di un utente verificando username e password.
+     * In caso di successo, genera un token di sessione e lo salva nel database.
+     * @param username  Nome utente dell'utente
+     * @param password  Password dell'utente (in chiaro o da confrontare con hash)
+     * @param ipClient  Indirizzo IP del client che effettua il login
+     * @return {@link Token} valido se il login è riuscito, altrimenti null
+     */
     public Token loginUtente(String username, String password, String ipClient) {
         String query = "SELECT ID, PASSWORD FROM UTENTI WHERE USERNAME = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -171,6 +242,11 @@ public class DBManager {
         return null;
     }
 
+    /**
+     * Genera un token sicuro e univoco utilizzato per identificare una sessione di login.
+     * Il token è codificato in Base64 URL-safe e privo di padding.
+     * @return Token generato come stringa.
+     */
     private String generaToken() {
         SecureRandom secureRandom = new SecureRandom();
         byte[] tokenBytes = new byte[24];
@@ -178,6 +254,16 @@ public class DBManager {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(tokenBytes);
     }
 
+    /**
+     * Registra un nuovo utente nel database dopo aver verificato che username, codice fiscale ed email siano unici.
+     * @param nome      Nome dell'utente
+     * @param cognome   Cognome dell'utente
+     * @param CF        Codice fiscale dell'utente
+     * @param email     Indirizzo email dell'utente
+     * @param username  Nome utente scelto
+     * @param password  Password scelta (attualmente in chiaro)
+     * @return {@link RegToken} contenente lo stato della registrazione per ciascun campo e l'esito complessivo
+     */
     public RegToken Register(String nome, String cognome, String CF, String email, String username, String password) {
         String checkUsername = "SELECT 1 FROM UTENTI WHERE USERNAME = ?";
         String checkCF = "SELECT 1 FROM UTENTI WHERE CODICE_FISCALE = ?";
@@ -231,6 +317,11 @@ public class DBManager {
         }
     }
 
+    /**
+     * Invalida un token eliminandolo dalla tabella delle sessioni di login.
+     * @param token Token di sessione da invalidare
+     * @return true se il logout ha avuto successo (token eliminato), false altrimenti
+     */
     public boolean LogOut(Token token) {
         String deleteQuery = "DELETE FROM SESSIONI_LOGIN WHERE TOKEN = ?";
         try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
@@ -243,6 +334,11 @@ public class DBManager {
         }
     }
 
+    /**
+     * Verifica se un token fornito non è più valido (non esiste o IP non corrisponde).
+     * @param token Token da validare
+     * @return true se il token è invalido o inesistente, false se è valido
+     */
     public boolean isTokenNotValid(Token token) {
         String query = "SELECT 1 FROM SESSIONI_LOGIN WHERE TOKEN = ? AND IP_CLIENT = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -257,6 +353,11 @@ public class DBManager {
         }
     }
 
+    /**
+     * Recupera un libro dal database a partire dal suo ID.
+     * @param id ID del libro da recuperare
+     * @return Oggetto {@link Libro} se trovato, altrimenti null
+     */
     public Libro getLibro(int id) {
         String query = "SELECT * FROM LIBRI WHERE ID = ? ";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -283,6 +384,14 @@ public class DBManager {
         }
     }
 
+    /**
+     * Crea una nuova libreria per l'utente specificato da token, associando un elenco di libri.
+     * Se il token non è valido o la libreria esiste già con lo stesso nome per quell'utente, l'operazione fallisce.
+     * @param token Token di sessione valido dell'utente
+     * @param nome  Nome della nuova libreria
+     * @param libri Lista di libri da inserire nella libreria
+     * @return true se la creazione della libreria ha avuto successo, false altrimenti
+     */
     public boolean creaLibreria(Token token, String nome, List<Libro> libri) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -337,6 +446,12 @@ public class DBManager {
         return false;
     }
 
+    /**
+     * Elimina una libreria per un determinato utente, identificato dal token.
+     * @param token Token di sessione valido dell'utente
+     * @param nome  Nome della libreria da eliminare
+     * @return true se la libreria è stata eliminata correttamente, false altrimenti
+     */
     public boolean eliminaLibreria(Token token, String nome) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -354,6 +469,17 @@ public class DBManager {
         }
     }
 
+    /**
+     * Aggiorna il contenuto di una libreria specifica associata all'utente, aggiungendo e rimuovendo libri.
+     * @param token Token di autenticazione dell'utente.
+     * @param nome Nome della libreria da aggiornare.
+     * @param libriAggiornati Lista aggiornata di libri che devono essere presenti nella libreria.
+     * @return Una lista contenente:
+     *         - [1] se l'operazione è andata a buon fine;
+     *         - [0] se si è verificato un errore o se il token è invalido;
+     *         - [0, idLibro, motivo, ...] se alcuni libri non possono essere eliminati, con motivo:
+     *           0 → libro valutato, 1 → libro consigliato, 2 → libro presente in consigli da altri utenti.
+     */
     public List<Integer> aggiornaLibreria(Token token, String nome, List<Libro> libriAggiornati) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -452,7 +578,12 @@ public class DBManager {
         return List.of(1);
     }
 
-
+    /**
+     * Recupera la lista di libri contenuti in una libreria specifica dell'utente.
+     * @param token Token di autenticazione dell'utente.
+     * @param nome Nome della libreria di cui recuperare i libri.
+     * @return Lista di libri presenti nella libreria, oppure {@code null} se il token non è valido o si verifica un errore.
+     */
     public List<Libro> getLibreria(Token token, String nome) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -471,6 +602,11 @@ public class DBManager {
         return libri;
     }
 
+    /**
+     * Recupera i nomi di tutte le librerie associate all'utente.
+     * @param token Token di autenticazione dell'utente.
+     * @return Lista di nomi delle librerie dell'utente, oppure {@code null} se il token è invalido o si verifica un errore.
+     */
     public List<String> getLibrerie(Token token) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -492,6 +628,11 @@ public class DBManager {
         return librerie;
     }
 
+    /**
+     * Recupera i dettagli di un libro, inclusi commenti e valutazioni da parte degli utenti e consigli correlati.
+     * @param libro Libro di cui recuperare i dettagli.
+     * @return Oggetto {@link Libro_Details} contenente le valutazioni e i consigli ricevuti dal libro.
+     */
     public Libro_Details getDetails(Libro libro) {
         List<Valutazione> valutazioni = new ArrayList<>();
         Hashtable<String, List<Libro>> consigli = new Hashtable<>();
@@ -565,6 +706,12 @@ public class DBManager {
         return new Libro_Details(consigli, valutazioni);
     }
 
+    /**
+     * Aggiunge una valutazione per un libro da parte dell'utente autenticato.
+     * @param token Token di autenticazione dell'utente.
+     * @param valutazione Oggetto contenente le valutazioni numeriche e i commenti dell'utente.
+     * @return {@code true} se la valutazione è stata inserita correttamente, {@code false} in caso di token non valido, libro non posseduto o errore SQL.
+     */
     public boolean addValutazione(Token token, Valutazione valutazione) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -610,6 +757,14 @@ public class DBManager {
         }
     }
 
+    /**
+     * Aggiunge un consiglio per un libro, associandolo ad altri 2-4 libri ritenuti simili o consigliabili.
+     * @param token Token di autenticazione dell'utente.
+     * @param libri Lista di libri dove:
+     *              - il primo è quello a cui si vuole associare il consiglio;
+     *              - gli altri sono i libri consigliati (almeno 2, massimo 4, null inclusi se mancanti).
+     * @return {@code true} se il consiglio è stato aggiunto correttamente, {@code false} altrimenti.
+     */
     public boolean addConsiglio(Token token, List<Libro> libri) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -658,6 +813,12 @@ public class DBManager {
         }
     }
 
+    /**
+     * Cerca i libri posseduti dall'utente in base a una parola chiave contenuta nel titolo.
+     * @param token Token di autenticazione dell'utente.
+     * @param titolo Parola chiave da cercare nel titolo.
+     * @return Lista di libri corrispondenti alla ricerca, oppure {@code null} in caso di token invalido o errore.
+     */
     public List<Libro> cercaLibriPerTitolo(Token token, String titolo) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -684,6 +845,12 @@ public class DBManager {
         return risultati;
     }
 
+    /**
+     * Cerca i libri posseduti dall'utente in base a una parola chiave contenuta nel nome dell'autore.
+     * @param token Token di autenticazione dell'utente.
+     * @param author Nome (parziale o completo) dell'autore da cercare.
+     * @return Lista di libri corrispondenti, oppure {@code null} in caso di token invalido o errore.
+     */
     public List<Libro> cercaLibriPerAutore(Token token, String author) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -710,6 +877,13 @@ public class DBManager {
         return risultati;
     }
 
+    /**
+     * Cerca i libri posseduti dall'utente in base al nome dell'autore e all'anno di pubblicazione.
+     * @param token Token di autenticazione dell'utente.
+     * @param author Nome dell'autore.
+     * @param year Anno di pubblicazione (anche parziale).
+     * @return Lista di libri corrispondenti, oppure {@code null} in caso di token invalido o errore.
+     */
     public List<Libro> cercaLibriPerAutoreAnno(Token token, String author, String year) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -738,7 +912,11 @@ public class DBManager {
         return risultati;
     }
 
-
+    /**
+     * Recupera tutti i libri posseduti dall'utente in qualsiasi libreria.
+     * @param token Token di autenticazione dell'utente.
+     * @return Lista completa dei libri posseduti, oppure {@code null} in caso di token invalido o errore.
+     */
     public List<Libro> cercaTuttiLibriUtente(Token token) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -766,6 +944,13 @@ public class DBManager {
         return risultati;
     }
 
+    /**
+     * Modifica il nome di una libreria specifica dell'utente.
+     * @param token Token di autenticazione dell'utente.
+     * @param nomeAttuale Nome corrente della libreria.
+     * @param nuovoNome Nuovo nome da assegnare alla libreria.
+     * @return {@code true} se l'aggiornamento è avvenuto con successo, {@code false} altrimenti.
+     */
     public boolean modificaNomeLibreria(Token token, String nomeAttuale, String nuovoNome) {
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
@@ -797,6 +982,12 @@ public class DBManager {
         }
     }
 
+    /**
+     * Verifica se l'utente possiede un determinato libro in almeno una delle sue librerie.
+     * @param userId ID dell'utente.
+     * @param bookId ID del libro.
+     * @return {@code true} se il libro è presente, {@code false} altrimenti o in caso di errore.
+     */
     public boolean utenteContieneLibro(int userId, int bookId){
         String sql = """
                 SELECT EXISTS (
@@ -819,6 +1010,11 @@ public class DBManager {
         return false;
     }
 
+    /**
+     * Controlla se un libro ha almeno una valutazione o un'associazione in un consiglio.
+     * @param idLibro ID del libro da controllare.
+     * @return {@code true} se il libro ha valutazioni o è incluso in un consiglio, {@code false} altrimenti.
+     */
     public boolean haValConsAss(int idLibro){
         String sql = """
                 SELECT
@@ -841,6 +1037,12 @@ public class DBManager {
         return false;
     }
 
+    /**
+     * Restituisce la data di creazione di una specifica libreria dell'utente.
+     * @param token Token di autenticazione dell'utente.
+     * @param nome Nome della libreria.
+     * @return {@link LocalDate} della creazione della libreria, oppure {@code null} se non trovata o in caso di errore.
+     */
     public LocalDate dataCreazioneLibreria(Token token, String nome){
         if (isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());

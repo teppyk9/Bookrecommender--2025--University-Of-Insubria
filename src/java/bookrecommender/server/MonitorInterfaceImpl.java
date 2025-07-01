@@ -15,6 +15,8 @@ public class MonitorInterfaceImpl extends UnicastRemoteObject implements Monitor
         super();
     }
 
+
+    //Deprecated
     @Override
     public void registerListener(ServerListener listener) throws RemoteException {
         listeners.add(listener);
