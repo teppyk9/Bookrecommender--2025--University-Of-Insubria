@@ -11,11 +11,12 @@ import java.util.Objects;
 
 /**
  * Controller dell'interfaccia grafica di configurazione del server.
+ * <p>
  * Questa classe gestisce l'interazione con il pannello FXML associato, permettendo all'utente di:
- *     Testare la disponibilità di una porta TCP
- *     Verificare la connessione al database
- *     Confermare e avviare la configurazione del server
- * Utilizza il singleton {@link ServerUtil} per accedere alla logica di backend.
+ *     <li>Testare la disponibilità di una porta TCP
+ *     <li>Verificare la connessione al database
+ *     <li>Confermare e avviare la configurazione del server
+ *     <li>Utilizza il singleton {@link ServerUtil} per accedere alla logica di backend.
  */
 public class ServerConfigController {
     /** Campo di testo per l'inserimento del numero di porta TCP. */

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class AddLibroLibreriaController{
+    @FXML private Text titoloLibreria;
     @FXML private TreeTableView<Object> treeTableView;
     @FXML private TreeTableColumn<Object,String> nameColumn;
     @FXML private TreeTableColumn<Object,Integer> countColumn;
@@ -30,17 +32,22 @@ public class AddLibroLibreriaController{
     private TreeItem<Object> rootItem;
 
     public void initialize() {
+        titoloLibreria.setText("Le tue librerie");
         rootItem = new TreeItem<>();
         treeTableView.setRoot(rootItem);
         treeTableView.setShowRoot(false);
 
+        nameColumn.setStyle("-fx-alignment: CENTER;");
         nameColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
-            if (v instanceof String)   return new ReadOnlyStringWrapper((String)v);
-            if (v instanceof Libro)    return new ReadOnlyStringWrapper(((Libro)v).getTitolo());
+            if (v instanceof String)
+                return new ReadOnlyStringWrapper((String)v);
+            if (v instanceof Libro)
+                return new ReadOnlyStringWrapper(((Libro)v).getTitolo());
             return new ReadOnlyStringWrapper("");
         });
 
+        countColumn.setStyle("-fx-alignment: CENTER;");
         countColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
             if (v instanceof String) {
@@ -50,6 +57,7 @@ public class AddLibroLibreriaController{
             return new ReadOnlyObjectWrapper<>(null);
         });
 
+        presentColumn.setStyle("-fx-alignment: CENTER;");
         presentColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
             if (v instanceof String nome) {
@@ -76,6 +84,7 @@ public class AddLibroLibreriaController{
             }
         });
 
+        dateColumn.setStyle("-fx-alignment: CENTER;");
         dateColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
             if (v instanceof String nome) {
@@ -100,6 +109,7 @@ public class AddLibroLibreriaController{
         treeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null && newSel.getValue() instanceof String nomeLib) {
                 addButton.setDisable(libPresent.getOrDefault(nomeLib, true));
+                titoloLibreria.setText(nomeLib);
             } else {
                 addButton.setDisable(true);
             }
@@ -185,5 +195,10 @@ public class AddLibroLibreriaController{
         } catch (RemoteException e){
             CliUtil.getInstance().createAlert("Errore di connessione", "Impossibile connettersi al server.\n" + e.getLocalizedMessage()).showAndWait();
         }
+    }
+
+    @FXML private void ExitApplication(){
+        Stage stage =  (Stage) addButton.getScene().getWindow();
+        stage.close();
     }
 }
