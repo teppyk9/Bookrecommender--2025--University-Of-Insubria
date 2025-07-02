@@ -13,28 +13,34 @@ import javafx.util.Duration;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GestioneLibrerieController {
     @FXML private TreeTableView<Object> treeTableView;
-    @FXML private TreeTableColumn<Object,String> nameColumn;
-    @FXML private TreeTableColumn<Object,Integer> countColumn;
+    @FXML private TreeTableColumn<Object, String> nameColumn;
+    @FXML private TreeTableColumn<Object, Integer> countColumn;
     @FXML private TreeTableColumn<Object, LocalDate> dateColumn;
     @FXML private TreeTableColumn<Object, Void> azioniColumn;
-    @FXML private TreeTableColumn<Object, Void> isValColumn;
-    @FXML private TreeTableColumn<Object, Void> isConsColumn;
+    @FXML private TreeTableColumn<Object, Boolean> isValColumn;
+    @FXML private TreeTableColumn<Object, Boolean> isConsColumn;
     @FXML private TreeTableColumn<Object, LocalDate> lastValColumn;
     @FXML private TreeTableColumn<Object, LocalDate> lastConsColumn;
     @FXML private TextField NomeLibreria;
     @FXML private Button BottoneCambiaNome;
 
     private TreeItem<Object> rootItem;
-    private final Map<String,Integer> libCounts = new HashMap<>();
-    private final Map<String,LocalDate> libDates = new HashMap<>();
+    private final Map<String, Integer> libCounts = new HashMap<>();
+    private final Map<String, LocalDate> libDates = new HashMap<>();
+    private final Map<Integer, LocalDate> valDate = new HashMap<>();
+    private final Map<Integer, LocalDate> consDate = new HashMap<>();
+    private final Map<Integer, Boolean> libVal = new HashMap<>();
+    private final Map<Integer, Boolean> libConsVal = new HashMap<>();
+
+
+
+    private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
+    private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
 
     @FXML
     public void initialize() {
@@ -72,6 +78,89 @@ public class GestioneLibrerieController {
             return new ReadOnlyObjectWrapper<>(null);
         });
 
+        isValColumn.setStyle("-fx-alignment: CENTER;");
+        isValColumn.setCellValueFactory(c -> {
+            Object v = c.getValue().getValue();
+            if (v instanceof Libro l) {
+                boolean b = false;
+                try {
+                    b = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l);
+                } catch (RemoteException e) {
+                }
+                return new ReadOnlyObjectWrapper<>(b);
+            }
+            return new ReadOnlyObjectWrapper<>(null);
+        });
+
+        isConsColumn.setStyle("-fx-alignment: CENTER;");
+        isConsColumn.setCellValueFactory(c -> {
+            Object v = c.getValue().getValue();
+            if (v instanceof Libro l) {
+                boolean b = false;
+                try {
+                    b = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l);
+                } catch (RemoteException e) {
+                }
+                return new ReadOnlyObjectWrapper<>(b);
+            }
+            return new ReadOnlyObjectWrapper<>(null);
+        });
+
+        isValColumn.setCellFactory(col -> new TreeTableCell<Object,Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item ? check : noCheck);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+        isConsColumn.setCellFactory(col -> new TreeTableCell<Object,Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item==null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item ? check : noCheck);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+
+        lastValColumn.setStyle("-fx-alignment: CENTER;");
+        lastValColumn.setCellValueFactory(c -> {
+            Object v = c.getValue().getValue();
+            if (v instanceof Libro l) {
+                LocalDate d = null;
+                try {
+                    d = CliUtil.getInstance().getLibService().getValDate(CliUtil.getInstance().getCurrentToken(), l);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                return new ReadOnlyObjectWrapper<>(d);
+            }
+            return new ReadOnlyObjectWrapper<>(null);
+        });
+
+        lastConsColumn.setStyle("-fx-alignment: CENTER;");
+        lastConsColumn.setCellValueFactory(c -> {
+            Object v = c.getValue().getValue();
+            if (v instanceof Libro l) {
+                LocalDate d = null;
+                try {
+                    d = CliUtil.getInstance().getLibService().getConDate(CliUtil.getInstance().getCurrentToken(), l);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                return new ReadOnlyObjectWrapper<>(d);
+            }
+            return new ReadOnlyObjectWrapper<>(null);
+        });
+
         azioniColumn.setCellFactory(col-> new TreeTableCell<>() {
             private final MenuButton menuLibrerie = new MenuButton();
             {
@@ -81,11 +170,11 @@ public class GestioneLibrerieController {
                 menuLibrerie.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
                 menuLibrerie.setStyle(
                         "-fx-background-color: transparent;" +
-                        "-fx-border-color: transparent;" +
-                        "-fx-padding: 0;" +
-                        "-fx-cursor: hand;" +
-                        "-fx-focus-color: transparent;" +
-                        "-fx-faint-focus-color: transparent;"
+                                "-fx-border-color: transparent;" +
+                                "-fx-padding: 0;" +
+                                "-fx-cursor: hand;" +
+                                "-fx-focus-color: transparent;" +
+                                "-fx-faint-focus-color: transparent;"
                 );
                 ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), menuLibrerie);
                 enlarge.setToX(1.1);
@@ -241,102 +330,6 @@ public class GestioneLibrerieController {
             }
         });
 
-        isValColumn.setStyle("-fx-alignment: CENTER;");
-        isValColumn.setCellFactory(col-> new TreeTableCell<Object, Void>() {
-            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
-            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-                Object o = getTableRow().getItem();
-                if (o instanceof Libro l) {
-                    boolean hasVal = false;
-                    try {
-                        hasVal = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l);
-                    } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
-                    }
-                    System.out.println(hasVal + " for Val " + l.getTitolo());
-                    setGraphic(hasVal ? check : noCheck);
-                    setText(null);
-                    setAlignment(Pos.CENTER);
-                } else {
-                    setGraphic(null);
-                    setText(null);
-                }
-            }
-        });
-
-        isConsColumn.setStyle("-fx-alignment: CENTER;");
-        isConsColumn.setCellFactory(col -> new TreeTableCell<Object, Void>() {
-            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16,16,true,true));
-            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16,16,true,true));
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                    setGraphic(null);
-                    setText(null);
-                    return;
-                }
-                Object o = getTableRow().getItem();
-                if (o instanceof Libro l) {
-                    boolean hasVal = false;
-                    try {
-                        hasVal = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l);
-                    } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
-                    }
-                    System.out.println(hasVal + " for Con " + l.getTitolo());
-                    setGraphic(hasVal ? check : noCheck);
-                    setText(null);
-                    setAlignment(Pos.CENTER);
-                } else {
-                    setGraphic(null);
-                    setText(null);
-                }
-            }
-        });
-
-        lastValColumn.setStyle("-fx-alignment: CENTER;");
-        lastValColumn.setCellValueFactory(c -> {
-            Object v = c.getValue().getValue();
-            if (v instanceof Libro l) {
-                try {
-                    LocalDate d = CliUtil.getInstance().getLibService().getValDate(CliUtil.getInstance().getCurrentToken(), l);
-                    System.out.println(d + " for Date " + l.getTitolo());
-                    return new ReadOnlyObjectWrapper<>(d);
-                } catch (RemoteException e) {
-                    CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
-                }
-            }
-            System.out.println("Errore for Date Val");
-            return new ReadOnlyObjectWrapper<>(null);
-        });
-
-        lastConsColumn.setStyle("-fx-alignment: CENTER;");
-        lastConsColumn.setCellValueFactory(c -> {
-            Object v = c.getValue().getValue();
-            if (v instanceof Libro l) {
-                try {
-                    LocalDate d = CliUtil.getInstance().getLibService().getConDate(CliUtil.getInstance().getCurrentToken(), l);
-                    System.out.println(d + " for Date Cons " + l.getTitolo());
-                    return new ReadOnlyObjectWrapper<>(d);
-                } catch (RemoteException e) {
-                    CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
-                }
-            }
-            System.out.println("Errore for Date Cons");
-            return new ReadOnlyObjectWrapper<>(null);
-        });
-
         treeTableView.setRowFactory(tv -> {
             TreeTableRow<Object> row = new TreeTableRow<>();
             row.setOnMouseClicked(event -> {
@@ -354,10 +347,17 @@ public class GestioneLibrerieController {
 
         treeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> BottoneCambiaNome.setDisable(newSel == null || !(newSel.getValue() instanceof String)));
         caricaLibrerie();
+        treeTableView.refresh();
     }
 
     private void caricaLibrerie() {
         rootItem.getChildren().clear();
+        libCounts.clear();
+        libDates.clear();
+        valDate.clear();
+        consDate.clear();
+        libVal.clear();
+        libConsVal.clear();
         try {
             List<String> libs = CliUtil.getInstance().getLibService().getLibs(CliUtil.getInstance().getCurrentToken());
             for (String nome : libs) {
@@ -385,6 +385,10 @@ public class GestioneLibrerieController {
         try {
             List<Libro> libri = CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLib);
             for (Libro l : libri) {
+                libVal.put(l.getId(), CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l));
+                libConsVal.put(l.getId(), CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l));
+                valDate.put(l.getId(), CliUtil.getInstance().getLibService().getValDate(CliUtil.getInstance().getCurrentToken(), l));
+                consDate.put(l.getId(), CliUtil.getInstance().getLibService().getConDate(CliUtil.getInstance().getCurrentToken(), l));
                 TreeItem<Object> libroNode = new TreeItem<>(l);
                 libNode.getChildren().add(libroNode);
             }
