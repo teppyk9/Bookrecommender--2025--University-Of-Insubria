@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" stylesheets="@../stylesheets/VisualizzaValutazione.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ModificaValutazioneController">
+    <VBox prefHeight="450.0" prefWidth="800.0">
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <Label fx:id="TitoloLabel" layoutX="14.0" layoutY="17.0" style="-fx-font-weight: bold;" text="Titolo">
+                <font>
+                    <Font size="21.0" />
+                </font>
+            </Label>
+         <Button fx:id="SalvaModificheButton" layoutX="671.0" layoutY="20.0" mnemonicParsing="false" onAction="#salvaModifiche" text="Salva Modifiche" />
+         <Button fx:id="EliminaValutazioneButton" layoutX="400.0" layoutY="20.0" mnemonicParsing="false" onAction="#eliminaValutazione" text="Elimina Valutazione" />
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0">
+                <Label style="-fx-font-weight: bold;" text="Stile">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="43.0" prefWidth="286.0">
+                    <ImageView fx:id="starStile1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starStile2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starStile3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starStile4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starStile5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <Label fx:id="votoStile" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
+                </HBox>
+            </VBox>
+         <TextField fx:id="testoStile" layoutX="400.0" layoutY="7.0" prefHeight="50.0" prefWidth="371.0" />
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
+                <Label style="-fx-font-weight: bold;" text="Contenuto">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="43.0" prefWidth="286.0">
+                    <ImageView fx:id="starContenuto1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starContenuto2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starContenuto3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starContenuto4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starContenuto5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <Label fx:id="votoContenuto" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
+                </HBox>
+            </VBox>
+         <TextField fx:id="testoContenuto" layoutX="400.0" layoutY="7.0" prefHeight="50.0" prefWidth="371.0" />
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
+                <Label style="-fx-font-weight: bold;" text="Gradevolezza">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="43.0" prefWidth="286.0">
+                    <ImageView fx:id="starGradevolezza1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starGradevolezza2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starGradevolezza3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starGradevolezza4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starGradevolezza5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <Label fx:id="votoGradevolezza" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
+                </HBox>
+            </VBox>
+         <TextField fx:id="testoGradevolezza" layoutX="400.0" layoutY="9.0" prefHeight="50.0" prefWidth="371.0" />
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
+                <Label style="-fx-font-weight: bold;" text="Originalità">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="43.0" prefWidth="286.0">
+                    <ImageView fx:id="starOriginalita1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starOriginalita2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starOriginalita3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starOriginalita4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starOriginalita5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <Label fx:id="votoOriginalita" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
+                </HBox>
+            </VBox>
+         <TextField fx:id="testoOriginalita" layoutX="400.0" layoutY="9.0" prefHeight="50.0" prefWidth="371.0" />
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
+                <Label style="-fx-font-weight: bold;" text="Edizione">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <HBox prefHeight="43.0" prefWidth="286.0">
+                    <ImageView fx:id="starEdizione1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starEdizione2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starEdizione3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starEdizione4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="starEdizione5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                    <Label fx:id="votoEdizione" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
+                </HBox>
+            </VBox>
+         <TextField fx:id="testoEdizione" layoutX="400.0" layoutY="7.0" prefHeight="50.0" prefWidth="371.0" />
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <Label layoutX="14.0" layoutY="22.0" style="-fx-font-weight: bold;" text="Commento finale">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Label>
+         <TextField fx:id="testoFinale" layoutX="400.0" layoutY="7.0" prefHeight="50.0" prefWidth="371.0" />
+        </AnchorPane>
+    </VBox>
+</AnchorPane>

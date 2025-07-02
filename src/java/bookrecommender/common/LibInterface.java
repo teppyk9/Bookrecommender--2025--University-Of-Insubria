@@ -105,4 +105,24 @@ public interface LibInterface extends Remote {
      * @throws RemoteException se si verifica un errore nella comunicazione remota
      */
     LocalDate getCreationDate(Token token, String nome) throws RemoteException;
+
+    boolean existVal(Token token, Libro libro) throws RemoteException;
+
+    boolean existCon(Token token, Libro libro) throws RemoteException;
+
+    boolean updateVal(Token token, Valutazione valutazione) throws RemoteException;
+
+    boolean updateCon(Token token, List<Libro> libri) throws RemoteException;
+
+    boolean deleteVal(Token token, Libro libro) throws RemoteException;
+
+    boolean deleteCon(Token token, Libro libro) throws RemoteException;
+
+    LocalDate getValDate(Token token, Libro libro) throws RemoteException;
+
+    LocalDate getConDate(Token token, Libro libro) throws RemoteException;
+
+    List<Libro> getConsigli(Token token, Libro libro) throws RemoteException;
+
+    Valutazione getValutazione(Token token, Libro libro) throws RemoteException;
 }

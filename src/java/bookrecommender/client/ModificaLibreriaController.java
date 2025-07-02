@@ -183,26 +183,7 @@ public class ModificaLibreriaController extends TableViewEngine{
                     NomeLibreria.setEditable(false);
                     NomeLibreria.setVisible(false);
                 } else {
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 1; i < risultati.size(); i += 2) {
-                        int idLibro = risultati.get(i);
-                        int codice = risultati.get(i + 1);
-                        switch (codice) {
-                            case 0:
-                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha valutazioni associate.");
-                                break;
-                            case 1:
-                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" è stato utilizzato come consiglio.");
-                                break;
-                            case 2:
-                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha libri consigliati ad esso associati.");
-                                break;
-                            default:
-                                sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha codice errore sconosciuto: ").append(codice).append(".");
-                        }
-                        if (i + 2 < risultati.size()) sb.append(System.lineSeparator());
-                    }
-                    CliUtil.getInstance().createAlert("Errore", sb.toString()).showAndWait();
+                    CliUtil.getInstance().reviewLibUpdate(risultati);
                 }
             } catch (Exception ignored) {
             }

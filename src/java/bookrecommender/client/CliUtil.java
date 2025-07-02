@@ -12,9 +12,11 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -248,6 +250,26 @@ public final class CliUtil {
                         return;
                     }
                     break;
+                case MODIFICACONSIGLIO:
+                    ModificaConsiglioController modificaConsiglioController = loader.getController();
+                    if(obj instanceof Libro) {
+                        stage = new Stage();
+                        modificaConsiglioController.setLibro((Libro) obj);
+                    } else {
+                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        return;
+                    }
+                    break;
+                case MODIFICAVALUTAZIONE:
+                    ModificaValutazioneController modificaValutazioneController = loader.getController();
+                    if(obj instanceof Valutazione) {
+                        stage = new Stage();
+                        modificaValutazioneController.setValutazione((Valutazione) obj);
+                    } else {
+                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Valutazione object, got " + obj.getClass().getName());
+                        return;
+                    }
+                    break;
                 default:
                     logger.log(Level.SEVERE, "Unsupported FXML type: " + fxml.name());
                     return;
@@ -316,6 +338,34 @@ public final class CliUtil {
             } else {
                 stars[i].setImage(starEmpty);
             }
+        }
+    }
+
+    public void reviewLibUpdate(List<Integer> risultati){
+        StringBuilder sb = new StringBuilder();
+        try {
+            for (int i = 1; i < risultati.size(); i += 2) {
+                int idLibro = risultati.get(i);
+                int codice = risultati.get(i + 1);
+                switch (codice) {
+                    case 0:
+                        sb.append("Il libro con titolo ").append(searchService.getLibro(idLibro)).append(" ha valutazioni associate.");
+                        break;
+                    case 1:
+                        sb.append("Il libro con titolo ").append(searchService.getLibro(idLibro)).append(" è stato utilizzato come consiglio.");
+                        break;
+                    case 2:
+                        sb.append("Il libro con titolo ").append(searchService.getLibro(idLibro)).append(" ha libri consigliati ad esso associati.");
+                        break;
+                    default:
+                        sb.append("Il libro con titolo ").append(searchService.getLibro(idLibro)).append(" ha codice errore sconosciuto: ").append(codice).append(".");
+                }
+                if (i + 2 < risultati.size())
+                    sb.append(System.lineSeparator());
+            }
+            createAlert("Errore", sb.toString()).showAndWait();
+        }catch (RemoteException e){
+            createAlert("Errore", "Errore nel recupero dati dei libri\n" + e.getMessage()).showAndWait();
         }
     }
 }

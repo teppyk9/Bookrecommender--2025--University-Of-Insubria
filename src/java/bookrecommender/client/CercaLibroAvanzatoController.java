@@ -22,6 +22,7 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
     @FXML private TableColumn<Libro, String> autoreCol;
     @FXML private TableColumn<Libro, Integer> annoCol;
     @FXML private TableColumn<Libro, Void> recensioniCol;
+    @FXML private TableColumn<Object, Void> librerieCol;
     @FXML private TableColumn<Libro, Void> aggiungiCol;
 
     private boolean searchType = false;

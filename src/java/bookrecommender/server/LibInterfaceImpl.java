@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * delle librerie personali degli utenti. Fornisce funzionalità RMI per la creazione,
  * modifica, eliminazione, valutazione e consultazione delle librerie e dei libri.
  * Tutte le operazioni sono registrate tramite {@link Logger} e delegate al {@link DBManager}.
- * In caso di chiamata RMI non valida (es. client sconosciuto), i metodi restituiscono valori di fallback.
+ * In caso di chiamata RMI non valida (es. Client sconosciuto), i metodi restituiscono valori di fallback.
  */
 public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterface {
     @Serial
@@ -210,5 +210,105 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
             return null;
         }
         return dbManager.dataCreazioneLibreria(token, nome);
+    }
+
+    @Override
+    public boolean existVal(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Info presenza valutazione per libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.existVal(token, libro);
+    }
+
+    @Override
+    public boolean existCon(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Info presenza consiglio per libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.existCon(token, libro);
+    }
+
+    @Override
+    public boolean updateVal(Token token, Valutazione valutazione) throws RemoteException {
+        try{
+            logger.info("Modifica valutazione per libro " + valutazione.getIdLibro() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.updateVal(token, valutazione);
+    }
+
+    @Override
+    public boolean updateCon(Token token, List<Libro> libri) throws RemoteException {
+        try{
+            logger.info("Modifica consigli per libro " + libri.get(0).getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.updateCon(token, libri);
+    }
+
+    @Override
+    public boolean deleteVal(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Eliminazione valutazione del libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.deleteVal(token, libro);
+    }
+
+    @Override
+    public boolean deleteCon(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Eliminazione consigli del libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return false;
+        }
+        return dbManager.deleteCon(token, libro);
+    }
+
+    @Override
+    public LocalDate getValDate(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Recupero data di modifica per la valutazione del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return null;
+        }
+        return dbManager.getValDate(token, libro);
+    }
+
+    @Override
+    public LocalDate getConDate(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Recupero data di modifica per il consiglio del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return null;
+        }
+        return dbManager.getConsDate(token, libro);
+    }
+
+    @Override
+    public List<Libro> getConsigli(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Recupero consiglio del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return null;
+        }
+        return dbManager.getConsiglio(token, libro);
+    }
+
+    @Override
+    public Valutazione getValutazione(Token token, Libro libro) throws RemoteException {
+        try{
+            logger.info("Recupero valutazione del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+        } catch (ServerNotActiveException e) {
+            return null;
+        }
+        return dbManager.getValutazione(token, libro);
     }
 }

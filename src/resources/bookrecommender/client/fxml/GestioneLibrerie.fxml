@@ -9,12 +9,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.GestioneLibrerieController">
    <children>
-      <TreeTableView fx:id="treeTableView" layoutX="102.0" layoutY="108.0" prefHeight="295.0" prefWidth="595.0">
+      <TreeTableView fx:id="treeTableView" layoutX="17.0" layoutY="108.0" prefHeight="295.0" prefWidth="765.0">
          <columns>
-            <TreeTableColumn fx:id="nameColumn" prefWidth="352.0" text="Nome Libreria" />
-            <TreeTableColumn fx:id="countColumn" prefWidth="87.0" text="Quantità Libri" />
-            <TreeTableColumn fx:id="dateColumn" prefWidth="112.0" text="Data Creazione" />
-            <TreeTableColumn fx:id="azioniColumn" prefWidth="43.0" text="Azioni" />
+            <TreeTableColumn fx:id="nameColumn" prefWidth="229.5" text="Nome Libreria" />
+            <TreeTableColumn fx:id="countColumn" prefWidth="57.0" text="Qt.à Libri" />
+            <TreeTableColumn fx:id="dateColumn" prefWidth="91.5" text="Data Creazione" />
+            <TreeTableColumn fx:id="isValColumn" prefWidth="54.0" text="Valutato" />
+            <TreeTableColumn fx:id="isConsColumn" prefWidth="72.0" text="Consigliato" />
+            <TreeTableColumn fx:id="lastValColumn" prefWidth="108.0" text="Ultima mod. Val" />
+            <TreeTableColumn fx:id="lastConsColumn" minWidth="2.0" prefWidth="108.0" text="Ultima mod. Cons." />
+            <TreeTableColumn fx:id="azioniColumn" prefWidth="44.0" text="Azioni" />
          </columns>
       </TreeTableView>
       <Text layoutX="343.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestisci le tue librerie" />

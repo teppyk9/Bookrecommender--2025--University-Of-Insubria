@@ -1074,4 +1074,259 @@ public class DBManager {
             return null;
         }
     }
+
+    public boolean existVal(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String sql = "SELECT 1 FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in existVal", e);
+            return false;
+        }
+    }
+
+    public boolean existCon(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String sql = "SELECT 1 FROM consigli WHERE id_utente = ? AND idlibro = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in existCon", e);
+            return false;
+        }
+    }
+
+    public boolean updateVal(Token token, Valutazione val) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String sql = """
+            UPDATE valutazioni
+               SET c_stile = ?,  v_stile = ?,
+                   c_contenuto = ?, v_contenuto = ?,
+                   c_gradevolezza = ?, v_gradevolezza = ?,
+                   c_originalita = ?,  v_originalita = ?,
+                   c_edizione = ?,  v_edizione = ?,
+                   c_finale = ?,
+                   valutazione_time = CURRENT_TIMESTAMP
+             WHERE id_utente = ? AND idlibro = ?
+            """;
+        List<Float> ratings = val.getValutazioni();
+        List<String> comments = val.getCommenti();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1,  comments.get(0));
+            ps.setInt(   2,  Math.round(ratings.get(0)));
+            ps.setString(3,  comments.get(1));
+            ps.setInt(   4,  Math.round(ratings.get(1)));
+            ps.setString(5,  comments.get(2));
+            ps.setInt(   6,  Math.round(ratings.get(2)));
+            ps.setString(7,  comments.get(3));
+            ps.setInt(   8,  Math.round(ratings.get(3)));
+            ps.setString(9,  comments.get(4));
+            ps.setInt(  10,  Math.round(ratings.get(4)));
+            ps.setString(11, comments.size() > 5 ? comments.get(5) : "");
+            ps.setInt(  12, token.getUserId());
+            ps.setInt(  13, val.getIdLibro());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in updateVal", e);
+            return false;
+        }
+    }
+
+    public boolean updateCon(Token token, List<Libro> libri) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        if (libri.size() < 2 || libri.size() > 4) {
+            return false;
+        }
+        String sql = """
+            UPDATE consigli
+               SET lib_1 = ?, lib_2 = ?, lib_3 = ?, consiglio_time = CURRENT_TIMESTAMP
+             WHERE id_utente = ? AND idlibro = ?
+            """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            int refId = libri.get(0).getId();
+            ps.setObject(1, libri.size() > 1 ? libri.get(1).getId() : null, Types.INTEGER);
+            ps.setObject(2, libri.size() > 2 ? libri.get(2).getId() : null, Types.INTEGER);
+            ps.setObject(3, libri.size() > 3 ? libri.get(3).getId() : null, Types.INTEGER);
+            ps.setInt(4, token.getUserId());
+            ps.setInt(5, refId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in updateCon", e);
+            return false;
+        }
+    }
+
+    public boolean deleteVal(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String sql = "DELETE FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in deleteVal", e);
+            return false;
+        }
+    }
+
+    public boolean deleteCon(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String sql = "DELETE FROM consigli WHERE id_utente = ? AND idlibro = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in deleteCon", e);
+            return false;
+        }
+    }
+
+    public LocalDate getValDate(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        String sql = "SELECT valutazione_time FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Timestamp ts = rs.getTimestamp("valutazione_time");
+                    return ts.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in getValDate", e);
+            return null;
+        }
+    }
+
+    public LocalDate getConsDate(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        String sql = "SELECT consiglio_time FROM consigli WHERE id_utente = ? AND idlibro = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Timestamp ts = rs.getTimestamp("consiglio_time");
+                    return ts.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in getConsDate", e);
+            return null;
+        }
+    }
+
+    public List<Libro> getConsiglio(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        String sql = "SELECT lib_1, lib_2, lib_3 FROM consigli WHERE id_utente = ? AND idlibro = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                List<Libro> result = new ArrayList<>();
+                result.add(getLibro(libro.getId()));
+                for (int i = 0; i < 3; i++) {
+                    int consigliatoId = rs.getInt("lib_" + (i+1));
+                    if (!rs.wasNull()) {
+                        result.add(getLibro(consigliatoId));
+                    }
+                }
+                return result;
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in getConsiglio", e);
+            return null;
+        }
+    }
+
+    public Valutazione getValutazione(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return null;
+        }
+        String valSql = """
+        SELECT c_stile, v_stile,
+               c_contenuto, v_contenuto,
+               c_gradevolezza, v_gradevolezza,
+               c_originalita, v_originalita,
+               c_edizione, v_edizione,
+               c_finale, v_finale
+          FROM valutazioni
+         WHERE id_utente = ? AND idlibro = ?
+        """;
+        try (PreparedStatement psVal  = conn.prepareStatement(valSql)) {
+            psVal.setInt(1, token.getUserId());
+            psVal.setInt(2, libro.getId());
+            try (ResultSet rsV = psVal.executeQuery()) {
+                if (!rsV.next()) {
+                    return null;
+                }
+                List<Float> ratings = List.of(
+                        rsV.getFloat("v_stile"),
+                        rsV.getFloat("v_contenuto"),
+                        rsV.getFloat("v_gradevolezza"),
+                        rsV.getFloat("v_originalita"),
+                        rsV.getFloat("v_edizione"),
+                        rsV.getFloat("v_finale")
+                );
+                List<String> comments = List.of(
+                        rsV.getString("c_stile"),
+                        rsV.getString("c_contenuto"),
+                        rsV.getString("c_gradevolezza"),
+                        rsV.getString("c_originalita"),
+                        rsV.getString("c_edizione"),
+                        rsV.getString("c_finale")
+                );
+                return new Valutazione(String.valueOf(token.getUserId()), ratings, comments, libro);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore in getValutazione", e);
+            return null;
+        }
+    }
 }

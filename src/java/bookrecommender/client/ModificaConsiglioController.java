@@ -10,15 +10,16 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreaConsiglioController extends TableViewEngine {
+public class ModificaConsiglioController extends TableViewEngine {
+    @FXML private Button GoBackButton_MainMenu;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
     @FXML private MenuItem MenuCercaTitolo;
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
-    @FXML private TableView <Libro>tableView;
-    @FXML private TableColumn <Libro, String> titoloCol;
+    @FXML private TableView<Libro> tableView;
+    @FXML private TableColumn<Libro, String> titoloCol;
     @FXML private TableColumn <Libro, String>autoreCol;
     @FXML private TableColumn <Libro, Integer> annoCol;
     @FXML private TableColumn <Libro, Void> azioniCol;
@@ -27,8 +28,6 @@ public class CreaConsiglioController extends TableViewEngine {
     @FXML private TableColumn <Libro, String> risAutoreCol;
     @FXML private TableColumn <Libro, Integer> risAnnoCol;
     @FXML private TableColumn <Libro, Void> risAzioniCol;
-
-    @FXML private Button GoBackButton_MainMenu;
 
     private Libro myLibro;
 
@@ -43,6 +42,14 @@ public class CreaConsiglioController extends TableViewEngine {
 
     public void setLibro(Libro libro) {
         this.myLibro = libro;
+        try{
+            List <Libro> listaConsigli = new ArrayList<>(CliUtil.getInstance().getLibService().getConsigli(CliUtil.getInstance().getCurrentToken(), myLibro));
+            listaConsigli.remove(myLibro);
+            risTableView.setItems(FXCollections.observableArrayList(listaConsigli));
+        } catch (RemoteException e) {
+            CliUtil.getInstance().createAlert("Errore durante il recupero dei consigli del libro", e.getMessage());
+        }
+
     }
 
     @Override protected TextField getCampoRicerca(){
@@ -155,8 +162,10 @@ public class CreaConsiglioController extends TableViewEngine {
             return;
         }
         try {
-            if (CliUtil.getInstance().getLibService().addConsiglio(CliUtil.getInstance().getCurrentToken(), cons)) {
+            if (CliUtil.getInstance().getLibService().updateCon(CliUtil.getInstance().getCurrentToken(), cons)) {
                 CliUtil.getInstance().createConfirmation("Successo", "Consiglio salvato!", true).showAndWait();
+                Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
+                stage.close();
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito").showAndWait();
             }
@@ -164,9 +173,24 @@ public class CreaConsiglioController extends TableViewEngine {
             CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
         }
     }
-
     @FXML
     private void GoToMainMenu() {
         ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+    }
+
+    public void eliminaConsigli() {
+        if(CliUtil.getInstance().createConfirmation("Eliminazione Consiglio", "Sei sicuro di voler eliminare questo consiglio?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
+            try {
+                if (CliUtil.getInstance().getLibService().deleteCon(CliUtil.getInstance().getCurrentToken(), myLibro)) {
+                    CliUtil.getInstance().createConfirmation("Successo", "Consiglio eliminato!", true).showAndWait();
+                    Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
+                    stage.close();
+                } else {
+                    CliUtil.getInstance().createAlert("Errore", "Eliminazione fallita").showAndWait();
+                }
+            } catch (RemoteException e) {
+                CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+            }
+        }
     }
 }
