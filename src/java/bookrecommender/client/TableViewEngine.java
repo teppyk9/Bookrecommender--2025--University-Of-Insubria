@@ -1,6 +1,7 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -13,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -354,12 +356,34 @@ public abstract class TableViewEngine {
             });
         } else {
             getOActionCol().setCellFactory(col -> new TableCell<>() {
-                private final MenuButton menu = new MenuButton("", new ImageView(new Image(
-                        Objects.requireNonNull(getClass().getResourceAsStream(
-                                "/bookrecommender/client/icons/minus-circle-red.png")), 16, 16, true, true)));
+                private final Button rimuovi = new Button();
                 {
-                    MenuItem rimuovi = new MenuItem("Rimuovi");
-                    menu.getItems().add(rimuovi);
+                    rimuovi.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/minus-circle-red.png")), 16, 16, true, true)));
+                    rimuovi.setStyle(
+                        "-fx-background-color: transparent;" +
+                        "-fx-border-color: transparent;" +
+                        "-fx-padding: 0;" +
+                        "-fx-cursor: hand;" +
+                        "-fx-focus-color: transparent;" +
+                        "-fx-faint-focus-color: transparent;"
+                    );
+                    ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), rimuovi);
+                    enlarge.setToX(1.1);
+                    enlarge.setToY(1.1);
+
+                    ScaleTransition shrink = new ScaleTransition(Duration.millis(100), rimuovi);
+                    shrink.setToX(1.0);
+                    shrink.setToY(1.0);
+
+                    rimuovi.setOnMouseEntered(e -> {
+                        shrink.stop();
+                        enlarge.playFromStart();
+                    });
+
+                    rimuovi.setOnMouseExited(e -> {
+                        enlarge.stop();
+                        shrink.playFromStart();
+                    });
                     rimuovi.setOnAction(evt -> {
                         Libro l = getTableView().getItems().get(getIndex());
                         ObservableList<Libro> items = getOTableView().getItems();
@@ -370,7 +394,7 @@ public abstract class TableViewEngine {
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
-                    setGraphic(empty ? null : menu);
+                    setGraphic(empty ? null : rimuovi);
                     setAlignment(Pos.CENTER);
                 }
             });

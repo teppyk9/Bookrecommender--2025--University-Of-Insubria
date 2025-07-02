@@ -185,7 +185,7 @@ public final class CliUtil {
                     stage.show();
                     stage.getScene().getRoot().requestFocus();
                     return;
-                case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO:
+                case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO, GESTIONELIBRERIE:
                     stage = getPrimaryStage();
                     break;
                 case CREALIBRERIA:
