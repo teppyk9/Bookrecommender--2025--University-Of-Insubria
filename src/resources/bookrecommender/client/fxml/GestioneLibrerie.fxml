@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.GestioneLibrerieController">
    <children>
       <TreeTableView fx:id="treeTableView" layoutX="102.0" layoutY="108.0" prefHeight="295.0" prefWidth="595.0">
          <columns>
-            <TreeTableColumn fx:id="nameColumn" prefWidth="214.28567504882812" text="Nome Libreria" />
-            <TreeTableColumn fx:id="countColumn" prefWidth="89.14288330078125" text="Quantità Libri" />
-            <TreeTableColumn fx:id="dateColumn" prefWidth="144.5714111328125" text="Data Creazione" />
-            <TreeTableColumn minWidth="0.0" prefWidth="67.4285888671875" text="Azioni" />
+            <TreeTableColumn fx:id="nameColumn" prefWidth="293.5" text="Nome Libreria" />
+            <TreeTableColumn fx:id="countColumn" prefWidth="89.5" text="Quantità Libri" />
+            <TreeTableColumn fx:id="dateColumn" prefWidth="138.0" text="Data Creazione" />
+            <TreeTableColumn minWidth="0.0" prefWidth="73.0" text="Azioni" />
          </columns>
       </TreeTableView>
       <Text layoutX="343.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestisci le tue librerie" />

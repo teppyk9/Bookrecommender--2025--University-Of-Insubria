@@ -27,18 +27,18 @@
     </VBox>
        <TableView fx:id="tableView" layoutX="14.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0">
            <columns>
-               <TableColumn fx:id="titoloCol" prefWidth="162.0" text="Titolo" />
-               <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" />
-               <TableColumn fx:id="annoCol" prefWidth="82.0" text="Anno" />
-               <TableColumn fx:id="azioniCol" prefWidth="54.0" text="Azioni" />
+               <TableColumn fx:id="titoloCol" prefWidth="162.0" text="Titolo" style="-fx-alignment: CENTER;"/>
+               <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" style="-fx-alignment: CENTER;"/>
+               <TableColumn fx:id="annoCol" prefWidth="82.0" text="Anno" style="-fx-alignment: CENTER;"/>
+               <TableColumn fx:id="azioniCol" prefWidth="54.0" text="Azioni" style="-fx-alignment: CENTER;"/>
            </columns>
        </TableView>
        <TableView fx:id="risTableView" layoutX="490.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0">
            <columns>
-               <TableColumn fx:id="risTitoloCol" prefWidth="162.0" text="Titolo" />
-               <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" />
-               <TableColumn fx:id="risAnnoCol" prefWidth="82.0" text="Anno" />
-               <TableColumn fx:id="risAzioniCol" prefWidth="54.0" text="Azioni" />
+               <TableColumn fx:id="risTitoloCol" prefWidth="162.0" text="Titolo" style="-fx-alignment: CENTER;"/>
+               <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" style="-fx-alignment: CENTER;"/>
+               <TableColumn fx:id="risAnnoCol" prefWidth="82.0" text="Anno" style="-fx-alignment: CENTER;"/>
+               <TableColumn fx:id="risAzioniCol" prefWidth="54.0" text="Azioni" style="-fx-alignment: CENTER;"/>
            </columns>
        </TableView>
    <Separator layoutX="473.0" layoutY="52.0" orientation="VERTICAL" prefHeight="481.0" prefWidth="17.0">

@@ -29,7 +29,7 @@ public class AreaRiservataController {
     }
 
     public void OpenVisualizzaLibrerie() {
-        System.out.println("OpenVisualizzaLibrerie called");
+        CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null);
     }
 
     public void LogOut(){
