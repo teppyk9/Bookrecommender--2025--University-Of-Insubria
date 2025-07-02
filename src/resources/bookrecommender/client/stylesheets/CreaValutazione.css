@@ -1,0 +1,114 @@
+.background{
+   -fx-background-image: url('../icons/copertina_chiara.jpeg');
+}
+
+.box{
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-boder-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.titoloLibro{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #A31621;
+
+}
+
+.titoloLibro .label{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #A31621;
+    -fx-background-color: rgba(252, 247, 248, 0.45);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.etichetta{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #fcf7f8;
+}
+
+.etichetta_finale{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #a31621;
+    -fx-alignment: center;
+}
+
+.box_commento{
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-boder-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+}
+
+.box_commento .label{
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-boder-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.box_commento-finale{
+    -fx-background-color: rgba(252, 247, 248, 0.7);
+    -fx-boder-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #a31621;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+}
+
+.box_commento-finale .label{
+    -fx-background-color: rgba(252, 247, 248, 0.7);
+    -fx-boder-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.box_titolo{
+    -fx-background-color: rgba(252, 247, 248, 0.65);
+    -fx-border-color: transparent;
+}
+
+.errore {
+    -fx-text-fill: #a31621;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-alignment: center-left;
+
+}
+
+
+.indietro{
+    -fx-background-color: transarent;
+    -fx-background-image: url('../icons/indietro_r.png');
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+
+.indietro:hover{
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+.salva{
+    -fx-background-color: #a31621;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-background-radius: 6px;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+.salva:hover{
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}

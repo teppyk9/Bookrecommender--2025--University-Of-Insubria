@@ -9,28 +9,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaValutazioneController">
-   <VBox prefHeight="450.0" prefWidth="800.0">
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <Label layoutX="24.0" layoutY="22.0" style="-fx-font-weight: bold;" text="Valuta questo libro!">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/CreaValutazione.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaValutazioneController">
+   <VBox prefHeight="406.0" prefWidth="800.0">
+      <AnchorPane prefHeight="39.0" prefWidth="800.0" styleClass="box_titolo">
+         <Label layoutX="57.0" layoutY="11.0" prefHeight="31.0" prefWidth="63.0" styleClass="titoloLibro" text="Valuta">
             <font>
                <Font size="21.0" />
             </font>
          </Label>
-         <Button fx:id="BottoneSalva" layoutX="255.0" layoutY="23.0" mnemonicParsing="false" onAction="#SalvaValutazione" prefHeight="25.0" prefWidth="104.0" style="-fx-font-weight: bold;" text="Salva">
+         <Label layoutX="132.0" layoutY="11.0" prefHeight="31.0" prefWidth="241.0" styleClass="titoloLibro" text="* titolo libro da valutare *">
             <font>
-               <Font size="14.0" />
-            </font>
-         </Button>
-         <Label fx:id="messaggioErrore" layoutX="384.0" layoutY="24.0" text="Errore">
-            <font>
-               <Font size="19.0" />
+               <Font size="21.0" />
             </font>
          </Label>
+         <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="45.0" styleClass="indietro" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0">
-            <Label style="-fx-font-weight: bold;" text="Stile">
+         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0" styleClass="box">
+            <Label styleClass="etichetta" text="Stile">
                <font>
                   <Font size="14.0" />
                </font>
@@ -44,11 +40,11 @@
                <Label fx:id="votoStile" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
             </HBox>
          </VBox>
-         <TextField fx:id="testoStile" layoutX="386.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" />
+         <TextField fx:id="testoStile" layoutX="384.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
-            <Label style="-fx-font-weight: bold;" text="Contenuto">
+         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0" styleClass="box">
+            <Label styleClass="etichetta" text="Contenuto">
                <font>
                   <Font size="14.0" />
                </font>
@@ -62,11 +58,11 @@
                <Label fx:id="votoContenuto" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
             </HBox>
          </VBox>
-         <TextField fx:id="testoContenuto" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" />
+         <TextField fx:id="testoContenuto" editable="false" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
-            <Label style="-fx-font-weight: bold;" text="Gradevolezza">
+         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0" styleClass="box">
+            <Label styleClass="etichetta" text="Gradevolezza">
                <font>
                   <Font size="14.0" />
                </font>
@@ -80,11 +76,11 @@
                <Label fx:id="votoGradevolezza" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
             </HBox>
          </VBox>
-         <TextField fx:id="testoGradevolezza" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" />
+         <TextField fx:id="testoGradevolezza" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
-            <Label style="-fx-font-weight: bold;" text="Originalità">
+         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0" styleClass="box">
+            <Label styleClass="etichetta" text="Originalità">
                <font>
                   <Font size="14.0" />
                </font>
@@ -98,11 +94,11 @@
                <Label fx:id="votoOriginalita" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
             </HBox>
          </VBox>
-         <TextField fx:id="testoOriginalita" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" />
+         <TextField fx:id="testoOriginalita" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0">
-            <Label style="-fx-font-weight: bold;" text="Edizione">
+         <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0" styleClass="box">
+            <Label prefHeight="15.0" prefWidth="72.0" styleClass="etichetta" text="Edizione">
                <font>
                   <Font size="14.0" />
                </font>
@@ -116,15 +112,29 @@
                <Label fx:id="votoEdizione" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
             </HBox>
          </VBox>
-         <TextField fx:id="testoEdizione" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" />
+         <TextField fx:id="testoEdizione" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <TextField fx:id="testoFinale" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" />
-         <Label layoutX="14.0" layoutY="22.0" style="-fx-font-weight: bold;" text="Commento finale">
-            <font>
-               <Font size="14.0" />
-            </font>
-         </Label>
+         <TextField fx:id="testoFinale" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
+         <HBox layoutX="14.0" layoutY="8.0" prefHeight="43.0" prefWidth="232.0" styleClass="box_commento-finale">
+            <children>
+               <Label prefHeight="46.0" prefWidth="232.0" styleClass="etichetta_finale" text="Commento finale">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+            </children>
+         </HBox>
       </AnchorPane>
    </VBox>
+   <Button fx:id="BottoneSalva" layoutX="683.0" layoutY="412.0" mnemonicParsing="false" onAction="#SalvaValutazione" prefHeight="0.0" prefWidth="102.0" styleClass="salva" text="Salva">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Button>
+   <Label fx:id="messaggioErrore" layoutX="14.0" layoutY="411.0" prefHeight="31.0" prefWidth="665.0" styleClass="errore" text="*Errore*">
+      <font>
+         <Font size="19.0" />
+      </font>
+   </Label>
 </AnchorPane>
