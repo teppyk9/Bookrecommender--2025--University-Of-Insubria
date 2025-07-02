@@ -8,10 +8,9 @@
    <children>
       <TreeTableView fx:id="treeTableView" layoutX="102.0" layoutY="108.0" prefHeight="295.0" prefWidth="595.0">
          <columns>
-            <TreeTableColumn fx:id="nameColumn" prefWidth="293.5" text="Nome Libreria" />
-            <TreeTableColumn fx:id="countColumn" prefWidth="89.5" text="Quantità Libri" />
-            <TreeTableColumn fx:id="dateColumn" prefWidth="138.0" text="Data Creazione" />
-            <TreeTableColumn minWidth="0.0" prefWidth="73.0" text="Azioni" />
+            <TreeTableColumn fx:id="nameColumn" prefWidth="369.5" text="Nome Libreria" />
+            <TreeTableColumn fx:id="countColumn" prefWidth="114.5" text="Quantità Libri" />
+            <TreeTableColumn fx:id="dateColumn" prefWidth="110.0" text="Data Creazione" />
          </columns>
       </TreeTableView>
       <Text layoutX="343.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestisci le tue librerie" />
