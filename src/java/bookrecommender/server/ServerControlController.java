@@ -23,26 +23,51 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller JavaFX del pannello di controllo del server. Questa classe gestisce:
+ *   L'inizializzazione del logging verso l'interfaccia grafica
+ *   L'interruzione del server tramite bottone dedicato
+ *   Il salvataggio dei log su file locale
+ * È pensata per consentire il monitoraggio in tempo reale del server e la gestione interattiva
+ * da parte dell'utente tramite interfaccia grafica.
+ */
 public class ServerControlController {
+    /** Bottone per arrestare il server manualmente. */
     public Button stopServerButton;
+    /** Bottone per salvare su file il contenuto dei log. */
     public Button saveLogsButton;
 
+    /** Icona grafica usata nei popup di conferma. */
     private final ImageView confirmation_icon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/server/icons/alert_confirmation_icon.png"))));
+    /** Icona grafica usata nei popup di errore. */
     private final ImageView alert_icon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/server/icons/alert_icon.png"))));
+    /** Area in cui vengono visualizzati i log del server in tempo reale. */
     public TextFlow logFlow;
+    /** ScrollPane contenente l’area di log. */
     public ScrollPane logScrollPane;
 
 
+    /**
+     * Inizializza il pannello di controllo del server.
+     * - Imposta le dimensioni delle icone
+     * - Reindirizza il logging Java verso il {@link TextFlow} con un handler personalizzato
+     * - Applica un filtro per visualizzare solo log rilevanti
+     * - Imposta un comportamento di chiusura sicuro per la finestra
+     */
     public void initialize() {
         confirmation_icon.setFitWidth(48);
         confirmation_icon.setFitHeight(48);
         alert_icon.setFitWidth(48);
         alert_icon.setFitHeight(48);
 
+        /* Rimuove gli handler console predefiniti */
         Logger rootLogger = Logger.getLogger("");
         Arrays.stream(rootLogger.getHandlers()).filter(h -> h instanceof ConsoleHandler).forEach(rootLogger::removeHandler);
 
+
+        // Crea e configura handler personalizzato per i log grafici
         TextFlowHandler tfHandler = new TextFlowHandler(logFlow, logScrollPane);
+        //Definisce i package/classi da cui accettare log
         Set<String> allowed = Set.of(
                 ServerUtil.class.getName(),
                 DBManager.class.getName(),
@@ -53,10 +78,12 @@ public class ServerControlController {
 
         tfHandler.setFilter(record -> allowed.contains(record.getLoggerName()));
 
+        // Aggiunge handler al root logger
         rootLogger.addHandler(tfHandler);
         rootLogger.setLevel(Level.ALL);
 
         Logger.getLogger(ServerUtil.class.getName()).info("Pannello di controllo avviato");
+        // Comportamento alla chiusura della finestra
         Platform.runLater(() -> {
             Stage stage = ServerUtil.getInstance().getPrimaryStage();
             stage.setOnCloseRequest(event -> {
@@ -67,6 +94,14 @@ public class ServerControlController {
         });
     }
 
+
+    /**
+     * Arresta il server in modo sicuro, mostrando prima una finestra di conferma.
+     * Se l’utente conferma, il metodo:
+     *     Chiama {@link ServerUtil#closeServer()}
+     *     Chiude JavaFX con {@code Platform.exit()}
+     *     Termina il processo con {@code System.exit(0)}
+     */
     public void stopServer() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Conferma Uscita");
@@ -84,6 +119,13 @@ public class ServerControlController {
         });
     }
 
+    /**
+     * Salva su file il contenuto corrente dei log visualizzati nell'interfaccia.
+     * L'utente sceglie il file tramite un {@link FileChooser}, con suggerimento
+     * di salvataggio sul desktop. I log sono salvati in formato UTF-8.
+     * In caso di successo, viene mostrata una finestra di conferma con il percorso.
+     * In caso di errore I/O, viene mostrata una finestra di errore dettagliata.
+     */
     public void saveLogs() {
         FileChooser fileChooser = new FileChooser();
         File desktop = new File(System.getProperty("user.home"), "Desktop");

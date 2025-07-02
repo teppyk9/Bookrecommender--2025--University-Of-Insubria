@@ -9,16 +9,38 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * Controller dell'interfaccia grafica di configurazione del server.
+ * Questa classe gestisce l'interazione con il pannello FXML associato, permettendo all'utente di:
+ *     Testare la disponibilità di una porta TCP
+ *     Verificare la connessione al database
+ *     Confermare e avviare la configurazione del server
+ * Utilizza il singleton {@link ServerUtil} per accedere alla logica di backend.
+ */
 public class ServerConfigController {
+    /** Campo di testo per l'inserimento del numero di porta TCP. */
     public TextField portField;
+    /** Bottone per testare la disponibilità della porta. */
     public Button testPortButton;
+    /** Campo di testo per l'inserimento dell'URL del database. */
     public TextField dbUrlField;
+    /** Campo di testo per l'inserimento dello username del database. */
     public TextField dbUserField;
+    /** Campo per l'inserimento della password del database. */
     public PasswordField dbPasswordField;
+    /** Bottone per testare la connessione al database. */
     public Button testDbButton;
+    /** Bottone per confermare la configurazione. */
     public Button confirmButton;
+    /** Etichetta per visualizzare messaggi di feedback all'utente. */
     public Label testLabel;
 
+
+    /**
+     * Metodo di inizializzazione del controller.
+     * Pulisce l’etichetta di stato, inizializza il {@code DBManager} e imposta
+     * un comportamento personalizzato alla chiusura della finestra (uscita completa).
+     */
     public void initialize() {
         testLabel.setText("");
         ServerUtil.getInstance().setDBManager();
@@ -31,6 +53,12 @@ public class ServerConfigController {
         });
     }
 
+
+    /**
+     * Verifica se la porta TCP inserita è valida e libera.
+     * Mostra un messaggio informativo nell'etichetta {@code testLabel},
+     * colorato in base all'esito.
+     */
     @FXML
     private void testPort() {
         String txt = portField.getText().trim();
@@ -57,6 +85,12 @@ public class ServerConfigController {
         }
     }
 
+
+    /**
+     * Testa la connessione al database utilizzando i dati inseriti,
+     * verifica che i campi URL e utente non siano vuoti e poi chiama
+     * {@code tryConnectToDb()} dal {@link ServerUtil}.
+     */
     @FXML
     private void testDB() {
         String url  = dbUrlField.getText().trim();
@@ -77,6 +111,13 @@ public class ServerConfigController {
         }
     }
 
+
+    /**
+     * Esegue la configurazione finale del server.
+     * Controlla la validità di tutti i campi (porta, credenziali DB),
+     * verifica le connessioni e in caso di successo avvia il server e chiude la finestra.
+     * In caso di errore mostra un {@link Alert} o un messaggio in {@code testLabel}.
+     */
     @FXML
     private void confirm() {
         String url  = dbUrlField.getText().trim();
@@ -130,6 +171,10 @@ public class ServerConfigController {
         }
     }
 
+    /**
+     * Ripristina lo stato iniziale dell’etichetta di feedback.
+     * Utile per cancellare eventuali messaggi di errore precedenti.
+     */
     public void resetLabel() {
         testLabel.setText("");
     }
