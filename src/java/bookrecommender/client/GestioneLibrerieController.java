@@ -241,6 +241,102 @@ public class GestioneLibrerieController {
             }
         });
 
+        isValColumn.setStyle("-fx-alignment: CENTER;");
+        isValColumn.setCellFactory(col-> new TreeTableCell<Object, Void>() {
+            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
+            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+                Object o = getTableRow().getItem();
+                if (o instanceof Libro l) {
+                    boolean hasVal = false;
+                    try {
+                        hasVal = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l);
+                    } catch (RemoteException e) {
+                        CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+                    }
+                    System.out.println(hasVal + " for Val " + l.getTitolo());
+                    setGraphic(hasVal ? check : noCheck);
+                    setText(null);
+                    setAlignment(Pos.CENTER);
+                } else {
+                    setGraphic(null);
+                    setText(null);
+                }
+            }
+        });
+
+        isConsColumn.setStyle("-fx-alignment: CENTER;");
+        isConsColumn.setCellFactory(col -> new TreeTableCell<Object, Void>() {
+            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16,16,true,true));
+            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16,16,true,true));
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+                Object o = getTableRow().getItem();
+                if (o instanceof Libro l) {
+                    boolean hasVal = false;
+                    try {
+                        hasVal = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l);
+                    } catch (RemoteException e) {
+                        CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+                    }
+                    System.out.println(hasVal + " for Con " + l.getTitolo());
+                    setGraphic(hasVal ? check : noCheck);
+                    setText(null);
+                    setAlignment(Pos.CENTER);
+                } else {
+                    setGraphic(null);
+                    setText(null);
+                }
+            }
+        });
+
+        lastValColumn.setStyle("-fx-alignment: CENTER;");
+        lastValColumn.setCellValueFactory(c -> {
+            Object v = c.getValue().getValue();
+            if (v instanceof Libro l) {
+                try {
+                    LocalDate d = CliUtil.getInstance().getLibService().getValDate(CliUtil.getInstance().getCurrentToken(), l);
+                    System.out.println(d + " for Date " + l.getTitolo());
+                    return new ReadOnlyObjectWrapper<>(d);
+                } catch (RemoteException e) {
+                    CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+                }
+            }
+            System.out.println("Errore for Date Val");
+            return new ReadOnlyObjectWrapper<>(null);
+        });
+
+        lastConsColumn.setStyle("-fx-alignment: CENTER;");
+        lastConsColumn.setCellValueFactory(c -> {
+            Object v = c.getValue().getValue();
+            if (v instanceof Libro l) {
+                try {
+                    LocalDate d = CliUtil.getInstance().getLibService().getConDate(CliUtil.getInstance().getCurrentToken(), l);
+                    System.out.println(d + " for Date Cons " + l.getTitolo());
+                    return new ReadOnlyObjectWrapper<>(d);
+                } catch (RemoteException e) {
+                    CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+                }
+            }
+            System.out.println("Errore for Date Cons");
+            return new ReadOnlyObjectWrapper<>(null);
+        });
+
         treeTableView.setRowFactory(tv -> {
             TreeTableRow<Object> row = new TreeTableRow<>();
             row.setOnMouseClicked(event -> {
