@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.VisualizzaLibreriaController">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ModificaLibreriaController">
     <VBox layoutX="10.0" layoutY="513.0" spacing="10.0" AnchorPane.bottomAnchor="-492.42857142857144" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.571428571428669" AnchorPane.topAnchor="513.0">
         <AnchorPane prefHeight="43.0" prefWidth="750.0" />
         <AnchorPane prefHeight="35.0" prefWidth="750.0" />

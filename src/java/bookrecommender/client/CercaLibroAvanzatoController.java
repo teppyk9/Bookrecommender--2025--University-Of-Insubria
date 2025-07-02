@@ -1,18 +1,12 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.rmi.RemoteException;
-import java.util.List;
 
 public class CercaLibroAvanzatoController extends TableViewEngine {
 
@@ -30,9 +24,6 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
     @FXML private TableColumn<Libro, Void> recensioniCol;
     @FXML private TableColumn<Libro, Void> aggiungiCol;
 
-    @FXML private ListView<String> ListaLibrerie;
-    @FXML private Button BottoneCreaLibreria;
-
     private boolean searchType = false;
 
     public void initialize() {
@@ -40,10 +31,8 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
         initSRecensioniCol();
         initSAggiungiAdvCol();
         initTableViews();
-        aggiornaListaLibrerie();
-        initAutoRefresh();
         Platform.runLater(() -> {
-            Stage stage = (Stage) BottoneCreaLibreria.getScene().getWindow();
+            Stage stage = (Stage) MenuTipoRicerca.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {
                 try {
                     CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
@@ -143,44 +132,6 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
 
     @Override
     protected boolean getSearchType() {return searchType;}
-
-    private void initAutoRefresh() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), evt -> aggiornaListaLibrerie()));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
-
-    @FXML
-    private void aggiornaListaLibrerie() {
-        try {
-            List<String> libs = CliUtil.getInstance().getLibService().getLibs(CliUtil.getInstance().getCurrentToken());
-            if (libs != null && !libs.isEmpty()) {
-                ListaLibrerie.setItems(FXCollections.observableArrayList(libs));
-            } else {
-                CliUtil.getInstance().createAlert("Errore", "Nessuna libreria trovata.").showAndWait();
-            }
-        } catch (Exception e) {
-            CliUtil.getInstance().createAlert("Errore durante il caricamento delle librerie", e.getMessage()).showAndWait();
-        }
-    }
-
-    @FXML
-    private void CreaLibreria() {
-        CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null);
-    }
-
-    @FXML
-    private void handleListaDoppioClick_2(MouseEvent e) {
-        if (e.getClickCount() == 2)
-            ApriLibreria();
-    }
-
-    @FXML
-    private void ApriLibreria() {
-        String nome = ListaLibrerie.getSelectionModel().getSelectedItem();
-        if (nome != null)
-            CliUtil.getInstance().buildStage(FXMLtype.VISUALIZZALIBRERIA, nome);
-    }
 
     @FXML
     private void GoToMainMenu(){

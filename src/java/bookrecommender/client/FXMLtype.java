@@ -13,7 +13,7 @@ public enum FXMLtype {
     CREAVALUTAZIONE("/bookrecommender/client/fxml/CreaValutazione.fxml", "Crea Valutazione"),
     VISUALIZZAVALUTAZIONE("/bookrecommender/client/fxml/VisualizzaValutazione.fxml", "Visualizza Valutazione"),
     CREACONSIGLIO("/bookrecommender/client/fxml/CreaConsiglio.fxml", "Aggiungi Consiglio"),
-    VISUALIZZALIBRERIA("/bookrecommender/client/fxml/VisualizzaLibreria.fxml", "Visualizza Libreria"),
+    MODIFICALIBRERIA("/bookrecommender/client/fxml/ModificaLibreria.fxml", "Visualizza Libreria"),
     AGGIUNGILIBROLIBRERIA("/bookrecommender/client/fxml/AddLibroLibreria.fxml", "Aggiungi Libro alla Libreria"),
     GESTIONELIBRERIE("/bookrecommender/client/fxml/GestioneLibrerie.fxml","Gestione Librerie");
 

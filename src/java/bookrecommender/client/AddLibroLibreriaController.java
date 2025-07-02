@@ -176,18 +176,31 @@ public class AddLibroLibreriaController{
             List<Libro> updated = new ArrayList<>(current);
             updated.add(libro);
 
-            List<Integer> result = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), nomeLib, updated);
+            List<Integer> risultati = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), nomeLib, updated);
 
-            if (!result.isEmpty() && result.get(0) == 1) {
+            if (!risultati.isEmpty() && risultati.get(0) == 1) {
                 Stage stage = (Stage) addButton.getScene().getWindow();
                 stage.close();
                 CliUtil.getInstance().createConfirmation("Aggiornamento riuscito", "Il libro è stato aggiunto correttamente alla libreria '" + nomeLib + "'.",false).showAndWait();
             } else {
                 StringBuilder sb = new StringBuilder("Impossibile aggiornare la libreria:\n");
-                for (int i = 1; i + 1 < result.size(); i += 2) {
-                    int idLibroErr = result.get(i);
-                    int codice   = result.get(i + 1);
-                    sb.append("• Libro id ").append(idLibroErr).append(" errore codice ").append(codice).append("\n");
+                for (int i = 1; i < risultati.size(); i += 2) {
+                    int idLibro = risultati.get(i);
+                    int codice = risultati.get(i + 1);
+                    switch (codice) {
+                        case 0:
+                            sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha valutazioni associate.");
+                            break;
+                        case 1:
+                            sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" è stato utilizzato come consiglio.");
+                            break;
+                        case 2:
+                            sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha libri consigliati ad esso associati.");
+                            break;
+                        default:
+                            sb.append("Il libro con titolo ").append(CliUtil.getInstance().getSearchService().getLibro(idLibro)).append(" ha codice errore sconosciuto: ").append(codice).append(".");
+                    }
+                    if (i + 2 < risultati.size()) sb.append(System.lineSeparator());
                 }
                 CliUtil.getInstance().createAlert("Errore Aggiornamento", sb.toString()).showAndWait();
             }

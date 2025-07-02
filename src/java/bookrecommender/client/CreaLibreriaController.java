@@ -3,7 +3,6 @@ package bookrecommender.client;
 import bookrecommender.common.Libro;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,6 @@ public class CreaLibreriaController extends TableViewEngine {
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
 
-    @FXML private Button BottoneSalvaLibreria;
-    @FXML private Button ExitButton;
     @FXML private TextField NomeLibreria;
 
     @FXML
@@ -95,7 +92,7 @@ public class CreaLibreriaController extends TableViewEngine {
         try {
             if (CliUtil.getInstance().getLibService().createLib(CliUtil.getInstance().getCurrentToken(), nome.trim(), libri)) {
                 CliUtil.getInstance().createConfirmation("Successo", "Libreria salvata con successo!", false).showAndWait();
-                ((Stage)BottoneSalvaLibreria.getScene().getWindow()).close();
+                ExitApplication();
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Impossibile salvare la libreria").showAndWait();
             }
@@ -108,6 +105,6 @@ public class CreaLibreriaController extends TableViewEngine {
 
     @FXML
     private void ExitApplication() {
-        ((Stage)ExitButton.getScene().getWindow()).close();
+        CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null);
     }
 }

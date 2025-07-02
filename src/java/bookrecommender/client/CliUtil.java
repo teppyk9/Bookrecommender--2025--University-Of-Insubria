@@ -185,11 +185,8 @@ public final class CliUtil {
                     stage.show();
                     stage.getScene().getRoot().requestFocus();
                     return;
-                case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO, GESTIONELIBRERIE:
-                    stage = getPrimaryStage();
-                    break;
-                case CREALIBRERIA:
-                    stage = new Stage();
+                case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO, GESTIONELIBRERIE, CREALIBRERIA:
+                    stage = primaryStage;
                     break;
                 case DETTAGLIOLIBRO:
                     DettaglioLibroController dettaglioLibroController = loader.getController();
@@ -231,11 +228,11 @@ public final class CliUtil {
                         return;
                     }
                     break;
-                case VISUALIZZALIBRERIA:
-                    VisualizzaLibreriaController visualizzaLibreriaController = loader.getController();
+                case MODIFICALIBRERIA:
+                    ModificaLibreriaController modificaLibreriaController = loader.getController();
                     if(obj instanceof String) {
-                        stage = new Stage();
-                        visualizzaLibreriaController.setLibreria((String) obj);
+                        stage = primaryStage;
+                        modificaLibreriaController.setLibreria((String) obj);
                     } else {
                         logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected String object, got " + obj.getClass().getName());
                         return;
@@ -321,5 +318,4 @@ public final class CliUtil {
             }
         }
     }
-
 }

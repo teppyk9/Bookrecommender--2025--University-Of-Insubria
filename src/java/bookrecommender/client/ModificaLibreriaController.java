@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class VisualizzaLibreriaController extends TableViewEngine{
+public class ModificaLibreriaController extends TableViewEngine{
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
@@ -52,7 +52,7 @@ public class VisualizzaLibreriaController extends TableViewEngine{
         initTableViews();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
-            stage.setOnCloseRequest(event -> saveFlag(stage));
+            stage.setOnCloseRequest(event -> saveFlag());
         });
     }
 
@@ -115,17 +115,17 @@ public class VisualizzaLibreriaController extends TableViewEngine{
 
     @FXML
     private void ExitApplication() {
-        saveFlag((Stage) BottoneCambiaNome.getScene().getWindow());
+        saveFlag();
     }
 
-    private void saveFlag(Stage stage) {
+    private void saveFlag() {
         if (hannoDifferenze(OriginalLibri, new ArrayList<>(risTableView.getItems())) || !NomeLibreria.getText().isEmpty()) {
             CliUtil.getInstance().createConfirmation("Conferma uscita", "Tutte le modifiche andranno perse!\nSei sicuro di voler uscire?", true).showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES)
-                    stage.close();
+                    CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE, null);
             });
         }else
-            stage.close();
+            CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE, null);
     }
 
     @FXML
