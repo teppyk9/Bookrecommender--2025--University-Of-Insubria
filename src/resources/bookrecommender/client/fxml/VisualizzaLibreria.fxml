@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,26 +14,47 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.VisualizzaLibreriaController">
     <VBox layoutX="10.0" layoutY="513.0" spacing="10.0" AnchorPane.bottomAnchor="-492.42857142857144" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.571428571428669" AnchorPane.topAnchor="513.0">
-        <AnchorPane prefHeight="32.0" prefWidth="750.0" />
         <AnchorPane prefHeight="43.0" prefWidth="750.0" />
         <AnchorPane prefHeight="35.0" prefWidth="750.0" />
     </VBox>
-   <TableView fx:id="tableView" layoutX="115.0" layoutY="111.0" prefHeight="289.0" prefWidth="570.0">
+   <TableView fx:id="tableView" layoutX="14.0" layoutY="111.0" prefHeight="289.0" prefWidth="435.0">
       <columns>
-         <TableColumn fx:id="titoloCol" prefWidth="234.28567504882812" text="Titolo" />
-         <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="143.4285888671875" text="Autore" />
-         <TableColumn fx:id="annoCol" prefWidth="58.857177734375" text="Anno" />
-         <TableColumn fx:id="azioniCol" prefWidth="133.142822265625" text="Azioni" />
+         <TableColumn fx:id="titoloCol" prefWidth="149.71429443359375" text="Titolo" />
+         <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="101.71426391601562" text="Autore" />
+         <TableColumn fx:id="annoCol" prefWidth="62.85711669921875" text="Anno" />
+         <TableColumn fx:id="azioniCol" prefWidth="118.85711669921875" text="Azioni" />
       </columns>
    </TableView>
-      <Text fx:id="Titolo_Librerie" layoutX="334.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Nome Libreria*" textAlignment="CENTER" wrappingWidth="131.5">
+      <Text fx:id="Titolo_Librerie" layoutX="166.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Nome Libreria*" textAlignment="CENTER" wrappingWidth="131.5">
           <font>
               <Font size="17.0" />
           </font>
       </Text>
       <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="17.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="23.0" prefWidth="84.0" text="Indietro" />
-          <Button fx:id="BottoneCambiaNome" layoutX="116.0" layoutY="86.0" mnemonicParsing="false" onAction="#cambiaNome" text="Cambia Nome" />
-      <TextField fx:id="NomeLibreria" layoutX="211.0" layoutY="86.0" prefHeight="25.0" prefWidth="266.0" promptText="Cambia il nome alla tua libreria" />
-          <Button fx:id="BottoneEliminaLibreria" layoutX="114.0" layoutY="399.0" mnemonicParsing="false" onAction="#eliminaLibreria" text="Elimina Libreria" />
-      <Button fx:id="BottoneSalvaLibreria" layoutX="566.0" layoutY="399.0" mnemonicParsing="false" onAction="#SalvaLibreria" prefHeight="23.0" prefWidth="118.0" text="Salva Libreria" />
+          <Button fx:id="BottoneCambiaNome" layoutX="17.0" layoutY="86.0" mnemonicParsing="false" onAction="#cambiaNome" text="Cambia Nome" />
+      <TextField fx:id="NomeLibreria" layoutX="114.0" layoutY="86.0" prefHeight="25.0" prefWidth="266.0" promptText="Cambia il nome alla tua libreria" />
+          <Button fx:id="BottoneEliminaLibreria" layoutX="11.0" layoutY="399.0" mnemonicParsing="false" onAction="#eliminaLibreria" text="Elimina Libreria" />
+      <Button fx:id="BottoneSalvaLibreria" layoutX="334.0" layoutY="399.0" mnemonicParsing="false" onAction="#SalvaLibreria" prefHeight="23.0" prefWidth="118.0" text="Salva Libreria" />
+   <TableView fx:id="risTableView" layoutX="453.0" layoutY="111.0" prefHeight="289.0" prefWidth="409.0">
+      <columns>
+         <TableColumn fx:id="risTitoloCol" prefWidth="215.0" text="Titolo" />
+         <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="90.0" text="Autore" />
+         <TableColumn fx:id="risAnnoCol" prefWidth="44.0" text="Anno" />
+         <TableColumn fx:id="risAzioniCol" prefWidth="58.28567940848217" text="Azioni" />
+      </columns>
+   </TableView>
+   <TextField fx:id="campoRicerca" layoutX="453.0" layoutY="73.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="438.0" promptText="Cerca un libro..." />
+   <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="816.0" layoutY="44.0" onAction="#handleClickCerca" text="Cerca">
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+   </Button>
+   <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="610.0" layoutY="44.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="205.0" text="Tipo di ricerca" textFill="WHITE">
+      <items>
+         <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
+         <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
+         <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" text="Autore e anno di pubblicazione" />
+      </items>
+   </MenuButton>
+   <TextField fx:id="campoRicercaAnno" layoutX="453.0" layoutY="44.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" />
 </AnchorPane>
