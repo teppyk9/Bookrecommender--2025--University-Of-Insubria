@@ -2,18 +2,36 @@ package bookrecommender.client;
 
 import bookrecommender.common.Libro;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableRow;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GestioneLibrerieController {
@@ -32,15 +50,6 @@ public class GestioneLibrerieController {
     private TreeItem<Object> rootItem;
     private final Map<String, Integer> libCounts = new HashMap<>();
     private final Map<String, LocalDate> libDates = new HashMap<>();
-    private final Map<Integer, LocalDate> valDate = new HashMap<>();
-    private final Map<Integer, LocalDate> consDate = new HashMap<>();
-    private final Map<Integer, Boolean> libVal = new HashMap<>();
-    private final Map<Integer, Boolean> libConsVal = new HashMap<>();
-
-
-
-    private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
-    private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
 
     @FXML
     public void initialize() {
@@ -50,11 +59,10 @@ public class GestioneLibrerieController {
 
         nameColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
-            if (v instanceof String) {
-                return new ReadOnlyStringWrapper((String)v);
-            }
-            if (v instanceof Libro) {
-                return new ReadOnlyStringWrapper(((Libro)v).getTitolo());
+            if (v instanceof String s) {
+                return new ReadOnlyStringWrapper(s);
+            } else if (v instanceof LibroRow row) {
+                return row.titoloProperty();
             }
             return new ReadOnlyStringWrapper("");
         });
@@ -62,9 +70,8 @@ public class GestioneLibrerieController {
         countColumn.setStyle("-fx-alignment: CENTER;");
         countColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
-            if (v instanceof String nome) {
-                Integer cnt = libCounts.get(nome);
-                return new ReadOnlyObjectWrapper<>(cnt);
+            if (v instanceof String s) {
+                return new ReadOnlyObjectWrapper<>(libCounts.get(s));
             }
             return new ReadOnlyObjectWrapper<>(null);
         });
@@ -72,8 +79,8 @@ public class GestioneLibrerieController {
         dateColumn.setStyle("-fx-alignment: CENTER;");
         dateColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
-            if (v instanceof String nome) {
-                return new ReadOnlyObjectWrapper<>(libDates.get(nome));
+            if (v instanceof String s) {
+                return new ReadOnlyObjectWrapper<>(libDates.get(s));
             }
             return new ReadOnlyObjectWrapper<>(null);
         });
@@ -81,50 +88,21 @@ public class GestioneLibrerieController {
         isValColumn.setStyle("-fx-alignment: CENTER;");
         isValColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
-            if (v instanceof Libro l) {
-                boolean b = false;
-                try {
-                    b = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l);
-                } catch (RemoteException e) {
-                }
-                return new ReadOnlyObjectWrapper<>(b);
+            if (v instanceof LibroRow row) {
+                return row.hasValutazioneProperty();
             }
             return new ReadOnlyObjectWrapper<>(null);
         });
+        isValColumn.setCellFactory(col -> new TreeTableCell<>() {
+            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
+            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
 
-        isConsColumn.setStyle("-fx-alignment: CENTER;");
-        isConsColumn.setCellValueFactory(c -> {
-            Object v = c.getValue().getValue();
-            if (v instanceof Libro l) {
-                boolean b = false;
-                try {
-                    b = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l);
-                } catch (RemoteException e) {
-                }
-                return new ReadOnlyObjectWrapper<>(b);
-            }
-            return new ReadOnlyObjectWrapper<>(null);
-        });
-
-        isValColumn.setCellFactory(col -> new TreeTableCell<Object,Boolean>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item==null) {
+                if(item == null || empty)
                     setGraphic(null);
-                } else {
-                    setGraphic(item ? check : noCheck);
-                    setAlignment(Pos.CENTER);
-                }
-            }
-        });
-        isConsColumn.setCellFactory(col -> new TreeTableCell<Object,Boolean>() {
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item==null) {
-                    setGraphic(null);
-                } else {
+                else {
                     setGraphic(item ? check : noCheck);
                     setAlignment(Pos.CENTER);
                 }
@@ -134,236 +112,256 @@ public class GestioneLibrerieController {
         lastValColumn.setStyle("-fx-alignment: CENTER;");
         lastValColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
-            if (v instanceof Libro l) {
-                LocalDate d = null;
-                try {
-                    d = CliUtil.getInstance().getLibService().getValDate(CliUtil.getInstance().getCurrentToken(), l);
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-                return new ReadOnlyObjectWrapper<>(d);
+            if (v instanceof LibroRow row) {
+                return row.lastValDateProperty();
             }
             return new ReadOnlyObjectWrapper<>(null);
+        });
+
+        isConsColumn.setStyle("-fx-alignment: CENTER;");
+        isConsColumn.setCellValueFactory(c -> {
+            Object v = c.getValue().getValue();
+            if (v instanceof LibroRow row) {
+                return row.hasConsiglioProperty();
+            }
+            return new ReadOnlyObjectWrapper<>(null);
+        });
+        isConsColumn.setCellFactory(col -> new TreeTableCell<>() {
+            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 16, 16, true, true));
+            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 16, 16, true, true));
+
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item ? check : noCheck);
+                    setAlignment(Pos.CENTER);
+                }
+            }
         });
 
         lastConsColumn.setStyle("-fx-alignment: CENTER;");
         lastConsColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
-            if (v instanceof Libro l) {
-                LocalDate d = null;
-                try {
-                    d = CliUtil.getInstance().getLibService().getConDate(CliUtil.getInstance().getCurrentToken(), l);
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-                return new ReadOnlyObjectWrapper<>(d);
+            if (v instanceof LibroRow row) {
+                return row.lastConsDateProperty();
             }
             return new ReadOnlyObjectWrapper<>(null);
         });
 
-        azioniColumn.setCellFactory(col-> new TreeTableCell<>() {
-            private final MenuButton menuLibrerie = new MenuButton();
-            {
-                MenuItem modifica = new MenuItem("Modifica Libreria");
-                MenuItem rimuovi = new MenuItem("Elimina Libreria");
-                menuLibrerie.getItems().addAll(modifica, rimuovi);
-                menuLibrerie.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
-                menuLibrerie.setStyle(
-                        "-fx-background-color: transparent;" +
-                                "-fx-border-color: transparent;" +
-                                "-fx-padding: 0;" +
-                                "-fx-cursor: hand;" +
-                                "-fx-focus-color: transparent;" +
-                                "-fx-faint-focus-color: transparent;"
-                );
-                ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), menuLibrerie);
-                enlarge.setToX(1.1);
-                enlarge.setToY(1.1);
-
-                ScaleTransition shrink = new ScaleTransition(Duration.millis(100), menuLibrerie);
-                shrink.setToX(1.0);
-                shrink.setToY(1.0);
-
-                menuLibrerie.setOnMouseEntered(e -> {
-                    shrink.stop();
-                    enlarge.playFromStart();
-                });
-
-                menuLibrerie.setOnMouseExited(e -> {
-                    enlarge.stop();
-                    shrink.playFromStart();
-                });
-
-                modifica.setOnAction(evt -> {
-                    Object o = getTableRow().getItem();
-                    if(o instanceof String) {
-                        CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, getTableRow().getItem());
-                    }else
-                        CliUtil.getInstance().createAlert("Errore", "Modifica button on a " + o.getClass() + " instead of String").showAndWait();
-                });
-
-                rimuovi.setOnAction(evt -> {
-                    Object o = getTableRow().getItem();
-                    if(o instanceof String) {
-                        if(CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro di voler eliminare la libreria " + o + "?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
-                            try {
-                                if(CliUtil.getInstance().getLibService().deleteLib(CliUtil.getInstance().getCurrentToken(), (String) o)){
-                                    CliUtil.getInstance().createConfirmation("Successo", "Libreria eliminata con successo!",false).showAndWait();
-                                    caricaLibrerie();
-                                }else
-                                    CliUtil.getInstance().createAlert("Errore", "Errore nell'eliminazione della librerie").showAndWait();
-                            } catch (RemoteException e) {
-                                CliUtil.getInstance().createAlert("Failed to delete " + o.getClass().getSimpleName(), e.getMessage()).showAndWait();
-                            }
-                        }
-                    }else
-                        CliUtil.getInstance().createAlert("Errore", "Elimina button on a " + o.getClass() + " instead of String").showAndWait();
-
-                });
-            }
-            private final MenuButton menuLibri = new MenuButton();
-            {
-                MenuItem valuta = new MenuItem("Aggiungi Valutazione");
-                MenuItem consiglia = new MenuItem("Aggiungi Consigli");
-                MenuItem rimuovi = new MenuItem("Rimuovi dalla libreria");
-
-                menuLibri.getItems().addAll(valuta, consiglia, rimuovi);
-                menuLibri.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
-                menuLibri.setStyle(
-                        "-fx-background-color: transparent;" +
-                                "-fx-border-color: transparent;" +
-                                "-fx-padding: 0;" +
-                                "-fx-cursor: hand;" +
-                                "-fx-focus-color: transparent;" +
-                                "-fx-faint-focus-color: transparent;"
-                );
-                ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), menuLibri);
-                enlarge.setToX(1.1);
-                enlarge.setToY(1.1);
-
-                ScaleTransition shrink = new ScaleTransition(Duration.millis(100), menuLibri);
-                shrink.setToX(1.0);
-                shrink.setToY(1.0);
-
-                menuLibri.setOnMouseEntered(e -> {
-                    shrink.stop();
-                    enlarge.playFromStart();
-                });
-
-                menuLibri.setOnMouseExited(e -> {
-                    enlarge.stop();
-                    shrink.playFromStart();
-                });
-
-                valuta.setOnAction(evt -> {
-                    Object o = getTableRow().getItem();
-                    if(o instanceof Libro) {
-                        CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, o);
-                    }else{
-                        CliUtil.getInstance().createAlert("Errore","ValutaButton needs object Libro, provided " + o.getClass()).showAndWait();
-                    }
-                });
-
-                consiglia.setOnAction(evt -> {
-                    Object o = getTableRow().getItem();
-                    if(o instanceof Libro) {
-                        CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, o);
-                    }else{
-                        CliUtil.getInstance().createAlert("Errore","ValutaButton needs object Libro, provided " + o.getClass()).showAndWait();
-                    }
-                });
-
-                rimuovi.setOnAction(evt -> {
-                    TreeItem<Object> thisItem = getTableRow().getTreeItem();
-                    if (thisItem == null)
-                        return;
-
-                    TreeItem<Object> libNode = thisItem.getParent();
-                    if (libNode == null)
-                        return;
-
-                    Object libValue = libNode.getValue();
-                    if (!(libValue instanceof String nomeLibreria))
-                        return;
-
-                    List<Libro> libMod = libNode.getChildren().stream().map(TreeItem::getValue).filter(v -> v instanceof Libro).map(v -> (Libro) v).collect(Collectors.toList());
-
-                    Libro l = (Libro) thisItem.getValue();
-                    libMod.removeIf(b -> b.equals(l));
-                    if(libMod.size() < 3){
-                        CliUtil.getInstance().createAlert("Errore","Non puoi rimuovere questo libro!\nLa libreria deve contenere almeno 3 libri").showAndWait();
-                        return;
-                    }
-
-                    if(CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro di voler rimuovere questo libro dalla libreria?",true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
-                        try {
-                            List<Integer> risultati = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), nomeLibreria, libMod);
-                            if (!risultati.isEmpty() && risultati.get(0) == 1) {
-                                CliUtil.getInstance().createConfirmation("Aggiornamento riuscito", "Il libro è stato rimosso correttamente alla libreria '" + nomeLibreria + "'.", false).showAndWait();
-                                caricaLibrerie();
-                            } else {
-                                CliUtil.getInstance().reviewLibUpdate(risultati);
-                            }
-                        } catch (RemoteException ex) {
-                            CliUtil.getInstance().createAlert("Errore", ex.getMessage()).showAndWait();
-                        }
-                    }
-                });
-            }
-
+        azioniColumn.setCellFactory(col -> new TreeTableCell<>() {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
-                    setText(null);
                     setGraphic(null);
                     return;
                 }
-                Object o = getTableRow().getItem();
-                if (o instanceof String) {
-                    setGraphic(menuLibrerie);
-                    setAlignment(Pos.CENTER);
+                Object v = getTableRow().getItem();
+                if (v instanceof String) {
+                    setGraphic(createMenuLibrerieActions(this));
+                } else if (v instanceof LibroRow) {
+                    setGraphic(createMenuBookActions(this));
                 } else {
-                    setGraphic(menuLibri);
-                    setAlignment(Pos.CENTER);
+                    setGraphic(null);
                 }
+                setAlignment(Pos.CENTER);
             }
         });
 
         treeTableView.setRowFactory(tv -> {
             TreeTableRow<Object> row = new TreeTableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
+            row.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2 && !row.isEmpty()) {
                     Object v = row.getItem();
-                    if (v instanceof String nomeLib) {
-                        CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, nomeLib);
-                    }else if (v instanceof Libro) {
-                        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO,v);
+                    if (v instanceof String s) {
+                        CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, s);
+                    } else if (v instanceof LibroRow lr) {
+                        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, lr.getLibro());
                     }
                 }
             });
             return row;
         });
 
-        treeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> BottoneCambiaNome.setDisable(newSel == null || !(newSel.getValue() instanceof String)));
+        BottoneCambiaNome.setDisable(true);
+        treeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) ->
+                BottoneCambiaNome.setDisable(newSel == null || !(newSel.getValue() instanceof String))
+        );
+
         caricaLibrerie();
-        treeTableView.refresh();
+    }
+
+    private MenuButton createMenuLibrerieActions(TreeTableCell<Object, Void> cell) {
+        MenuButton mb = new MenuButton();
+        MenuItem modifica = new MenuItem("Modifica Libreria");
+        MenuItem rimuovi = new MenuItem("Elimina Libreria");
+        mb.getItems().addAll(modifica, rimuovi);
+        mb.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
+        mb.setStyle("-fx-background-color: transparent;"
+                + "-fx-border-color: transparent;"
+                + "-fx-padding: 0;"
+                + "-fx-cursor: hand;"
+                + "-fx-focus-color: transparent;"
+                + "-fx-faint-focus-color: transparent;");
+
+        ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), mb);
+        enlarge.setToX(1.1);
+        enlarge.setToY(1.1);
+        ScaleTransition shrink = new ScaleTransition(Duration.millis(100), mb);
+        shrink.setToX(1.0);
+        shrink.setToY(1.0);
+        mb.setOnMouseEntered(e -> { shrink.stop(); enlarge.playFromStart(); });
+        mb.setOnMouseExited(e -> { enlarge.stop(); shrink.playFromStart(); });
+
+        modifica.setOnAction(evt -> {
+            Object o = cell.getTableRow().getItem();
+            if (o instanceof String nome) {
+                CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, nome);
+            } else {
+                CliUtil.getInstance().createAlert("Errore", "Modifica button on a " + o.getClass()).showAndWait();
+            }
+        });
+
+        rimuovi.setOnAction(evt -> {
+            Object o = cell.getTableRow().getItem();
+            if (o instanceof String nome) {
+                if (CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro di voler eliminare la libreria " + nome + "?", true)
+                        .showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
+                    try {
+                        if (CliUtil.getInstance().getLibService().deleteLib(CliUtil.getInstance().getCurrentToken(), nome)) {
+                            CliUtil.getInstance().createConfirmation("Successo", "Libreria eliminata con successo!", false).showAndWait();
+                            caricaLibrerie();
+                        } else {
+                            CliUtil.getInstance().createAlert("Errore", "Errore nell'eliminazione").showAndWait();
+                        }
+                    } catch (RemoteException e) {
+                        CliUtil.getInstance().createAlert("Failed to delete", e.getMessage()).showAndWait();
+                    }
+                }
+            } else {
+                CliUtil.getInstance().createAlert("Errore", "Elimina button on a " + o.getClass()).showAndWait();
+            }
+        });
+        return mb;
+    }
+
+    private MenuButton createMenuBookActions(TreeTableCell<Object, Void> cell) {
+        MenuButton mb = new MenuButton();
+        MenuItem valuta = new MenuItem("Aggiungi Valutazione");
+        MenuItem consiglia = new MenuItem("Aggiungi Consigli");
+        MenuItem rimuovi = new MenuItem("Rimuovi dalla libreria");
+        MenuItem modVal = new MenuItem("Modifica Valutazione");
+        MenuItem modCons = new MenuItem("Modifica Consiglio");
+        mb.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
+        mb.setStyle("-fx-background-color: transparent;"
+                + "-fx-border-color: transparent;"
+                + "-fx-padding: 0;"
+                + "-fx-cursor: hand;"
+                + "-fx-focus-color: transparent;"
+                + "-fx-faint-focus-color: transparent;");
+
+        ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), mb);
+        enlarge.setToX(1.1);
+        enlarge.setToY(1.1);
+        ScaleTransition shrink = new ScaleTransition(Duration.millis(100), mb);
+        shrink.setToX(1.0);
+        shrink.setToY(1.0);
+        mb.setOnMouseEntered(e -> { shrink.stop(); enlarge.playFromStart(); });
+        mb.setOnMouseExited(e -> { enlarge.stop(); shrink.playFromStart(); });
+
+        valuta.setOnAction(evt -> {
+            Object o = cell.getTableRow().getItem();
+            if (o instanceof LibroRow lr) {
+                CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, lr.getLibro());
+            } else {
+                CliUtil.getInstance().createAlert("Errore", "Valuta needs Libro, got " + o.getClass()).showAndWait();
+            }
+        });
+
+        consiglia.setOnAction(evt -> {
+            Object o = cell.getTableRow().getItem();
+            if (o instanceof LibroRow lr) {
+                CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, lr.getLibro());
+            } else {
+                CliUtil.getInstance().createAlert("Errore", "Consiglia needs Libro, got " + o.getClass()).showAndWait();
+            }
+        });
+
+        rimuovi.setOnAction(evt -> {
+            TreeItem<Object> thisItem = cell.getTableRow().getTreeItem();
+            if (thisItem == null) return;
+            TreeItem<Object> libNode = thisItem.getParent();
+            if (libNode == null) return;
+            Object libV = libNode.getValue();
+            if (!(libV instanceof String nomeLib)) return;
+            List<LibroRow> libri = libNode.getChildren().stream().map(TreeItem::getValue).filter(v -> v instanceof LibroRow).map(v -> (LibroRow) v).collect(Collectors.toList());
+            LibroRow lr = (LibroRow) thisItem.getValue();
+            libri.removeIf(rw -> rw.getLibro().equals(lr.getLibro()));
+            if (libri.size() < 3) {
+                CliUtil.getInstance().createAlert("Errore", "La libreria deve contenere almeno 3 libri").showAndWait();
+                return;
+            }
+            if (CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
+                try {
+                    List<bookrecommender.common.Libro> modList = libri.stream().map(LibroRow::getLibro).collect(Collectors.toList());
+                    List<Integer> results = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), nomeLib, modList);
+                    if (!results.isEmpty() && results.get(0) == 1) {
+                        CliUtil.getInstance().createConfirmation("Aggiornato", "Rimosso correttamente", false).showAndWait();
+                        caricaLibrerie();
+                    } else {
+                        CliUtil.getInstance().reviewLibUpdate(results);
+                    }
+                } catch (RemoteException e) {
+                    CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+                }
+            }
+        });
+
+        modVal.setOnAction(evt ->{
+            Object o = cell.getTableRow().getItem();
+            if (o instanceof LibroRow lr) {
+                try {
+                    CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), lr.getLibro()));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                CliUtil.getInstance().createAlert("Errore", "Consiglia needs Libro, got " + o.getClass()).showAndWait();
+            }
+        });
+
+        modCons.setOnAction(evt ->{
+            Object o = cell.getTableRow().getItem();
+            if (o instanceof LibroRow lr) {
+                CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, lr.getLibro());
+            } else {
+                CliUtil.getInstance().createAlert("Errore", "Consiglia needs Libro, got " + o.getClass()).showAndWait();
+            }
+        });
+        if(cell == null || cell.getTableRow() == null) {
+            return null;
+        }
+        Object o = cell.getTableRow().getItem();
+        if(o instanceof LibroRow lr) {
+            mb.getItems().addAll((lr.hasValutazione() ? modVal : valuta),(lr.hasConsiglio() ? modCons : consiglia), rimuovi);
+        }
+        return mb;
     }
 
     private void caricaLibrerie() {
         rootItem.getChildren().clear();
         libCounts.clear();
         libDates.clear();
-        valDate.clear();
-        consDate.clear();
-        libVal.clear();
-        libConsVal.clear();
         try {
-            List<String> libs = CliUtil.getInstance().getLibService().getLibs(CliUtil.getInstance().getCurrentToken());
+            var token = CliUtil.getInstance().getCurrentToken();
+            List<String> libs = CliUtil.getInstance().getLibService().getLibs(token);
             for (String nome : libs) {
-                List<Libro> libri = CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nome);
-                libCounts.put(nome, libri.size());
-                libDates.put(nome, CliUtil.getInstance().getLibService().getCreationDate(CliUtil.getInstance().getCurrentToken(), nome));
+                List<bookrecommender.common.Libro> list = CliUtil.getInstance().getLibService().getLib(token, nome);
+                libCounts.put(nome, list.size());
+                libDates.put(nome, CliUtil.getInstance().getLibService().getCreationDate(token, nome));
 
                 TreeItem<Object> libNode = new TreeItem<>(nome);
                 libNode.getChildren().add(new TreeItem<>());
@@ -383,14 +381,15 @@ public class GestioneLibrerieController {
 
     private void caricaFigliLibri(TreeItem<Object> libNode, String nomeLib) {
         try {
-            List<Libro> libri = CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLib);
-            for (Libro l : libri) {
-                libVal.put(l.getId(), CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l));
-                libConsVal.put(l.getId(), CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l));
-                valDate.put(l.getId(), CliUtil.getInstance().getLibService().getValDate(CliUtil.getInstance().getCurrentToken(), l));
-                consDate.put(l.getId(), CliUtil.getInstance().getLibService().getConDate(CliUtil.getInstance().getCurrentToken(), l));
-                TreeItem<Object> libroNode = new TreeItem<>(l);
-                libNode.getChildren().add(libroNode);
+            var token = CliUtil.getInstance().getCurrentToken();
+            List<Libro> list = CliUtil.getInstance().getLibService().getLib(token, nomeLib);
+            for (Libro l : list) {
+                boolean hasVal = CliUtil.getInstance().getLibService().existVal(token, l);
+                boolean hasCons = CliUtil.getInstance().getLibService().existCon(token, l);
+                LocalDate valD = CliUtil.getInstance().getLibService().getValDate(token, l);
+                LocalDate consD = CliUtil.getInstance().getLibService().getConDate(token, l);
+                LibroRow row = new LibroRow(l, hasVal, hasCons, valD, consD);
+                libNode.getChildren().add(new TreeItem<>(row));
             }
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore caricamento libri", e.getMessage()).showAndWait();
@@ -399,33 +398,66 @@ public class GestioneLibrerieController {
 
     @FXML private void cambiaNome() {
         Object o = treeTableView.getSelectionModel().getSelectedItem().getValue();
-        if(o instanceof String) {
-            if(NomeLibreria.getText().trim().length() < 5 || NomeLibreria.getText().trim().length() > 50) {
-                CliUtil.getInstance().createAlert("Errore","Il titolo deve essere compreso tra 5 e 50 caratteri!").showAndWait();
-            }else if(NomeLibreria.getText().trim().equals(o)) {
-                CliUtil.getInstance().createAlert("Errore","Il titolo deve essere diverso dal precedente!").showAndWait();
-            }else{
+        if (o instanceof String oldName) {
+            String newName = NomeLibreria.getText().trim();
+            if (newName.length() < 5 || newName.length() > 50) {
+                CliUtil.getInstance().createAlert("Errore", "Lunghezza compresa tra 5 e 50").showAndWait();
+            } else if (newName.equals(oldName)) {
+                CliUtil.getInstance().createAlert("Errore", "Nome uguale").showAndWait();
+            } else {
                 try {
-                    if(CliUtil.getInstance().getLibService().modifyLibName(CliUtil.getInstance().getCurrentToken(), (String) o, NomeLibreria.getText().trim())) {
-                        CliUtil.getInstance().createConfirmation("Successo", "Nome Libreria modificato correttamente", false).showAndWait();
+                    if (CliUtil.getInstance().getLibService().modifyLibName(CliUtil.getInstance().getCurrentToken(), oldName, newName)) {
+                        CliUtil.getInstance().createConfirmation("Successo", "Nome modificato", false).showAndWait();
                         NomeLibreria.clear();
                         caricaLibrerie();
+                    } else {
+                        CliUtil.getInstance().createAlert("Errore", "Modifica fallita").showAndWait();
                     }
-                    else
-                        CliUtil.getInstance().createAlert("Errore", "Modifica del nome della libreria fallito!").showAndWait();
-                }catch(RemoteException e){
-                    CliUtil.getInstance().createAlert("Errore", "Errore nella connessione al server").showAndWait();
+                } catch (RemoteException e) {
+                    CliUtil.getInstance().createAlert("Errore", "Connessione").showAndWait();
                 }
             }
-        }else CliUtil.getInstance().createAlert("Errore", "CambiaNomeButton needs String type, provided " + o.getClass().getSimpleName()).showAndWait();
+        } else {
+            CliUtil.getInstance().createAlert("Errore", "Seleziona una libreria").showAndWait();
+        }
     }
 
-
     @FXML private void ExitApplication() {
-        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA,null);
+        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
     }
 
     public void creaLibreria() {
-        CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA,null);
+        CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null);
+    }
+
+    public static class LibroRow {
+        private final Libro libro;
+        private final StringProperty titolo;
+        private final BooleanProperty hasValutazione;
+        private final boolean boolVal;
+        private final BooleanProperty hasConsiglio;
+        private final boolean boolCons;
+        private final ObjectProperty<LocalDate> lastValDate;
+        private final ObjectProperty<LocalDate> lastConsDate;
+
+        public LibroRow(Libro l, boolean val, boolean cons, LocalDate valD, LocalDate consD) {
+            this.libro = l;
+            this.titolo = new SimpleStringProperty(l.getTitolo());
+            this.hasValutazione = new SimpleBooleanProperty(val);
+            boolVal = val;
+            this.hasConsiglio = new SimpleBooleanProperty(cons);
+            boolCons = cons;
+            this.lastValDate = new SimpleObjectProperty<>(valD);
+            this.lastConsDate = new SimpleObjectProperty<>(consD);
+        }
+
+        public Libro getLibro() { return libro; }
+        public StringProperty titoloProperty() { return titolo; }
+        public BooleanProperty hasValutazioneProperty() { return hasValutazione; }
+        public boolean hasValutazione() { return boolVal; }
+        public BooleanProperty hasConsiglioProperty() { return hasConsiglio; }
+        public boolean hasConsiglio() { return boolCons; }
+        public ObjectProperty<LocalDate> lastValDateProperty() { return lastValDate; }
+        public ObjectProperty<LocalDate> lastConsDateProperty() { return lastConsDate; }
     }
 }
