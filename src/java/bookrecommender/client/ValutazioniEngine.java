@@ -28,11 +28,9 @@ public abstract class ValutazioniEngine {
         }
     }
 
-    protected void displayGroup(ImageView[] stars, Label voto, String commento, float valore, String emptyMsg) {
+    protected void displayGroup(ImageView[] stars, Label voto, String commento, Label area,float valore, String emptyMsg) {
         CliUtil.getInstance().setStar(stars[0], stars[1], stars[2], stars[3], stars[4], valore);
         voto.setText(String.valueOf(valore));
-        getCommentControl(commento).setText(commento.isEmpty() ? emptyMsg : commento);
+        area.setText(commento.isEmpty() ? emptyMsg : commento);
     }
-
-    protected abstract Label getCommentControl(String text);
 }

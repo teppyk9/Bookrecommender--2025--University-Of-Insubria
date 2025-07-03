@@ -40,11 +40,6 @@ public class ModificaValutazioneController extends ValutazioniEngine {
         });
     }
 
-    @Override
-    protected Label getCommentControl(String text) {
-        return null;
-    }
-
     public void setValutazione(Valutazione v, FXMLtype oldFXMLType) {
         this.myVal = v;
         this.oldFXMLType = oldFXMLType;
