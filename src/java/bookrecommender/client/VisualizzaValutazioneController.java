@@ -1,6 +1,7 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Valutazione;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -57,5 +58,9 @@ public class VisualizzaValutazioneController extends ValutazioniEngine {
         displayGroup(new ImageView[]{starOriginalita1,starOriginalita2,starOriginalita3,starOriginalita4,starOriginalita5}, votoOriginalita, com.get(3), val.get(3), "Nessuna recensione per l'originalità");
         displayGroup(new ImageView[]{starEdizione1,starEdizione2,starEdizione3,starEdizione4,starEdizione5}, votoEdizione, com.get(4), val.get(4), "Nessuna recensione per l'edizione");
         displayGroup(new ImageView[]{starMedia1,starMedia2,starMedia3,starMedia4,starMedia5}, votoMedia, com.get(5), val.get(5), "Nessuna recensione per la valutazione finale");
+    }
+
+    public void exitApplication(ActionEvent actionEvent) {
+
     }
 }
