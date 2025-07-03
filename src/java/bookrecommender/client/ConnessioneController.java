@@ -42,7 +42,7 @@ public class ConnessioneController {
                 stage.close();
                 if (CliUtil.getInstance().createConfirmation("Connessione riuscita", "La connessione al server è stata stabilita con successo. Continuare?", true).showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
                     CliUtil.getInstance().setMonitorService();
-                    CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
+                    CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
                 } else {
                     Platform.exit();
                     System.exit(0);

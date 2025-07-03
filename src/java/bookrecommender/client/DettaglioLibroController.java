@@ -124,7 +124,7 @@ public class DettaglioLibroController {
         if (mouseEvent.getClickCount() == 2) {
             Valutazione selezionato = listaValutazioni.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
-                CliUtil.getInstance().buildStage(FXMLtype.VISUALIZZAVALUTAZIONE, selezionato);
+                CliUtil.getInstance().buildStage(FXMLtype.VISUALIZZAVALUTAZIONE, null, selezionato);
             }
         }
     }
@@ -133,7 +133,7 @@ public class DettaglioLibroController {
         if (mouseEvent.getClickCount() == 2) {
             Libro selezionato = listaConsigli.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
-                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, selezionato);
+                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, null, selezionato);
             }
         }
     }

@@ -163,7 +163,7 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
 
     @FXML
     private void GoToMainMenu(){
-        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
+        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
     }
 
     public void setRicerca() {

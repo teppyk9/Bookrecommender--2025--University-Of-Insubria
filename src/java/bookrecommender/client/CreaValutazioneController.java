@@ -57,6 +57,7 @@ public class CreaValutazioneController {
     @FXML private TextField testoFinale;
 
     private Libro libro;
+    private FXMLtype oldFXMLType;
 
     public void initialize() {
         messaggioErrore.setText("");
@@ -67,8 +68,9 @@ public class CreaValutazioneController {
         configuraValutazione(List.of(starEdizione1, starEdizione2, starEdizione3, starEdizione4, starEdizione5), votoEdizione);
     }
 
-    public void setLibro(Libro libro) {
+    public void setLibro(Libro libro, FXMLtype oldFXMLType) {
         this.libro = libro;
+        this.oldFXMLType = oldFXMLType;
         titoloLibro.setText(libro.getTitolo());
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneSalva.getScene().getWindow();
@@ -101,8 +103,7 @@ public class CreaValutazioneController {
         try{
             if (CliUtil.getInstance().getLibService().addValutazione(CliUtil.getInstance().getCurrentToken(), valutazione)) {
                 CliUtil.getInstance().createConfirmation("Valutazione salvata", "La valutazione è stata salvata con successo.",false).showAndWait();
-                Stage stage = (Stage) BottoneSalva.getScene().getWindow();
-                stage.close();
+                CliUtil.getInstance().buildStage(oldFXMLType,null, null);
             }else{
                 messaggioErrore.setText("Errore durante il salvataggio della valutazione, potrebbe essere già stata effettuata una valutazione per questo libro.");
             }
@@ -144,8 +145,7 @@ public class CreaValutazioneController {
 
     @FXML private void exitApplication() {
         if(CliUtil.getInstance().createConfirmation("Uscita", "Sei sicuro di voler uscire?\nTutte le modifiche andranno perse", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
-            Stage stage = (Stage) BottoneSalva.getScene().getWindow();
-            stage.close();
+            CliUtil.getInstance().buildStage(oldFXMLType,null, null);
         }
     }
 }

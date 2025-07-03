@@ -108,6 +108,6 @@ public class CreaLibreriaController extends TableViewEngine {
 
     @FXML
     private void ExitApplication() {
-        CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null);
+        CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null, null);
     }
 }

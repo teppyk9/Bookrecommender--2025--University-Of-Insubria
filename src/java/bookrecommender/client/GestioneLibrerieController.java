@@ -179,9 +179,9 @@ public class GestioneLibrerieController {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
                     Object v = row.getItem();
                     if (v instanceof String s) {
-                        CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, s);
+                        CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, null, s);
                     } else if (v instanceof LibroRow lr) {
-                        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, lr.getLibro());
+                        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, null, lr.getLibro());
                     }
                 }
             });
@@ -229,7 +229,7 @@ public class GestioneLibrerieController {
         modifica.setOnAction(evt -> {
             Object o = cell.getTableRow().getItem();
             if (o instanceof String nome) {
-                CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, nome);
+                CliUtil.getInstance().buildStage(FXMLtype.MODIFICALIBRERIA, null, nome);
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Modifica button on a " + o.getClass()).showAndWait();
             }
@@ -285,7 +285,7 @@ public class GestioneLibrerieController {
         valuta.setOnAction(evt -> {
             Object o = cell.getTableRow().getItem();
             if (o instanceof LibroRow lr) {
-                CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, lr.getLibro());
+                CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, null, lr.getLibro());
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Valuta needs Libro, got " + o.getClass()).showAndWait();
             }
@@ -294,7 +294,7 @@ public class GestioneLibrerieController {
         consiglia.setOnAction(evt -> {
             Object o = cell.getTableRow().getItem();
             if (o instanceof LibroRow lr) {
-                CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, lr.getLibro());
+                CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, null, lr.getLibro());
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Consiglia needs Libro, got " + o.getClass()).showAndWait();
             }
@@ -334,7 +334,7 @@ public class GestioneLibrerieController {
             Object o = cell.getTableRow().getItem();
             if (o instanceof LibroRow lr) {
                 try {
-                    CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), lr.getLibro()));
+                    CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, null, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), lr.getLibro()));
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
@@ -346,7 +346,7 @@ public class GestioneLibrerieController {
         modCons.setOnAction(evt ->{
             Object o = cell.getTableRow().getItem();
             if (o instanceof LibroRow lr) {
-                CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, lr.getLibro());
+                CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, null, lr.getLibro());
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Consiglia needs Libro, got " + o.getClass()).showAndWait();
             }
@@ -432,11 +432,11 @@ public class GestioneLibrerieController {
     }
 
     @FXML private void ExitApplication() {
-        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
+        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
     }
 
     public void creaLibreria() {
-        CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null);
+        CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null, null);
     }
 
     public static class LibroRow {

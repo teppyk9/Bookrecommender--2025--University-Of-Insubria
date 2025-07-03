@@ -99,7 +99,7 @@ public class AddLibroLibreriaController{
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     Object v = row.getItem();
                     if (v instanceof Libro) {
-                        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, v);
+                        CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, null,v);
                     }
                 }
             });

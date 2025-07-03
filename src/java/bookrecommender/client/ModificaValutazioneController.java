@@ -93,6 +93,8 @@ public class ModificaValutazioneController {
 
     private Valutazione myValutazione;
 
+    private FXMLtype oldFXMLType;
+
     private boolean isModifica = false;
 
     public void initialize() {
@@ -105,8 +107,9 @@ public class ModificaValutazioneController {
         });
     }
 
-    public void setValutazione(Valutazione val) {
+    public void setValutazione(Valutazione val, FXMLtype oldFXMLType) {
         this.myValutazione = val;
+        this.oldFXMLType = oldFXMLType;
 
         configuraValutazione(List.of(starStile1, starStile2, starStile3, starStile4, starStile5), votoStile);
         configuraValutazione(List.of(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5), votoContenuto);
@@ -224,8 +227,7 @@ public class ModificaValutazioneController {
         try {
             if (CliUtil.getInstance().getLibService().updateVal(CliUtil.getInstance().getCurrentToken(), valutazione)) {
                 CliUtil.getInstance().createConfirmation("Valutazione salvata", "La valutazione è stata salvata con successo.", false).showAndWait();
-                Stage stage = (Stage) SalvaModificheButton.getScene().getWindow();
-                stage.close();
+                CliUtil.getInstance().buildStage(oldFXMLType,null, null);
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito\n" + "Non è stato possibile salvare la valutazione. Riprova più tardi.").showAndWait();
             }
@@ -239,8 +241,7 @@ public class ModificaValutazioneController {
             try {
                 if (CliUtil.getInstance().getLibService().deleteVal(CliUtil.getInstance().getCurrentToken(), myValutazione.getLibro())) {
                     CliUtil.getInstance().createConfirmation("Valutazione eliminata", "La valutazione è stata eliminata con successo.", false).showAndWait();
-                    Stage stage = (Stage) SalvaModificheButton.getScene().getWindow();
-                    stage.close();
+                    CliUtil.getInstance().buildStage(oldFXMLType,null, null);
                 } else {
                     CliUtil.getInstance().createAlert("Errore", "Eliminazione fallita\n" + "Non è stato possibile eliminare la valutazione. Riprova più tardi.").showAndWait();
                 }
@@ -254,8 +255,7 @@ public class ModificaValutazioneController {
         if(isModifica && CliUtil.getInstance().createConfirmation("Conferma uscita", "Hai modificato la valutazione. Vuoi salvare le modifiche prima di uscire?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
             salvaModifiche();
         }else {
-            Stage stage = (Stage) SalvaModificheButton.getScene().getWindow();
-            stage.close();
+            CliUtil.getInstance().buildStage(oldFXMLType,null, null);
         }
     }
 

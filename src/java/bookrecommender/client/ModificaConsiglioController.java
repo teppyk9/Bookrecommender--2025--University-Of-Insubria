@@ -1,6 +1,7 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -30,6 +31,9 @@ public class ModificaConsiglioController extends TableViewEngine {
     @FXML private TableColumn <Libro, Void> risAzioniCol;
 
     private Libro myLibro;
+    private FXMLtype oldFXMLType;
+
+    private List<Libro> oldLibri = new ArrayList<>();
 
     @FXML
     public void initialize() {
@@ -38,13 +42,22 @@ public class ModificaConsiglioController extends TableViewEngine {
         initOActionCol(false);
         initOTableView();
         initTableViews();
+        Platform.runLater(() -> {
+            Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
+            stage.setOnCloseRequest(evt -> {
+                GoToMainMenu();
+                evt.consume();
+            });
+        });
     }
 
-    public void setLibro(Libro libro) {
+    public void setLibro(Libro libro, FXMLtype oldFXMLType) {
         this.myLibro = libro;
+        this.oldFXMLType = oldFXMLType;
         try{
             List <Libro> listaConsigli = new ArrayList<>(CliUtil.getInstance().getLibService().getConsigli(CliUtil.getInstance().getCurrentToken(), myLibro));
             listaConsigli.remove(myLibro);
+            oldLibri = listaConsigli;
             risTableView.setItems(FXCollections.observableArrayList(listaConsigli));
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore durante il recupero dei consigli del libro", e.getMessage());
@@ -167,7 +180,11 @@ public class ModificaConsiglioController extends TableViewEngine {
     }
     @FXML
     private void GoToMainMenu() {
-        ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+        if(CliUtil.getInstance().hannoDifferenze(oldLibri, risTableView.getItems())){
+            if(CliUtil.getInstance().createConfirmation("Modifiche non salvate", "Hai modifiche non salvate, sei sicuro di voler uscire=", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
+                CliUtil.getInstance().buildStage(oldFXMLType,null, null);
+            }
+        }
     }
 
     public void eliminaConsigli() {
@@ -175,8 +192,7 @@ public class ModificaConsiglioController extends TableViewEngine {
             try {
                 if (CliUtil.getInstance().getLibService().deleteCon(CliUtil.getInstance().getCurrentToken(), myLibro)) {
                     CliUtil.getInstance().createConfirmation("Successo", "Consiglio eliminato!", true).showAndWait();
-                    Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
-                    stage.close();
+                    CliUtil.getInstance().buildStage(oldFXMLType,null, null);
                 } else {
                     CliUtil.getInstance().createAlert("Errore", "Eliminazione fallita").showAndWait();
                 }

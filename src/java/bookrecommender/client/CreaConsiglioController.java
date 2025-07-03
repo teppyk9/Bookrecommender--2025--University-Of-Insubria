@@ -30,6 +30,7 @@ public class CreaConsiglioController extends TableViewEngine {
     @FXML private Button GoBackButton_MainMenu;
 
     private Libro myLibro;
+    private FXMLtype oldFXMLType;
 
     @FXML
     public void initialize() {
@@ -47,8 +48,9 @@ public class CreaConsiglioController extends TableViewEngine {
         });
     }
 
-    public void setLibro(Libro libro) {
+    public void setLibro(Libro libro, FXMLtype oldFXMLType) {
         this.myLibro = libro;
+        this.oldFXMLType = oldFXMLType;
     }
 
     @Override protected TextField getCampoRicerca(){
@@ -171,10 +173,10 @@ public class CreaConsiglioController extends TableViewEngine {
         List<Libro> cons = new ArrayList<>(risTableView.getItems());
         if(!cons.isEmpty()) {
             if (CliUtil.getInstance().createConfirmation("Attenzione", "Hai dei consigli non salvati, vuoi davvero tornare al menu principale?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
-                ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+                CliUtil.getInstance().buildStage(oldFXMLType,null, null);
             }
         }else{
-            ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+            CliUtil.getInstance().buildStage(oldFXMLType,null, null);
         }
     }
 }

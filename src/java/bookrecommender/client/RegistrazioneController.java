@@ -41,11 +41,11 @@ public class RegistrazioneController {
     }
 
     public void GoBackMainMenu() {
-        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
     }
 
     public void GoToLoginPage() {
-        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null);
+        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null, null);
     }
 
     public void TryReg() {
@@ -113,7 +113,7 @@ public class RegistrazioneController {
             RegToken result = CliUtil.getInstance().getLogRegService().Register(nome, cognome, cf, email, username, password1);
             if (result.RegistrationAvailable()) {
                 CliUtil.getInstance().createConfirmation("Registrazione riuscita", "Benvenuto " + username + "!", false).showAndWait();
-                CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
+                CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
             } else{
                 if(result.isUsernameAvailable()) {
                     CliUtil.getInstance().createAlert("Errore", "Username già utilizzata").showAndWait();

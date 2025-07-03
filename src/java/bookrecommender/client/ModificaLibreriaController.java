@@ -10,9 +10,7 @@ import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ModificaLibreriaController extends TableViewEngine{
     @FXML private TextField campoRicerca;
@@ -122,13 +120,13 @@ public class ModificaLibreriaController extends TableViewEngine{
     }
 
     private void saveFlag() {
-        if (hannoDifferenze(OriginalLibri, new ArrayList<>(risTableView.getItems())) || !NomeLibreria.getText().isEmpty()) {
+        if (CliUtil.getInstance().hannoDifferenze(OriginalLibri, new ArrayList<>(risTableView.getItems())) || !NomeLibreria.getText().isEmpty()) {
             CliUtil.getInstance().createConfirmation("Conferma uscita", "Tutte le modifiche andranno perse!\nSei sicuro di voler uscire?", true).showAndWait().ifPresent(response -> {
                 if (response == ButtonType.YES)
-                    CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE, null);
+                    CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE, null, null);
             });
         }else
-            CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE, null);
+            CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE, null, null);
     }
 
     @FXML
@@ -176,7 +174,7 @@ public class ModificaLibreriaController extends TableViewEngine{
             return;
         }
         List<Libro> LibriLibrerie = new ArrayList<>(risTableView.getItems());
-        if (hannoDifferenze(OriginalLibri, LibriLibrerie) && LibriLibrerie.size() >= 3) {
+        if (CliUtil.getInstance().hannoDifferenze(OriginalLibri, LibriLibrerie) && LibriLibrerie.size() >= 3) {
             try {
                 List<Integer> risultati = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), LibName, LibriLibrerie);
                 if (risultati.get(0) == 1) {
@@ -195,12 +193,5 @@ public class ModificaLibreriaController extends TableViewEngine{
         } else {
             CliUtil.getInstance().createAlert("Errore", "Nessuna modifica effettuata.").showAndWait();
         }
-    }
-
-    private boolean hannoDifferenze(List<Libro> list1, List<Libro> list2) {
-        if (list1.size() != list2.size()) return true;
-        Set<Libro> set = new HashSet<>(list2);
-        for (Libro libro : list1) if (!set.contains(libro)) return true;
-        return false;
     }
 }

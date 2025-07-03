@@ -132,6 +132,6 @@ public class CercaLibroController extends TableViewEngine {
 
     @FXML
     private void GoToMainMenu() {
-        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null,null);
     }
 }

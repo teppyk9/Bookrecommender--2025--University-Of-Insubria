@@ -61,7 +61,7 @@ public class LoginController {
             if (token != null) {
                 CliUtil.getInstance().setCurrentToken(token);
                 CliUtil.getInstance().createConfirmation("Login riuscito", "Benvenuto " + username + "!",false).showAndWait();
-                CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null);
+                CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
             } else {
                 ErrorToLogin.setVisible(true);
                 ErrorToLogin.setManaged(true);
@@ -74,11 +74,11 @@ public class LoginController {
 
     public void GoToRegisterPage(MouseEvent mouseEvent) {
         if(mouseEvent.getClickCount() == 1 || mouseEvent.getClickCount() == 2) {
-            CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null);
+            CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null, null);
         }
     }
 
     public void GoBackMainMenu() {
-        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
     }
 }

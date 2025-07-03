@@ -15,9 +15,7 @@ import javafx.stage.Window;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,7 +75,7 @@ public final class CliUtil {
             this.monitorService = null;
             RMI_HOST = null;
             RMI_PORT = 0;
-            buildStage(FXMLtype.CONNESSIONE, null);
+            buildStage(FXMLtype.CONNESSIONE, null,null);
         });
     }
 
@@ -172,16 +170,23 @@ public final class CliUtil {
         }
     }
 
-    public void buildStage(FXMLtype fxml, Object obj) {
+    public boolean hannoDifferenze(List<Libro> list1, List<Libro> list2) {
+        if (list1.size() != list2.size()) return true;
+        Set<Libro> set = new HashSet<>(list2);
+        for (Libro libro : list1) if (!set.contains(libro)) return true;
+        return false;
+    }
+
+    public void buildStage(FXMLtype newFxml, FXMLtype oldFXML,Object obj) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml.getPath()));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(newFxml.getPath()));
             Parent root = loader.load();
             Stage stage;
-            switch(fxml) {
+            switch(newFxml) {
                 case CONNESSIONE:
                     stage = getPrimaryStage();
                     stage.setScene(new Scene(root));
-                    stage.setTitle(fxml.getTitle());
+                    stage.setTitle(newFxml.getTitle());
                     stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/server_connection.png"))));
                     stage.setResizable(false);
                     stage.show();
@@ -196,17 +201,17 @@ public final class CliUtil {
                     if(obj instanceof Libro) {
                         dettaglioLibroController.setLibro((Libro) obj);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected Libro object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
                 case CREAVALUTAZIONE:
                     CreaValutazioneController valutazioneController = loader.getController();
                     if(obj instanceof Libro) {
-                        stage = new Stage();
-                        valutazioneController.setLibro((Libro) obj);
+                        stage = primaryStage;
+                        valutazioneController.setLibro((Libro) obj, oldFXML);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected Libro object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
@@ -216,17 +221,17 @@ public final class CliUtil {
                         stage = new Stage();
                         visualizzaValutazioneController.setValutazione((Valutazione) obj);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Valutazione object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected Valutazione object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
                 case CREACONSIGLIO:
                     CreaConsiglioController aggiungiConsiglioController = loader.getController();
                     if(obj instanceof Libro) {
-                        stage = new Stage();
-                        aggiungiConsiglioController.setLibro((Libro) obj);
+                        stage = primaryStage;
+                        aggiungiConsiglioController.setLibro((Libro) obj, oldFXML);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected Libro object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
@@ -236,7 +241,7 @@ public final class CliUtil {
                         stage = primaryStage;
                         modificaLibreriaController.setLibreria((String) obj);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected String object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected String object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
@@ -246,41 +251,41 @@ public final class CliUtil {
                         stage = new Stage();
                         addLibroLibreriaController.setLibro((Libro) obj);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected Libro object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
                 case MODIFICACONSIGLIO:
                     ModificaConsiglioController modificaConsiglioController = loader.getController();
                     if(obj instanceof Libro) {
-                        stage = new Stage();
-                        modificaConsiglioController.setLibro((Libro) obj);
+                        stage = primaryStage;
+                        modificaConsiglioController.setLibro((Libro) obj, oldFXML);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Libro object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected Libro object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
                 case MODIFICAVALUTAZIONE:
                     ModificaValutazioneController modificaValutazioneController = loader.getController();
                     if(obj instanceof Valutazione) {
-                        stage = new Stage();
-                        modificaValutazioneController.setValutazione((Valutazione) obj);
+                        stage = primaryStage;
+                        modificaValutazioneController.setValutazione((Valutazione) obj, oldFXML);
                     } else {
-                        logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name() + ": expected Valutazione object, got " + obj.getClass().getName());
+                        logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name() + ": expected Valutazione object, got " + obj.getClass().getName());
                         return;
                     }
                     break;
                 default:
-                    logger.log(Level.SEVERE, "Unsupported FXML type: " + fxml.name());
+                    logger.log(Level.SEVERE, "Unsupported FXML type: " + newFxml.name());
                     return;
             }
             stage.setScene(new Scene(root));
-            stage.setTitle(fxml.getTitle());
+            stage.setTitle(newFxml.getTitle());
             stage.getIcons().setAll(programIcon);
             stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to build stage for " + fxml.name(), e);
+            logger.log(Level.SEVERE, "Failed to build stage for " + newFxml.name(), e);
         }
     }
 

@@ -20,14 +20,14 @@ public class HomeController {
     }
 
     public void OpenLoginPage() {
-        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null);
+        CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null, null);
     }
 
     public void OpenSignUpPage() {
-        CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null);
+        CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null, null);
     }
 
     public void OpenCercaLibroBasePage() {
-        CliUtil.getInstance().buildStage(FXMLtype.CERCA, null);
+        CliUtil.getInstance().buildStage(FXMLtype.CERCA, null, null);
     }
 }

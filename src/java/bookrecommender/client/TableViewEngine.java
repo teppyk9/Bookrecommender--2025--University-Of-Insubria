@@ -390,7 +390,7 @@ public abstract class TableViewEngine {
         TableRow<Libro> row = new TableRow<>();
         row.setOnMouseClicked(evt -> {
             if (evt.getClickCount() == 2 && !row.isEmpty()) {
-                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, row.getItem());
+                CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, null, row.getItem());
             }
         });
         return row;
@@ -413,8 +413,8 @@ public abstract class TableViewEngine {
         MenuItem libreria = new MenuItem("Aggiungi ad una libreria");
 
 
-        valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, tableView.getItems().get(idx)));
-        consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, tableView.getItems().get(idx)));
+        valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, null, tableView.getItems().get(idx)));
+        consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, null, tableView.getItems().get(idx)));
         rimuovi.setOnAction(evt -> {
             Libro l = tableView.getItems().get(idx);
             ObservableList<Libro> items = getOTableView().getItems();
@@ -423,7 +423,7 @@ public abstract class TableViewEngine {
         });
         modValuta.setOnAction(evt -> {
             try {
-                CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
+                CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, null, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
             } catch (RemoteException e) {
                 CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
             }
@@ -431,9 +431,9 @@ public abstract class TableViewEngine {
         libreria.setOnAction(evt -> {
             Libro l = tableView.getItems().get(idx);
             if(l != null)
-                CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGILIBROLIBRERIA,l);
+                CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGILIBROLIBRERIA,null, l);
         });
-        modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, tableView.getItems().get(idx)));
+        modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, null, tableView.getItems().get(idx)));
         menu.getItems().addAll(valuta, modValuta, consiglia, modCons, libreria, rimuovi);
 
         return menu;

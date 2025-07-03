@@ -25,11 +25,11 @@ public class AreaRiservataController {
     }
 
     public void OpenCercaLibroAvanzato() {
-        CliUtil.getInstance().buildStage(FXMLtype.CERCA_AVANZATO, null);
+        CliUtil.getInstance().buildStage(FXMLtype.CERCA_AVANZATO, null,null);
     }
 
     public void OpenVisualizzaLibrerie() {
-        CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null);
+        CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null, null);
     }
 
     public void LogOut(){
@@ -44,6 +44,6 @@ public class AreaRiservataController {
             CliUtil.getInstance().createAlert("Errore di Logout", e.getMessage());
         }
         CliUtil.getInstance().setCurrentToken(null);
-        CliUtil.getInstance().buildStage(FXMLtype.HOME, null);
+        CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
     }
 }
