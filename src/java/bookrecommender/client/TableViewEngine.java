@@ -221,9 +221,16 @@ public abstract class TableViewEngine {
 
     protected void initSAggiungiAdvCol(){
         getSAggiungiAdvCol().setCellFactory(col -> new TableCell<>() {
-            private final MenuButton menu = new MenuButton("", new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/plus-circle-green.png")), 16, 16, true, true)));
+            private final MenuButton menu = new MenuButton();
             {
-                MenuItem recensisci = new MenuItem("Recensisci");
+                menu.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
+                menu.setStyle("-fx-background-color: transparent;"
+                        + "-fx-border-color: transparent;"
+                        + "-fx-padding: 0;"
+                        + "-fx-cursor: hand;"
+                        + "-fx-focus-color: transparent;"
+                        + "-fx-faint-focus-color: transparent;");
+                MenuItem recensisci = new MenuItem("Aggiungi Recensione");
                 MenuItem consigli = new MenuItem("Aggiungi Consigli");
                 MenuItem libreria = new MenuItem("Aggiungi ad una libreria");
                 menu.getItems().addAll(recensisci, consigli, libreria);
@@ -268,10 +275,15 @@ public abstract class TableViewEngine {
 
     protected void initSAddRemCol(){
         getSAddRemCol().setCellFactory(col -> new TableCell<>() {
-            private final MenuButton menu = new MenuButton("", new ImageView(new Image(
-                    Objects.requireNonNull(getClass().getResourceAsStream(
-                            "/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
+            private final MenuButton menu = new MenuButton();
             {
+                menu.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
+                menu.setStyle("-fx-background-color: transparent;"
+                        + "-fx-border-color: transparent;"
+                        + "-fx-padding: 0;"
+                        + "-fx-cursor: hand;"
+                        + "-fx-focus-color: transparent;"
+                        + "-fx-faint-focus-color: transparent;");
                 MenuItem aggiungi = new MenuItem("Aggiungi");
                 MenuItem rimuovi = new MenuItem("Rimuovi");
                 menu.getItems().addAll(aggiungi, rimuovi);
@@ -329,10 +341,15 @@ public abstract class TableViewEngine {
     protected void initOActionCol(boolean type){
         if(type){
             getOActionCol().setCellFactory(col -> new TableCell<>() {
-                private final MenuButton menu = new MenuButton("", new ImageView(new Image(
-                        Objects.requireNonNull(getClass().getResourceAsStream(
-                                "/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
+                private final MenuButton menu = new MenuButton();
                 {
+                    menu.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
+                    menu.setStyle("-fx-background-color: transparent;"
+                            + "-fx-border-color: transparent;"
+                            + "-fx-padding: 0;"
+                            + "-fx-cursor: hand;"
+                            + "-fx-focus-color: transparent;"
+                            + "-fx-faint-focus-color: transparent;");
                     MenuItem valuta = new MenuItem("Valuta");
                     MenuItem consiglia = new MenuItem("Crea Consiglio");
                     MenuItem rimuovi = new MenuItem("Rimuovi");

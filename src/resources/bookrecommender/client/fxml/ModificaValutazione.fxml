@@ -8,13 +8,14 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" stylesheets="@../stylesheets/VisualizzaValutazione.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ModificaValutazioneController">
     <VBox prefHeight="450.0" prefWidth="800.0">
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-            <Label fx:id="TitoloLabel" layoutX="14.0" layoutY="17.0" style="-fx-font-weight: bold;" text="Titolo">
+            <Label fx:id="TitoloLabel" layoutX="78.0" layoutY="17.0" style="-fx-font-weight: bold;" text="Titolo">
                 <font>
                     <Font size="21.0" />
                 </font>
             </Label>
          <Button fx:id="SalvaModificheButton" layoutX="671.0" layoutY="20.0" mnemonicParsing="false" onAction="#salvaModifiche" text="Salva Modifiche" />
          <Button fx:id="EliminaValutazioneButton" layoutX="400.0" layoutY="20.0" mnemonicParsing="false" onAction="#eliminaValutazione" text="Elimina Valutazione" />
+         <Button layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#ExitApplication" text="Indietro" />
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="232.0">

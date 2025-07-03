@@ -2,8 +2,10 @@ package bookrecommender.client;
 
 import bookrecommender.common.Libro;
 import bookrecommender.common.Valutazione;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -14,44 +16,45 @@ import java.util.List;
 
 public class CreaValutazioneController {
 
-    public Button BottoneSalva;
-    public Label messaggioErrore;
-    public ImageView starStile1;
-    public ImageView starStile2;
-    public ImageView starStile3;
-    public ImageView starStile4;
-    public ImageView starStile5;
-    public Label votoStile;
-    public TextField testoStile;
-    public ImageView starContenuto1;
-    public ImageView starContenuto2;
-    public ImageView starContenuto3;
-    public ImageView starContenuto4;
-    public ImageView starContenuto5;
-    public Label votoContenuto;
-    public TextField testoContenuto;
-    public ImageView starGradevolezza1;
-    public ImageView starGradevolezza2;
-    public ImageView starGradevolezza3;
-    public ImageView starGradevolezza4;
-    public ImageView starGradevolezza5;
-    public Label votoGradevolezza;
-    public TextField testoGradevolezza;
-    public ImageView starOriginalita1;
-    public ImageView starOriginalita2;
-    public ImageView starOriginalita3;
-    public ImageView starOriginalita4;
-    public ImageView starOriginalita5;
-    public Label votoOriginalita;
-    public TextField testoOriginalita;
-    public ImageView starEdizione1;
-    public ImageView starEdizione2;
-    public ImageView starEdizione3;
-    public ImageView starEdizione4;
-    public ImageView starEdizione5;
-    public Label votoEdizione;
-    public TextField testoEdizione;
-    public TextField testoFinale;
+    @FXML private Label titoloLibro;
+    @FXML private Button BottoneSalva;
+    @FXML private Label messaggioErrore;
+    @FXML private ImageView starStile1;
+    @FXML private ImageView starStile2;
+    @FXML private ImageView starStile3;
+    @FXML private ImageView starStile4;
+    @FXML private ImageView starStile5;
+    @FXML private Label votoStile;
+    @FXML private TextField testoStile;
+    @FXML private ImageView starContenuto1;
+    @FXML private ImageView starContenuto2;
+    @FXML private ImageView starContenuto3;
+    @FXML private ImageView starContenuto4;
+    @FXML private ImageView starContenuto5;
+    @FXML private Label votoContenuto;
+    @FXML private TextField testoContenuto;
+    @FXML private ImageView starGradevolezza1;
+    @FXML private ImageView starGradevolezza2;
+    @FXML private ImageView starGradevolezza3;
+    @FXML private ImageView starGradevolezza4;
+    @FXML private ImageView starGradevolezza5;
+    @FXML private Label votoGradevolezza;
+    @FXML private TextField testoGradevolezza;
+    @FXML private ImageView starOriginalita1;
+    @FXML private ImageView starOriginalita2;
+    @FXML private ImageView starOriginalita3;
+    @FXML private ImageView starOriginalita4;
+    @FXML private ImageView starOriginalita5;
+    @FXML private Label votoOriginalita;
+    @FXML private TextField testoOriginalita;
+    @FXML private ImageView starEdizione1;
+    @FXML private ImageView starEdizione2;
+    @FXML private ImageView starEdizione3;
+    @FXML private ImageView starEdizione4;
+    @FXML private ImageView starEdizione5;
+    @FXML private Label votoEdizione;
+    @FXML private TextField testoEdizione;
+    @FXML private TextField testoFinale;
 
     private Libro libro;
 
@@ -66,9 +69,17 @@ public class CreaValutazioneController {
 
     public void setLibro(Libro libro) {
         this.libro = libro;
+        titoloLibro.setText(libro.getTitolo());
+        Platform.runLater(() -> {
+            Stage stage = (Stage) BottoneSalva.getScene().getWindow();
+            stage.setOnCloseRequest(evt -> {
+                exitApplication();
+                evt.consume();
+            });
+        });
     }
 
-    public void SalvaValutazione() {
+    @FXML private void SalvaValutazione() {
         try {
             if (Integer.parseInt(votoStile.getText()) == 0 || Integer.parseInt(votoContenuto.getText()) == 0 || Integer.parseInt(votoGradevolezza.getText()) == 0 ||
                     Integer.parseInt(votoOriginalita.getText()) == 0 || Integer.parseInt(votoEdizione.getText()) == 0) {
@@ -129,5 +140,12 @@ public class CreaValutazioneController {
     @FXML
     private void resetMessaggioErrore() {
         messaggioErrore.setText("");
+    }
+
+    @FXML private void exitApplication() {
+        if(CliUtil.getInstance().createConfirmation("Uscita", "Sei sicuro di voler uscire?\nTutte le modifiche andranno perse", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
+            Stage stage = (Stage) BottoneSalva.getScene().getWindow();
+            stage.close();
+        }
     }
 }
