@@ -79,6 +79,9 @@ public class ModificaLibreriaController extends TableViewEngine{
         return false;
     }
 
+    @Override
+    protected Libro getMyLibro() {return null;}
+
     @Override protected MenuButton getMenuTipoRicerca(){
         return MenuTipoRicerca;
     }

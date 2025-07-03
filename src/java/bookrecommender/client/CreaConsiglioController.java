@@ -1,7 +1,7 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-import javafx.collections.FXCollections;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -27,7 +27,6 @@ public class CreaConsiglioController extends TableViewEngine {
     @FXML private TableColumn <Libro, String> risAutoreCol;
     @FXML private TableColumn <Libro, Integer> risAnnoCol;
     @FXML private TableColumn <Libro, Void> risAzioniCol;
-
     @FXML private Button GoBackButton_MainMenu;
 
     private Libro myLibro;
@@ -39,6 +38,13 @@ public class CreaConsiglioController extends TableViewEngine {
         initOActionCol(false);
         initOTableView();
         initTableViews();
+        Platform.runLater(() -> {
+            Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
+            stage.setOnCloseRequest(evt -> {
+                GoToMainMenu();
+                evt.consume();
+            });
+        });
     }
 
     public void setLibro(Libro libro) {
@@ -135,15 +141,9 @@ public class CreaConsiglioController extends TableViewEngine {
     @Override
     protected boolean getSearchType() {return true;}
 
-    @FXML
-    private void getAllBooks() {
-        try {
-            List<Libro> libri = CliUtil.getInstance().getSearchService().getAllBooks(CliUtil.getInstance().getCurrentToken());
-            libri.remove(myLibro);
-            tableView.setItems(FXCollections.observableArrayList(libri));
-        } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore", "Impossibile caricare i libri").showAndWait();
-        }
+    @Override
+    protected Libro getMyLibro() {
+        return myLibro;
     }
 
     @FXML
@@ -156,7 +156,8 @@ public class CreaConsiglioController extends TableViewEngine {
         }
         try {
             if (CliUtil.getInstance().getLibService().addConsiglio(CliUtil.getInstance().getCurrentToken(), cons)) {
-                CliUtil.getInstance().createConfirmation("Successo", "Consiglio salvato!", true).showAndWait();
+                CliUtil.getInstance().createConfirmation("Successo", "Consiglio salvato!", false).showAndWait();
+                ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito").showAndWait();
             }
@@ -167,6 +168,13 @@ public class CreaConsiglioController extends TableViewEngine {
 
     @FXML
     private void GoToMainMenu() {
-        ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+        List<Libro> cons = new ArrayList<>(risTableView.getItems());
+        if(!cons.isEmpty()) {
+            if (CliUtil.getInstance().createConfirmation("Attenzione", "Hai dei consigli non salvati, vuoi davvero tornare al menu principale?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
+                ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+            }
+        }else{
+            ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+        }
     }
 }

@@ -13,7 +13,7 @@
                <Font size="21.0" />
             </font>
          </Label>
-         <Label fx:id="titoloLibro" layoutX="129.0" layoutY="11.0" prefHeight="31.0" prefWidth="241.0" styleClass="titoloLibro" text="* titolo libro da valutare *">
+         <Label fx:id="titoloLibro" layoutX="129.0" layoutY="11.0" prefHeight="31.0" prefWidth="631.0" styleClass="titoloLibro" text="* titolo libro da valutare *">
             <font>
                <Font size="21.0" />
             </font>

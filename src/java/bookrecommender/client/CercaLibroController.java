@@ -127,6 +127,9 @@ public class CercaLibroController extends TableViewEngine {
     @Override
     protected boolean getSearchType() {return false;}
 
+    @Override
+    protected Libro getMyLibro() {return null;}
+
     @FXML
     private void GoToMainMenu() {
         CliUtil.getInstance().buildStage(FXMLtype.HOME, null);

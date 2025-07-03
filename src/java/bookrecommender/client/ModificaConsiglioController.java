@@ -142,16 +142,8 @@ public class ModificaConsiglioController extends TableViewEngine {
     @Override
     protected boolean getSearchType() {return true;}
 
-    @FXML
-    private void getAllBooks() {
-        try {
-            List<Libro> libri = CliUtil.getInstance().getSearchService().getAllBooks(CliUtil.getInstance().getCurrentToken());
-            libri.remove(myLibro);
-            tableView.setItems(FXCollections.observableArrayList(libri));
-        } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore", "Impossibile caricare i libri").showAndWait();
-        }
-    }
+    @Override
+    protected Libro getMyLibro() {return myLibro;}
 
     @FXML
     private void salvaConsiglio() {

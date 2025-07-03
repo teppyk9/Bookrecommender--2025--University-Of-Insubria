@@ -2,6 +2,7 @@ package bookrecommender.client;
 
 import bookrecommender.common.Libro;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -24,6 +25,7 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.rmi.RemoteException;
@@ -192,6 +194,14 @@ public class GestioneLibrerieController {
         );
 
         caricaLibrerie();
+
+        Platform.runLater(() -> {
+            Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+        });
     }
 
     private MenuButton createMenuLibrerieActions(TreeTableCell<Object, Void> cell) {

@@ -161,6 +161,9 @@ public abstract class TableViewEngine {
      * <p>
      * Può assumere i valori {@code Titolo}, {@code Autore} o {@code AutoreAnno}.
      */
+
+    protected abstract Libro getMyLibro();
+
     private String searchType = "";
 
     protected void initBasicSearch() {
@@ -351,9 +354,10 @@ public abstract class TableViewEngine {
                             + "-fx-focus-color: transparent;"
                             + "-fx-faint-focus-color: transparent;");
                     MenuItem valuta = new MenuItem("Valuta");
-                    MenuItem consiglia = new MenuItem("Crea Consiglio");
+                    MenuItem consiglia = new MenuItem("Aggiungi Consigli");
                     MenuItem rimuovi = new MenuItem("Rimuovi");
-                    menu.getItems().addAll(valuta, consiglia, rimuovi);
+                    MenuItem modValuta = new MenuItem("Modifica Valutazione");
+                    MenuItem modCons = new MenuItem("Modifica Consigli");
 
                     valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, getTableView().getItems().get(getIndex())));
                     consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, getTableView().getItems().get(getIndex())));
@@ -362,12 +366,43 @@ public abstract class TableViewEngine {
                         ObservableList<Libro> items = getOTableView().getItems();
                         if (containsLibro(items, l)) items.removeIf(item -> item.equals(l));
                     });
+                    modValuta.setOnAction(evt -> {
+                        try {
+                            CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), getTableView().getItems().get(getIndex())));
+                        } catch (RemoteException e) {
+                            CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                        }
+                    });
+                    modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, getTableView().getItems().get(getIndex())));
+                    menu.getItems().addAll(valuta, modValuta, consiglia, modCons, rimuovi);
                 }
 
                 @Override
                 protected void updateItem(Void item, boolean empty) {
                     super.updateItem(item, empty);
-                    setGraphic(empty ? null : menu);
+                    if(empty) {
+                        setGraphic(null);
+                        return;
+                    }
+                    boolean hasVal = false;
+                    boolean hasCon = false;
+                    try {
+                        hasVal = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), getTableView().getItems().get(getIndex()));
+                        hasCon = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), getTableView().getItems().get(getIndex()));
+                    } catch (RemoteException e) {
+                        CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                    }
+                    if (hasVal) {
+                        menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Valuta"));
+                    } else {
+                        menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Modifica Valutazione"));
+                    }
+                    if (hasCon) {
+                        menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Aggiungi Consigli"));
+                    } else {
+                        menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Modifica Consigli"));
+                    }
+                    setGraphic(menu);
                     setAlignment(Pos.CENTER);
                 }
             });
@@ -503,6 +538,17 @@ public abstract class TableViewEngine {
     private void keyEnterPressed_2(KeyEvent e) {
         if ("Enter".equals(e.getCode().getName()))
             handleClickCerca();
+    }
+
+    @FXML
+    private void getAllBooks() {
+        try {
+            List<Libro> libri = CliUtil.getInstance().getSearchService().getAllBooks(CliUtil.getInstance().getCurrentToken());
+            libri.remove(getMyLibro());
+            getSTableView().setItems(FXCollections.observableArrayList(libri));
+        } catch (RemoteException e) {
+            CliUtil.getInstance().createAlert("Errore", "Impossibile caricare i libri").showAndWait();
+        }
     }
 
     private boolean validateYear(String anno) {
