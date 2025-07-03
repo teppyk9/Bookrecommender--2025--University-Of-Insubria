@@ -161,6 +161,11 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
     @Override
     protected Libro getMyLibro() {return null;}
 
+    @Override
+    protected FXMLtype getMyFXMLtype() {
+        return FXMLtype.CERCA_AVANZATO;
+    }
+
     @FXML
     private void GoToMainMenu(){
         CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);

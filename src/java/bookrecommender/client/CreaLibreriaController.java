@@ -84,6 +84,11 @@ public class CreaLibreriaController extends TableViewEngine {
     @Override
     protected Libro getMyLibro() {return null;}
 
+    @Override
+    protected FXMLtype getMyFXMLtype() {
+        return null;
+    }
+
     @FXML
     private void SalvaLibreria() {
         String nome = NomeLibreria.getText();

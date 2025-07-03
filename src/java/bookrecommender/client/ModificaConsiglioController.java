@@ -158,6 +158,11 @@ public class ModificaConsiglioController extends TableViewEngine {
     @Override
     protected Libro getMyLibro() {return myLibro;}
 
+    @Override
+    protected FXMLtype getMyFXMLtype() {
+        return null;
+    }
+
     @FXML
     private void salvaConsiglio() {
         List<Libro> cons = new ArrayList<>(risTableView.getItems());

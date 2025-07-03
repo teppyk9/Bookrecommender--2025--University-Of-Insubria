@@ -19,6 +19,7 @@ import javafx.util.Duration;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class TableViewEngine {
     /**
@@ -163,6 +164,8 @@ public abstract class TableViewEngine {
      */
 
     protected abstract Libro getMyLibro();
+
+    protected abstract FXMLtype getMyFXMLtype();
 
     private String searchType = "";
 
@@ -413,8 +416,8 @@ public abstract class TableViewEngine {
         MenuItem libreria = new MenuItem("Aggiungi ad una libreria");
 
 
-        valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, null, tableView.getItems().get(idx)));
-        consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, null, tableView.getItems().get(idx)));
+        valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, getMyFXMLtype(), tableView.getItems().get(idx)));
+        consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
         rimuovi.setOnAction(evt -> {
             Libro l = tableView.getItems().get(idx);
             ObservableList<Libro> items = getOTableView().getItems();
@@ -423,7 +426,7 @@ public abstract class TableViewEngine {
         });
         modValuta.setOnAction(evt -> {
             try {
-                CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, null, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
+                CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
             } catch (RemoteException e) {
                 CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
             }
@@ -433,7 +436,7 @@ public abstract class TableViewEngine {
             if(l != null)
                 CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGILIBROLIBRERIA,null, l);
         });
-        modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, null, tableView.getItems().get(idx)));
+        modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
         menu.getItems().addAll(valuta, modValuta, consiglia, modCons, libreria, rimuovi);
 
         return menu;
@@ -442,22 +445,22 @@ public abstract class TableViewEngine {
     private void setMenuAzioni(MenuButton menu, TableView<Libro> tableView, int index) {
         boolean hasVal = false;
         boolean hasCon = false;
+        boolean inLib = false;
         try {
             hasVal = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(index));
             hasCon = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(index));
+            inLib = CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(index));
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
         }
-        if (hasVal) {
-            menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Valuta"));
+        Set<String> daRimuovere;
+        if (inLib) {
+            daRimuovere = Set.of(hasVal ? "Valuta" : "Modifica Valutazione", hasCon ? "Aggiungi Consigli" : "Modifica Consigli"
+            );
         } else {
-            menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Modifica Valutazione"));
+            daRimuovere = Set.of("Valuta", "Modifica Valutazione", "Aggiungi Consigli", "Modifica Consigli");
         }
-        if (hasCon) {
-            menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Aggiungi Consigli"));
-        } else {
-            menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Modifica Consigli"));
-        }
+        menu.getItems().removeIf(mi -> daRimuovere.contains(mi.getText()));
     }
 
     private void switchType(String key, String text) {
