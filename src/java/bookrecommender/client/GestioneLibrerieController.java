@@ -372,7 +372,6 @@ public class GestioneLibrerieController {
                 List<bookrecommender.common.Libro> list = CliUtil.getInstance().getLibService().getLib(token, nome);
                 libCounts.put(nome, list.size());
                 libDates.put(nome, CliUtil.getInstance().getLibService().getCreationDate(token, nome));
-
                 TreeItem<Object> libNode = new TreeItem<>(nome);
                 libNode.getChildren().add(new TreeItem<>());
                 libNode.addEventHandler(TreeItem.branchExpandedEvent(), e -> {
