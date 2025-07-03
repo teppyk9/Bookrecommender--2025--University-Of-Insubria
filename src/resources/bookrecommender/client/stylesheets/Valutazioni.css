@@ -1,0 +1,152 @@
+.background{
+    -fx-background-image: url('../icons/copertina_chiara.jpeg');
+}
+/* sfondo per titolo e autore recensione*/
+.box_titolo{
+    -fx-background-color: rgba(252, 247, 248, 0.65);
+    -fx-border-color: transparent;
+}
+
+.indietro{
+    -fx-background-color: transparent;
+    -fx-background-image: url('../icons/indietro_r.png');
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+
+.indietro:hover{
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+/* titolo del libro */
+.titoloLibroValutato{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #A31621;
+    -fx-alignment: center;
+}
+.titoloLibroDaValutare{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #A31621;
+    -fx-alignment: center-left;
+}
+
+.titoloLibro .label{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #A31621;
+    -fx-background-color: rgba(252, 247, 248, 0.45);
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.autoreRecensione {
+    -fx-text-fill: #a31621;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-alignment: center;
+}
+
+/*etichetta per la voce della valutazione*/
+.etichetta{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #fcf7f8;
+}
+/* etichetta per "commento finale" */
+.etichetta_finale{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #a31621;
+}
+/* voto valutazioni */
+.voto{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #fcf7f8;
+    -fx-background-color: #a31621;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+}
+
+.voto_finale{
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #a31621;
+    -fx-background-color: #fcf7f8;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+}
+
+
+/* sfondo per valutazioni con stelle*/
+.box{
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+/* sfondo per valutazioni con stelle finale*/
+.box_finale{
+    -fx-background-color: rgba(252, 247, 248, 0.7);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+/* label per scrivere commento recensione*/
+.box_commento{
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-boder-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+}
+
+.box_commento .label{
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-boder-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+/* errore in crea valutazione */
+.errore {
+    -fx-text-fill: #a31621;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-alignment: center-left;
+}
+
+/* bottone per salvare la valutazione*/
+.salva{
+    -fx-background-color: #a31621;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 15px;
+    -fx-background-radius: 6px;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+.salva:hover{
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+
+
+
+
+
+
+
+
+

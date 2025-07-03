@@ -1,6 +1,7 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Valutazione;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -111,5 +112,9 @@ public class VisualizzaValutazioneController {
         } else {
             finaleTextArea.setText(commenti.get(5));
         }
+    }
+
+    public void exitApplication(ActionEvent actionEvent) {
+
     }
 }
