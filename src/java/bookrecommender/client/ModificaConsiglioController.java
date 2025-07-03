@@ -37,11 +37,7 @@ public class ModificaConsiglioController extends TableViewEngine {
 
     @FXML
     public void initialize() {
-        initBasicSearch();
-        initSAddRemCol();
-        initOActionCol(false);
-        initOTableView();
-        initTableViews();
+        initForConsigli();
         Platform.runLater(() -> {
             Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {
@@ -160,7 +156,7 @@ public class ModificaConsiglioController extends TableViewEngine {
 
     @Override
     protected FXMLtype getMyFXMLtype() {
-        return null;
+        return FXMLtype.MODIFICACONSIGLIO;
     }
 
     @FXML
@@ -174,8 +170,7 @@ public class ModificaConsiglioController extends TableViewEngine {
         try {
             if (CliUtil.getInstance().getLibService().updateCon(CliUtil.getInstance().getCurrentToken(), cons)) {
                 CliUtil.getInstance().createConfirmation("Successo", "Consiglio salvato!", true).showAndWait();
-                Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
-                stage.close();
+                CliUtil.getInstance().buildStage(oldFXMLType,null, null);
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito").showAndWait();
             }

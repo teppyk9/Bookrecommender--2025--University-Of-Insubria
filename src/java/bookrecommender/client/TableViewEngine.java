@@ -1,7 +1,6 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -14,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Duration;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -236,6 +234,7 @@ public abstract class TableViewEngine {
                 }
                 MenuButton menu = menuAzioni(getTableView(), getIndex());
                 setMenuAzioni(menu, getTableView(), getIndex());
+                CliUtil.getInstance().styleIconControl(menu);
                 menu.getItems().removeIf(menuItem -> menuItem.getText().equals("Rimuovi"));
                 setGraphic(menu);
                 setAlignment(Pos.CENTER);
@@ -248,12 +247,7 @@ public abstract class TableViewEngine {
             private final MenuButton menu = new MenuButton();
             {
                 menu.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
-                menu.setStyle("-fx-background-color: transparent;"
-                        + "-fx-border-color: transparent;"
-                        + "-fx-padding: 0;"
-                        + "-fx-cursor: hand;"
-                        + "-fx-focus-color: transparent;"
-                        + "-fx-faint-focus-color: transparent;");
+                CliUtil.getInstance().styleIconControl(menu);
                 MenuItem aggiungi = new MenuItem("Aggiungi");
                 MenuItem rimuovi = new MenuItem("Rimuovi");
                 menu.getItems().addAll(aggiungi, rimuovi);
@@ -320,6 +314,7 @@ public abstract class TableViewEngine {
                     }
                     MenuButton menu = menuAzioni(getTableView(), getIndex());
                     setMenuAzioni(menu, getTableView(), getIndex());
+                    CliUtil.getInstance().styleIconControl(menu);
                     menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Aggiungi ad una libreria"));
                     setGraphic(menu);
                     setAlignment(Pos.CENTER);
@@ -330,31 +325,8 @@ public abstract class TableViewEngine {
                 private final Button rimuovi = new Button();
                 {
                     rimuovi.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/minus-circle-red.png")), 16, 16, true, true)));
-                    rimuovi.setStyle(
-                        "-fx-background-color: transparent;" +
-                        "-fx-border-color: transparent;" +
-                        "-fx-padding: 0;" +
-                        "-fx-cursor: hand;" +
-                        "-fx-focus-color: transparent;" +
-                        "-fx-faint-focus-color: transparent;"
-                    );
-                    ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), rimuovi);
-                    enlarge.setToX(1.1);
-                    enlarge.setToY(1.1);
-
-                    ScaleTransition shrink = new ScaleTransition(Duration.millis(100), rimuovi);
-                    shrink.setToX(1.0);
-                    shrink.setToY(1.0);
-
-                    rimuovi.setOnMouseEntered(e -> {
-                        shrink.stop();
-                        enlarge.playFromStart();
-                    });
-
-                    rimuovi.setOnMouseExited(e -> {
-                        enlarge.stop();
-                        shrink.playFromStart();
-                    });
+                    CliUtil.getInstance().styleIconControl(rimuovi);
+                    CliUtil.getInstance().styleIconControl(rimuovi);
                     rimuovi.setOnAction(evt -> {
                         Libro l = getTableView().getItems().get(getIndex());
                         ObservableList<Libro> items = getOTableView().getItems();
@@ -389,6 +361,14 @@ public abstract class TableViewEngine {
         if(getOTableView() != null) getOTableView().setRowFactory(tv -> initRows());
     }
 
+    protected void initForConsigli(){
+        initBasicSearch();
+        initSAddRemCol();
+        initOActionCol(false);
+        initOTableView();
+        initTableViews();
+    }
+
     private TableRow<Libro> initRows(){
         TableRow<Libro> row = new TableRow<>();
         row.setOnMouseClicked(evt -> {
@@ -402,12 +382,6 @@ public abstract class TableViewEngine {
     private MenuButton menuAzioni(TableView<Libro> tableView, int idx) {
         MenuButton menu = new MenuButton();
         menu.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
-        menu.setStyle("-fx-background-color: transparent;"
-                + "-fx-border-color: transparent;"
-                + "-fx-padding: 0;"
-                + "-fx-cursor: hand;"
-                + "-fx-focus-color: transparent;"
-                + "-fx-faint-focus-color: transparent;");
         MenuItem valuta = new MenuItem("Valuta");
         MenuItem consiglia = new MenuItem("Aggiungi Consigli");
         MenuItem rimuovi = new MenuItem("Rimuovi");

@@ -2,7 +2,6 @@ package bookrecommender.client;
 
 import bookrecommender.common.Libro;
 import bookrecommender.common.Token;
-import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
@@ -18,7 +17,6 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -328,21 +326,7 @@ public class GestioneLibrerieController extends TreeTableEngine {
 
     private void setMenuButtonStyle(MenuButton mb) {
         mb.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
-        mb.setStyle(
-                "-fx-background-color: transparent;"
-                        + "-fx-border-color: transparent;"
-                        + "-fx-padding: 0;"
-                        + "-fx-cursor: hand;"
-                        + "-fx-focus-color: transparent;"
-                        + "-fx-faint-focus-color: transparent;");
-        ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), mb);
-        enlarge.setToX(1.1);
-        enlarge.setToY(1.1);
-        ScaleTransition shrink = new ScaleTransition(Duration.millis(100), mb);
-        shrink.setToX(1.0);
-        shrink.setToY(1.0);
-        mb.setOnMouseEntered(e -> { shrink.stop(); enlarge.playFromStart(); });
-        mb.setOnMouseExited (e -> { enlarge.stop(); shrink.playFromStart(); });
+        CliUtil.getInstance().styleIconControl(mb);
     }
 
     public static class LibroRow {

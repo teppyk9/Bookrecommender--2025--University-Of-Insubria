@@ -34,11 +34,7 @@ public class CreaConsiglioController extends TableViewEngine {
 
     @FXML
     public void initialize() {
-        initBasicSearch();
-        initSAddRemCol();
-        initOActionCol(false);
-        initOTableView();
-        initTableViews();
+       initForConsigli();
         Platform.runLater(() -> {
             Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {
@@ -150,7 +146,7 @@ public class CreaConsiglioController extends TableViewEngine {
 
     @Override
     protected FXMLtype getMyFXMLtype() {
-        return null;
+        return FXMLtype.CREACONSIGLIO;
     }
 
     @FXML
@@ -164,7 +160,7 @@ public class CreaConsiglioController extends TableViewEngine {
         try {
             if (CliUtil.getInstance().getLibService().addConsiglio(CliUtil.getInstance().getCurrentToken(), cons)) {
                 CliUtil.getInstance().createConfirmation("Successo", "Consiglio salvato!", false).showAndWait();
-                ((Stage) GoBackButton_MainMenu.getScene().getWindow()).close();
+                    CliUtil.getInstance().buildStage(oldFXMLType,null, null);
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito").showAndWait();
             }

@@ -82,7 +82,7 @@ public class ModificaLibreriaController extends TableViewEngine{
 
     @Override
     protected FXMLtype getMyFXMLtype() {
-        return null;
+        return FXMLtype.MODIFICALIBRERIA;
     }
 
     @Override protected MenuButton getMenuTipoRicerca(){

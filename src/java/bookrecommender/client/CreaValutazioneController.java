@@ -114,9 +114,7 @@ public class CreaValutazioneController {
 
     private void aggiornaStelle(int numeroPiene, List<ImageView> stelle) {
         for (int i = 0; i < stelle.size(); i++) {
-            stelle.get(i).setImage(i < numeroPiene
-                    ? CliUtil.getInstance().getStarFull()
-                    : CliUtil.getInstance().getStarEmpty());
+            stelle.get(i).setImage(i < numeroPiene ? CliUtil.getInstance().getStarFull() : CliUtil.getInstance().getStarEmpty());
         }
     }
 
@@ -145,7 +143,7 @@ public class CreaValutazioneController {
 
     @FXML private void exitApplication() {
         if(CliUtil.getInstance().createConfirmation("Uscita", "Sei sicuro di voler uscire?\nTutte le modifiche andranno perse", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
-            CliUtil.getInstance().buildStage(oldFXMLType,null, null);
+            CliUtil.getInstance().buildStage(oldFXMLType, null, null);
         }
     }
 }
