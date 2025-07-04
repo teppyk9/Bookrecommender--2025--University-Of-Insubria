@@ -1,20 +1,21 @@
-/*- interfaccia per aggiungere un libro a una libreria
-(pannello più piccolo con tabella (table come visualizza libreria senza azioni))*/
+/*
 
+- GestioneLibrerie.fxml
+- AddLibroLibreria.fxml
+
+*/
 .background {
     -fx-background-image: url('../icons/copertina_chiara.jpeg');
-
 }
 
-.box_chiaro{
-    -fx-background-color: rgba(252, 247, 248, 0.65);
+.box_chiaro{ /* style da add libro */
+    -fx-background-color: rgba(252, 247, 248, 0.7);
     -fx-border-color: transparent;
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
-
 }
 
-.titoloDaAggiungere{
+.titoloDaAggiungere{ /* style class di add libro */
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-font-family: "Century Gothic";
@@ -22,7 +23,8 @@
     -fx-background-color: rgba(252, 247, 248, 0.65);
 }
 
-.bottone{
+/* bottone predefinito */
+.bottone{ /* style class di add libro */
     -fx-background-color: #a31621;
     -fx-text-fill: #fcf7f8;
     -fx-font-family: "Century Gothic";
@@ -48,10 +50,28 @@
     -fx-scale-y: 1.08;
 }
 
-/* tree table view */
+
+/* campo per la modifica del nome della libreria in GestioneLibrerie */
+.cambia_nome {
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.text-field.cambia_nome.prompt-text {
+    -fx-prompt-text-fill: #fcf7f8 ;
+    -fx-opacity: 1;
+}
+
 /* TreeTableView */
+
+/* METTERE IN TABLE UTIL SE FUNZIONA */
 .tree-table-view {
-    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-background-color: rgba(163, 22, 33, 0.7);
     -fx-table-cell-border-color: transparent;
     -fx-font-family: "Century Gothic";
     -fx-font-size: 12px;
@@ -75,14 +95,14 @@
 .tree-table-view .column-header .label {
     -fx-text-fill: #fcf7f8;
     -fx-font-weight: bold;
-    -fx-font-size: 13px;
+    -fx-font-size: 11px;
 }
 
 .tree-table-row-cell {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-font-size: 12px;
-    -fx-text-fill: #fcf7f8;
+    -fx-text-fill: #fcf7f8 !important;
 }
 
 .tree-table-row-cell:filled:selected,
@@ -138,3 +158,13 @@
 .tree-table-view .scroll-bar .track {
     -fx-background-color: transparent;
 }
+
+
+.tree-table-cell{ /* righe della tree table view */
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 12px;
+    -fx-padding: 4 8;
+    -fx-background-color: transparent;
+}
+

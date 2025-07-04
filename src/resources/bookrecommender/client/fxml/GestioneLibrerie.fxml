@@ -5,26 +5,31 @@
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.GestioneLibrerieController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Librerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.GestioneLibrerieController">
    <children>
-      <TreeTableView fx:id="treeTableView" layoutX="17.0" layoutY="108.0" prefHeight="295.0" prefWidth="765.0">
-         <columns>
-            <TreeTableColumn fx:id="nameColumn" prefWidth="229.5" text="Nome Libreria" />
-            <TreeTableColumn fx:id="countColumn" prefWidth="57.0" text="Qt.à Libri" />
-            <TreeTableColumn fx:id="dateColumn" prefWidth="91.5" text="Data Creazione" />
-            <TreeTableColumn fx:id="isValColumn" prefWidth="54.0" text="Valutato" />
-            <TreeTableColumn fx:id="isConsColumn" prefWidth="72.0" text="Consigliato" />
-            <TreeTableColumn fx:id="lastValColumn" prefWidth="108.0" text="Ultima mod. Val" />
-            <TreeTableColumn fx:id="lastConsColumn" minWidth="2.0" prefWidth="108.0" text="Ultima mod. Cons." />
-            <TreeTableColumn fx:id="azioniColumn" prefWidth="44.0" text="Azioni" />
-         </columns>
-      </TreeTableView>
-      <Text layoutX="343.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestisci le tue librerie" />
-      <TextField fx:id="NomeLibreria" layoutX="194.0" layoutY="73.0" prefHeight="25.0" prefWidth="266.0" promptText="Cambia il nome alla tua libreria" />
-      <Button fx:id="BottoneCambiaNome" layoutX="102.0" layoutY="73.0" mnemonicParsing="false" onAction="#cambiaNome" text="Cambia Nome" />
-      <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="1.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="25.0" prefWidth="132.0" styleClass="indietro" text="Indietro" />
-      <Button fx:id="CreaLibreriaButton" layoutX="554.0" layoutY="73.0" mnemonicParsing="false" onAction="#creaLibreria" text="Crea Una nuova Libreria" />
+      <Text layoutX="297.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titoloDaAggiungere" text="Gestisci le tue librerie" />
+      <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="1.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="43.0" prefWidth="50.0" styleClass="indietro" />
+      <Pane layoutX="26.0" layoutY="95.0" prefHeight="349.0" prefWidth="746.0" styleClass="box_chiaro">
+         <children>
+            <TreeTableView fx:id="treeTableView" layoutY="54.0" prefHeight="295.0" prefWidth="746.0">
+               <columns>
+                  <TreeTableColumn fx:id="nameColumn" prefWidth="194.28570556640625" text="Nome Libreria" />
+                  <TreeTableColumn fx:id="countColumn" prefWidth="46.85711669921875" text="N° Libri" />
+                  <TreeTableColumn fx:id="dateColumn" prefWidth="96.0" text="Data Creazione" />
+                  <TreeTableColumn fx:id="isValColumn" prefWidth="52.57147216796875" text="Valutato" />
+                  <TreeTableColumn fx:id="lastValColumn" prefWidth="109.7142333984375" text="Ultima mod. Val" />
+                  <TreeTableColumn fx:id="isConsColumn" prefWidth="86.857177734375" text="Consigliato" />
+                  <TreeTableColumn fx:id="lastConsColumn" minWidth="2.0" prefWidth="110.2857666015625" text="Ultima mod. Cons." />
+                  <TreeTableColumn fx:id="azioniColumn" prefWidth="53.142822265625" text="Azioni" />
+               </columns>
+            </TreeTableView>
+            <Button fx:id="CreaLibreriaButton" layoutX="588.0" mnemonicParsing="false" onAction="#creaLibreria" styleClass="bottone" text="Crea Una nuova Libreria" />
+            <Button fx:id="BottoneCambiaNome" mnemonicParsing="false" onAction="#cambiaNome" styleClass="bottone" text="Cambia Nome" />
+            <TextField fx:id="NomeLibreria" layoutX="107.0" layoutY="-1.0" prefHeight="25.0" prefWidth="266.0" promptText="Cambia il nome alla tua libreria" styleClass="cambia_nome" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="337.5" prefWidth="600.0" styleClass="background" stylesheets="@../stylesheets/AddLibroLibreria.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.AddLibroLibreriaController">
+<AnchorPane prefHeight="337.5" prefWidth="600.0" styleClass="background" stylesheets="@../stylesheets/Librerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.AddLibroLibreriaController">
    <Pane layoutX="42.0" layoutY="49.0" prefHeight="261.0" prefWidth="515.0" styleClass="box_chiaro">
       <children>
          <Text fx:id="titoloLibreria" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titoloDaAggiungere" text="*Titolo libro selezionato*" wrappingWidth="400.5714852469308" />
       
               <TreeTableView fx:id="treeTableView" layoutY="31.0" prefHeight="229.0" prefWidth="515.0">
                <columns>
-                   <TreeTableColumn fx:id="nameColumn" prefWidth="214.28567504882812" text="Nome Libreria"  />
+                   <TreeTableColumn fx:id="nameColumn" prefWidth="214.28567504882812" text="Nome Libreria" />
                    <TreeTableColumn fx:id="countColumn" prefWidth="89.14288330078125" text="Quantità Libri" />
                    <TreeTableColumn fx:id="dateColumn" prefWidth="144.5714111328125" text="Data Creazione" />
                    <TreeTableColumn fx:id="presentColumn" minWidth="0.0" prefWidth="67.4285888671875" text="Presente" />

@@ -127,7 +127,7 @@
          </HBox>
       </AnchorPane>
    </VBox>
-   <Button fx:id="BottoneSalva" layoutX="683.0" layoutY="412.0" mnemonicParsing="false" onAction="#SalvaValutazione" prefHeight="0.0" prefWidth="102.0" styleClass="salva" text="Salva">
+   <Button fx:id="BottoneSalva" layoutX="683.0" layoutY="412.0" mnemonicParsing="false" onAction="#SalvaValutazione" prefHeight="0.0" prefWidth="102.0" styleClass="salva-elimina" text="Salva">
       <font>
          <Font size="14.0" />
       </font>

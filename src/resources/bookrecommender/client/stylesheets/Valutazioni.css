@@ -1,3 +1,9 @@
+/*
+- CreaValutazione.fxml
+- VisualizzaValutazione.fxml
+- ModificaValutazione.fxml
+*/
+
 .background{
     -fx-background-image: url('../icons/copertina_chiara.jpeg');
 }
@@ -45,7 +51,7 @@
     -fx-background-radius: 8px;
     -fx-border-radius: 8px;
 }
-
+ /* label per autore recensione*/
 .autoreRecensione {
     -fx-text-fill: #a31621;
     -fx-font-family: "Century Gothic";
@@ -125,8 +131,8 @@
     -fx-alignment: center-left;
 }
 
-/* bottone per salvare la valutazione*/
-.salva{
+/* bottone per salvare/eliminare la valutazione*/
+.salva-elimina{
     -fx-background-color: #a31621;
     -fx-text-fill: #fcf7f8;
     -fx-font-family: "Century Gothic";
@@ -136,10 +142,11 @@
     -fx-scale-y: 1;
     -fx-transition: all 0.2s;
 }
-.salva:hover{
+.salva-elimina:hover{
     -fx-scale-x: 1.08;
     -fx-scale-y: 1.08;
 }
+
 
 
 

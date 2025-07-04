@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -11,36 +12,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="540.0" prefWidth="960.0" styleClass="background" stylesheets="@../stylesheets/CreaLibreria.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaLibreriaController">
-    <VBox layoutX="10.0" layoutY="583.0" spacing="10.0" AnchorPane.bottomAnchor="-561.8571428571429" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.571428571428669" AnchorPane.topAnchor="583.0">
-        <AnchorPane prefHeight="32.0" prefWidth="750.0" />
-        <AnchorPane prefHeight="43.0" prefWidth="750.0" />
-        <AnchorPane prefHeight="317.0" prefWidth="750.0">
-            <HBox prefHeight="309.0" prefWidth="780.0" />
-        </AnchorPane>
-        <AnchorPane prefHeight="35.0" prefWidth="750.0" />
-    </VBox>
-       <TableView fx:id="tableView" layoutX="14.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0">
-           <columns>
-               <TableColumn fx:id="titoloCol" prefWidth="162.0" text="Titolo" style="-fx-alignment: CENTER;"/>
-               <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" style="-fx-alignment: CENTER;"/>
-               <TableColumn fx:id="annoCol" prefWidth="82.0" text="Anno" style="-fx-alignment: CENTER;"/>
-               <TableColumn fx:id="azioniCol" prefWidth="54.0" text="Azioni" style="-fx-alignment: CENTER;"/>
-           </columns>
-       </TableView>
-       <TableView fx:id="risTableView" layoutX="490.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0">
-           <columns>
-               <TableColumn fx:id="risTitoloCol" prefWidth="162.0" text="Titolo" style="-fx-alignment: CENTER;"/>
-               <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" style="-fx-alignment: CENTER;"/>
-               <TableColumn fx:id="risAnnoCol" prefWidth="82.0" text="Anno" style="-fx-alignment: CENTER;"/>
-               <TableColumn fx:id="risAzioniCol" prefWidth="54.0" text="Azioni" style="-fx-alignment: CENTER;"/>
-           </columns>
-       </TableView>
+<AnchorPane prefHeight="540.0" prefWidth="960.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaLibreriaController">
    <Separator layoutX="473.0" layoutY="52.0" orientation="VERTICAL" prefHeight="481.0" prefWidth="17.0">
       <cursor>
          <Cursor fx:constant="DEFAULT" />
@@ -71,4 +47,32 @@
       <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="-3.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="50.0" prefWidth="53.0" styleClass="indietro" />
    <TextField fx:id="NomeLibreria" layoutX="490.0" layoutY="68.0" prefHeight="25.0" prefWidth="457.0" promptText="Dai un nome alla tua libreria" styleClass="field" />
       <Button fx:id="BottoneSalvaLibreria" layoutX="490.0" layoutY="100.0" mnemonicParsing="false" onAction="#SalvaLibreria" prefHeight="25.0" prefWidth="457.0" styleClass="bottone" text="Salva Libreria" />
+   <Pane layoutX="14.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
+      <children>
+             <TableView fx:id="tableView" prefHeight="379.0" prefWidth="457.0">
+                 <columns>
+                     <TableColumn fx:id="titoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo" />
+                     <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="Autore" />
+                     <TableColumn fx:id="annoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno" />
+                     <TableColumn fx:id="azioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni" />
+                 </columns>
+             </TableView>
+      </children>
+   </Pane>
+   <Pane layoutX="490.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
+      <children>
+             <TableView fx:id="risTableView" prefHeight="379.0" prefWidth="457.0">
+                 <columns>
+                     <TableColumn fx:id="risTitoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo" />
+                     <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="Autore" />
+                     <TableColumn fx:id="risAnnoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno" />
+                     <TableColumn fx:id="risAzioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni" />
+                 </columns>
+             </TableView>
+      </children>
+   </Pane>
+   <stylesheets>
+      <URL value="@../stylesheets/CreaModificaLibrerieConsiglio.css" />
+      <URL value="@../stylesheets/TableUtil.css" />
+   </stylesheets>
 </AnchorPane>

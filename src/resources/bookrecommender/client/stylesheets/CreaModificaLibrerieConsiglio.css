@@ -1,5 +1,11 @@
+/* crea libreria
+    crea consiglio
+    modifica libreria
+    modifica consiglio
+
+*/
 .background{
-    -fx-background-color: #fcf7f8;
+    -fx-background-image: url('../icons/copertina_chiara.jpeg');
 }
 
 .titolo{
@@ -8,6 +14,20 @@
     -fx-font-family: "Century Gothic";
     -fx-fill: #a31621;
 }
+
+.sottotitolo{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Century Gothic";
+    -fx-text-fill: #a31621;
+    -fx-fill: #a31621;
+    -fx-background-color: rgba(252, 247, 248, 0.7);
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-alignment: center;
+
+}
+
 
 .bottone{
     -fx-background-color: #a31621;
@@ -111,92 +131,12 @@
 }
 
 
-/* TableView */
-.table-view { /* sfondo tabella, predefinito*/
-    -fx-background-color: rgba(163, 22, 33, 0.68);
-    -fx-table-cell-border-color: transparent;
-    -fx-font-family: "Century Gothic";
-    -fx-font-size: 12px;
-    -fx-text-fill: #fcf7f8;
-    -fx-border-radius: 6px;
+/* box sotto table view */
+.sfondo-tabella{
+    -fx-background-color: white;
     -fx-background-radius: 6px;
-}
+    -fx-border-radius: 6px;
+    -fx-border-width: 0px 0px 0px 0px;
 
-.table-view .column-header-background { /* intestazione tabella (colonne) */
-    -fx-background-color: #A31621;
-    -fx-background-radius: 6px 6px 0 0;
-}
-
-.table-view .column-header,
-.table-view .filler { /* intestazione tabella (colonne) e riempimento */
-    -fx-background-color: transparent;
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: transparent;
-}
-
-.table-view .column-header .label { /* etichetta intestazione tabella (colonne) */
-    -fx-text-fill: #fcf7f8;
-    -fx-font-weight: bold;
-    -fx-font-size: 13px;
-}
-
-.table-row-cell { /* celle della tabella */
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-font-size: 12px;
-    -fx-text-fill: #fcf7f8;
-}
-
-.table-row-cell:filled:selected,
-.table-row-cell:filled:focused:selected { /* riga selezionata */
-    -fx-background-color: #A31621;
-    -fx-text-fill: #fcf7f8;
-    -fx-font-weight: bold;
-}
-
-.table-row-cell:filled:hover { /* riga al passaggio del mouse */
-    -fx-text-fill: #fcf7f8;
-    -fx-background-color: #A31621;
-}
-
-.table-cell { /* celle della tabella */
-    -fx-border-width: 0 0 1 0;
-    -fx-border-color: transparent;
-    -fx-padding: 4 8;
-    -fx-background-color: transparent;
-}
-
-/* ScrollBar personalizzata */
-.scroll-bar:vertical, .scroll-bar:horizontal {
-    -fx-background-color: transparent;
-    -fx-pref-width: 6px;
-    -fx-pref-height: 6px;
-}
-
-.scroll-bar .increment-button,
-.scroll-bar .decrement-button { /* elimina frecce scrollbar*/
-    -fx-padding: 0;
-    -fx-background-color: transparent;
-    -fx-shape: "";
-    -fx-opacity: 0;
-    -fx-min-width: 0;
-    -fx-min-height: 0;
-    -fx-max-width: 0;
-    -fx-max-height: 0;
-}
-
-.scroll-bar .thumb { /* cursore della scrollbar */
-    -fx-background-color: rgba(163,22,33,0.18);
-    -fx-background-radius: 4px;
-    -fx-min-height: 20px;
-    -fx-min-width: 20px;
-}
-
-.scroll-bar .thumb:hover {
-    -fx-background-color: #A31621;
-}
-
-.scroll-bar .track {
-    -fx-background-color: transparent;
 }
 

@@ -1,67 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<AnchorPane prefHeight="450.0" prefWidth="800.0" stylesheets="@../stylesheets/CercaLibro.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaConsiglioController">
-    <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-        <AnchorPane prefHeight="32.0" prefWidth="750.0">
-            <TextField fx:id="campoRicerca" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="438.0" promptText="Cerca un libro..." />
-         <Button fx:id="Bottone_GetAllBooks" layoutX="466.0" mnemonicParsing="false" onAction="#getAllBooks" text="Visualizza tutti i tuoi libri" />
-         <Button fx:id="salvaButton" layoutX="676.0" layoutY="-1.0" mnemonicParsing="false" onAction="#salvaConsiglio" text="Salva" />
-        </AnchorPane>
-        <AnchorPane prefHeight="43.0" prefWidth="750.0">
-            <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" onAction="#handleClickCerca" text="Cerca">
-                <opaqueInsets>
-                    <Insets />
-                </opaqueInsets>
-            </Button>
-            <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="61.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="205.0" text="Tipo di ricerca" textFill="WHITE">
-                <items>
-                    <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
-                    <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
-                    <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" text="Autore e anno di pubblicazione" />
-                </items>
-            </MenuButton>
-            <TextField fx:id="campoRicercaAnno" layoutX="282.0" layoutY="-1.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" />
-            <Text layoutX="527.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consigli" textAlignment="CENTER" wrappingWidth="131.5">
-                <font>
-                    <Font size="17.0" />
-                </font>
-            </Text>
-        </AnchorPane>
-        <AnchorPane prefHeight="317.0" prefWidth="750.0">
-            <HBox prefHeight="309.0" prefWidth="780.0">
-                <TableView fx:id="tableView" layoutX="258.0" layoutY="157.0" prefHeight="289.0" prefWidth="390.0">
-                    <columns>
-                        <TableColumn fx:id="titoloCol" prefWidth="215.0" text="Titolo" />
-                        <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="90.0" text="Autore" />
-                        <TableColumn fx:id="annoCol" prefWidth="44.0" text="Anno" />
-                        <TableColumn fx:id="azioniCol" prefWidth="40.0" text="Azioni" />
-                    </columns>
-                </TableView>
-                <TableView fx:id="risTableView" layoutX="258.0" layoutY="157.0" prefHeight="289.0" prefWidth="390.0">
-                    <columns>
-                        <TableColumn fx:id="risTitoloCol" prefWidth="215.0" text="Titolo" />
-                        <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="90.0" text="Autore" />
-                        <TableColumn fx:id="risAnnoCol" prefWidth="44.0" text="Anno" />
-                        <TableColumn fx:id="risAzioniCol" prefWidth="40.0" text="Azioni" />
-                    </columns>
-                </TableView>
-            </HBox>
-        </AnchorPane>
-        <AnchorPane prefHeight="35.0" prefWidth="750.0">
-            <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="534.0" layoutY="7.0" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="23.0" prefWidth="216.0" text="Indietro" />
-        </AnchorPane>
-    </VBox>
+<AnchorPane prefHeight="540.0" prefWidth="960.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaConsiglioController">
+   <children>
+      <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="46.0" prefWidth="45.0" styleClass="indietro" />
+      <Text layoutX="352.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Crea un consiglio" />
+      <Pane layoutX="14.0" layoutY="145.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
+         <children>
+            <TableView fx:id="tableView" prefHeight="379.0" prefWidth="457.0">
+               <columns>
+                  <TableColumn fx:id="titoloCol" prefWidth="162.0" text="Titolo" />
+                  <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" />
+                  <TableColumn fx:id="annoCol" prefWidth="82.0" text="Anno" />
+                  <TableColumn fx:id="azioniCol" prefWidth="54.0" text="Azioni" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane layoutX="488.0" layoutY="146.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
+         <children>
+            <TableView fx:id="risTableView" prefHeight="379.0" prefWidth="457.0">
+               <columns>
+                  <TableColumn fx:id="risTitoloCol" prefWidth="162.0" text="Titolo" />
+                  <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" text="Autore" />
+                  <TableColumn fx:id="risAnnoCol" prefWidth="82.0" text="Anno" />
+                  <TableColumn fx:id="risAzioniCol" prefWidth="54.0" text="Azioni" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Separator layoutX="471.0" layoutY="45.0" orientation="VERTICAL" prefHeight="481.0" prefWidth="17.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <effect>
+            <InnerShadow>
+               <color>
+                  <Color red="0.6392157077789307" green="0.08627451211214066" blue="0.12941177189350128" />
+               </color>
+            </InnerShadow>
+         </effect>
+      </Separator>
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="171.0" layoutY="107.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="300.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+         <items>
+            <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
+            <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
+            <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" text="Autore e anno di pubblicazione" />
+         </items>
+      </MenuButton>
+      <TextField fx:id="campoRicerca" layoutX="171.0" layoutY="68.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" />
+      <TextField fx:id="campoRicercaAnno" layoutX="14.0" layoutY="68.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" styleClass="field" />
+      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="438.0" layoutY="68.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="29.0" styleClass="cerca" text="Cerca">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Button fx:id="salvaButton" layoutX="834.0" layoutY="107.0" mnemonicParsing="false" onAction="#salvaConsiglio" prefHeight="25.0" prefWidth="110.0" styleClass="bottone" text="Salva consiglio" />
+      <Button fx:id="Bottone_GetAllBooks" layoutX="14.0" layoutY="107.0" mnemonicParsing="false" onAction="#getAllBooks" prefHeight="25.0" prefWidth="157.0" styleClass="bottone" text="Visualizza tutti i tuoi libri" />
+      <Label layoutX="598.0" layoutY="68.0" prefHeight="17.0" prefWidth="237.0" styleClass="sottotitolo" text="Consigliati" />
+   </children>
+   <stylesheets>
+      <URL value="@../stylesheets/CreaModificaLibrerieConsiglio.css" />
+      <URL value="@../stylesheets/TableUtil.css" />
+   </stylesheets>
 </AnchorPane>
