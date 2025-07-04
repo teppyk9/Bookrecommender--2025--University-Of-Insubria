@@ -84,7 +84,7 @@
       </Text>
    </children>
    <stylesheets>
-      <URL value="@../stylesheets/CreaModificaLibrerieConsiglio.css" />
+      <URL value="@../stylesheets/CercaCreaModifica.css" />
       <URL value="@../stylesheets/TableUtil.css" />
    </stylesheets>
 </AnchorPane>

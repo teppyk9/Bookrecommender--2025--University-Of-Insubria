@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/CercaLibroAvanzato.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroAvanzatoController">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroAvanzatoController">
       <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="45.0" prefWidth="46.0" styleClass="indietro" />
-      <Text fx:id="Titolo_Librerie" layoutX="297.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Ricerca Avanzata" textAlignment="CENTER" wrappingWidth="206.5">
+      <Text fx:id="Titolo_Librerie" layoutX="238.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Ricerca Avanzata" textAlignment="CENTER" wrappingWidth="324.21429443359375">
           <font>
               <Font size="17.0" />
           </font>
       </Text>
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="28.0" layoutY="95.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="267.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="28.0" layoutY="72.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="744.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
           <items>
               <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
               <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
               <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" text="Autore e anno di pubblicazione" />
           </items>
       </MenuButton>
-      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="309.0" layoutY="94.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="33.0" styleClass="cerca">
+      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="741.0" layoutY="103.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="30.0" styleClass="cerca">
           <opaqueInsets>
               <Insets />
           </opaqueInsets>
       </Button>
-      <TextField fx:id="campoRicercaAnno" layoutX="309.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="70.0" promptText="Anno..." styleClass="barraRicerca" />
-      <TextField fx:id="campoRicerca" layoutX="28.0" layoutY="122.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="barraRicerca" />
-   <CheckBox fx:id="checkRicerca" layoutX="28.0" layoutY="71.0" mnemonicParsing="false" onAction="#setRicerca" style="-fx-background-color: white; -fx-background-radius: 6; -fx-border-radius: 6; -fx-border-width: 1; -fx-padding: 2;" text="Cerca nelle tue librerie" />
-   <TableView fx:id="tableView" layoutX="28.0" layoutY="157.0" prefHeight="261.0" prefWidth="744.0">
+      <TextField fx:id="campoRicercaAnno" layoutX="305.0" layoutY="103.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="167.0" promptText="Anno..." styleClass="field" />
+      <TextField fx:id="campoRicerca" layoutX="473.0" layoutY="103.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" />
+   <CheckBox fx:id="checkRicerca" layoutX="28.0" layoutY="103.0" mnemonicParsing="false" onAction="#setRicerca" prefHeight="25.0" prefWidth="159.0" styleClass="checkbox" text="Cerca nelle tue librerie" />
+   <TableView fx:id="tableView" layoutX="28.0" layoutY="145.0" prefHeight="287.0" prefWidth="744.0">
      <columns>
        <TableColumn fx:id="titoloCol" prefWidth="345.5" text="Titolo" />
        <TableColumn fx:id="autoreCol" prefWidth="132.0" text="Autore" />
@@ -37,4 +45,8 @@
          <TableColumn fx:id="aggiungiCol" prefWidth="65.5" text="Opzioni" />
      </columns>
    </TableView>
+   <stylesheets>
+      <URL value="@../stylesheets/CercaCreaModifica.css" />
+      <URL value="@../stylesheets/TableUtil.css" />
+   </stylesheets>
 </AnchorPane>

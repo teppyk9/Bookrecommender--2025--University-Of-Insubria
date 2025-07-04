@@ -2,10 +2,21 @@
     crea consiglio
     modifica libreria
     modifica consiglio
+    cerca
+    cerca avanzata
 
 */
 .background{
     -fx-background-image: url('../icons/copertina_chiara.jpeg');
+}
+
+/* box sotto table view */
+.sfondo-tabella{
+    -fx-background-color: white;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-border-width: 0px 0px 0px 0px;
+
 }
 
 .titolo{
@@ -88,15 +99,15 @@
 
 
 .menu-button .context-menu {
-    -fx-background-color: rgba(163, 22, 33, 0.68);
-    -fx-border-color: rgba(163, 22, 33, 0.68);
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-border-color: rgba(163, 22, 33, 0.7);
     -fx-border-width: 1px;
     -fx-border-radius: 0px;
 
 }
 
 .menu-button .menu-item {
-    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-background-color: rgba(163, 22, 33, 0.7);
     -fx-text-fill: #fcf7f8;
     -fx-font-size: 12px;
     -fx-font-family: "Century Gothic";
@@ -105,14 +116,14 @@
 
 .menu-button .menu-item:focused,
 .menu-button .menu-item:hover {
-    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-background-color: rgba(163, 22, 33, 0.7);
     -fx-text-fill: #fcf7f8;
     -fx-border-radius: 0px;
     -fx-font-weight: bold;
 }
 
 .field {
-    -fx-background-color: rgba(163, 22, 33, 0.68);
+    -fx-background-color: rgba(163, 22, 33, 0.7);
     -fx-text-fill: #fcf7f8;
     -fx-font-size: 12px;
     -fx-font-family: "Century Gothic";
@@ -130,13 +141,53 @@
     -fx-font-size: 12px; /* size del prompt text */
 }
 
-
-/* box sotto table view */
-.sfondo-tabella{
-    -fx-background-color: white;
+/* CHECKBOX */
+.checkbox {
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-border-color: rgba(163, 22, 33, 0.7);
     -fx-background-radius: 6px;
     -fx-border-radius: 6px;
-    -fx-border-width: 0px 0px 0px 0px;
-
 }
 
+.checkbox .label {
+    -fx-text-fill: #fcf7f8 ;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-font-family: "Century Gothic";
+    -fx-padding: 2px;
+}
+
+.checkbox:selected .label {
+    -fx-text-fill: #fcf7f8 ;
+    -fx-font-weight: bold;
+}
+
+.checkbox .box {
+    -fx-background-color: transparent ;
+    -fx-border-color: rgba(163, 22, 33, 0.7) ;
+    -fx-border-style: solid;
+    -fx-min-width: 18px;      /* larghezza minima */
+    -fx-min-height: 18px;     /* altezza minima */
+    -fx-pref-width: 18px;     /* larghezza preferita */
+    -fx-pref-height: 18px;    /* altezza preferita */
+    -fx-border-width: 2px;    /* spessore bordo */
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+
+.checkbox:selected .mark {
+    -fx-background-color: #fcf7f8 ;
+    -fx-fill: #a31621;
+    -fx-padding: 2px;
+    -fx-scale-x: 1.3;         /* ingrandisce la spunta orizzontalmente */
+    -fx-scale-y: 1.3;         /* ingrandisce la spunta verticalmente */
+}
+
+.checkbox .text{
+    -fx-fill: #fcf7f8 ;
+    -fx-font-size: 12px ;
+    -fx-font-weight: bold ;
+    -fx-font-family: "Century Gothic";
+    -fx-padding: 2px;
+}

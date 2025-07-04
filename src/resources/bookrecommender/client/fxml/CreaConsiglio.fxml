@@ -76,7 +76,7 @@
       <Label layoutX="598.0" layoutY="68.0" prefHeight="17.0" prefWidth="237.0" styleClass="sottotitolo" text="Consigliati" />
    </children>
    <stylesheets>
-      <URL value="@../stylesheets/CreaModificaLibrerieConsiglio.css" />
+      <URL value="@../stylesheets/CercaCreaModifica.css" />
       <URL value="@../stylesheets/TableUtil.css" />
    </stylesheets>
 </AnchorPane>
