@@ -5,27 +5,41 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Form.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.LoginController">
    <children>
+      <Pane layoutY="83.0" opacity="0.85" prefHeight="302.0" prefWidth="800.0" styleClass="box">
+         <children>
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="33.0" prefHeight="33.0" prefWidth="366.0" styleClass="titolo" text="LOGIN" textAlignment="CENTER" />
+            <HBox layoutX="242.0" layoutY="81.0" prefHeight="47.0" prefWidth="316.0">
+               <children>
+                  <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" />
+                  <TextField fx:id="UsernameField" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
+               </children>
+            </HBox>
+            <HBox layoutX="242.0" layoutY="138.0" prefHeight="38.0" prefWidth="316.0">
+               <children>
+                  <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
+                  <PasswordField fx:id="PasswordField" onKeyPressed="#EnterController" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
+               </children>
+            </HBox>
+            <Label fx:id="NonHaiUnAccountFiled" alignment="CENTER" layoutX="242.0" layoutY="224.0" onMouseClicked="#GoToRegisterPage" prefHeight="38.0" prefWidth="316.0" styleClass="reg" text="Non hai ancora un account? Registrati qui" textAlignment="CENTER">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="AccediButton" layoutX="342.0" layoutY="189.0" mnemonicParsing="false" onAction="#TryLogin" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Accedi" />
+            <Text fx:id="ErrorToLogin" fill="WHITE" layoutX="202.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errore" text="Username o Password Errati!" textAlignment="CENTER" wrappingWidth="395.523681640625">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
       <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="49.0" styleClass="indietro" />
-      <Label contentDisplay="CENTER" layoutX="235.0" layoutY="132.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" />
-      <TextField fx:id="UsernameField" layoutX="340.0" layoutY="130.0" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
-      <Label contentDisplay="CENTER" layoutX="235.0" layoutY="206.0" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
-      <PasswordField fx:id="PasswordField" layoutX="340.0" layoutY="200.0" onKeyPressed="#EnterController" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
-      <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="61.0" prefHeight="33.0" prefWidth="366.0" styleClass="titolo" text="LOGIN" textAlignment="CENTER" />
-      <Button fx:id="AccediButton" layoutX="341.0" layoutY="266.0" mnemonicParsing="false" onAction="#TryLogin" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Accedi" />
-      <Label fx:id="NonHaiUnAccountFiled" alignment="CENTER" layoutX="242.0" layoutY="314.0" onMouseClicked="#GoToRegisterPage" prefHeight="66.0" prefWidth="316.0" styleClass="reg" text="Non hai ancora un account? Registrati qui" textAlignment="CENTER">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font>
-      </Label>
-      <Text fx:id="ErrorToLogin" fill="WHITE" layoutX="278.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="errore" text="Username o Passowrd Errati!" textAlignment="CENTER">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

@@ -6,7 +6,7 @@
 }
 
 .box{ /* ok */
-    -fx-background-color: rgba(163, 22, 33, 0.71); /* Colore di sfondo chiaro */
+    -fx-background-color: rgba(163, 22, 33, 0.7); /* Colore di sfondo chiaro */
     -fx-background-radius: 10px; /* Angoli arrotondati */
 }
 

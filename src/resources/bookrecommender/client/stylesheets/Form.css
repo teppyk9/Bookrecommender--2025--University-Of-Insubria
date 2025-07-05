@@ -4,6 +4,10 @@
 }*/
 
 .background {
+    -fx-background-image: url('../icons/copertina.jpeg');
+}
+
+.box{
     -fx-background-color: #A31621;
 }
 
@@ -18,16 +22,18 @@
     -fx-font-size: 20px;
     -fx-text-fill: #FCF7F8;
     -fx-font-family: "Century Gothic";
+    -fx-font-weight: bold;
 }
 
 
 
 .field{
-    -fx-background-color: #A31621;
+    -fx-background-color: transparent;
     -fx-text-fill: #FCF7F8;
     -fx-font-size: 16px;
     -fx-font-family: "Century Gothic";
     -fx-border-color: #FCF7F8;
+    -fx-border-width: 0 0 2px 0;
     -fx-border-radius: 6px;
     -fx-padding: 8 16;
 }
@@ -51,8 +57,8 @@
 }
 
 .indietro{
-    -fx-background-color: #A31621;
-    -fx-background-image: url('../icons/indietro.png');
+    -fx-background-color: transarent;
+    -fx-background-image: url('../icons/indietro_r.png');
     -fx-scale-x: 1;
     -fx-scale-y: 1;
     -fx-transition: all 0.2s;
@@ -63,10 +69,11 @@
     -fx-scale-y: 1.08;
 }
 
+
 .errore{
-    -fx-text-fill: #FCF7F8;
+    -fx-fill: #fcf7f8;
     -fx-font-family: "Century Gothic";
     -fx-font-weight: bold;
-    -fx-font-size: 18px;
+    -fx-font-size: 20px;
     -fx-animated: underline;
 }

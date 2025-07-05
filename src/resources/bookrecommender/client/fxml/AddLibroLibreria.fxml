@@ -12,7 +12,7 @@
       <children>
          <Text fx:id="titoloLibreria" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titoloDaAggiungere" text="*Titolo libro selezionato*" wrappingWidth="400.5714852469308" />
       
-              <TreeTableView fx:id="treeTableView" layoutY="31.0" prefHeight="229.0" prefWidth="515.0">
+              <TreeTableView fx:id="treeTableView" layoutY="31.0" prefHeight="230.0" prefWidth="515.0">
                <columns>
                    <TreeTableColumn fx:id="nameColumn" prefWidth="214.28567504882812" text="Nome Libreria" />
                    <TreeTableColumn fx:id="countColumn" prefWidth="89.14288330078125" text="Quantità Libri" />
