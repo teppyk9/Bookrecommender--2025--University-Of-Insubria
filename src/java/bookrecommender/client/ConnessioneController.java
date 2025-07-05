@@ -4,13 +4,39 @@ import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+/**
+ * Controller JavaFX per la schermata di connessione al server RMI.
+ * <p>
+ * Permette all'utente di specificare host e porta del server e di testare o confermare la connessione.
+ * Se la connessione ha esito positivo, viene inizializzata la connessione ai servizi RMI e caricata la schermata iniziale.
+ * </p>
+ * <p>
+ * Alla chiusura della finestra, l'applicazione viene terminata.
+ */
 public class ConnessioneController {
+
+    /** Campo di testo per l'inserimento dell'indirizzo host */
     public TextField hostField;
+
+    /** Campo di testo per l'inserimento della porta */
     public TextField portField;
+
+    /** Bottone per confermare la connessione */
     public Button confermaButton;
+
+    /** Bottone per testare la connessione */
     public Button testButton;
+
+    /** Etichetta usata per mostrare messaggi di errore o successo */
     public Label testLabel;
 
+    /**
+     * Metodo di inizializzazione della schermata.
+     * <ul>
+     *   <li>Imposta valori predefiniti per host e porta (localhost, 1099)</li>
+     *   <li>Registra un'azione sulla chiusura della finestra per terminare il programma</li>
+     * </ul>
+     */
     public void initialize() {
         hostField.setText("localhost");
         portField.setText("1099");
@@ -24,6 +50,15 @@ public class ConnessioneController {
         });
     }
 
+    /**
+     * Gestisce il click sul bottone "Conferma".
+     * <ul>
+     *   <li>Valida host e porta</li>
+     *   <li>Effettua il test della connessione</li>
+     *   <li>In caso di successo, mostra una conferma per continuare</li>
+     *   <li>In caso di rifiuto o errore, termina l'applicazione</li>
+     * </ul>
+     */
     public void conferma() {
         String host = hostField.getText();
         String port = portField.getText();
@@ -57,6 +92,14 @@ public class ConnessioneController {
 
     }
 
+    /**
+     * Gestisce il click sul bottone "Test Connessione".
+     * <ul>
+     *   <li>Valida host e porta</li>
+     *   <li>Effettua un test di connessione al server RMI</li>
+     *   <li>Aggiorna l'etichetta {@code testLabel} con il risultato</li>
+     * </ul>
+     */
     public void test() {
         String host = hostField.getText();
         String port = portField.getText();
@@ -83,6 +126,10 @@ public class ConnessioneController {
         }
     }
 
+    /**
+     * Ripristina lo stato iniziale dell'etichetta {@code testLabel},
+     * rimuovendo eventuali messaggi e colori di errore.
+     */
     public void resetLabel() {
         testLabel.setText("");
         testLabel.setStyle("-fx-text-fill: black;");

@@ -22,6 +22,20 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Classe singleton di utilità per il client JavaFX.
+ * <p>
+ * Gestisce e centralizza:
+ * <ul>
+ *   <li>Connessione ai servizi RMI (login, ricerca, librerie, monitor)</li>
+ *   <li>Caricamento e gestione delle schermate JavaFX tramite FXML</li>
+ *   <li>Gestione del token utente autenticato</li>
+ *   <li>Creazione di alert e finestre di conferma</li>
+ *   <li>Stilizzazione delle icone e visualizzazione delle valutazioni a stelle</li>
+ * </ul>
+ * Implementa il pattern singleton tramite inner class statica {@code Holder}.
+ * </p>
+ */
 public final class CliUtil {
 
     private static final Logger logger = Logger.getLogger(CliUtil.class.getName());
@@ -54,10 +68,19 @@ public final class CliUtil {
         private static final CliUtil INSTANCE = new CliUtil();
     }
 
+    /**
+     * Restituisce l'istanza singleton di {@code CliUtil}.
+     * @return l'istanza condivisa
+     */
     public static CliUtil getInstance() {
         return Holder.INSTANCE;
     }
 
+    /**
+     * Imposta lo {@link Stage} principale dell’applicazione.
+     *
+     * @param stage lo {@code Stage} da usare come finestra principale
+     */
     public void init(Stage stage) {
         if (this.primaryStage == null) {
             this.primaryStage = stage;
@@ -66,6 +89,9 @@ public final class CliUtil {
         }
     }
 
+    /**
+     * Chiude tutte le finestre, resetta lo stato del client e riapre la schermata di connessione.
+     */
     public void softRestart() {
         Platform.runLater(() -> {
             for (Window w : new ArrayList<>(Window.getWindows())) {
@@ -84,6 +110,12 @@ public final class CliUtil {
         });
     }
 
+    /**
+     * Restituisce lo {@link Stage} principale.
+     *
+     * @return lo stage principale
+     * @throws IllegalStateException se {@code init()} non è stato chiamato
+     */
     public Stage getPrimaryStage() {
         if (primaryStage == null) {
             logger.log(Level.SEVERE, "PrimaryStage has not been initialized. Call init() first.");
@@ -92,6 +124,12 @@ public final class CliUtil {
         return primaryStage;
     }
 
+    /**
+     * Imposta l'host e la porta del server RMI.
+     *
+     * @param host indirizzo IP o nome host del server
+     * @param port porta del registro RMI
+     */
     public void setServer(String host, int port) {
         if (host != null && !host.isEmpty() && port > 0 && port <= 65535) {
             logger.log(Level.INFO, "Setting RMI host to: " + host + " and port to: " + port);
@@ -102,6 +140,11 @@ public final class CliUtil {
         }
     }
 
+    /**
+     * Verifica la connessione al registro RMI configurato.
+     *
+     * @return {@code true} se la connessione è avvenuta correttamente, {@code false} altrimenti
+     */
     public boolean testConnection() {
         try {
             Registry registry = LocateRegistry.getRegistry(RMI_HOST, RMI_PORT);
@@ -114,14 +157,29 @@ public final class CliUtil {
         }
     }
 
+    /**
+     * Restituisce il {@link Token} dell’utente attualmente autenticato.
+     *
+     * @return il token corrente, o {@code null} se non autenticato
+     */
     public Token getCurrentToken() {
         return currentToken;
     }
 
+    /**
+     * Imposta il {@link Token} dell’utente corrente.
+     *
+     * @param token nuovo token da associare alla sessione
+     */
     public void setCurrentToken(Token token) {
         this.currentToken = token;
     }
 
+    /**
+     * Restituisce il servizio remoto per login e registrazione.
+     *
+     * @return istanza remota di {@code LogRegInterface}
+     */
     public LogRegInterface getLogRegService() {
         if (logRegService == null) {
             try {
@@ -135,6 +193,11 @@ public final class CliUtil {
         return logRegService;
     }
 
+    /**
+     * Restituisce il servizio remoto per la ricerca dei libri.
+     *
+     * @return istanza remota di {@code SearchInterface}
+     */
     public SearchInterface getSearchService() {
         if (searchService == null) {
             try {
@@ -148,6 +211,11 @@ public final class CliUtil {
         return searchService;
     }
 
+    /**
+     * Restituisce il servizio remoto per la gestione delle librerie.
+     *
+     * @return istanza remota di {@code LibInterface}
+     */
     public LibInterface getLibService() {
         if (libService == null) {
             try {
@@ -161,6 +229,9 @@ public final class CliUtil {
         return libService;
     }
 
+    /**
+     * Registra il client al servizio di monitoraggio remoto del server.
+     */
     public void setMonitorService() {
         if (monitorService == null) {
             try {
@@ -175,6 +246,13 @@ public final class CliUtil {
         }
     }
 
+    /**
+     * Verifica se due liste di libri contengono elementi differenti.
+     *
+     * @param list1 prima lista
+     * @param list2 seconda lista
+     * @return {@code true} se ci sono differenze, {@code false} se sono uguali
+     */
     public boolean hannoDifferenze(List<Libro> list1, List<Libro> list2) {
         if (list1.size() != list2.size()) return true;
         Set<Libro> set = new HashSet<>(list2);
@@ -182,6 +260,14 @@ public final class CliUtil {
         return false;
     }
 
+    /**
+     * Carica e mostra una schermata JavaFX specificata da {@link FXMLtype}.
+     * Può anche passare parametri al controller corrispondente.
+     *
+     * @param newFxml tipo della schermata da caricare
+     * @param oldFXML schermata precedente (facoltativa, usata per ritorno)
+     * @param obj     parametro da passare al controller (es. {@link Libro}, {@link Valutazione}, {@link String})
+     */
     public void buildStage(FXMLtype newFxml, FXMLtype oldFXML,Object obj) {
         if(lock == null)
             lock = obj;
@@ -318,6 +404,13 @@ public final class CliUtil {
         }
     }
 
+    /**
+     * Crea un alert di errore personalizzato.
+     *
+     * @param titolo    titolo della finestra
+     * @param messaggio contenuto del messaggio
+     * @return oggetto {@link Alert} configurato
+     */
     public Alert createAlert(String titolo, String messaggio) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titolo);
@@ -332,6 +425,14 @@ public final class CliUtil {
         return alert;
     }
 
+    /**
+     * Crea una finestra di conferma con bottoni personalizzati.
+     *
+     * @param titolo    titolo della finestra
+     * @param messaggio contenuto del messaggio
+     * @param binary    se {@code true}, mostra bottoni Sì/No; altrimenti solo OK
+     * @return oggetto {@link Alert} configurato
+     */
     public Alert createConfirmation(String titolo, String messaggio, boolean binary) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(titolo);
@@ -349,14 +450,35 @@ public final class CliUtil {
         return alert;
     }
 
+    /**
+     * Restituisce l’icona di una stella piena.
+     *
+     * @return immagine PNG di stella piena
+     */
     public Image getStarFull() {
         return starFull;
     }
 
+    /**
+     * Restituisce l’icona di una stella vuota.
+     *
+     * @return immagine PNG di stella vuota
+     */
     public Image getStarEmpty() {
         return starEmpty;
     }
 
+
+    /**
+     * Imposta le immagini delle 5 stelle in base al voto espresso (float tra 0 e 5).
+     *
+     * @param star1 prima stella
+     * @param star2 seconda stella
+     * @param star3 terza stella
+     * @param star4 quarta stella
+     * @param star5 quinta stella
+     * @param voto  valore da 0 a 5 (con frazioni)
+     */
     public void setStar(ImageView star1, ImageView star2, ImageView star3, ImageView star4, ImageView star5, float voto) {
         ImageView[] stars = {star1, star2, star3, star4, star5};
         for (int i = 0; i < stars.length; i++) {
@@ -375,6 +497,12 @@ public final class CliUtil {
         }
     }
 
+    /**
+     * Mostra un riepilogo degli errori riscontrati durante
+     * l’aggiornamento di una libreria, basandosi su codici restituiti dal server.
+     *
+     * @param risultati lista di interi alternati (ID libro, codice errore)
+     */
     public void reviewLibUpdate(List<Integer> risultati){
         StringBuilder sb = new StringBuilder();
         try {
@@ -403,6 +531,12 @@ public final class CliUtil {
         }
     }
 
+    /**
+     * Applica uno stile trasparente a un controllo con icona (es. pulsante) e
+     * aggiunge un’animazione al passaggio del mouse.
+     *
+     * @param control controllo {@link Labeled} da stilizzare
+     */
     public void styleIconControl(Labeled control){
         control.setStyle(
                 "-fx-background-color: transparent;"
