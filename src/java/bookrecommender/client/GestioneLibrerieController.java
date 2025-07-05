@@ -325,7 +325,7 @@ public class GestioneLibrerieController extends TreeTableEngine {
     }
 
     private void setMenuButtonStyle(MenuButton mb) {
-        mb.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 16, 16, true, true)));
+        mb.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
         CliUtil.getInstance().styleIconControl(mb);
     }
 

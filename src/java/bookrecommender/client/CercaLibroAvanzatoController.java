@@ -58,7 +58,6 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
         initBasicSearch();
         initSRecensioniCol();
         initSAggiungiAdvCol();
-        // Colonna che mostra icone in base alla presenza del libro nelle librerie utente
         librerieCol.setStyle("-fx-alignment: CENTER;");
         librerieCol.setCellFactory(col -> new TableCell<>() {
             private final ImageView ivTrue  = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")),12,12,true,true));
@@ -71,17 +70,10 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
                     return;
                 }
                 Libro libro = getTableView().getItems().get(getIndex());
-                boolean has = false;
-                try {
-                    has = CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), libro);
-                } catch (RemoteException e) {
-                    CliUtil.getInstance().createAlert("Errore di connessione", "Impossibile verificare la presenza del libro in libreria.").showAndWait();
-                }
-                setGraphic(has ? ivTrue : ivFalse);
+                setGraphic(getInLib().get(libro) ? ivTrue : ivFalse);
             }
         });
         initTableViews();
-        // Logout automatico alla chiusura della finestra
         Platform.runLater(() -> {
             Stage stage = (Stage) MenuTipoRicerca.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {

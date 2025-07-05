@@ -15,9 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
 import java.rmi.RemoteException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public abstract class TableViewEngine {
     /**
@@ -166,6 +164,10 @@ public abstract class TableViewEngine {
     protected abstract FXMLtype getMyFXMLtype();
 
     private String searchType = "";
+    private final Map<Libro, Boolean> hasRec = new HashMap<>();
+    private final Map<Libro, Boolean> hasVal = new HashMap<>();
+    private final Map<Libro, Boolean> hasCon = new HashMap<>();
+    private final Map<Libro, Boolean> inLib = new HashMap<>();
 
     protected void initBasicSearch() {
         getCampoRicercaAnno().setVisible(false);
@@ -209,14 +211,7 @@ public abstract class TableViewEngine {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    Libro l = getTableView().getItems().get(getIndex());
-                    boolean has = false;
-                    try {
-                        has = CliUtil.getInstance().getSearchService().hasValRec(l);
-                    } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore", "Impossibile verificare le recensioni: " + e.getMessage()).showAndWait();
-                    }
-                    setGraphic(has ? check : noCheck);
+                    setGraphic(hasRec.get(getTableView().getItems().get(getIndex())) ? check : noCheck);
                     setAlignment(Pos.CENTER);
                 }
             }
@@ -234,7 +229,6 @@ public abstract class TableViewEngine {
                 }
                 MenuButton menu = menuAzioni(getTableView(), getIndex());
                 setMenuAzioni(menu, getTableView(), getIndex());
-                CliUtil.getInstance().styleIconControl(menu);
                 menu.getItems().removeIf(menuItem -> menuItem.getText().equals("Rimuovi"));
                 setGraphic(menu);
                 setAlignment(Pos.CENTER);
@@ -313,9 +307,8 @@ public abstract class TableViewEngine {
                         return;
                     }
                     MenuButton menu = menuAzioni(getTableView(), getIndex());
-                    setMenuAzioni(menu, getTableView(), getIndex());
-                    CliUtil.getInstance().styleIconControl(menu);
                     menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Aggiungi ad una libreria"));
+                    setMenuAzioni(menu, getTableView(), getIndex());
                     setGraphic(menu);
                     setAlignment(Pos.CENTER);
                 }
@@ -325,7 +318,6 @@ public abstract class TableViewEngine {
                 private final Button rimuovi = new Button();
                 {
                     rimuovi.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/minus-circle-red.png")), 16, 16, true, true)));
-                    CliUtil.getInstance().styleIconControl(rimuovi);
                     CliUtil.getInstance().styleIconControl(rimuovi);
                     rimuovi.setOnAction(evt -> {
                         Libro l = getTableView().getItems().get(getIndex());
@@ -382,13 +374,13 @@ public abstract class TableViewEngine {
     private MenuButton menuAzioni(TableView<Libro> tableView, int idx) {
         MenuButton menu = new MenuButton();
         menu.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
+        CliUtil.getInstance().styleIconControl(menu);
         MenuItem valuta = new MenuItem("Valuta");
         MenuItem consiglia = new MenuItem("Aggiungi Consigli");
         MenuItem rimuovi = new MenuItem("Rimuovi");
         MenuItem modValuta = new MenuItem("Modifica Valutazione");
         MenuItem modCons = new MenuItem("Modifica Consigli");
         MenuItem libreria = new MenuItem("Aggiungi ad una libreria");
-
 
         valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, getMyFXMLtype(), tableView.getItems().get(idx)));
         consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
@@ -417,19 +409,9 @@ public abstract class TableViewEngine {
     }
 
     private void setMenuAzioni(MenuButton menu, TableView<Libro> tableView, int index) {
-        boolean hasVal = false;
-        boolean hasCon = false;
-        boolean inLib = false;
-        try {
-            hasVal = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(index));
-            hasCon = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(index));
-            inLib = CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(index));
-        } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
-        }
         Set<String> daRimuovere;
-        if (inLib) {
-            daRimuovere = Set.of(hasVal ? "Valuta" : "Modifica Valutazione", hasCon ? "Aggiungi Consigli" : "Modifica Consigli"
+        if (inLib.get(tableView.getItems().get(index))) {
+            daRimuovere = Set.of(hasVal.get(tableView.getItems().get(index)) ? "Valuta" : "Modifica Valutazione", hasCon.get(tableView.getItems().get(index)) ? "Aggiungi Consigli" : "Modifica Consigli"
             );
         } else {
             daRimuovere = Set.of("Valuta", "Modifica Valutazione", "Aggiungi Consigli", "Modifica Consigli");
@@ -479,10 +461,42 @@ public abstract class TableViewEngine {
                     return;
             }
             ObservableList<Libro> data = FXCollections.observableArrayList(risultati);
+            hasRec.clear();
+            assert risultati != null;
+            for(Libro l : risultati){
+                hasRec.put(l, CliUtil.getInstance().getSearchService().hasValRec(l));
+            }
+            setLibriP(risultati);
             getSTableView().setItems(data);
         } catch (Exception e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
         }
+    }
+
+    private void setLibriP(List<Libro> libri){
+        if(CliUtil.getInstance().getCurrentToken() != null){
+            hasVal.clear();
+            hasCon.clear();
+            inLib.clear();
+            for(Libro l : libri){
+                try {
+                    inLib.put(l, CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), l));
+                    if(inLib.get(l) && hasRec.get(l)) {
+                        hasVal.put(l, CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l));
+                        hasCon.put(l, CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l));
+                    }else{
+                        hasVal.put(l, false);
+                        hasCon.put(l, false);
+                    }
+                } catch (RemoteException e) {
+                    CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                }
+            }
+        }
+    }
+
+    protected Map<Libro, Boolean> getInLib() {
+        return inLib;
     }
 
     @FXML
