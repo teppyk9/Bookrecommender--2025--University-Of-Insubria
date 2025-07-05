@@ -495,10 +495,6 @@ public abstract class TableViewEngine {
         }
     }
 
-    protected Map<Libro, Boolean> getInLib() {
-        return inLib;
-    }
-
     @FXML
     private void keyEnterPressed_1(KeyEvent e) {
         if ("Enter".equals(e.getCode().getName()))
@@ -566,5 +562,21 @@ public abstract class TableViewEngine {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
         }
+    }
+
+    protected Map<Libro, Boolean> getHasRec() {
+        return this.hasRec;
+    }
+
+    protected Map<Libro, Boolean> getHasVal() {
+        return this.hasVal;
+    }
+
+    protected Map<Libro, Boolean> getHasCon() {
+        return this.hasCon;
+    }
+
+    protected Map<Libro, Boolean> getInLib() {
+        return this.inLib;
     }
 }

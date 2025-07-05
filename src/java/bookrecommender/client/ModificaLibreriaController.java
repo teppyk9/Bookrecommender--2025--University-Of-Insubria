@@ -43,11 +43,6 @@ public class ModificaLibreriaController extends TableViewEngine{
         NomeLibreria.setDisable(true);
         NomeLibreria.setEditable(false);
         NomeLibreria.setVisible(false);
-        initBasicSearch();
-        initSAddRemCol();
-        initOActionCol(true);
-        initOTableView();
-        initTableViews();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
             stage.setOnCloseRequest(event -> saveFlag());
@@ -63,6 +58,26 @@ public class ModificaLibreriaController extends TableViewEngine{
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore", "Impossibile caricare la libreria: " + e.getMessage()).showAndWait();
         }
+        for(Libro l : OriginalLibri){
+            try {
+                getInLib().put(l, CliUtil.getInstance().getLibService().isLibPresent(CliUtil.getInstance().getCurrentToken(), l));
+                getHasRec().put(l, CliUtil.getInstance().getSearchService().hasValRec(l));
+                if(getInLib().get(l) && getHasRec().get(l)) {
+                    getHasVal().put(l, CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l));
+                    getHasCon().put(l, CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l));
+                }else{
+                    getHasVal().put(l, false);
+                    getHasCon().put(l, false);
+                }
+            } catch (RemoteException e) {
+                CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+            }
+        }
+        initBasicSearch();
+        initSAddRemCol();
+        initOActionCol(true);
+        initOTableView();
+        initTableViews();
     }
 
     @Override protected TextField getCampoRicerca(){
