@@ -29,6 +29,7 @@ import java.util.Objects;
  */
 public class CercaLibroAvanzatoController extends TableViewEngine {
 
+    @FXML private ProgressIndicator loadingCircle;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
@@ -217,6 +218,11 @@ public class CercaLibroAvanzatoController extends TableViewEngine {
     @Override
     protected FXMLtype getMyFXMLtype() {
         return FXMLtype.CERCA_AVANZATO;
+    }
+
+    @Override
+    protected ProgressIndicator getProgressIndicator() {
+        return loadingCircle;
     }
 
     /**

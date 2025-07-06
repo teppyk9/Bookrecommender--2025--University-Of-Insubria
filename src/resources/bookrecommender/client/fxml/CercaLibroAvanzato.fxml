@@ -6,6 +6,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -20,7 +21,7 @@
               <Font size="17.0" />
           </font>
       </Text>
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="28.0" layoutY="72.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="744.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="28.0" layoutY="72.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="714.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE" AnchorPane.rightAnchor="60.0">
           <items>
               <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
               <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
@@ -33,7 +34,7 @@
           </opaqueInsets>
       </Button>
       <TextField fx:id="campoRicercaAnno" layoutX="305.0" layoutY="103.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="167.0" promptText="Anno..." styleClass="field" />
-      <TextField fx:id="campoRicerca" layoutX="473.0" layoutY="103.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" />
+      <TextField fx:id="campoRicerca" layoutX="473.0" layoutY="103.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="60.0" />
    <CheckBox fx:id="checkRicerca" layoutX="28.0" layoutY="103.0" mnemonicParsing="false" onAction="#setRicerca" prefHeight="25.0" prefWidth="159.0" styleClass="checkbox" text="Cerca nelle tue librerie" />
    <TableView fx:id="tableView" layoutX="28.0" layoutY="145.0" prefHeight="287.0" prefWidth="744.0">
      <columns>
@@ -45,6 +46,7 @@
          <TableColumn fx:id="aggiungiCol" prefWidth="65.5" text="Opzioni" />
      </columns>
    </TableView>
+   <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="743.0" layoutY="72.0" prefHeight="25.0" prefWidth="19.0" />
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />
       <URL value="@../stylesheets/TableUtil.css" />

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModificaLibreriaController extends TableViewEngine{
+    @FXML private ProgressIndicator loadingCircle;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
@@ -98,6 +99,11 @@ public class ModificaLibreriaController extends TableViewEngine{
     @Override
     protected FXMLtype getMyFXMLtype() {
         return FXMLtype.MODIFICALIBRERIA;
+    }
+
+    @Override
+    protected ProgressIndicator getProgressIndicator() {
+        return loadingCircle;
     }
 
     @Override protected MenuButton getMenuTipoRicerca(){

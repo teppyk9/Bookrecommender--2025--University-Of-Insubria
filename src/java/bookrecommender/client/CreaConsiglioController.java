@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class CreaConsiglioController extends TableViewEngine {
 
+    @FXML private ProgressIndicator loadingCircle;
     /** Campo di testo per la ricerca del titolo o autore */
     @FXML private TextField campoRicerca;
 
@@ -287,6 +288,11 @@ public class CreaConsiglioController extends TableViewEngine {
     @Override
     protected FXMLtype getMyFXMLtype() {
         return FXMLtype.CREACONSIGLIO;
+    }
+
+    @Override
+    protected ProgressIndicator getProgressIndicator() {
+        return loadingCircle;
     }
 
     /**
