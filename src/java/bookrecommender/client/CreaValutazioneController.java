@@ -21,81 +21,81 @@ import java.util.List;
  */
 public class CreaValutazioneController {
 
-    // Etichetta che visualizza il titolo del libro da valutare
+    /** Etichetta che visualizza il titolo del libro da valutare*/
     @FXML private Label titoloLibro;
 
-    // Pulsante che avvia il salvataggio della valutazione
+    /** Pulsante che avvia il salvataggio della valutazione*/
     @FXML private Button BottoneSalva;
 
-    // Etichetta che mostra eventuali messaggi d'errore all'utente
+    /** Etichetta che mostra eventuali messaggi d'errore all'utente*/
     @FXML private Label messaggioErrore;
 
-// Stelle cliccabili per la valutazione dello "Stile"
+    /** Stelle cliccabili per la valutazione dello "Stile"*/
     @FXML private ImageView starStile1;
     @FXML private ImageView starStile2;
     @FXML private ImageView starStile3;
     @FXML private ImageView starStile4;
     @FXML private ImageView starStile5;
 
-    // Etichetta che mostra il voto assegnato allo stile
+    /** Etichetta che mostra il voto assegnato allo stile*/
     @FXML private Label votoStile;
 
-    // Campo testuale per commentare lo stile
+    /** Campo testuale per commentare lo stile*/
     @FXML private TextField testoStile;
 
-    // Stelle cliccabili per la valutazione del "Contenuto"
+    /** Stelle cliccabili per la valutazione del "Contenuto"*/
     @FXML private ImageView starContenuto1;
     @FXML private ImageView starContenuto2;
     @FXML private ImageView starContenuto3;
     @FXML private ImageView starContenuto4;
     @FXML private ImageView starContenuto5;
 
-    // Etichetta che mostra il voto assegnato al contenuto
+    /** Etichetta che mostra il voto assegnato al contenuto*/
     @FXML private Label votoContenuto;
 
-    // Campo testuale per commentare il contenuto
+    /** Campo testuale per commentare il contenuto*/
     @FXML private TextField testoContenuto;
 
-    // Stelle cliccabili per la valutazione della "Gradevolezza"
+    /** Stelle cliccabili per la valutazione della "Gradevolezza"*/
     @FXML private ImageView starGradevolezza1;
     @FXML private ImageView starGradevolezza2;
     @FXML private ImageView starGradevolezza3;
     @FXML private ImageView starGradevolezza4;
     @FXML private ImageView starGradevolezza5;
 
-    // Etichetta che mostra il voto assegnato alla gradevolezza
+    /** Etichetta che mostra il voto assegnato alla gradevolezza*/
     @FXML private Label votoGradevolezza;
 
-    // Campo testuale per commentare la gradevolezza
+    /** Campo testuale per commentare la gradevolezza*/
     @FXML private TextField testoGradevolezza;
 
-    // Stelle cliccabili per la valutazione dell'"Originalità"
+    /** Stelle cliccabili per la valutazione dell'"Originalità"*/
     @FXML private ImageView starOriginalita1;
     @FXML private ImageView starOriginalita2;
     @FXML private ImageView starOriginalita3;
     @FXML private ImageView starOriginalita4;
     @FXML private ImageView starOriginalita5;
 
-    // Etichetta che mostra il voto assegnato all'originalità
+    /** Etichetta che mostra il voto assegnato all'originalità*/
     @FXML private Label votoOriginalita;
 
-    // Campo testuale per commentare l'originalità
+    /** Campo testuale per commentare l'originalità*/
     @FXML private TextField testoOriginalita;
 
-    // Stelle cliccabili per la valutazione dell'"Edizione"
+    /** Stelle cliccabili per la valutazione dell'"Edizione"*/
     @FXML private ImageView starEdizione1;
     @FXML private ImageView starEdizione2;
     @FXML private ImageView starEdizione3;
     @FXML private ImageView starEdizione4;
     @FXML private ImageView starEdizione5;
 
-    // Etichetta che mostra il voto assegnato all'edizione
+    /**Etichetta che mostra il voto assegnato all'edizione*/
     @FXML private Label votoEdizione;
 
-    // Campo testuale per commentare l'edizione
+    /** Campo testuale per commentare l'edizione*/
     @FXML private TextField testoEdizione;
 
-    // Campo testuale per un commento finale generico alla valutazione
+    /** Campo testuale per un commento finale generico alla valutazione*/
     @FXML private TextField testoFinale;
 
     private Libro libro;

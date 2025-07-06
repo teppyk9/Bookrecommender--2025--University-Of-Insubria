@@ -88,7 +88,7 @@ public class DettaglioLibroController {
     public ListView<Valutazione> listaValutazioni;
     public ListView<Libro> listaConsigli;
 
-    // Dettagli del libro ottenuti dal server (valutazioni e consigli)
+    /** Dettagli del libro ottenuti dal server (valutazioni e consigli)*/
     private Libro_Details details;
 
     /**
