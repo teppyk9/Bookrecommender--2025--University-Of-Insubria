@@ -11,7 +11,6 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -44,6 +43,8 @@ public class AddLibroLibreriaController extends TreeTableEngine {
     @FXML private Button addButton;
 
     private Libro libro;
+    private FXMLtype odlFXML;
+
     private final Map<String, Integer> libCounts = new HashMap<>();
     private final Map<String, Boolean> libPresent = new HashMap<>();
     private final Map<String, LocalDate> libDates = new HashMap<>();
@@ -197,7 +198,8 @@ public class AddLibroLibreriaController extends TreeTableEngine {
      *
      * @param libro libro da aggiungere
      */
-    public void setLibro(Libro libro) {
+    public void setLibro(Libro libro, FXMLtype odlFXML) {
+        this.odlFXML = odlFXML;
         this.libro = libro;
         loadLibraries();
     }
@@ -216,8 +218,8 @@ public class AddLibroLibreriaController extends TreeTableEngine {
             updated.add(libro);
             List<Integer> risultati = CliUtil.getInstance().getLibService().updateLib(CliUtil.getInstance().getCurrentToken(), nomeLib, updated);
             if (!risultati.isEmpty() && risultati.get(0) == 1) {
-                ((Stage)addButton.getScene().getWindow()).close();
                 CliUtil.getInstance().createConfirmation("Aggiornamento riuscito", "Il libro è stato aggiunto correttamente alla libreria '" + nomeLib + "'.", false).showAndWait();
+                CliUtil.getInstance().buildStage(odlFXML, null, null);
             } else {
                 CliUtil.getInstance().reviewLibUpdate(risultati);
             }
@@ -231,6 +233,6 @@ public class AddLibroLibreriaController extends TreeTableEngine {
      */
     @FXML
     private void ExitApplication() {
-        ((Stage)addButton.getScene().getWindow()).close();
+        CliUtil.getInstance().buildStage(odlFXML, null, null);
     }
 }

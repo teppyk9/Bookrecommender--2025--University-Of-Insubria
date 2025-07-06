@@ -254,13 +254,34 @@ public abstract class TableViewEngine {
                         items = FXCollections.observableArrayList();
                         target.setItems(items);
                     }
-                    if (!containsLibro(items, l)) items.add(l);
+                    if (!containsLibro(items, l)) {
+                        inLib.put(l, true);
+                        try {
+                            hasRec.put(l, CliUtil.getInstance().getSearchService().hasValRec(l));
+                            if( hasRec.get(l)) {
+                                hasVal.put(l, CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l));
+                                hasCon.put(l, CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l));
+                            } else {
+                                hasVal.put(l, false);
+                                hasCon.put(l, false);
+                            }
+                        } catch (RemoteException e) {
+                            CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                        }
+                        items.add(l);
+                    }
                 });
                 rimuovi.setOnAction(evt -> {
                     Libro l = getTableView().getItems().get(getIndex());
                     TableView<Libro> target = getOTableView();
                     ObservableList<Libro> items = target.getItems();
-                    if (containsLibro(items, l)) items.removeIf(item -> item.equals(l));
+                    if (containsLibro(items, l)) {
+                        items.removeIf(item -> item.equals(l));
+                        inLib.remove(l);
+                        hasVal.remove(l);
+                        hasCon.remove(l);
+                        hasRec.remove(l);
+                    }
                 });
             }
 
@@ -293,47 +314,33 @@ public abstract class TableViewEngine {
      * In entrambi i casi, l'aggiornamento della grafica della cella avviene nel metodo
      * <code>updateItem(Void, boolean)</code>, che imposta allineamento e graphic a seconda che la cella sia vuota.
      *
-     * @param type se <code>true</code> viene creato un menu completo (valuta, consiglia, rimuovi);
-     *             se <code>false</code> viene creato un menu minimale (solo rimuovi)
      */
-    protected void initOActionCol(boolean type){
-        if(type){
-            getOActionCol().setCellFactory(col -> new TableCell<>() {
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(empty) {
-                        setGraphic(null);
-                        return;
+    protected void initOActionCol(){
+        getOActionCol().setCellFactory(col -> new TableCell<>() {
+            private final Button rimuovi = new Button();
+            {
+                rimuovi.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/minus-circle-red.png")), 16, 16, true, true)));
+                CliUtil.getInstance().styleIconControl(rimuovi);
+                rimuovi.setOnAction(evt -> {
+                    Libro l = getTableView().getItems().get(getIndex());
+                    ObservableList<Libro> items = getOTableView().getItems();
+                    if (containsLibro(items, l)) {
+                        items.removeIf(item -> item.equals(l));
+                        inLib.remove(l);
+                        hasVal.remove(l);
+                        hasCon.remove(l);
+                        hasRec.remove(l);
                     }
-                    MenuButton menu = menuAzioni(getTableView(), getIndex());
-                    menu.getItems().removeIf(menuItem ->  menuItem.getText().equals("Aggiungi ad una libreria"));
-                    setMenuAzioni(menu, getTableView(), getIndex());
-                    setGraphic(menu);
-                    setAlignment(Pos.CENTER);
-                }
-            });
-        } else {
-            getOActionCol().setCellFactory(col -> new TableCell<>() {
-                private final Button rimuovi = new Button();
-                {
-                    rimuovi.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/minus-circle-red.png")), 16, 16, true, true)));
-                    CliUtil.getInstance().styleIconControl(rimuovi);
-                    rimuovi.setOnAction(evt -> {
-                        Libro l = getTableView().getItems().get(getIndex());
-                        ObservableList<Libro> items = getOTableView().getItems();
-                        if (containsLibro(items, l)) items.removeIf(item -> item.equals(l));
-                    });
-                }
+                });
+            }
 
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setGraphic(empty ? null : rimuovi);
-                    setAlignment(Pos.CENTER);
-                }
-            });
-        }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : rimuovi);
+                setAlignment(Pos.CENTER);
+            }
+        });
     }
 
     protected void initOTableView() {
@@ -356,7 +363,7 @@ public abstract class TableViewEngine {
     protected void initForConsigli(){
         initBasicSearch();
         initSAddRemCol();
-        initOActionCol(false);
+        initOActionCol();
         initOTableView();
         initTableViews();
     }
@@ -400,7 +407,7 @@ public abstract class TableViewEngine {
         libreria.setOnAction(evt -> {
             Libro l = tableView.getItems().get(idx);
             if(l != null)
-                CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGILIBROLIBRERIA,null, l);
+                CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGILIBROLIBRERIA,getMyFXMLtype(), l);
         });
         modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
         menu.getItems().addAll(valuta, modValuta, consiglia, modCons, libreria, rimuovi);
