@@ -93,7 +93,12 @@ public enum FXMLtype {
     /**
      * Schermata per modificare una valutazione esistente.
      */
-    MODIFICAVALUTAZIONE("/bookrecommender/client/fxml/ModificaValutazione.fxml", "Modifica Valutazione");
+    MODIFICAVALUTAZIONE("/bookrecommender/client/fxml/ModificaValutazione.fxml", "Modifica Valutazione"),
+
+    /**
+     * Schermata per modificare la password dell'utente o per eliminare l'account.
+     */
+    IMPOSTAZIONI("/bookrecommender/client/fxml/Impostazioni.fxml", "Impostazioni");
 
 
     private final String path;

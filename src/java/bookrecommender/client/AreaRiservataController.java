@@ -83,4 +83,8 @@ public class AreaRiservataController {
         CliUtil.getInstance().setCurrentToken(null);
         CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
     }
+
+    public void openImpostazioni() {
+        CliUtil.getInstance().buildStage(FXMLtype.IMPOSTAZIONI, null,null);
+    }
 }

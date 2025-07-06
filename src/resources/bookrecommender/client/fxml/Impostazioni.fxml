@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ImpostazioniController">
+   <children>
+      <Button fx:id="goBackButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBackAreaRiservata" text="Indietro" />
+      <Button fx:id="eliminaAccountButton" layoutX="518.0" layoutY="296.0" mnemonicParsing="false" onAction="#eliminaAccount" text="Elimina Account" />
+      <Button fx:id="cambiaPasswordButton" layoutX="177.0" layoutY="296.0" mnemonicParsing="false" onAction="#cambiaPassword" text="Cambia password" />
+      <HBox fx:id="firstPasswordField" layoutX="252.0" layoutY="153.0" prefHeight="38.0" prefWidth="316.0">
+         <children>
+            <Label fx:id="labePassword1" contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
+            <PasswordField fx:id="PasswordField1" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
+         </children>
+      </HBox>
+      <HBox fx:id="secondPasswordField" layoutX="252.0" layoutY="206.0" prefHeight="38.0" prefWidth="316.0">
+         <children>
+            <Label fx:id="labelPassword2" contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
+            <PasswordField fx:id="PasswordField2" prefHeight="38.0" prefWidth="205.0" styleClass="field" />
+         </children>
+      </HBox>
+      <Label fx:id="labelErrore" layoutX="382.0" layoutY="262.0" text="Errore!" />
+   </children>
+</AnchorPane>

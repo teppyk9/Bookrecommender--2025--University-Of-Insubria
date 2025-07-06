@@ -16,5 +16,6 @@
             <Button fx:id="BottoneLogOut" layoutX="537.0" layoutY="147.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="LogOut" />
          </children>
       </Pane>
+      <Button fx:id="impostazioniButton" layoutX="684.0" layoutY="395.0" mnemonicParsing="false" onAction="#openImpostazioni" text="Impostazioni" />
    </children>
 </AnchorPane>
