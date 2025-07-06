@@ -26,21 +26,74 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Controller JavaFX per la schermata di gestione delle librerie personali dell’utente.
+ * <p>
+ * Estende {@link TreeTableEngine} per presentare una struttura ad albero in cui ogni nodo radice
+ * rappresenta una libreria e i nodi figli rappresentano i libri contenuti.
+ * Permette di:
+ * <ul>
+ *     <li>Visualizzare metadati e stato di valutazioni/consigli per ogni libro</li>
+ *     <li>Modificare o eliminare librerie</li>
+ *     <li>Valutare, consigliare, rimuovere o modificare libri</li>
+ *     <li>Rinominare librerie tramite form e pulsante</li>
+ * </ul>
+ * La comunicazione con il server avviene tramite RMI.
+ */
 public class GestioneLibrerieController extends TreeTableEngine {
+
+    /** Colonna che mostra il nome della libreria o il titolo del libro. */
     @FXML private TreeTableColumn<Object, String> nameColumn;
+
+    /** Colonna che mostra il numero di libri contenuti nella libreria. */
     @FXML private TreeTableColumn<Object, Integer> countColumn;
+
+    /** Colonna che mostra la data di creazione della libreria. */
     @FXML private TreeTableColumn<Object, LocalDate> dateColumn;
+
+    /** Colonna che contiene i pulsanti di azione (modifica, elimina, valuta, ecc.). */
     @FXML private TreeTableColumn<Object, Void> azioniColumn;
+
+    /** Colonna che indica se un libro ha almeno una valutazione. */
     @FXML private TreeTableColumn<Object, Boolean> isValColumn;
+
+    /** Colonna che indica se un libro ha almeno un consiglio. */
     @FXML private TreeTableColumn<Object, Boolean> isConsColumn;
+
+    /** Colonna che mostra la data dell’ultima valutazione del libro. */
     @FXML private TreeTableColumn<Object, LocalDate> lastValColumn;
+
+    /** Colonna che mostra la data dell’ultimo consiglio associato al libro. */
     @FXML private TreeTableColumn<Object, LocalDate> lastConsColumn;
+
+    /** Campo di testo per inserire il nuovo nome della libreria selezionata. */
     @FXML private TextField NomeLibreria;
+
+    /** Pulsante che conferma la modifica del nome della libreria. */
     @FXML private Button BottoneCambiaNome;
 
+    /** Mappa che associa a ogni nome di libreria il numero di libri in essa contenuti. */
     private final Map<String, Integer> libCounts = new HashMap<>();
+
+    /** Mappa che associa a ogni nome di libreria la sua data di creazione. */
     private final Map<String, LocalDate> libDates = new HashMap<>();
 
+    /**
+     * Metodo di inizializzazione chiamato automaticamente da JavaFX dopo il caricamento dell’FXML.
+     * Configura le colonne della tabella, associa le proprietà visive, imposta i listener degli eventi,
+     * e carica inizialmente tutte le librerie dell’utente tramite invocazione remota al server.
+     * <p>
+     * Le colonne vengono popolate con proprietà specifiche degli oggetti:
+     * <ul>
+     *     <li>{@code nameColumn} mostra il titolo della libreria o del libro</li>
+     *     <li>{@code countColumn} e {@code dateColumn} sono collegate alle mappe {@code libCounts} e {@code libDates}</li>
+     *     <li>{@code isValColumn} e {@code isConsColumn} mostrano check/icon in base alla presenza di valutazioni/consigli</li>
+     *     <li>{@code lastValColumn} e {@code lastConsColumn} mostrano la data dell’ultima valutazione/consiglio</li>
+     *     <li>{@code azioniColumn} visualizza menu dinamici contestuali (per librerie o libri)</li>
+     * </ul>
+     * Viene anche registrato un evento per la chiusura della finestra e viene disabilitato il pulsante
+     * {@code BottoneCambiaNome} se non è selezionata una libreria.
+     */
     @FXML
     public void initialize() {
         initializeTree();
@@ -101,6 +154,13 @@ public class GestioneLibrerieController extends TreeTableEngine {
         });
     }
 
+    /**
+     * Configura una colonna booleana per visualizzare un'icona (check o alert)
+     * in base alla proprietà restituita da una funzione applicata a {@link LibroRow}.
+     *
+     * @param col  La colonna da configurare.
+     * @param prop La funzione che restituisce la proprietà booleana da visualizzare.
+     */
     private void setupCheckColumn(TreeTableColumn<Object, Boolean> col, java.util.function.Function<LibroRow, javafx.beans.property.BooleanProperty> prop) {
         col.setStyle("-fx-alignment: CENTER;");
         col.setCellValueFactory(c -> {
@@ -123,6 +183,13 @@ public class GestioneLibrerieController extends TreeTableEngine {
         });
     }
 
+    /**
+     * Gestisce il doppio clic su un elemento della tabella.
+     * Se si tratta di una libreria, apre la schermata di modifica della libreria.
+     * Se si tratta di un libro, apre la schermata di dettaglio del libro.
+     *
+     * @param v Oggetto selezionato dall'utente.
+     */
     @Override
     protected void handleDoubleClick(Object v) {
         if (v instanceof String s)
@@ -131,21 +198,49 @@ public class GestioneLibrerieController extends TreeTableEngine {
             CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, null, lr.getLibro());
     }
 
+    /**
+     * Recupera i contenuti di una libreria dal server.
+     *
+     * @param token   Token di autenticazione dell'utente.
+     * @param nomeLib Nome della libreria da caricare.
+     * @return Lista di {@link Libro} contenuti nella libreria.
+     * @throws RemoteException Se la comunicazione con il server fallisce.
+     */
     @Override
     protected List<bookrecommender.common.Libro> fetchLibraryContents(Token token, String nomeLib) throws RemoteException {
         return CliUtil.getInstance().getLibService().getLib(token, nomeLib);
     }
 
+    /**
+     * Restituisce la mappa con i conteggi dei libri per ciascuna libreria.
+     *
+     * @return Mappa nome libreria → numero di libri.
+     */
     @Override
     protected Map<String, Integer> getLibCounts() {
         return libCounts;
     }
 
+    /**
+     * Restituisce la mappa con le date di creazione delle librerie.
+     *
+     * @return Mappa nome libreria → data di creazione.
+     */
     @Override
     protected Map<String, LocalDate> getLibDates() {
         return libDates;
     }
 
+    /**
+     * Carica i libri associati a una libreria specifica e li inserisce come figli
+     * del nodo della TreeTable. Per ogni libro, recupera dal server informazioni
+     * su valutazioni, consigli e relative date.
+     * <p>
+     * In caso di errore durante la comunicazione, viene mostrato un alert.
+     *
+     * @param libNode Nodo della libreria nella TreeTable.
+     * @param nomeLib Nome della libreria.
+     */
     @Override
     protected void caricaFigliLibri(TreeItem<Object> libNode, String nomeLib) {
         try {
@@ -164,6 +259,18 @@ public class GestioneLibrerieController extends TreeTableEngine {
         }
     }
 
+    /**
+     * Gestisce la modifica del nome di una libreria selezionata.
+     * <p>
+     * Il metodo verifica che:
+     * <ul>
+     *     <li>Sia selezionata una libreria</li>
+     *     <li>Il nuovo nome abbia lunghezza compresa tra 5 e 50 caratteri</li>
+     *     <li>Il nuovo nome sia diverso da quello attuale</li>
+     * </ul>
+     * Se tutti i controlli sono superati, invia la richiesta di modifica al server tramite RMI.
+     * In base all'esito della modifica, mostra un messaggio di successo o errore.
+     */
     @FXML
     private void cambiaNome() {
         Object o = treeTableView.getSelectionModel().getSelectedItem().getValue();
@@ -191,16 +298,31 @@ public class GestioneLibrerieController extends TreeTableEngine {
         }
     }
 
+    /**
+     * Ritorna alla schermata dell'area riservata dell'utente.
+     */
     @FXML
     private void ExitApplication() {
         CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
     }
 
+    /**
+     * Apre la schermata per la creazione di una nuova libreria.
+     */
     @FXML
     void creaLibreria() {
         CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null, null);
     }
 
+    /**
+     * Crea e restituisce un {@link MenuButton} contenente le azioni disponibili per una libreria,
+     * come "Modifica" e "Elimina". Il comportamento di ogni voce è gestito tramite listener.
+     * Se viene selezionata l’opzione "Elimina", viene chiesta conferma e, in caso positivo,
+     * viene inviata la richiesta di rimozione della libreria al server.
+     *
+     * @param cell La cella di tabella contenente la libreria selezionata.
+     * @return MenuButton con azioni contestuali per la libreria.
+     */
     private MenuButton createMenuLibrerieActions(TreeTableCell<Object, Void> cell) {
         MenuButton mb = new MenuButton();
         MenuItem modifica = new MenuItem("Modifica Libreria");
@@ -237,6 +359,20 @@ public class GestioneLibrerieController extends TreeTableEngine {
         return mb;
     }
 
+    /**
+     * Crea e restituisce un {@link MenuButton} contenente le azioni disponibili per un libro.
+     * Le azioni includono:
+     * <ul>
+     *     <li>Aggiungi o modifica valutazione</li>
+     *     <li>Aggiungi o modifica consiglio</li>
+     *     <li>Rimuovi il libro dalla libreria</li>
+     * </ul>
+     * Se il libro ha meno di 3 elementi dopo la rimozione, la libreria non può essere aggiornata.
+     * Tutte le modifiche sono eseguite tramite chiamate RMI e l'utente è notificato con alert o conferme.
+     *
+     * @param cell La cella di tabella contenente il libro selezionato.
+     * @return MenuButton con azioni contestuali per il libro.
+     */
     private MenuButton createMenuBookActions(TreeTableCell<Object, Void> cell) {
         MenuButton mb = new MenuButton();
         MenuItem valuta = new MenuItem("Aggiungi Valutazione");
@@ -324,24 +460,68 @@ public class GestioneLibrerieController extends TreeTableEngine {
         return mb;
     }
 
+    /**
+     * Applica uno stile grafico al {@link MenuButton} inserendo un'icona a discesa e applicando
+     * lo stile definito da {@link CliUtil}.
+     *
+     * @param mb Il pulsante a cui applicare lo stile.
+     */
     private void setMenuButtonStyle(MenuButton mb) {
         mb.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
         CliUtil.getInstance().styleIconControl(mb);
     }
 
+    /**
+     * Classe di supporto per rappresentare un libro all’interno della TreeTableView.
+     * <p>
+     * Ogni oggetto {@code LibroRow} contiene:
+     * <ul>
+     *     <li>Il riferimento al {@link Libro} originale</li>
+     *     <li>Il titolo come proprietà osservabile per l’interfaccia</li>
+     *     <li>Due booleani per sapere se esistono valutazioni e consigli</li>
+     *     <li>Le date dell’ultima valutazione e dell’ultimo consiglio</li>
+     * </ul>
+     * Viene usata come wrapper per facilitare il binding tra dati e colonne nella tabella.
+     */
     public static class LibroRow {
+
+        /** Riferimento al libro rappresentato da questa riga. */
         private final Libro libro;
+
+        /** Titolo del libro, usato come proprietà osservabile. */
         private final StringProperty titolo;
+
+        /** Proprietà booleana che indica se il libro ha almeno una valutazione. */
         private final BooleanProperty hasValutazione;
+
+        /** Proprietà booleana che indica se il libro ha almeno una valutazione. */
         private final boolean boolVal;
+
+        /** Proprietà booleana che indica se il libro ha almeno un consiglio. */
         private final BooleanProperty hasConsiglio;
+
+        /** Valore booleano statico che indica la presenza di consigli (non osservabile). */
         private final boolean boolCons;
+
+        /** Data dell'ultima valutazione, come proprietà osservabile. */
         private final ObjectProperty<LocalDate> lastValDate;
+
+        /** Data dell'ultimo consiglio, come proprietà osservabile. */
         private final ObjectProperty<LocalDate> lastConsDate;
 
+
+        /**
+         * Costruttore che inizializza tutte le proprietà della riga libro.
+         *
+         * @param l      Il libro da rappresentare.
+         * @param val    True se il libro ha almeno una valutazione.
+         * @param cons   True se il libro ha almeno un consiglio.
+         * @param valD   Data dell’ultima valutazione del libro.
+         * @param consD  Data dell’ultimo consiglio per il libro.
+         */
         public LibroRow(Libro l, boolean val, boolean cons, LocalDate valD, LocalDate consD) {
             this.libro = l;
-            this.titolo = new SimpleStringProperty(l.getTitolo());
+            this.titolo = new SimpleStringProperty(l.   getTitolo());
             this.hasValutazione = new SimpleBooleanProperty(val);
             this.boolVal = val;
             this.hasConsiglio = new SimpleBooleanProperty(cons);
@@ -350,13 +530,65 @@ public class GestioneLibrerieController extends TreeTableEngine {
             this.lastConsDate = new SimpleObjectProperty<>(consD);
         }
 
+        /**
+         * Restituisce il libro originale associato a questa riga.
+         *
+         * @return Il libro rappresentato.
+         */
         public Libro getLibro() { return libro; }
+
+        /**
+         * Restituisce la proprietà osservabile del titolo del libro,
+         * utile per collegarla a una colonna della TreeTableView.
+         *
+         * @return Titolo del libro come {@code StringProperty}.
+         */
         public StringProperty titoloProperty() { return titolo; }
+
+        /**
+         * Restituisce la proprietà osservabile che indica
+         * se il libro ha almeno una valutazione.
+         *
+         * @return {@code BooleanProperty} true se il libro ha valutazioni.
+         */
         public BooleanProperty hasValutazioneProperty() { return hasValutazione; }
+
+        /**
+         * Restituisce il valore statico (non osservabile) che indica
+         * se il libro ha almeno una valutazione.
+         *
+         * @return true se è presente almeno una valutazione.
+         */
         public boolean hasValutazione() { return boolVal; }
+
+        /**
+         * Restituisce la proprietà osservabile che indica
+         * se il libro ha almeno un consiglio.
+         *
+         * @return {@code BooleanProperty} true se il libro ha consigli.
+         */
         public BooleanProperty hasConsiglioProperty() { return hasConsiglio; }
+
+        /**
+         * Restituisce il valore statico (non osservabile) che indica
+         * se il libro ha almeno un consiglio.
+         *
+         * @return true se è presente almeno un consiglio.
+         */
         public boolean hasConsiglio() { return boolCons; }
+
+        /**
+         * Restituisce la proprietà osservabile della data dell'ultima valutazione del libro.
+         *
+         * @return {@code ObjectProperty<LocalDate>} con la data dell’ultima valutazione.
+         */
         public ObjectProperty<LocalDate> lastValDateProperty() { return lastValDate; }
+
+        /**
+         * Restituisce la proprietà osservabile della data dell'ultimo consiglio per il libro.
+         *
+         * @return {@code ObjectProperty<LocalDate>} con la data dell’ultimo consiglio.
+         */
         public ObjectProperty<LocalDate> lastConsDateProperty() { return lastConsDate; }
     }
 }
