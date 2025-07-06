@@ -6,6 +6,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -162,6 +163,8 @@ public abstract class TableViewEngine {
     protected abstract Libro getMyLibro();
 
     protected abstract FXMLtype getMyFXMLtype();
+
+    protected abstract ProgressIndicator getProgressIndicator();
 
     private String searchType = "";
     private final Map<Libro, Boolean> hasRec = new HashMap<>();
@@ -449,36 +452,65 @@ public abstract class TableViewEngine {
     private void handleClickCerca() {
         String testo = getCampoRicerca().getText();
         String anno = getCampoRicercaAnno().getText();
+
         if (testo == null || testo.length() < 2) {
             getSTableView().setItems(FXCollections.observableArrayList());
             CliUtil.getInstance().createAlert("Errore", "Inserire almeno 2 caratteri per la ricerca.").showAndWait();
             return;
         }
-        List<Libro> risultati;
-        try {
-            switch (searchType) {
-                case "Titolo": risultati = searchByTitle(testo); break;
-                case "Autore": risultati = searchByAuthor(testo); break;
-                case "AutoreAnno":
-                    if (!validateYear(anno)) return;
-                    risultati = searchByAuthorAndYear(testo, Integer.parseInt(anno));
-                    break;
-                default:
-                    CliUtil.getInstance().createAlert("Errore", "Tipo di ricerca non selezionato.").showAndWait();
-                    return;
+
+        getProgressIndicator().setProgress(-1);
+        getProgressIndicator().setVisible(true);
+
+        Task<List<Libro>> searchTask = new Task<>() {
+            @Override
+            protected List<Libro> call() throws Exception {
+                List<Libro> risultati;
+                switch (searchType) {
+                    case "Titolo":
+                        risultati = searchByTitle(testo);
+                        break;
+                    case "Autore":
+                        risultati = searchByAuthor(testo);
+                        break;
+                    case "AutoreAnno":
+                        if (!validateYear(anno)) {
+                            return Collections.emptyList();
+                        }
+                        risultati = searchByAuthorAndYear(testo, Integer.parseInt(anno));
+                        break;
+                    default:
+                        throw new IllegalStateException("Tipo di ricerca non selezionato.");
+                }
+
+                hasRec.clear();
+                assert risultati != null;
+                for (Libro l : risultati) {
+                    hasRec.put(l, CliUtil.getInstance().getSearchService().hasValRec(l));
+                }
+                return risultati;
             }
+        };
+
+        searchTask.setOnSucceeded(evt -> {
+            List<Libro> risultati = searchTask.getValue();
             ObservableList<Libro> data = FXCollections.observableArrayList(risultati);
-            hasRec.clear();
-            assert risultati != null;
-            for(Libro l : risultati){
-                hasRec.put(l, CliUtil.getInstance().getSearchService().hasValRec(l));
-            }
             setLibriP(risultati);
             getSTableView().setItems(data);
-        } catch (Exception e) {
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
-        }
+            getProgressIndicator().setVisible(false);
+        });
+
+        searchTask.setOnFailed(evt -> {
+            Throwable ex = searchTask.getException();
+            CliUtil.getInstance().createAlert("Errore durante la ricerca", ex.getMessage()).showAndWait();
+            getProgressIndicator().setVisible(false);
+        });
+
+        Thread thread = new Thread(searchTask);
+        thread.setDaemon(true);
+        thread.start();
     }
+
 
     private void setLibriP(List<Libro> libri){
         if(CliUtil.getInstance().getCurrentToken() != null){

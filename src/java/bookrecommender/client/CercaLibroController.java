@@ -19,6 +19,7 @@ import javafx.stage.Stage;
  */
 public class CercaLibroController extends TableViewEngine {
 
+    @FXML private ProgressIndicator loadingCircle;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
@@ -202,6 +203,11 @@ public class CercaLibroController extends TableViewEngine {
     @Override
     protected FXMLtype getMyFXMLtype() {
         return null;
+    }
+
+    @Override
+    protected ProgressIndicator getProgressIndicator() {
+        return loadingCircle;
     }
 
     /**

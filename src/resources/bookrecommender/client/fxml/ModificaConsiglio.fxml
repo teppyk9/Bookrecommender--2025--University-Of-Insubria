@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -55,7 +56,7 @@
             </InnerShadow>
          </effect>
       </Separator>
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="172.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="297.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="172.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="266.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE" AnchorPane.rightAnchor="523.0">
          <items>
             <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
             <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
@@ -63,7 +64,7 @@
          </items>
       </MenuButton>
       <TextField fx:id="campoRicercaAnno" layoutX="13.0" layoutY="68.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" styleClass="field" />
-      <TextField fx:id="campoRicerca" layoutX="170.0" layoutY="68.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" />
+      <TextField fx:id="campoRicerca" layoutX="170.0" layoutY="68.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="523.0" />
       <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="437.0" layoutY="68.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="29.0" styleClass="cerca" text="Cerca">
          <opaqueInsets>
             <Insets />
@@ -75,6 +76,7 @@
       <Button fx:id="eliminaConsigliButton" layoutX="488.0" layoutY="108.0" mnemonicParsing="false" onAction="#eliminaConsigli" prefHeight="25.0" prefWidth="117.0" styleClass="bottone" text="Elimina Consiglio" />
       <Text layoutX="346.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Modifica consiglio" />
       <Label layoutX="598.0" layoutY="68.0" prefHeight="17.0" prefWidth="237.0" styleClass="sottotitolo" text="Consigliati" />
+      <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="439.0" layoutY="108.0" prefHeight="25.0" prefWidth="19.0" />
    </children>
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />

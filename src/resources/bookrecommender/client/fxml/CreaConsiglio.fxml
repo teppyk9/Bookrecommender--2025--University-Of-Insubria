@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -57,7 +58,7 @@
             </InnerShadow>
          </effect>
       </Separator>
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="171.0" layoutY="107.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="300.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="171.0" layoutY="107.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="267.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
          <items>
             <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
             <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
@@ -74,6 +75,7 @@
       <Button fx:id="salvaButton" layoutX="834.0" layoutY="107.0" mnemonicParsing="false" onAction="#salvaConsiglio" prefHeight="25.0" prefWidth="110.0" styleClass="bottone" text="Salva consiglio" />
       <Button fx:id="Bottone_GetAllBooks" layoutX="14.0" layoutY="107.0" mnemonicParsing="false" onAction="#getAllBooks" prefHeight="25.0" prefWidth="157.0" styleClass="bottone" text="Visualizza tutti i tuoi libri" />
       <Label layoutX="598.0" layoutY="68.0" prefHeight="17.0" prefWidth="237.0" styleClass="sottotitolo" text="Consigliati" />
+      <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="441.0" layoutY="107.0" prefHeight="25.0" prefWidth="19.0" />
    </children>
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />

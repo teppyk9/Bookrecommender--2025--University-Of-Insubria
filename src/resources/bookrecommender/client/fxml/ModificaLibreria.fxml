@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -58,14 +59,14 @@
          </effect>
       </Separator>
       <TextField fx:id="campoRicercaAnno" layoutX="14.0" layoutY="74.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Inserisci l'anno" styleClass="field" />
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="14.0" layoutY="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="457.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="14.0" layoutY="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="424.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE" AnchorPane.rightAnchor="522.0">
          <items>
             <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
             <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
             <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" text="Autore e anno di pubblicazione" />
          </items>
       </MenuButton>
-      <TextField fx:id="campoRicerca" layoutX="171.0" layoutY="74.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" />
+      <TextField fx:id="campoRicerca" layoutX="171.0" layoutY="74.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="522.0" />
       <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="438.0" layoutY="74.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="29.0" styleClass="cerca" text="Cerca">
          <opaqueInsets>
             <Insets />
@@ -82,6 +83,7 @@
             <Font size="17.0" />
          </font>
       </Text>
+      <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="440.0" layoutY="109.0" prefHeight="25.0" prefWidth="19.0" />
    </children>
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />

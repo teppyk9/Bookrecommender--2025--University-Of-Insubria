@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModificaConsiglioController extends TableViewEngine {
+    @FXML private ProgressIndicator loadingCircle;
     @FXML private Button GoBackButton_MainMenu;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
@@ -157,6 +158,11 @@ public class ModificaConsiglioController extends TableViewEngine {
     @Override
     protected FXMLtype getMyFXMLtype() {
         return FXMLtype.MODIFICACONSIGLIO;
+    }
+
+    @Override
+    protected ProgressIndicator getProgressIndicator() {
+        return loadingCircle;
     }
 
     @FXML

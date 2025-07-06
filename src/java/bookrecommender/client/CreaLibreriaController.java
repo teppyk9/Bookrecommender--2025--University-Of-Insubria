@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class CreaLibreriaController extends TableViewEngine {
 
+    @FXML private ProgressIndicator loadingCircle;
     /** Tabella dei risultati di ricerca. */
     @FXML private TableView <Libro>tableView;
 
@@ -150,6 +151,11 @@ public class CreaLibreriaController extends TableViewEngine {
     @Override
     protected FXMLtype getMyFXMLtype() {
         return FXMLtype.CREALIBRERIA;
+    }
+
+    @Override
+    protected ProgressIndicator getProgressIndicator() {
+        return loadingCircle;
     }
 
     /**

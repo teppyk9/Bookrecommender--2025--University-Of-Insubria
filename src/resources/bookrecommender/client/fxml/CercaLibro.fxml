@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -14,7 +15,7 @@
 <AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
     <children>
         <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="55.0" styleClass="indietro" />
-        <MenuButton fx:id="MenuTipoRicerca" layoutX="29.0" layoutY="77.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="726.0" styleClass="sceltaRicerca" text="Tipologia ricerca">
+        <MenuButton fx:id="MenuTipoRicerca" layoutX="29.0" layoutY="77.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="685.0" styleClass="sceltaRicerca" text="Tipologia ricerca" AnchorPane.rightAnchor="78.0">
             <items>
                 <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" styleClass="sceltaRicerca" text="Titolo" />
                 <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore" />
@@ -31,12 +32,13 @@
             </columns>
         </TableView>
       <Text layoutX="316.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Cerca Libro" />
-          <TextField fx:id="campoRicerca" layoutX="455.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field">
+          <TextField fx:id="campoRicerca" layoutX="455.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="78.0">
               <font>
                   <Font name="Century Gothic" size="1.0" />
               </font>
           </TextField>
           <Button fx:id="bottoneCerca" contentDisplay="CENTER" layoutX="722.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="29.0" styleClass="cerca" />
+      <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="724.0" layoutY="78.0" prefHeight="25.0" prefWidth="19.0" />
     </children>
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />
