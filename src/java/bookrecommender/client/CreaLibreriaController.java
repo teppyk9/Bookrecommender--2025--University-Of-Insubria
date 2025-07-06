@@ -73,7 +73,7 @@ public class CreaLibreriaController extends TableViewEngine {
     public void initialize() {
         initBasicSearch();
         initSAddRemCol();
-        initOActionCol(false);
+        initOActionCol();
         initOTableView();
         initTableViews();
     }

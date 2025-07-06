@@ -359,8 +359,8 @@ public final class CliUtil {
                         obj = lock;
                     AddLibroLibreriaController addLibroLibreriaController = loader.getController();
                     if(obj instanceof Libro) {
-                        stage = new Stage();
-                        addLibroLibreriaController.setLibro((Libro) obj);
+                        stage = primaryStage;
+                        addLibroLibreriaController.setLibro((Libro) obj, oldFXML);
                     } else {
                         logger.log(Level.SEVERE, msgLibro);
                         return;

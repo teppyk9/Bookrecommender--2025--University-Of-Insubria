@@ -75,7 +75,7 @@ public class ModificaLibreriaController extends TableViewEngine{
         }
         initBasicSearch();
         initSAddRemCol();
-        initOActionCol(true);
+        initOActionCol();
         initOTableView();
         initTableViews();
     }
