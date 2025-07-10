@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 
 public class ImpostazioniController{
 
-    //TODO: implementare anagrafica utente e cambio username
+    //TODO: implementare anagrafica utente e cambio username + invio su password2
 
     @FXML private HBox firstPasswordField;
     @FXML private PasswordField PasswordField1;
