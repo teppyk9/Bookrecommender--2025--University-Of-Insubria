@@ -1329,4 +1329,60 @@ public class DBManager {
             return null;
         }
     }
+
+    public boolean cambiaPassword(Token token, String newPassword) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String update = "UPDATE UTENTI SET PASSWORD = ? WHERE ID = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(update)) {
+            stmt.setString(1, newPassword);
+            stmt.setInt(2, token.getUserId());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.getUserId(), e);
+        }
+        return false;
+    }
+
+    public boolean eliminaAccount(Token token) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String delConsigli = "DELETE FROM consigli WHERE id_utente = ?";
+        String delValutazioni = "DELETE FROM valutazioni WHERE id_utente = ?";
+        String delLibrerie = "DELETE FROM librerie WHERE id_utente = ?";
+        String delSessioni = "DELETE FROM sessioni_login WHERE idutente = ?";
+        String delUtente = "DELETE FROM utenti WHERE id = ?";
+        try {
+            conn.setAutoCommit(false);
+            try (PreparedStatement p1 = conn.prepareStatement(delConsigli);
+                 PreparedStatement p2 = conn.prepareStatement(delValutazioni);
+                 PreparedStatement p3 = conn.prepareStatement(delLibrerie);
+                 PreparedStatement p4 = conn.prepareStatement(delSessioni);
+                 PreparedStatement p5 = conn.prepareStatement(delUtente)) {
+                p1.setInt(1, token.getUserId()); p1.executeUpdate();
+                p2.setInt(1, token.getUserId()); p2.executeUpdate();
+                p3.setInt(1, token.getUserId()); p3.executeUpdate();
+                p4.setInt(1, token.getUserId()); p4.executeUpdate();
+                p5.setInt(1, token.getUserId());
+                boolean ok = p5.executeUpdate() > 0;
+                if (ok)
+                    conn.commit();
+                else
+                    conn.rollback();
+                return ok;
+            } catch (SQLException e) {
+                conn.rollback();
+                logger.log(Level.SEVERE, "Errore nell'eliminazione account utente " + token.getUserId(), e);
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore di gestione transazione per eliminazione account", e);
+        }
+        return false;
+    }
 }

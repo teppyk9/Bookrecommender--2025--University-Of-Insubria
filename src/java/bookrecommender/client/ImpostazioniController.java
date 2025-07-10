@@ -2,12 +2,16 @@ package bookrecommender.client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
 
 public class ImpostazioniController{
+
+    //TODO: implementare anagrafica utente e cambio username
 
     @FXML private HBox firstPasswordField;
     @FXML private PasswordField PasswordField1;
@@ -16,7 +20,6 @@ public class ImpostazioniController{
     @FXML private Label labelErrore;
     @FXML private Button eliminaAccountButton;
     @FXML private Button cambiaPasswordButton;
-    @FXML private Button goBackButton;
 
     private boolean isChangingPassword = false;
 
@@ -43,8 +46,19 @@ public class ImpostazioniController{
             String p1 = PasswordField1.getText();
             String p2 = PasswordField2.getText();
             if (p1.equals(p2)) {
-                // TODO: metodo per cambiare la password
-                resetPasswordUI();
+                if(CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro di voler cambiare la password?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
+                    cambiaPasswordButton.setDisable(true);
+                    try {
+                        if (CliUtil.getInstance().getLogRegService().cambiaPassword(CliUtil.getInstance().getCurrentToken(), p1)) {
+                            CliUtil.getInstance().createConfirmation("Successo", "Password cambiata con successo", false).showAndWait();
+                        } else {
+                            CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare la password").showAndWait();
+                        }
+                    } catch (RemoteException e) {
+                        CliUtil.getInstance().createAlert("Errore di rete", "Impossibile cambiare la password").showAndWait();
+                    }
+                    resetPasswordUI();
+                }
             } else {
                 labelErrore.setText("Le password non corrispondono");
                 labelErrore.setVisible(true);
@@ -62,20 +76,24 @@ public class ImpostazioniController{
         PasswordField1.clear();
         PasswordField2.clear();
 
-        // TODO: metodo per eliminare l’account
-        boolean success = true;
-
-        if (success) {
-            Stage stage = (Stage) eliminaAccountButton.getScene().getWindow();
-            stage.close();
-        } else {
-            cambiaPasswordButton.setDisable(false);
+        if(CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro di voler eliminare l'account?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
+            try {
+                if (CliUtil.getInstance().getLogRegService().eliminaAccount(CliUtil.getInstance().getCurrentToken())) {
+                    CliUtil.getInstance().setCurrentToken(null);
+                    CliUtil.getInstance().createConfirmation("Successo", "Account eliminato", false).showAndWait();
+                    CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
+                } else {
+                    cambiaPasswordButton.setDisable(false);
+                }
+            }catch (RemoteException e) {
+                CliUtil.getInstance().createAlert("Errore di rete", "Impossibile eliminare l'account").showAndWait();
+            }
         }
     }
 
     @FXML
     private void goBackAreaRiservata() {
-        // TODO: implementa navigazione indietro
+        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
     }
 
     private void validatePasswords() {

@@ -38,4 +38,8 @@ public interface LogRegInterface extends Remote {
      * @throws RemoteException se si verifica un errore nella comunicazione RMI
      */
     boolean LogOut(Token token) throws RemoteException;
+
+    boolean cambiaPassword(Token token, String newPassword) throws RemoteException;
+
+    boolean eliminaAccount(Token token) throws RemoteException;
 }

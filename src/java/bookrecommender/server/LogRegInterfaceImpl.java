@@ -100,4 +100,20 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         } catch (ServerNotActiveException ignored) {}
         return dbManager.LogOut(token);
     }
+
+    @Override
+    public boolean cambiaPassword(Token token, String newPassword) throws RemoteException {
+        try {
+            logger.info("PasswordChange called for token: " + token.getToken() + ", client host: " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        return dbManager.cambiaPassword(token, newPassword);
+    }
+
+    @Override
+    public boolean eliminaAccount(Token token) throws RemoteException {
+        try {
+            logger.info("UserDelete called for token: " + token.getToken() + ", client host: " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        return dbManager.eliminaAccount(token);
+    }
 }
