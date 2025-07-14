@@ -8,6 +8,13 @@ import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
+import java.security.SecureRandom;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -23,20 +30,15 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /**Gestore della logica di accesso al database*/
-    private final DBManager dbManager;
-
     /**Logger per il tracciamento delle operazioni lato server*/
     private final Logger logger;
 
     /**
      * Costruttore della classe {@code LogRegInterfaceImpl}.
-     * @param dbManager il gestore delle operazioni sul database.
      * @throws RemoteException se si verifica un errore nell'esportazione dell'oggetto remoto.
      */
-    protected LogRegInterfaceImpl(DBManager dbManager) throws RemoteException {
+    protected LogRegInterfaceImpl() throws RemoteException {
         super();
-        this.dbManager = dbManager;
         this.logger = Logger.getLogger(LogRegInterfaceImpl.class.getName());
     }
 
@@ -54,10 +56,43 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     public Token TryLogin(String username, String password) throws RemoteException {
         try {
             logger.info("TryLogin called with username: " + username + ", password: " + password + ", client host: " + getClientHost());
-            return dbManager.loginUtente(username, password, getClientHost());
-        }catch(ServerNotActiveException e){
-            return null;
+        }catch(ServerNotActiveException ignored){}
+        String query = "SELECT ID, PASSWORD FROM UTENTI WHERE USERNAME = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int userId = rs.getInt("ID");
+                    String storedPassword = rs.getString("PASSWORD");
+                    int rows = 0;
+                    if (password.equals(storedPassword)) {
+                        String token = generaToken();
+
+                        String insert = "INSERT INTO SESSIONI_LOGIN (IDUTENTE, IP_CLIENT, TOKEN) VALUES (?, ?, ?)";
+                        try (PreparedStatement insertStmt = conn.prepareStatement(insert)) {
+                            insertStmt.setInt(1, userId);
+                            insertStmt.setString(2, getClientHost());
+                            insertStmt.setString(3, token);
+                            rows = insertStmt.executeUpdate();
+                        } catch (ServerNotActiveException e) {
+                            logger.severe("Errore durante l'inserimento del token: " + e.getMessage());
+                        }
+                        if (rows > 0) {
+                            return new Token(token, userId, getClientHost());
+                        } else {
+                            return null;
+                        }
+                    } else return null;
+                } else return null;
+            } catch (ServerNotActiveException e) {
+                logger.severe("Errore durante l'esecuzione della query di login: " + e.getMessage());
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel login di un utente", e);
         }
+        return null;
     }
 
 
@@ -78,9 +113,56 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     public RegToken Register(String nome, String cognome, String CF, String email, String username, String password) throws RemoteException {
         try {
             logger.info("Register called with nome: " + nome + ", cognome: " + cognome + ", CF: " + CF + ", email: " + email + ", username: " + username + ", client host: " + getClientHost());
-            return dbManager.Register(nome, cognome, CF, email, username, password);
-        } catch (ServerNotActiveException e) {
-            return null;
+        } catch (ServerNotActiveException ignored) {}
+        String checkUsername = "SELECT 1 FROM UTENTI WHERE USERNAME = ?";
+        String checkCF = "SELECT 1 FROM UTENTI WHERE CODICE_FISCALE = ?";
+        String checkEmail = "SELECT 1 FROM UTENTI WHERE EMAIL = ?";
+        String insertQuery = "INSERT INTO UTENTI (USERNAME, NOME, COGNOME, CODICE_FISCALE, EMAIL, PASSWORD) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (
+                Connection conn = ServerUtil.getInstance().getConnection();
+                PreparedStatement checkUStmt = conn.prepareStatement(checkUsername);
+                PreparedStatement checkCFStmt = conn.prepareStatement(checkCF);
+                PreparedStatement checkEmailStmt = conn.prepareStatement(checkEmail);
+                PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+
+            checkUStmt.setString(1, username);
+            checkCFStmt.setString(1, CF);
+            checkEmailStmt.setString(1, email);
+
+
+            try (ResultSet rsU = checkUStmt.executeQuery();
+                 ResultSet rsCF = checkCFStmt.executeQuery();
+                 ResultSet rsEmail = checkEmailStmt.executeQuery()) {
+
+                boolean existsUsername = rsU.next();
+                boolean existsCF = rsCF.next();
+                boolean existsEmail = rsEmail.next();
+                if (existsUsername || existsCF || existsEmail) {
+                    return new RegToken(existsUsername, existsCF, existsEmail, false);
+                }
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Errore nella registrazione di un utente CASE: ResultSet not valid", e);
+                return new RegToken(false, false, false, false);
+            }
+
+            insertStmt.setString(1, username);
+            insertStmt.setString(2, nome);
+            insertStmt.setString(3, cognome);
+            insertStmt.setString(4, CF);
+            insertStmt.setString(5, email);
+            insertStmt.setString(6, password);
+
+            int rows = insertStmt.executeUpdate();
+            if (rows > 0) {
+                return new RegToken(true, true, true, true);
+            } else {
+                return new RegToken(false, false, false, false);
+            }
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella registrazione di un utente CASE: InsertStatement not valid", e);
+            return new RegToken(false, false, false, false);
         }
     }
 
@@ -98,7 +180,16 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         try {
             logger.info("LogOut called for token: " + token.getToken() + ", client host: " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
-        return dbManager.LogOut(token);
+        String deleteQuery = "DELETE FROM SESSIONI_LOGIN WHERE TOKEN = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+            stmt.setString(1, token.getToken());
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore durante il logout dell'utente", e);
+            return false;
+        }
     }
 
     @Override
@@ -106,7 +197,20 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         try {
             logger.info("PasswordChange called for token: " + token.getToken() + ", client host: " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
-        return dbManager.cambiaPassword(token, newPassword);
+        if (ServerUtil.getInstance().isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String update = "UPDATE UTENTI SET PASSWORD = ? WHERE ID = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(update)) {
+            stmt.setString(1, newPassword);
+            stmt.setInt(2, token.getUserId());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.getUserId(), e);
+        }
+        return false;
     }
 
     @Override
@@ -114,6 +218,55 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         try {
             logger.info("UserDelete called for token: " + token.getToken() + ", client host: " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
-        return dbManager.eliminaAccount(token);
+        if (ServerUtil.getInstance().isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String delConsigli = "DELETE FROM consigli WHERE id_utente = ?";
+        String delValutazioni = "DELETE FROM valutazioni WHERE id_utente = ?";
+        String delLibrerie = "DELETE FROM librerie WHERE id_utente = ?";
+        String delSessioni = "DELETE FROM sessioni_login WHERE idutente = ?";
+        String delUtente = "DELETE FROM utenti WHERE id = ?";
+        try {
+            Connection conn = ServerUtil.getInstance().getConnection();
+            conn.setAutoCommit(false);
+            try (PreparedStatement p1 = conn.prepareStatement(delConsigli);
+                 PreparedStatement p2 = conn.prepareStatement(delValutazioni);
+                 PreparedStatement p3 = conn.prepareStatement(delLibrerie);
+                 PreparedStatement p4 = conn.prepareStatement(delSessioni);
+                 PreparedStatement p5 = conn.prepareStatement(delUtente)) {
+                p1.setInt(1, token.getUserId()); p1.executeUpdate();
+                p2.setInt(1, token.getUserId()); p2.executeUpdate();
+                p3.setInt(1, token.getUserId()); p3.executeUpdate();
+                p4.setInt(1, token.getUserId()); p4.executeUpdate();
+                p5.setInt(1, token.getUserId());
+                boolean ok = p5.executeUpdate() > 0;
+                if (ok)
+                    conn.commit();
+                else
+                    conn.rollback();
+                return ok;
+            } catch (SQLException e) {
+                conn.rollback();
+                logger.log(Level.SEVERE, "Errore nell'eliminazione account utente " + token.getUserId(), e);
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore di gestione transazione per eliminazione account", e);
+        }
+        return false;
+    }
+
+    /**
+     * Genera un token sicuro e univoco utilizzato per identificare una sessione di login.
+     * Il token è codificato in Base64 URL-safe e privo di padding.
+     * @return Token generato come stringa.
+     */
+    private String generaToken() {
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] tokenBytes = new byte[24];
+        secureRandom.nextBytes(tokenBytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(tokenBytes);
     }
 }

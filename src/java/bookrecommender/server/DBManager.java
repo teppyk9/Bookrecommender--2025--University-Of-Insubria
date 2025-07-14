@@ -4,7 +4,6 @@ import bookrecommender.common.*;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.security.SecureRandom;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -93,11 +92,16 @@ public class DBManager {
         }
     }
 
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection(){
         if (dataSource == null) {
-            throw new IllegalStateException("DataSource non inizializzato. Chiama connect() prima.");
+            logger.warning("DataSource non inizializzato. Chiama connect() prima.");
         }
-        return dataSource.getConnection();
+        try{
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore durante l'ottenimento della connessione al database", e);
+            return null;
+        }
     }
 
     /**
@@ -218,144 +222,6 @@ public class DBManager {
             stmt.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nel restart delle sessioni", e);
-        }
-    }
-
-    /**
-     * Esegue il login di un utente verificando username e password.
-     * In caso di successo, genera un token di sessione e lo salva nel database.
-     * @param username  Nome utente dell'utente
-     * @param password  Password dell'utente (in chiaro o da confrontare con hash)
-     * @param ipClient  Indirizzo IP del client che effettua il login
-     * @return {@link Token} valido se il login è riuscito, altrimenti null
-     */
-    public Token loginUtente(String username, String password, String ipClient) {
-        String query = "SELECT ID, PASSWORD FROM UTENTI WHERE USERNAME = ?";
-        try (Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, username);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    int userId = rs.getInt("ID");
-                    String storedPassword = rs.getString("PASSWORD");
-                    int rows;
-                    if (password.equals(storedPassword)) {  // Puoi sostituire con hash per maggiore sicurezza
-                        String token = generaToken();
-
-                        // Salva token nel DB
-                        String insert = "INSERT INTO SESSIONI_LOGIN (IDUTENTE, IP_CLIENT, TOKEN) VALUES (?, ?, ?)";
-                        try (PreparedStatement insertStmt = conn.prepareStatement(insert)) {
-                            insertStmt.setInt(1, userId);
-                            insertStmt.setString(2, ipClient);
-                            insertStmt.setString(3, token);
-                            rows = insertStmt.executeUpdate();
-                        }
-                        if (rows > 0) {
-                            return new Token(token, userId, ipClient);
-                        } else {
-                            return null;
-                        }
-                    } else return null;
-                } else return null;
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nel login di un utente", e);
-        }
-        return null;
-    }
-
-    /**
-     * Genera un token sicuro e univoco utilizzato per identificare una sessione di login.
-     * Il token è codificato in Base64 URL-safe e privo di padding.
-     * @return Token generato come stringa.
-     */
-    private String generaToken() {
-        SecureRandom secureRandom = new SecureRandom();
-        byte[] tokenBytes = new byte[24];
-        secureRandom.nextBytes(tokenBytes);
-        return Base64.getUrlEncoder().withoutPadding().encodeToString(tokenBytes);
-    }
-
-    /**
-     * Registra un nuovo utente nel database dopo aver verificato che username, codice fiscale ed email siano unici.
-     * @param nome      Nome dell'utente
-     * @param cognome   Cognome dell'utente
-     * @param CF        Codice fiscale dell'utente
-     * @param email     Indirizzo email dell'utente
-     * @param username  Nome utente scelto
-     * @param password  Password scelta (attualmente in chiaro)
-     * @return {@link RegToken} contenente lo stato della registrazione per ciascun campo e l'esito complessivo
-     */
-    public RegToken Register(String nome, String cognome, String CF, String email, String username, String password) {
-        String checkUsername = "SELECT 1 FROM UTENTI WHERE USERNAME = ?";
-        String checkCF = "SELECT 1 FROM UTENTI WHERE CODICE_FISCALE = ?";
-        String checkEmail = "SELECT 1 FROM UTENTI WHERE EMAIL = ?";
-        String insertQuery = "INSERT INTO UTENTI (USERNAME, NOME, COGNOME, CODICE_FISCALE, EMAIL, PASSWORD) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (
-                Connection conn = getConnection();
-                PreparedStatement checkUStmt = conn.prepareStatement(checkUsername);
-                PreparedStatement checkCFStmt = conn.prepareStatement(checkCF);
-                PreparedStatement checkEmailStmt = conn.prepareStatement(checkEmail);
-                PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
-
-            // Verifica se esiste già un utente con username, codice fiscale o email
-            checkUStmt.setString(1, username);
-            checkCFStmt.setString(1, CF);
-            checkEmailStmt.setString(1, email);
-
-
-            try (ResultSet rsU = checkUStmt.executeQuery();
-                 ResultSet rsCF = checkCFStmt.executeQuery();
-                 ResultSet rsEmail = checkEmailStmt.executeQuery()) {
-
-                boolean existsUsername = rsU.next();
-                boolean existsCF = rsCF.next();
-                boolean existsEmail = rsEmail.next();
-                if (existsUsername || existsCF || existsEmail) {
-                    return new RegToken(existsUsername, existsCF, existsEmail, false);
-                }
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Errore nella registrazione di un utente CASE: ResultSet not valid", e);
-                return new RegToken(false, false, false, false);
-            }
-
-            insertStmt.setString(1, username);
-            insertStmt.setString(2, nome);
-            insertStmt.setString(3, cognome);
-            insertStmt.setString(4, CF);
-            insertStmt.setString(5, email);
-            insertStmt.setString(6, password);
-
-            int rows = insertStmt.executeUpdate();
-            if (rows > 0) {
-                return new RegToken(true, true, true, true); // Registrazione avvenuta con successo
-            } else {
-                return new RegToken(false, false, false, false); // Errore durante la registrazione
-            }
-
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella registrazione di un utente CASE: InsertStatement not valid", e);
-            return new RegToken(false, false, false, false);
-        }
-    }
-
-    /**
-     * Invalida un token eliminandolo dalla tabella delle sessioni di login.
-     * @param token Token di sessione da invalidare
-     * @return true se il logout ha avuto successo (token eliminato), false altrimenti
-     */
-    public boolean LogOut(Token token) {
-        String deleteQuery = "DELETE FROM SESSIONI_LOGIN WHERE TOKEN = ?";
-        try (Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
-            stmt.setString(1, token.getToken());
-            int rows = stmt.executeUpdate();
-            return rows > 0;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore durante il logout dell'utente", e);
-            return false;
         }
     }
 
@@ -1389,61 +1255,4 @@ public class DBManager {
         }
     }
 
-    public boolean cambiaPassword(Token token, String newPassword) {
-        if (isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
-            return false;
-        }
-        String update = "UPDATE UTENTI SET PASSWORD = ? WHERE ID = ?";
-        try (Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(update)) {
-            stmt.setString(1, newPassword);
-            stmt.setInt(2, token.getUserId());
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.getUserId(), e);
-        }
-        return false;
-    }
-
-    public boolean eliminaAccount(Token token) {
-        if (isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
-            return false;
-        }
-        String delConsigli = "DELETE FROM consigli WHERE id_utente = ?";
-        String delValutazioni = "DELETE FROM valutazioni WHERE id_utente = ?";
-        String delLibrerie = "DELETE FROM librerie WHERE id_utente = ?";
-        String delSessioni = "DELETE FROM sessioni_login WHERE idutente = ?";
-        String delUtente = "DELETE FROM utenti WHERE id = ?";
-        try {
-            Connection conn = getConnection();
-            conn.setAutoCommit(false);
-            try (PreparedStatement p1 = conn.prepareStatement(delConsigli);
-                 PreparedStatement p2 = conn.prepareStatement(delValutazioni);
-                 PreparedStatement p3 = conn.prepareStatement(delLibrerie);
-                 PreparedStatement p4 = conn.prepareStatement(delSessioni);
-                 PreparedStatement p5 = conn.prepareStatement(delUtente)) {
-                p1.setInt(1, token.getUserId()); p1.executeUpdate();
-                p2.setInt(1, token.getUserId()); p2.executeUpdate();
-                p3.setInt(1, token.getUserId()); p3.executeUpdate();
-                p4.setInt(1, token.getUserId()); p4.executeUpdate();
-                p5.setInt(1, token.getUserId());
-                boolean ok = p5.executeUpdate() > 0;
-                if (ok)
-                    conn.commit();
-                else
-                    conn.rollback();
-                return ok;
-            } catch (SQLException e) {
-                conn.rollback();
-                logger.log(Level.SEVERE, "Errore nell'eliminazione account utente " + token.getUserId(), e);
-            } finally {
-                conn.setAutoCommit(true);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore di gestione transazione per eliminazione account", e);
-        }
-        return false;
-    }
 }

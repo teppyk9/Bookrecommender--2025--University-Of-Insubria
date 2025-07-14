@@ -115,13 +115,13 @@ public class RegistrazioneController {
                 CliUtil.getInstance().createConfirmation("Registrazione riuscita", "Benvenuto " + username + "!", false).showAndWait();
                 CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
             } else{
-                if(result.isUsernameAvailable()) {
+                if(result.User()) {
                     CliUtil.getInstance().createAlert("Errore", "Username già utilizzata").showAndWait();
                 }
-                if(result.isEmailAvailable()) {
+                if(result.Email()) {
                     CliUtil.getInstance().createAlert("Errore", "Email già utilizzata").showAndWait();
                 }
-                if(result.isCFAvailable()) {
+                if(result.CF()) {
                     CliUtil.getInstance().createAlert("Errore", "Codice Fiscale già utilizzato").showAndWait();
                 }
             }

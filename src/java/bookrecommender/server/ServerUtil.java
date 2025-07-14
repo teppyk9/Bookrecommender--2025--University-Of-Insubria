@@ -1,5 +1,6 @@
 package bookrecommender.server;
 
+import bookrecommender.common.Token;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +11,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -143,7 +148,7 @@ public final class ServerUtil {
         try {
             Registry registry = LocateRegistry.createRegistry(port);
             SearchInterfaceImpl searchServer = new SearchInterfaceImpl(dbManager);
-            LogRegInterfaceImpl logRegServer = new LogRegInterfaceImpl(dbManager);
+            LogRegInterfaceImpl logRegServer = new LogRegInterfaceImpl();
             LibInterfaceImpl libServer = new LibInterfaceImpl(dbManager);
             monitorServer = new MonitorInterfaceImpl();
             registry.rebind("Search_Interface", searchServer);
@@ -156,6 +161,10 @@ public final class ServerUtil {
             logger.log(Level.SEVERE, "Errore nell'inizializzazione del server>", e);
             return false;
         }
+    }
+
+    public Connection getConnection(){
+        return dbManager.getConnection();
     }
 
     /**
@@ -192,6 +201,26 @@ public final class ServerUtil {
             stage.show();
         }catch (IOException e){
             logger.log(Level.SEVERE, "Errore nel caricamento del file FXML: " + fxmlFile, e);
+        }
+    }
+
+    /**
+     * Verifica se un token fornito non è più valido (non esiste o IP non corrisponde).
+     * @param token Token da validare
+     * @return true se il token è invalido o inesistente, false se è valido
+     */
+    public boolean isTokenNotValid(Token token) {
+        String query = "SELECT 1 FROM SESSIONI_LOGIN WHERE TOKEN = ? AND IP_CLIENT = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, token.getToken());
+            stmt.setString(2, token.getIpClient());
+            try (ResultSet rs = stmt.executeQuery()) {
+                return !rs.next();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella validazione del token " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient(), e);
+            return true;
         }
     }
 }
