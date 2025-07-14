@@ -178,6 +178,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
      */
     @Override
     public boolean hasValRec(Libro libro) throws RemoteException {
+        //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         return dbManager.haValConsAss(libro.getId());
     }
 }

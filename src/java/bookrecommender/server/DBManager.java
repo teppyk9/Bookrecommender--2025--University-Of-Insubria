@@ -1,6 +1,8 @@
 package bookrecommender.server;
 
 import bookrecommender.common.*;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.security.SecureRandom;
 import java.sql.*;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 public class DBManager {
 
     /** Connessione condivisa al database, usata dalle varie operazioni del DBManager. */
-    private static Connection conn;
+    private static HikariDataSource dataSource;
 
     /** Logger per la registrazione di eventi, errori e messaggi di debug della classe DBManager. */
     private static final Logger logger = Logger.getLogger(DBManager.class.getName());
@@ -39,15 +41,19 @@ public class DBManager {
      * @return true se la connessione di test ha successo, false altrimenti
      */
     public boolean tryConnection(String url, String user, String password) {
-        if (url == null || user == null || password == null) {
-            logger.log(Level.SEVERE, "Parametri di connessione non impostati.");
-            return false;
-        }
-        try (Connection ignored = DriverManager.getConnection(url, user, password)) {
-            logger.log(Level.INFO, "Test connessione al database avvenuto con successo.");
-            return true;
+        try{
+            HikariConfig cfg = new HikariConfig();
+            cfg.setJdbcUrl(url);
+            cfg.setUsername(user);
+            cfg.setPassword(password);
+            cfg.setMaximumPoolSize(1);
+            try (HikariDataSource testDs = new HikariDataSource(cfg);
+                 Connection ignored = testDs.getConnection()) {
+                logger.log(Level.INFO, "Test connessione HikariCP riuscito.");
+                return true;
+            }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella connessione al database", e);
+            logger.log(Level.SEVERE, "Test connessione fallito", e);
             return false;
         }
     }
@@ -60,34 +66,47 @@ public class DBManager {
      * @return true se la connessione è avvenuta correttamente, false altrimenti
      */
     public boolean connect(String url, String user, String password) {
-        try {
-            if (conn == null || conn.isClosed()) {
-                conn = DriverManager.getConnection(url, user, password);
-                logger.log(Level.INFO, "Connessione al database avvenuta con successo.");
-            } else {
-                logger.log(Level.WARNING, "Tentativo di riconnessione al database già connesso.");
-            }
+        if (dataSource != null && !dataSource.isClosed()) {
+            logger.log(Level.WARNING, "Pool già inizializzato.");
             return true;
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella connessione al database", e);
-            conn = null;
+        }
+        try {
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl(url);
+            config.setUsername(user);
+            config.setPassword(password);
+            config.setMaximumPoolSize(20);
+            config.setMinimumIdle(5);
+            config.setIdleTimeout(60_000);
+            config.setConnectionTimeout(30_000);
+            config.setPoolName("BookRecommenderPool");
+            config.addDataSourceProperty("cachePrepStmts", "true");
+            config.addDataSourceProperty("prepStmtCacheSize", "100");
+            config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+            dataSource = new HikariDataSource(config);
+            logger.log(Level.INFO, "HikariCP pool creato con successo.");
+            return true;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Errore inizializzazione HikariCP", e);
             return false;
         }
+    }
+
+    public Connection getConnection() throws SQLException {
+        if (dataSource == null) {
+            throw new IllegalStateException("DataSource non inizializzato. Chiama connect() prima.");
+        }
+        return dataSource.getConnection();
     }
 
     /**
      * Chiude la connessione attualmente aperta al database, se esistente.
      */
     public void closeConnection() {
-        if (conn != null) {
-            try {
-                conn.close();
-                logger.log(Level.INFO, "Connessione al database chiusa con successo.");
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Errore nella chiusura della connessione al database", e);
-            }
-        } else {
-            logger.log(Level.WARNING, "Nessuna connessione al database da chiudere.");
+        if (dataSource != null && !dataSource.isClosed()) {
+            dataSource.close();
+            logger.log(Level.INFO, "Pool HikariCP chiuso.");
         }
     }
 
@@ -150,7 +169,8 @@ public class DBManager {
      * @return Lista di libri risultanti dalla query
      */
     public List<Libro> selectLibro(String titolo, List<Libro> risultati, String query) {
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, "%" + titolo + "%");
 
@@ -172,7 +192,8 @@ public class DBManager {
         List<Libro> risultati = new ArrayList<>();
         String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) AND CAST(ANNOPUBBLICAZIONE AS TEXT) LIKE ?";
 
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, "%" + author + "%");
             stmt.setString(2, "%" + year + "%");
@@ -192,7 +213,8 @@ public class DBManager {
      */
     public void svuotaSessioniLogin() {
         String sql = "TRUNCATE TABLE SESSIONI_LOGIN RESTART IDENTITY";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nel restart delle sessioni", e);
@@ -209,7 +231,8 @@ public class DBManager {
      */
     public Token loginUtente(String username, String password, String ipClient) {
         String query = "SELECT ID, PASSWORD FROM UTENTI WHERE USERNAME = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -271,6 +294,7 @@ public class DBManager {
         String insertQuery = "INSERT INTO UTENTI (USERNAME, NOME, COGNOME, CODICE_FISCALE, EMAIL, PASSWORD) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (
+                Connection conn = getConnection();
                 PreparedStatement checkUStmt = conn.prepareStatement(checkUsername);
                 PreparedStatement checkCFStmt = conn.prepareStatement(checkCF);
                 PreparedStatement checkEmailStmt = conn.prepareStatement(checkEmail);
@@ -324,7 +348,8 @@ public class DBManager {
      */
     public boolean LogOut(Token token) {
         String deleteQuery = "DELETE FROM SESSIONI_LOGIN WHERE TOKEN = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
             stmt.setString(1, token.getToken());
             int rows = stmt.executeUpdate();
             return rows > 0;
@@ -341,7 +366,8 @@ public class DBManager {
      */
     public boolean isTokenNotValid(Token token) {
         String query = "SELECT 1 FROM SESSIONI_LOGIN WHERE TOKEN = ? AND IP_CLIENT = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, token.getToken());
             stmt.setString(2, token.getIpClient());
             try (ResultSet rs = stmt.executeQuery()) {
@@ -360,7 +386,8 @@ public class DBManager {
      */
     public Libro getLibro(int id) {
         String query = "SELECT * FROM LIBRI WHERE ID = ? ";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             Libro libro;
             try (ResultSet rs = stmt.executeQuery()) {
@@ -399,6 +426,7 @@ public class DBManager {
         }
         try {
             String checkQuery = "SELECT 1 FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?";
+            Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(checkQuery);
             stmt.setInt(1, token.getUserId());
             stmt.setString(2, nome);
@@ -413,7 +441,8 @@ public class DBManager {
         String insertLibQuery = "INSERT INTO LIBRERIE (ID_UTENTE, TITOLO_LIBRERIA) VALUES (?, ?)";
         String insertLibroQuery = "INSERT INTO LIBRERIA_LIBRO (IDLIBRERIA, IDLIBRO) VALUES (?, ?)";
 
-        try (PreparedStatement insertLibStmt = conn.prepareStatement(insertLibQuery, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = getConnection();
+                PreparedStatement insertLibStmt = conn.prepareStatement(insertLibQuery, Statement.RETURN_GENERATED_KEYS)) {
             insertLibStmt.setInt(1, token.getUserId());
             insertLibStmt.setString(2, nome);
 
@@ -458,7 +487,8 @@ public class DBManager {
             return false;
         }
         String deleteQuery = "DELETE FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
             stmt.setInt(1, token.getUserId());
             stmt.setString(2, nome);
             int rows = stmt.executeUpdate();
@@ -486,7 +516,8 @@ public class DBManager {
             return List.of(0);
         }
         int idLibreria;
-        try (PreparedStatement ps = conn.prepareStatement("SELECT id FROM librerie WHERE id_utente = ? AND titolo_libreria = ?")) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT id FROM librerie WHERE id_utente = ? AND titolo_libreria = ?")) {
             ps.setInt(1, token.getUserId());
             ps.setString(2, nome);
             try (ResultSet rs = ps.executeQuery()) {
@@ -501,7 +532,8 @@ public class DBManager {
             return List.of(0);
         }
         Set<Integer> correnti = new HashSet<>();
-        try (PreparedStatement ps = conn.prepareStatement("SELECT idlibro FROM libreria_libro WHERE idlibreria = ?")) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement("SELECT idlibro FROM libreria_libro WHERE idlibreria = ?")) {
             ps.setInt(1, idLibreria);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -518,7 +550,8 @@ public class DBManager {
         Set<Integer> daAggiungere = new HashSet<>(aggiornati);
         daAggiungere.removeAll(correnti);
         List<Integer> errors = new ArrayList<>();
-        try (PreparedStatement valStmt = conn.prepareStatement("SELECT 1 FROM valutazioni WHERE id_utente = ? AND idlibro = ? LIMIT 1");
+        try (Connection conn = getConnection();
+                PreparedStatement valStmt = conn.prepareStatement("SELECT 1 FROM valutazioni WHERE id_utente = ? AND idlibro = ? LIMIT 1");
              PreparedStatement useStmt = conn.prepareStatement("SELECT 1 FROM consigli WHERE id_utente = ? AND idlibro = ? LIMIT 1");
              PreparedStatement recStmt = conn.prepareStatement("SELECT 1 FROM consigli WHERE id_utente = ? AND (lib_1 = ? OR lib_2 = ? OR lib_3 = ?) LIMIT 1")) {
             for (int id : daEliminare) {
@@ -557,7 +590,8 @@ public class DBManager {
         }
         String delQ = "DELETE FROM libreria_libro WHERE idlibreria = ? AND idlibro = ?";
         String insQ = "INSERT INTO libreria_libro (idlibreria, idlibro) VALUES (?, ?)";
-        try (PreparedStatement delStmt = conn.prepareStatement(delQ);
+        try (Connection conn = getConnection();
+                PreparedStatement delStmt = conn.prepareStatement(delQ);
              PreparedStatement insStmt = conn.prepareStatement(insQ)) {
             for (int id : daEliminare) {
                 delStmt.setInt(1, idLibreria);
@@ -592,7 +626,8 @@ public class DBManager {
         List<Libro> libri = new ArrayList<>();
         String query = "SELECT L.* FROM LIBRERIE R JOIN LIBRERIA_LIBRO LL ON R.ID = LL.IDLIBRERIA JOIN LIBRI L ON LL.IDLIBRO = L.ID WHERE R.ID_UTENTE = ? AND R.TITOLO_LIBRERIA = ?";
 
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, token.getUserId());
             stmt.setString(2, nome);
             resultStmt(libri, stmt);
@@ -615,7 +650,8 @@ public class DBManager {
         List<String> librerie = new ArrayList<>();
         String query = "SELECT TITOLO_LIBRERIA FROM LIBRERIE WHERE ID_UTENTE = ?";
 
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, token.getUserId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -646,7 +682,8 @@ public class DBManager {
             WHERE v.idlibro = ?
         """;
 
-        try (PreparedStatement psValutazioni = conn.prepareStatement(queryValutazioni)) {
+        try (Connection conn = getConnection();
+                PreparedStatement psValutazioni = conn.prepareStatement(queryValutazioni)) {
             psValutazioni.setInt(1, libro.getId());
             ResultSet rs = psValutazioni.executeQuery();
             while (rs.next()) {
@@ -681,7 +718,8 @@ public class DBManager {
             WHERE c.idlibro = ?
         """;
 
-        try (PreparedStatement psConsigli = conn.prepareStatement(queryConsigli)) {
+        try (Connection conn = getConnection();
+                PreparedStatement psConsigli = conn.prepareStatement(queryConsigli)) {
             psConsigli.setInt(1, libro.getId());
             ResultSet rs = psConsigli.executeQuery();
             while (rs.next()) {
@@ -728,7 +766,8 @@ public class DBManager {
                                          v_gradevolezza, c_gradevolezza, v_originalita, c_originalita,
                                          v_edizione, c_edizione, c_finale)
                 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""";
-        try (PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
             stmt.setInt(1, valutazione.getIdLibro());
             stmt.setInt(2, token.getUserId());
             stmt.setFloat(3, valutazioni.get(0));
@@ -786,7 +825,8 @@ public class DBManager {
         String insertQuery = """
                 INSERT INTO consigli (idlibro, id_utente, lib_1, lib_2, lib_3)
                 VALUES (?, ?, ?, ?, ?)""";
-        try (PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
             stmt.setInt(1, libri.get(0).getId());
             stmt.setInt(2, token.getUserId());
             stmt.setInt(3, libri.get(1).getId());
@@ -834,7 +874,8 @@ public class DBManager {
                 ON lr.id = ll.idlibreria
                 WHERE lr.id_utente = ?
                 AND l.titolo ILIKE '%' || ? || '%';""";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, token.getUserId());
             stmt.setString(2, titolo);
             resultStmt(risultati, stmt);
@@ -866,7 +907,8 @@ public class DBManager {
                 ON lr.id = ll.idlibreria
                 WHERE lr.id_utente = ?
                 AND LOWER(l.autore) LIKE LOWER(?);""";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, token.getUserId());
             stmt.setString(2, "%" + author + "%");
             resultStmt(risultati, stmt);
@@ -900,7 +942,8 @@ public class DBManager {
                 WHERE lr.id_utente = ?
                 AND LOWER(l.autore) LIKE LOWER(?)
                 AND CAST(l.annopubblicazione AS TEXT) LIKE ?;""";
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, token.getUserId());
             stmt.setString(2, "%" + author + "%");
             stmt.setString(3, "%" + year + "%");
@@ -934,7 +977,8 @@ public class DBManager {
          WHERE lr.id_utente = ?;
         """;
 
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, token.getUserId());
             resultStmt(risultati, stmt);
         } catch (SQLException e) {
@@ -963,7 +1007,8 @@ public class DBManager {
                      WHERE id_utente = ?
                      AND titolo_libreria = ?;""";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, nuovoNome);
             ps.setInt(2, token.getUserId());
             ps.setString(3, nomeAttuale);
@@ -996,7 +1041,8 @@ public class DBManager {
                 JOIN libreria_libro ll ON l.id = ll.idlibreria
                 WHERE l.id_utente = ? AND ll.idlibro = ?
                 )""";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, userId);
             ps.setInt(2, bookId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -1023,7 +1069,8 @@ public class DBManager {
                 ) AS presente
                 """;
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idLibro);
             ps.setInt(2, idLibro);
             try (ResultSet rs = ps.executeQuery()) {
@@ -1056,7 +1103,8 @@ public class DBManager {
 
         int userId = token.getUserId();
 
-        try (PreparedStatement ps = conn.prepareStatement(SQL)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(SQL)) {
 
             ps.setInt (1, userId);
             ps.setString(2, nome);
@@ -1081,7 +1129,8 @@ public class DBManager {
             return false;
         }
         String sql = "SELECT 1 FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, token.getUserId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
@@ -1099,7 +1148,8 @@ public class DBManager {
             return false;
         }
         String sql = "SELECT 1 FROM consigli WHERE id_utente = ? AND idlibro = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, token.getUserId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
@@ -1129,7 +1179,9 @@ public class DBManager {
             """;
         List<Float> ratings = val.getValutazioni();
         List<String> comments = val.getCommenti();
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (
+                Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1,  comments.get(0));
             ps.setInt(   2,  Math.round(ratings.get(0)));
             ps.setString(3,  comments.get(1));
@@ -1163,7 +1215,8 @@ public class DBManager {
                SET lib_1 = ?, lib_2 = ?, lib_3 = ?, consiglio_time = CURRENT_TIMESTAMP
              WHERE id_utente = ? AND idlibro = ?
             """;
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             int refId = libri.get(0).getId();
             ps.setObject(1, libri.size() > 1 ? libri.get(1).getId() : null, Types.INTEGER);
             ps.setObject(2, libri.size() > 2 ? libri.get(2).getId() : null, Types.INTEGER);
@@ -1183,7 +1236,8 @@ public class DBManager {
             return false;
         }
         String sql = "DELETE FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, token.getUserId());
             ps.setInt(2, libro.getId());
             return ps.executeUpdate() > 0;
@@ -1199,7 +1253,8 @@ public class DBManager {
             return false;
         }
         String sql = "DELETE FROM consigli WHERE id_utente = ? AND idlibro = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, token.getUserId());
             ps.setInt(2, libro.getId());
             return ps.executeUpdate() > 0;
@@ -1215,7 +1270,8 @@ public class DBManager {
             return null;
         }
         String sql = "SELECT valutazione_time FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, token.getUserId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
@@ -1238,7 +1294,8 @@ public class DBManager {
             return null;
         }
         String sql = "SELECT consiglio_time FROM consigli WHERE id_utente = ? AND idlibro = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, token.getUserId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
@@ -1261,7 +1318,8 @@ public class DBManager {
             return null;
         }
         String sql = "SELECT lib_1, lib_2, lib_3 FROM consigli WHERE id_utente = ? AND idlibro = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, token.getUserId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
@@ -1299,7 +1357,8 @@ public class DBManager {
           FROM valutazioni
          WHERE id_utente = ? AND idlibro = ?
         """;
-        try (PreparedStatement psVal  = conn.prepareStatement(valSql)) {
+        try (Connection conn = getConnection();
+                PreparedStatement psVal  = conn.prepareStatement(valSql)) {
             psVal.setInt(1, token.getUserId());
             psVal.setInt(2, libro.getId());
             try (ResultSet rsV = psVal.executeQuery()) {
@@ -1336,7 +1395,8 @@ public class DBManager {
             return false;
         }
         String update = "UPDATE UTENTI SET PASSWORD = ? WHERE ID = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(update)) {
+        try (Connection conn = getConnection();
+                PreparedStatement stmt = conn.prepareStatement(update)) {
             stmt.setString(1, newPassword);
             stmt.setInt(2, token.getUserId());
             return stmt.executeUpdate() > 0;
@@ -1357,6 +1417,7 @@ public class DBManager {
         String delSessioni = "DELETE FROM sessioni_login WHERE idutente = ?";
         String delUtente = "DELETE FROM utenti WHERE id = ?";
         try {
+            Connection conn = getConnection();
             conn.setAutoCommit(false);
             try (PreparedStatement p1 = conn.prepareStatement(delConsigli);
                  PreparedStatement p2 = conn.prepareStatement(delValutazioni);

@@ -28,15 +28,6 @@ public class MonitorInterfaceImpl extends UnicastRemoteObject implements Monitor
         super();
     }
 
-
-    /**
-     * ⚠️ Metodo deprecato e non più usato attivamente nel sistema.
-     * Registra un listener remoto per ricevere notifiche dal server.
-     * Resta disponibile per retrocompatibilità.
-     * @param listener il listener remoto da registrare.
-     * @throws RemoteException se si verifica un errore nella comunicazione RMI.
-     * @deprecated Questo metodo non è più utilizzato attivamente nel sistema.
-     */
     @Override
     public void registerListener(ServerListener listener) throws RemoteException {
         listeners.add(listener);

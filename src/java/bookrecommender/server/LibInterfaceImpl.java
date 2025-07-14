@@ -186,11 +186,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
      */
     @Override
     public boolean isLibPresent(Token token, Libro libro) throws RemoteException {
-        try{
-            logger.info("Info presenza nelle librerie per libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
-        } catch (ServerNotActiveException e) {
-            return false;
-        }
+        //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         return dbManager.utenteContieneLibro(token.getUserId(), libro.getId());
     }
 
@@ -204,31 +200,19 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
      */
     @Override
     public LocalDate getCreationDate(Token token, String nome) throws RemoteException {
-        try{
-            logger.info("Recupero data di creazione per la libreria " + nome  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
-        } catch (ServerNotActiveException e) {
-            return null;
-        }
+        //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         return dbManager.dataCreazioneLibreria(token, nome);
     }
 
     @Override
     public boolean existVal(Token token, Libro libro) throws RemoteException {
-        try{
-            logger.info("Info presenza valutazione per libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
-        } catch (ServerNotActiveException e) {
-            return false;
-        }
+        //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         return dbManager.existVal(token, libro);
     }
 
     @Override
     public boolean existCon(Token token, Libro libro) throws RemoteException {
-        try{
-            logger.info("Info presenza consiglio per libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
-        } catch (ServerNotActiveException e) {
-            return false;
-        }
+        //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         return dbManager.existCon(token, libro);
     }
 

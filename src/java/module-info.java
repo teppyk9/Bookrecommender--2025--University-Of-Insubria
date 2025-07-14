@@ -6,6 +6,7 @@ module bookrecommender {
     requires javafx.graphics;
     requires org.postgresql.jdbc;
     requires java.desktop;
+    requires com.zaxxer.hikari;
 
     opens bookrecommender.client to javafx.fxml;
     opens bookrecommender.server to javafx.fxml;
