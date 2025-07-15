@@ -215,13 +215,13 @@ public final class ServerUtil {
         String query = "SELECT 1 FROM SESSIONI_LOGIN WHERE TOKEN = ? AND IP_CLIENT = ?";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, token.getToken());
-            stmt.setString(2, token.getIpClient());
+            stmt.setString(1, token.token());
+            stmt.setString(2, token.ipClient());
             try (ResultSet rs = stmt.executeQuery()) {
                 return !rs.next();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella validazione del token " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient(), e);
+            logger.log(Level.SEVERE, "Errore nella validazione del token " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient(), e);
             return true;
         }
     }
@@ -297,7 +297,7 @@ public final class ServerUtil {
 
     public boolean userHasLibro(Token token, Libro libro) {
         if (isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String sql = """
@@ -309,7 +309,7 @@ public final class ServerUtil {
                 )""";
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -317,7 +317,7 @@ public final class ServerUtil {
                 }
             }
         }catch(SQLException e){
-            logger.log(Level.SEVERE, "Errore nel controllo se l'utente con ID: " + token.getUserId() + " contiene il libro con ID: " + libro.getId(), e);
+            logger.log(Level.SEVERE, "Errore nel controllo se l'utente con ID: " + token.userId() + " contiene il libro con ID: " + libro.getId(), e);
         }
         return false;
     }

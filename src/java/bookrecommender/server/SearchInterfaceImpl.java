@@ -212,7 +212,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
             logger.info("Searching for books with title: " + title + " From client " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         List<Libro> risultati = new ArrayList<>();
@@ -227,7 +227,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
                 AND l.titolo ILIKE '%' || ? || '%';""";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             stmt.setString(2, title);
             ServerUtil.getInstance().resultStmt(risultati, stmt);
         } catch (SQLException e) {
@@ -249,7 +249,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
             logger.info("Searching for books with author: " + author + " From client " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         List<Libro> risultati = new ArrayList<>();
@@ -264,7 +264,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
                 AND LOWER(l.autore) LIKE LOWER(?);""";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             stmt.setString(2, "%" + author + "%");
             ServerUtil.getInstance().resultStmt(risultati, stmt);
         } catch (SQLException e) {
@@ -287,7 +287,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
             logger.info("Searching for books by author: " + author + " and year: " + year + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         List<Libro> risultati = new ArrayList<>();
@@ -303,7 +303,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
                 AND CAST(l.annopubblicazione AS TEXT) LIKE ?;""";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             stmt.setString(2, "%" + author + "%");
             stmt.setString(3, "%" + year + "%");
             ServerUtil.getInstance().resultStmt(risultati, stmt);
@@ -326,7 +326,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
             logger.info("Searching for books from client " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
 
@@ -343,10 +343,10 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
 
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             ServerUtil.getInstance().resultStmt(risultati, stmt);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nel recupero di tutti i libri per utente id " + token.getUserId(), e);
+            logger.log(Level.SEVERE, "Errore nel recupero di tutti i libri per utente id " + token.userId(), e);
             return null;
         }
         return risultati;

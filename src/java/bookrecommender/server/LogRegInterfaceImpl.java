@@ -178,12 +178,12 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     @Override
     public boolean LogOut(Token token) throws RemoteException {
         try {
-            logger.info("LogOut called for token: " + token.getToken() + ", client host: " + getClientHost());
+            logger.info("LogOut called for token: " + token.token() + ", client host: " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
         String deleteQuery = "DELETE FROM SESSIONI_LOGIN WHERE TOKEN = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
-            stmt.setString(1, token.getToken());
+            stmt.setString(1, token.token());
             int rows = stmt.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
@@ -195,20 +195,20 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     @Override
     public boolean cambiaPassword(Token token, String newPassword) throws RemoteException {
         try {
-            logger.info("PasswordChange called for token: " + token.getToken() + ", client host: " + getClientHost());
+            logger.info("PasswordChange called for token: " + token.token() + ", client host: " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String update = "UPDATE UTENTI SET PASSWORD = ? WHERE ID = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(update)) {
             stmt.setString(1, newPassword);
-            stmt.setInt(2, token.getUserId());
+            stmt.setInt(2, token.userId());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.getUserId(), e);
+            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.userId(), e);
         }
         return false;
     }
@@ -216,10 +216,10 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     @Override
     public boolean eliminaAccount(Token token) throws RemoteException {
         try {
-            logger.info("UserDelete called for token: " + token.getToken() + ", client host: " + getClientHost());
+            logger.info("UserDelete called for token: " + token.token() + ", client host: " + getClientHost());
         } catch (ServerNotActiveException ignored) {}
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String delConsigli = "DELETE FROM consigli WHERE id_utente = ?";
@@ -235,11 +235,11 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
                  PreparedStatement p3 = conn.prepareStatement(delLibrerie);
                  PreparedStatement p4 = conn.prepareStatement(delSessioni);
                  PreparedStatement p5 = conn.prepareStatement(delUtente)) {
-                p1.setInt(1, token.getUserId()); p1.executeUpdate();
-                p2.setInt(1, token.getUserId()); p2.executeUpdate();
-                p3.setInt(1, token.getUserId()); p3.executeUpdate();
-                p4.setInt(1, token.getUserId()); p4.executeUpdate();
-                p5.setInt(1, token.getUserId());
+                p1.setInt(1, token.userId()); p1.executeUpdate();
+                p2.setInt(1, token.userId()); p2.executeUpdate();
+                p3.setInt(1, token.userId()); p3.executeUpdate();
+                p4.setInt(1, token.userId()); p4.executeUpdate();
+                p5.setInt(1, token.userId());
                 boolean ok = p5.executeUpdate() > 0;
                 if (ok)
                     conn.commit();
@@ -248,7 +248,7 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
                 return ok;
             } catch (SQLException e) {
                 conn.rollback();
-                logger.log(Level.SEVERE, "Errore nell'eliminazione account utente " + token.getUserId(), e);
+                logger.log(Level.SEVERE, "Errore nell'eliminazione account utente " + token.userId(), e);
             } finally {
                 conn.setAutoCommit(true);
             }

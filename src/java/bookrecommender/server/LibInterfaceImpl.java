@@ -52,23 +52,23 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean createLib(Token token, String nome, List<Libro> libri) throws RemoteException {
         try {
-            logger.info("Creazione libreria: " + nome + " da parte di " + token.getUserId() + "con IP: " + getClientHost());
+            logger.info("Creazione libreria: " + nome + " da parte di " + token.userId() + "con IP: " + getClientHost());
         }catch(ServerNotActiveException e){
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         try {
             String checkQuery = "SELECT 1 FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?";
             Connection conn = ServerUtil.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(checkQuery);
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             stmt.setString(2, nome);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                logger.log(Level.WARNING, "Libreria con nome " + nome + " già esistente per l'utente con ID: " + token.getUserId());
+                logger.log(Level.WARNING, "Libreria con nome " + nome + " già esistente per l'utente con ID: " + token.userId());
                 return false;
             }
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement insertLibStmt = conn.prepareStatement(insertLibQuery, Statement.RETURN_GENERATED_KEYS)) {
-            insertLibStmt.setInt(1, token.getUserId());
+            insertLibStmt.setInt(1, token.userId());
             insertLibStmt.setString(2, nome);
 
             int rows = insertLibStmt.executeUpdate();
@@ -102,7 +102,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
                     }
                 }
             } else {
-                logger.log(Level.WARNING, "Nessuna riga inserita nella libreria per l'utente con ID: " + token.getUserId());
+                logger.log(Level.WARNING, "Nessuna riga inserita nella libreria per l'utente con ID: " + token.userId());
                 return false;
             }
         } catch (SQLException e) {
@@ -121,18 +121,18 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean deleteLib(Token token, String nome) throws RemoteException {
         try {
-            logger.info("Eliminazione libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Eliminazione libreria: " + nome + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String deleteQuery = "DELETE FROM LIBRERIE WHERE ID_UTENTE = ? AND TITOLO_LIBRERIA = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             stmt.setString(2, nome);
             int rows = stmt.executeUpdate();
             return rows > 0;
@@ -155,18 +155,18 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public List<Integer> updateLib(Token token, String nome, List<Libro> libriUp) throws RemoteException {
         try {
-            logger.info("Aggiornamento libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Aggiornamento libreria: " + nome + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return List.of(0);
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return List.of(0);
         }
         int idLibreria;
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement("SELECT id FROM librerie WHERE id_utente = ? AND titolo_libreria = ?")) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setString(2, nome);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -176,7 +176,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nel recupero dell'id libreria per utente id " + token.getUserId(), e);
+            logger.log(Level.SEVERE, "Errore nel recupero dell'id libreria per utente id " + token.userId(), e);
             return List.of(0);
         }
         Set<Integer> correnti = new HashSet<>();
@@ -203,21 +203,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
              PreparedStatement useStmt = conn.prepareStatement("SELECT 1 FROM consigli WHERE id_utente = ? AND idlibro = ? LIMIT 1");
              PreparedStatement recStmt = conn.prepareStatement("SELECT 1 FROM consigli WHERE id_utente = ? AND (lib_1 = ? OR lib_2 = ? OR lib_3 = ?) LIMIT 1")) {
             for (int id : daEliminare) {
-                valStmt.setInt(1, token.getUserId());
+                valStmt.setInt(1, token.userId());
                 valStmt.setInt(2, id);
                 if (valStmt.executeQuery().next()) {
                     errors.add(id);
                     errors.add(0);
                     continue;
                 }
-                useStmt.setInt(1, token.getUserId());
+                useStmt.setInt(1, token.userId());
                 useStmt.setInt(2, id);
                 if (useStmt.executeQuery().next()) {
                     errors.add(id);
                     errors.add(1);
                     continue;
                 }
-                recStmt.setInt(1, token.getUserId());
+                recStmt.setInt(1, token.userId());
                 recStmt.setInt(2, id);
                 recStmt.setInt(3, id);
                 recStmt.setInt(4, id);
@@ -270,12 +270,12 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public List<Libro> getLib(Token token, String nome) throws RemoteException {
         try {
-            logger.info("Recupero libreria: " + nome + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Recupero libreria: " + nome + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         List<Libro> libri = new ArrayList<>();
@@ -283,7 +283,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             stmt.setString(2, nome);
             ServerUtil.getInstance().resultStmt(libri, stmt);
         } catch (SQLException e) {
@@ -301,12 +301,12 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public List<String> getLibs(Token token) throws RemoteException {
         try {
-            logger.info("Recupero librerie da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Recupero librerie da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         List<String> librerie = new ArrayList<>();
@@ -314,7 +314,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setInt(1, token.getUserId());
+            stmt.setInt(1, token.userId());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     librerie.add(rs.getString("TITOLO_LIBRERIA"));
@@ -336,16 +336,16 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean addValutazione(Token token, Valutazione valutazione) throws RemoteException {
         try{
-            logger.info("Aggiunta valutazione da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Aggiunta valutazione da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         if(!ServerUtil.getInstance().userHasLibro(token, valutazione.getLibro())) {
-            logger.log(Level.WARNING, "L'utente con ID: " + token.getUserId() + " non ha il libro con ID: " + valutazione.getIdLibro() + " nelle sue librerie.");
+            logger.log(Level.WARNING, "L'utente con ID: " + token.userId() + " non ha il libro con ID: " + valutazione.getIdLibro() + " nelle sue librerie.");
             return false;
         }
         List<String> commenti = valutazione.getCommenti();
@@ -358,7 +358,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
             stmt.setInt(1, valutazione.getIdLibro());
-            stmt.setInt(2, token.getUserId());
+            stmt.setInt(2, token.userId());
             stmt.setFloat(3, valutazioni.get(0));
             stmt.setString(4, commenti.get(0));
             stmt.setFloat(5, valutazioni.get(1));
@@ -373,10 +373,10 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                logger.log(Level.INFO, "Valutazione aggiunta con successo per il libro con ID: " + valutazione.getIdLibro() + " da parte dell'utente con ID: " + token.getUserId());
+                logger.log(Level.INFO, "Valutazione aggiunta con successo per il libro con ID: " + valutazione.getIdLibro() + " da parte dell'utente con ID: " + token.userId());
                 return true;
             } else {
-                logger.log(Level.WARNING, "Nessuna riga inserita nella tabella delle valutazioni per il libro con ID: " + valutazione.getIdLibro() + " da parte dell'utente con ID: " + token.getUserId());
+                logger.log(Level.WARNING, "Nessuna riga inserita nella tabella delle valutazioni per il libro con ID: " + valutazione.getIdLibro() + " da parte dell'utente con ID: " + token.userId());
                 return false;
             }
         } catch (SQLException e) {
@@ -395,12 +395,12 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean addConsiglio(Token token, List<Libro> libri) throws RemoteException {
         try{
-            logger.info("Aggiunta consigli da parte di " + token.getUserId() + " con IP: " + getClientHost() + " a libro: " + libri.get(0).getId());
+            logger.info("Aggiunta consigli da parte di " + token.userId() + " con IP: " + getClientHost() + " a libro: " + libri.get(0).getId());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         if (libri.size() < 2) {
@@ -422,7 +422,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
             stmt.setInt(1, libri.get(0).getId());
-            stmt.setInt(2, token.getUserId());
+            stmt.setInt(2, token.userId());
             stmt.setInt(3, libri.get(1).getId());
             if(libri.get(2) == null)
                 stmt.setNull(4, Types.INTEGER);
@@ -435,10 +435,10 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                logger.log(Level.INFO, "Consiglio aggiunto con successo per il libro con ID: " + libri.get(0).getId() + " da parte dell'utente con ID: " + token.getUserId());
+                logger.log(Level.INFO, "Consiglio aggiunto con successo per il libro con ID: " + libri.get(0).getId() + " da parte dell'utente con ID: " + token.userId());
                 return true;
             } else {
-                logger.log(Level.WARNING, "Nessuna riga inserita nella tabella dei consigli per il libro con ID: " + libri.get(0).getId() + " da parte dell'utente con ID: " + token.getUserId());
+                logger.log(Level.WARNING, "Nessuna riga inserita nella tabella dei consigli per il libro con ID: " + libri.get(0).getId() + " da parte dell'utente con ID: " + token.userId());
                 return false;
             }
         } catch (SQLException e) {
@@ -458,12 +458,12 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean modifyLibName(Token token, String oldName, String newName) throws RemoteException {
         try{
-            logger.info("Modifica del nome della libreria " + oldName + " con il nome: " + newName + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Modifica del nome della libreria " + oldName + " con il nome: " + newName + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
 
@@ -476,19 +476,19 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, newName);
-            ps.setInt(2, token.getUserId());
+            ps.setInt(2, token.userId());
             ps.setString(3, oldName);
 
             int righe = ps.executeUpdate();
             if (righe == 1) {
-                logger.log(Level.INFO, "Rinominata libreria \"" + oldName + "\" in \"" + newName + "\" per utente id " + token.getUserId());
+                logger.log(Level.INFO, "Rinominata libreria \"" + oldName + "\" in \"" + newName + "\" per utente id " + token.userId());
                 return true;
             } else {
-                logger.log(Level.WARNING, "Nessuna libreria aggiornata: non esiste una libreria \"" + oldName + "\" per utente id " + token.getUserId());
+                logger.log(Level.WARNING, "Nessuna libreria aggiornata: non esiste una libreria \"" + oldName + "\" per utente id " + token.userId());
                 return false;
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore durante la modifica del nome della libreria \"" + oldName + "\" per utente id " + token.getUserId(), e);
+            logger.log(Level.SEVERE, "Errore durante la modifica del nome della libreria \"" + oldName + "\" per utente id " + token.userId(), e);
             return false;
         }
     }
@@ -518,7 +518,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     public LocalDate getCreationDate(Token token, String nome) throws RemoteException {
         //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         final String SQL =
@@ -527,7 +527,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
                         " WHERE id_utente = ? " +
                         "   AND titolo_libreria = ?";
 
-        int userId = token.getUserId();
+        int userId = token.userId();
 
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL)) {
@@ -553,13 +553,13 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     public boolean existVal(Token token, Libro libro) throws RemoteException {
         //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String sql = "SELECT 1 FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
@@ -574,13 +574,13 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     public boolean existCon(Token token, Libro libro) throws RemoteException {
         //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String sql = "SELECT 1 FROM consigli WHERE id_utente = ? AND idlibro = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next();
@@ -594,12 +594,12 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean updateVal(Token token, Valutazione valutazione) throws RemoteException {
         try{
-            logger.info("Modifica valutazione per libro " + valutazione.getIdLibro() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Modifica valutazione per libro " + valutazione.getIdLibro() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String sql = """
@@ -629,7 +629,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
             ps.setString(9,  comments.get(4));
             ps.setInt(  10,  Math.round(ratings.get(4)));
             ps.setString(11, comments.size() > 5 ? comments.get(5) : "");
-            ps.setInt(  12, token.getUserId());
+            ps.setInt(  12, token.userId());
             ps.setInt(  13, valutazione.getIdLibro());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -641,12 +641,12 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean updateCon(Token token, List<Libro> libri) throws RemoteException {
         try{
-            logger.info("Modifica consigli per libro " + libri.get(0).getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Modifica consigli per libro " + libri.get(0).getId() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         if (libri.size() < 2 || libri.size() > 4) {
@@ -663,7 +663,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
             ps.setObject(1, libri.size() > 1 ? libri.get(1).getId() : null, Types.INTEGER);
             ps.setObject(2, libri.size() > 2 ? libri.get(2).getId() : null, Types.INTEGER);
             ps.setObject(3, libri.size() > 3 ? libri.get(3).getId() : null, Types.INTEGER);
-            ps.setInt(4, token.getUserId());
+            ps.setInt(4, token.userId());
             ps.setInt(5, refId);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -675,18 +675,18 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean deleteVal(Token token, Libro libro) throws RemoteException {
         try{
-            logger.info("Eliminazione valutazione del libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Eliminazione valutazione del libro " + libro.getId() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String sql = "DELETE FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -698,18 +698,18 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public boolean deleteCon(Token token, Libro libro) throws RemoteException {
         try{
-            logger.info("Eliminazione consigli del libro " + libro.getId() + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Eliminazione consigli del libro " + libro.getId() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
         String sql = "DELETE FROM consigli WHERE id_utente = ? AND idlibro = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -721,18 +721,18 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public LocalDate getValDate(Token token, Libro libro) throws RemoteException {
         try{
-            logger.info("Recupero data di modifica per la valutazione del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Recupero data di modifica per la valutazione del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         String sql = "SELECT valutazione_time FROM valutazioni WHERE id_utente = ? AND idlibro = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -751,18 +751,18 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public LocalDate getConDate(Token token, Libro libro) throws RemoteException {
         try{
-            logger.info("Recupero data di modifica per il consiglio del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Recupero data di modifica per il consiglio del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         String sql = "SELECT consiglio_time FROM consigli WHERE id_utente = ? AND idlibro = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -781,18 +781,18 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public List<Libro> getConsigli(Token token, Libro libro) throws RemoteException {
         try{
-            logger.info("Recupero consiglio del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Recupero consiglio del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         String sql = "SELECT lib_1, lib_2, lib_3 FROM consigli WHERE id_utente = ? AND idlibro = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, token.getUserId());
+            ps.setInt(1, token.userId());
             ps.setInt(2, libro.getId());
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) {
@@ -817,12 +817,12 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     @Override
     public Valutazione getValutazione(Token token, Libro libro) throws RemoteException {
         try{
-            logger.info("Recupero valutazione del libro " + libro.getId()  + " da parte di " + token.getUserId() + " con IP: " + getClientHost());
+            logger.info("Recupero valutazione del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
-            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return null;
         }
         String valSql = """
@@ -837,7 +837,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         """;
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement psVal  = conn.prepareStatement(valSql)) {
-            psVal.setInt(1, token.getUserId());
+            psVal.setInt(1, token.userId());
             psVal.setInt(2, libro.getId());
             try (ResultSet rsV = psVal.executeQuery()) {
                 if (!rsV.next()) {
@@ -845,7 +845,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
                 }
                 List<Float> ratings = ServerUtil.getInstance().getVotiVal(rsV);
                 List<String> comments = ServerUtil.getInstance().getComVal(rsV);
-                return new Valutazione(String.valueOf(token.getUserId()), ratings, comments, libro);
+                return new Valutazione(String.valueOf(token.userId()), ratings, comments, libro);
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore in getValutazione", e);
