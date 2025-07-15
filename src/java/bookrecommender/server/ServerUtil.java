@@ -1,5 +1,6 @@
 package bookrecommender.server;
 
+import bookrecommender.common.Libro;
 import bookrecommender.common.Token;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -149,7 +151,7 @@ public final class ServerUtil {
             Registry registry = LocateRegistry.createRegistry(port);
             SearchInterfaceImpl searchServer = new SearchInterfaceImpl(dbManager);
             LogRegInterfaceImpl logRegServer = new LogRegInterfaceImpl();
-            LibInterfaceImpl libServer = new LibInterfaceImpl(dbManager);
+            LibInterfaceImpl libServer = new LibInterfaceImpl();
             monitorServer = new MonitorInterfaceImpl();
             registry.rebind("Search_Interface", searchServer);
             registry.rebind("LogReg_Interface", logRegServer);
@@ -221,6 +223,129 @@ public final class ServerUtil {
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nella validazione del token " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient(), e);
             return true;
+        }
+    }
+
+
+    /**
+     * Recupera un libro dal database a partire dal suo ID.
+     * @param id ID del libro da recuperare
+     * @return Oggetto {@link Libro} se trovato, altrimenti null
+     */
+    public Libro getLibro(int id) {
+        String query = "SELECT * FROM LIBRI WHERE ID = ? ";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            Libro libro;
+            try (ResultSet rs = stmt.executeQuery()) {
+                rs.next();
+                libro = new Libro(
+                        rs.getInt("ID"),
+                        rs.getString("TITOLO"),
+                        rs.getString("AUTORE"),
+                        rs.getString("DESCRIZIONE"),
+                        rs.getString("CATEGORIA"),
+                        rs.getString("EDITORE"),
+                        rs.getFloat("PREZZO"),
+                        rs.getShort("ANNOPUBBLICAZIONE"),
+                        rs.getShort("MESEPUBBLICAZIONE")
+                );
+            }
+            return libro;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero del libro con ID: " + id, e);
+            return null;
+        }
+    }
+
+    public List<Float> getVotiVal(ResultSet rs){
+        List<Float> Voti;
+        try {
+            Voti = List.of(
+                    rs.getFloat("v_stile"),
+                    rs.getFloat("v_contenuto"),
+                    rs.getFloat("v_gradevolezza"),
+                    rs.getFloat("v_originalita"),
+                    rs.getFloat("v_edizione"),
+                    rs.getFloat("v_finale")
+            );
+        }catch(SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero dei voti del libro", e);
+            return null;
+        }
+        return Voti;
+    }
+
+    public List<String> getComVal(ResultSet rs){
+        List<String> Commenti;
+        try {
+            Commenti = List.of(
+                    rs.getString("c_stile"),
+                    rs.getString("c_contenuto"),
+                    rs.getString("c_gradevolezza"),
+                    rs.getString("c_originalita"),
+                    rs.getString("c_edizione"),
+                    rs.getString("c_finale")
+            );
+        }catch(SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel recupero dei commenti del libro", e);
+            return null;
+        }
+        return Commenti;
+    }
+
+    public boolean userHasLibro(Token token, Libro libro) {
+        if (isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.getToken() + " utente di id " + token.getUserId() + " IP:" + token.getIpClient());
+            return false;
+        }
+        String sql = """
+                SELECT EXISTS (
+                SELECT 1
+                FROM librerie l
+                JOIN libreria_libro ll ON l.id = ll.idlibreria
+                WHERE l.id_utente = ? AND ll.idlibro = ?
+                )""";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, token.getUserId());
+            ps.setInt(2, libro.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBoolean(1);
+                }
+            }
+        }catch(SQLException e){
+            logger.log(Level.SEVERE, "Errore nel controllo se l'utente con ID: " + token.getUserId() + " contiene il libro con ID: " + libro.getId(), e);
+        }
+        return false;
+    }
+
+    /**
+     * Esegue un PreparedStatement e popola una lista di oggetti {@link Libro}
+     * con i risultati ottenuti dal ResultSet.
+     * @param risultati Lista da riempire con i libri estratti
+     * @param stmt      Statement SQL già preparato da eseguire
+     */
+    public void resultStmt(List<Libro> risultati, PreparedStatement stmt){
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Libro libro = new Libro(
+                        rs.getInt("ID"),
+                        rs.getString("TITOLO"),
+                        rs.getString("AUTORE"),
+                        rs.getString("DESCRIZIONE"),
+                        rs.getString("CATEGORIA"),
+                        rs.getString("EDITORE"),
+                        rs.getFloat("PREZZO"),
+                        rs.getShort("ANNOPUBBLICAZIONE"),
+                        rs.getShort("MESEPUBBLICAZIONE")
+                );
+                risultati.add(libro);
+            }
+        }catch(SQLException e) {
+            logger.log(Level.SEVERE, "Errore nell'esecuzione del PreparedStatement", e);
         }
     }
 }

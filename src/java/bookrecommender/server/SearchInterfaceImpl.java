@@ -53,7 +53,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
         try {
             logger.info("Searching book with ID: " + id + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
-        return dbManager.getLibro(id);
+        return ServerUtil.getInstance().getLibro(id);
     }
 
     /**
