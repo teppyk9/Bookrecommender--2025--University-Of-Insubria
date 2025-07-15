@@ -149,7 +149,7 @@ public final class ServerUtil {
         dbManager.svuotaSessioniLogin();
         try {
             Registry registry = LocateRegistry.createRegistry(port);
-            SearchInterfaceImpl searchServer = new SearchInterfaceImpl(dbManager);
+            SearchInterfaceImpl searchServer = new SearchInterfaceImpl();
             LogRegInterfaceImpl logRegServer = new LogRegInterfaceImpl();
             LibInterfaceImpl libServer = new LibInterfaceImpl();
             monitorServer = new MonitorInterfaceImpl();
