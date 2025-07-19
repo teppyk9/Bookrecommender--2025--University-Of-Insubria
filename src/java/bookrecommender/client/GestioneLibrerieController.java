@@ -1,7 +1,6 @@
 package bookrecommender.client;
 
 import bookrecommender.common.Libro;
-import bookrecommender.common.Token;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
@@ -24,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -161,7 +161,7 @@ public class GestioneLibrerieController extends TreeTableEngine {
      * @param col  La colonna da configurare.
      * @param prop La funzione che restituisce la proprietà booleana da visualizzare.
      */
-    private void setupCheckColumn(TreeTableColumn<Object, Boolean> col, java.util.function.Function<LibroRow, javafx.beans.property.BooleanProperty> prop) {
+    private void setupCheckColumn(TreeTableColumn<Object, Boolean> col, Function<LibroRow, BooleanProperty> prop) {
         col.setStyle("-fx-alignment: CENTER;");
         col.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
@@ -201,14 +201,13 @@ public class GestioneLibrerieController extends TreeTableEngine {
     /**
      * Recupera i contenuti di una libreria dal server.
      *
-     * @param token   Token di autenticazione dell'utente.
      * @param nomeLib Nome della libreria da caricare.
      * @return Lista di {@link Libro} contenuti nella libreria.
      * @throws RemoteException Se la comunicazione con il server fallisce.
      */
     @Override
-    protected List<bookrecommender.common.Libro> fetchLibraryContents(Token token, String nomeLib) throws RemoteException {
-        return CliUtil.getInstance().getLibService().getLib(token, nomeLib);
+    protected List<Libro> fetchLibraryContents(String nomeLib) throws RemoteException {
+        return CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLib);
     }
 
     /**
@@ -244,13 +243,12 @@ public class GestioneLibrerieController extends TreeTableEngine {
     @Override
     protected void caricaFigliLibri(TreeItem<Object> libNode, String nomeLib) {
         try {
-            Token token = CliUtil.getInstance().getCurrentToken();
-            List<bookrecommender.common.Libro> list = CliUtil.getInstance().getLibService().getLib(token, nomeLib);
-            for (bookrecommender.common.Libro l : list) {
-                boolean hasVal = CliUtil.getInstance().getLibService().existVal(token, l);
-                boolean hasCons = CliUtil.getInstance().getLibService().existCon(token, l);
-                LocalDate valD = CliUtil.getInstance().getLibService().getValDate(token, l);
-                LocalDate consD = CliUtil.getInstance().getLibService().getConDate(token, l);
+            List<Libro> list = CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLib);
+            for (Libro l : list) {
+                boolean hasVal = CliUtil.getInstance().getLibService().existVal(CliUtil.getInstance().getCurrentToken(), l);
+                boolean hasCons = CliUtil.getInstance().getLibService().existCon(CliUtil.getInstance().getCurrentToken(), l);
+                LocalDate valD = CliUtil.getInstance().getLibService().getValDate(CliUtil.getInstance().getCurrentToken(), l);
+                LocalDate consD = CliUtil.getInstance().getLibService().getConDate(CliUtil.getInstance().getCurrentToken(), l);
                 LibroRow row = new LibroRow(l, hasVal, hasCons, valD, consD);
                 libNode.getChildren().add(new TreeItem<>(row));
             }

@@ -1,6 +1,5 @@
 package bookrecommender.client;
 
-import bookrecommender.common.Token;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
@@ -48,12 +47,11 @@ public abstract class TreeTableEngine {
         getLibCounts().clear();
         getLibDates().clear();
         try {
-            Token token = CliUtil.getInstance().getCurrentToken();
-            List<String> libs = CliUtil.getInstance().getLibService().getLibs(token);
+            List<String> libs = CliUtil.getInstance().getLibService().getLibs(CliUtil.getInstance().getCurrentToken());
             for (String nome : libs) {
-                List<?> list = fetchLibraryContents(token, nome);
+                List<?> list = fetchLibraryContents(nome);
                 getLibCounts().put(nome, list.size());
-                getLibDates().put(nome, CliUtil.getInstance().getLibService().getCreationDate(token, nome));
+                getLibDates().put(nome, CliUtil.getInstance().getLibService().getCreationDate(CliUtil.getInstance().getCurrentToken(), nome));
                 creaFigliLibri(nome);
             }
         } catch (RemoteException e) {
@@ -76,7 +74,7 @@ public abstract class TreeTableEngine {
 
     protected abstract void handleDoubleClick(Object value);
 
-    protected abstract List<?> fetchLibraryContents(Token token, String nomeLib) throws RemoteException;
+    protected abstract List<?> fetchLibraryContents(String nomeLib) throws RemoteException;
 
     protected abstract Map<String, Integer> getLibCounts();
 

@@ -231,7 +231,6 @@ public abstract class TableViewEngine {
                     return;
                 }
                 MenuButton menu = menuAzioni(getTableView(), getIndex());
-                setMenuAzioni(menu, getTableView(), getIndex());
                 menu.getItems().removeIf(menuItem -> menuItem.getText().equals("Rimuovi"));
                 setGraphic(menu);
                 setAlignment(Pos.CENTER);
@@ -385,48 +384,40 @@ public abstract class TableViewEngine {
         MenuButton menu = new MenuButton();
         menu.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
         CliUtil.getInstance().styleIconControl(menu);
-        MenuItem valuta = new MenuItem("Valuta");
-        MenuItem consiglia = new MenuItem("Aggiungi Consigli");
-        MenuItem rimuovi = new MenuItem("Rimuovi");
-        MenuItem modValuta = new MenuItem("Modifica Valutazione");
-        MenuItem modCons = new MenuItem("Modifica Consigli");
         MenuItem libreria = new MenuItem("Aggiungi ad una libreria");
-
-        valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, getMyFXMLtype(), tableView.getItems().get(idx)));
-        consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
-        rimuovi.setOnAction(evt -> {
-            Libro l = tableView.getItems().get(idx);
-            ObservableList<Libro> items = getOTableView().getItems();
-            if (containsLibro(items, l))
-                items.removeIf(item -> item.equals(l));
-        });
-        modValuta.setOnAction(evt -> {
-            try {
-                CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
-            } catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
-            }
-        });
         libreria.setOnAction(evt -> {
             Libro l = tableView.getItems().get(idx);
             if(l != null)
                 CliUtil.getInstance().buildStage(FXMLtype.AGGIUNGILIBROLIBRERIA,getMyFXMLtype(), l);
         });
-        modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
-        menu.getItems().addAll(valuta, modValuta, consiglia, modCons, libreria, rimuovi);
-
-        return menu;
-    }
-
-    private void setMenuAzioni(MenuButton menu, TableView<Libro> tableView, int index) {
-        Set<String> daRimuovere;
-        if (inLib.get(tableView.getItems().get(index))) {
-            daRimuovere = Set.of(hasVal.get(tableView.getItems().get(index)) ? "Valuta" : "Modifica Valutazione", hasCon.get(tableView.getItems().get(index)) ? "Aggiungi Consigli" : "Modifica Consigli"
-            );
-        } else {
-            daRimuovere = Set.of("Valuta", "Modifica Valutazione", "Aggiungi Consigli", "Modifica Consigli");
+        if (inLib.get(tableView.getItems().get(idx))) {
+            if( hasVal.get(tableView.getItems().get(idx))) {
+                MenuItem modValuta = new MenuItem("Modifica Valutazione");
+                modValuta.setOnAction(evt -> {
+                    try {
+                        CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
+                    } catch (RemoteException e) {
+                        CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                    }
+                });
+                menu.getItems().add(modValuta);
+            } else {
+                MenuItem valuta = new MenuItem("Valuta");
+                valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, getMyFXMLtype(), tableView.getItems().get(idx)));
+                menu.getItems().add(valuta);
+            }
+            if( hasCon.get(tableView.getItems().get(idx))) {
+                MenuItem modCons = new MenuItem("Modifica Consigli");
+                modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
+                menu.getItems().add(modCons);
+            } else {
+                MenuItem consiglia = new MenuItem("Aggiungi Consigli");
+                consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
+                menu.getItems().add(consiglia);
+            }
         }
-        menu.getItems().removeIf(mi -> daRimuovere.contains(mi.getText()));
+        menu.getItems().add(libreria);
+        return menu;
     }
 
     private void switchType(String key, String text) {
@@ -482,11 +473,12 @@ public abstract class TableViewEngine {
                     default:
                         throw new IllegalStateException("Tipo di ricerca non selezionato.");
                 }
-
-                hasRec.clear();
-                assert risultati != null;
-                for (Libro l : risultati) {
-                    hasRec.put(l, CliUtil.getInstance().getSearchService().hasValRec(l));
+                if(getMyFXMLtype() == FXMLtype.CERCA || getMyFXMLtype() == FXMLtype.CERCA_AVANZATO || getMyFXMLtype() == FXMLtype.GESTIONELIBRERIE) {
+                    hasRec.clear();
+                    assert risultati != null;
+                    for (Libro l : risultati) {
+                        hasRec.put(l, CliUtil.getInstance().getSearchService().hasValRec(l));
+                    }
                 }
                 return risultati;
             }
@@ -495,7 +487,9 @@ public abstract class TableViewEngine {
         searchTask.setOnSucceeded(evt -> {
             List<Libro> risultati = searchTask.getValue();
             ObservableList<Libro> data = FXCollections.observableArrayList(risultati);
-            setLibriP(risultati);
+            if(getMyFXMLtype() == FXMLtype.CERCA_AVANZATO || getMyFXMLtype() == FXMLtype.GESTIONELIBRERIE) {
+                setLibriP(risultati);
+            }
             getSTableView().setItems(data);
             getProgressIndicator().setVisible(false);
         });
@@ -618,4 +612,5 @@ public abstract class TableViewEngine {
     protected Map<Libro, Boolean> getInLib() {
         return this.inLib;
     }
+
 }

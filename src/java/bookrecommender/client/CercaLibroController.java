@@ -202,7 +202,7 @@ public class CercaLibroController extends TableViewEngine {
      */
     @Override
     protected FXMLtype getMyFXMLtype() {
-        return null;
+        return FXMLtype.CERCA;
     }
 
     @Override

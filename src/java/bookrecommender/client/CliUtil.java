@@ -111,20 +111,6 @@ public final class CliUtil {
     }
 
     /**
-     * Restituisce lo {@link Stage} principale.
-     *
-     * @return lo stage principale
-     * @throws IllegalStateException se {@code init()} non è stato chiamato
-     */
-    public Stage getPrimaryStage() {
-        if (primaryStage == null) {
-            logger.log(Level.SEVERE, "PrimaryStage has not been initialized. Call init() first.");
-            throw new IllegalStateException("PrimaryStage not initialized.");
-        }
-        return primaryStage;
-    }
-
-    /**
      * Imposta l'host e la porta del server RMI.
      *
      * @param host indirizzo IP o nome host del server
@@ -282,7 +268,7 @@ public final class CliUtil {
             msgValutazione = msgValutazione.concat(s);
             switch(newFxml) {
                 case CONNESSIONE:
-                    stage = getPrimaryStage();
+                    stage = primaryStage;
                     stage.setScene(new Scene(root));
                     stage.setTitle(newFxml.getTitle());
                     stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/server_connection.png"))));

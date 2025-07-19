@@ -141,14 +141,13 @@ public class AddLibroLibreriaController extends TreeTableEngine {
     /**
      * Recupera la lista dei libri contenuti in una libreria specifica.
      *
-     * @param token   token dell'utente autenticato
      * @param nomeLib nome della libreria
      * @return lista di {@link Libro} presenti nella libreria
      * @throws RemoteException in caso di errore RMI
      */
     @Override
-    protected List<Libro> fetchLibraryContents(Token token, String nomeLib) throws RemoteException {
-        return CliUtil.getInstance().getLibService().getLib(token, nomeLib);
+    protected List<Libro> fetchLibraryContents(String nomeLib) throws RemoteException {
+        return CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLib);
     }
 
     /**
