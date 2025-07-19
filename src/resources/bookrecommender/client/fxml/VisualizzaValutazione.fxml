@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Valutazioni.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.VisualizzaValutazioneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Valutazioni.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.VisualizzaValutazione">
    <VBox prefHeight="450.0" prefWidth="800.0">
       <AnchorPane prefHeight="84.0" prefWidth="800.0" styleClass="box_titolo">
          <Label fx:id="TitoloLabel" wrapText="true" layoutX="375.0" layoutY="14.0" style="-fx-font-weight: bold;" styleClass="titoloLibroValutato" text="Titolo">

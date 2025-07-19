@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.GestioneLibrerieController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.GestioneLibrerie">
    <children>
       <Text layoutX="297.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titoloDaAggiungere" text="Gestisci le tue librerie" />
       <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="1.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="43.0" prefWidth="50.0" styleClass="indietro" />

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="250" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.server.ServerConfigController">
+<AnchorPane prefHeight="250" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.server.ui.ServerConfig">
     <VBox alignment="CENTER" layoutX="8.0" layoutY="30.0" prefHeight="178.0" prefWidth="367.0" spacing="10" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="30.0">
         <GridPane hgap="10" vgap="10">
             <columnConstraints>

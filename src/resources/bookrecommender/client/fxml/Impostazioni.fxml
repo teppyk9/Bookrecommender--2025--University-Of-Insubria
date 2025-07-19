@@ -8,7 +8,7 @@
 
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ImpostazioniController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Impostazioni">
    <children>
       <Button fx:id="goBackButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBackAreaRiservata" text="Indietro" />
       <Button fx:id="eliminaAccountButton" layoutX="518.0" layoutY="296.0" mnemonicParsing="false" onAction="#eliminaAccount" text="Elimina Account" />

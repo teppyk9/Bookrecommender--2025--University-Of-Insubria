@@ -1,5 +1,6 @@
 package bookrecommender.server;
 
+import bookrecommender.server.util.ServerUtil;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CercaLibroController">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.CercaLibro">
     <children>
         <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="55.0" styleClass="indietro" />
         <MenuButton fx:id="MenuTipoRicerca" layoutX="29.0" layoutY="77.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="685.0" styleClass="sceltaRicerca" text="Tipologia ricerca" AnchorPane.rightAnchor="78.0">

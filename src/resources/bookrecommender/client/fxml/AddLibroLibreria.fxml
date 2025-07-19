@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="337.5" prefWidth="600.0" styleClass="background" stylesheets="@../stylesheets/Librerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.AddLibroLibreriaController">
+<AnchorPane prefHeight="337.5" prefWidth="600.0" styleClass="background" stylesheets="@../stylesheets/Librerie.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.AddLibroLibreria">
    <Pane layoutX="42.0" layoutY="49.0" prefHeight="261.0" prefWidth="515.0" styleClass="box_chiaro">
       <children>
          <Text fx:id="titoloLibreria" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titoloDaAggiungere" text="*Titolo libro selezionato*" wrappingWidth="400.5714852469308" />

@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="540.0" prefWidth="960.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.CreaConsiglioController">
+<AnchorPane prefHeight="540.0" prefWidth="960.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.CreaConsiglio">
    <children>
       <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="46.0" prefWidth="45.0" styleClass="indietro" />
       <Text layoutX="352.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Crea un consiglio" />

@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="540.0" prefWidth="960.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ModificaConsiglioController">
+<AnchorPane prefHeight="540.0" prefWidth="960.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.ModificaConsiglio">
    <children>
       <Pane layoutX="13.0" layoutY="146.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
          <children>

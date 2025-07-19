@@ -1,5 +1,7 @@
 package bookrecommender.client;
 
+import bookrecommender.client.enums.FXMLtype;
+import bookrecommender.client.util.CliUtil;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
