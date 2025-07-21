@@ -1,5 +1,6 @@
 package bookrecommender.client.util;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.listener.ClientListener;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.ui.*;
@@ -18,7 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Labeled;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -61,13 +61,6 @@ public final class CliUtil {
     private static int RMI_PORT;
 
     private Object lock = null;
-
-    private static final Image programIcon = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/client/icons/program_icon.png")));
-    private static final Image starFull = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/client/icons/star-full.png")));
-    private static final Image starEmpty = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/client/icons/star-empty.png")));
-    private static final Image starHalf = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/client/icons/star-half.png")));
-    private static final Image starQuarter = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/client/icons/star-1-4.png")));
-    private static final Image starThreeQuarters = new Image(Objects.requireNonNull(CliUtil.class.getResourceAsStream("/bookrecommender/client/icons/star-3-4.png")));
 
     private CliUtil() {
         // Al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
@@ -280,7 +273,7 @@ public final class CliUtil {
                     stage = primaryStage;
                     stage.setScene(new Scene(root));
                     stage.setTitle(newFxml.getTitle());
-                    stage.getIcons().setAll(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/server_connection.png"))));
+                    stage.getIcons().setAll(IMGtype.SERVER.getImage());
                     stage.setResizable(false);
                     stage.show();
                     stage.getScene().getRoot().requestFocus();
@@ -391,7 +384,7 @@ public final class CliUtil {
             }
             stage.setScene(new Scene(root));
             stage.setTitle(newFxml.getTitle());
-            stage.getIcons().setAll(programIcon);
+            stage.getIcons().setAll(IMGtype.ICONA_PROG.getImage());
             stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
@@ -411,7 +404,7 @@ public final class CliUtil {
         alert.setTitle(titolo);
         alert.setContentText(messaggio);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png"))));
+        ImageView imageView = new ImageView(IMGtype.RED_CROSS.getImage());
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         alert.setGraphic(imageView);
@@ -433,7 +426,7 @@ public final class CliUtil {
         alert.setTitle(titolo);
         alert.setContentText(messaggio);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_confirmation_icon.png"))));
+        ImageView imageView = new ImageView(IMGtype.CONFIRM.getImage());
         imageView.setFitHeight(48);
         imageView.setFitWidth(48);
         alert.setGraphic(imageView);
@@ -444,25 +437,6 @@ public final class CliUtil {
             alert.getButtonTypes().setAll(ButtonType.OK);
         return alert;
     }
-
-    /**
-     * Restituisce l’icona di una stella piena.
-     *
-     * @return immagine PNG di stella piena
-     */
-    public Image getStarFull() {
-        return starFull;
-    }
-
-    /**
-     * Restituisce l’icona di una stella vuota.
-     *
-     * @return immagine PNG di stella vuota
-     */
-    public Image getStarEmpty() {
-        return starEmpty;
-    }
-
 
     /**
      * Imposta le immagini delle 5 stelle in base al voto espresso (float tra 0 e 5).
@@ -479,15 +453,15 @@ public final class CliUtil {
         for (int i = 0; i < stars.length; i++) {
             float diff = voto - i;
             if (diff >= 1) {
-                stars[i].setImage(starFull);
+                stars[i].setImage(IMGtype.STAR_4_4.getImage());
             } else if (diff >= 0.75) {
-                stars[i].setImage(starThreeQuarters);
+                stars[i].setImage(IMGtype.STAR_3_4.getImage());
             } else if (diff >= 0.5) {
-                stars[i].setImage(starHalf);
+                stars[i].setImage(IMGtype.STAR_2_4.getImage());
             } else if (diff >= 0.25) {
-                stars[i].setImage(starQuarter);
+                stars[i].setImage(IMGtype.STAR_1_4.getImage());
             } else {
-                stars[i].setImage(starEmpty);
+                stars[i].setImage(IMGtype.STAR_0_4.getImage());
             }
         }
     }

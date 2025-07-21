@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TreeTableEngine;
@@ -11,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -79,8 +79,14 @@ public class AddLibroLibreria extends TreeTableEngine {
 
         // Icone visive per colonna "presente"
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
-            private final ImageView ivTrue  = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")), 12,12,true,true));
-            private final ImageView ivFalse = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")), 12,12,true,true));
+            private final ImageView ivTrue = new ImageView(IMGtype.CHECK.getImage());
+            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage());
+            {
+                ivTrue.setFitWidth(12);
+                ivTrue.setFitHeight(12);
+                ivFalse.setFitWidth(12);
+                ivFalse.setFitHeight(12);
+            }
             @Override
             protected void updateItem(Boolean present, boolean empty) {
                 super.updateItem(present, empty);

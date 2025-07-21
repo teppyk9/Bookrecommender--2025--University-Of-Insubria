@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.common.model.Libro;
@@ -196,7 +197,7 @@ public class CreaValutazione {
      */
     private void aggiornaStelle(int numeroPiene, List<ImageView> stelle) {
         for (int i = 0; i < stelle.size(); i++) {
-            stelle.get(i).setImage(i < numeroPiene ? CliUtil.getInstance().getStarFull() : CliUtil.getInstance().getStarEmpty());
+            stelle.get(i).setImage(i < numeroPiene ? IMGtype.STAR_4_4.getImage() : IMGtype.STAR_0_4.getImage());
         }
     }
 
@@ -212,7 +213,7 @@ public class CreaValutazione {
         for (int i = 0; i < stelle.size(); i++) {
             final int index = i;
             ImageView stella = stelle.get(i);
-            stella.setImage(CliUtil.getInstance().getStarEmpty());
+            stella.setImage(IMGtype.STAR_0_4.getImage());
 
             stella.setOnMouseEntered(e -> aggiornaStelle(index + 1, stelle));
             stella.setOnMouseExited(e -> aggiornaStelle(valore[0], stelle));

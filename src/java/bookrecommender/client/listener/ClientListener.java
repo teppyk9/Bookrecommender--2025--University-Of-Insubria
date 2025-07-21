@@ -1,11 +1,11 @@
 package bookrecommender.client.listener;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.common.interfaces.ServerListener;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -13,7 +13,6 @@ import javafx.stage.Window;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Implementazione client dell'interfaccia {@link ServerListener}, utilizzata
@@ -67,7 +66,7 @@ public class ClientListener extends UnicastRemoteObject implements ServerListene
 
             // Imposta icona personalizzata
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_info_icon.png"))));
+            ImageView imageView = new ImageView(IMGtype.INFO.getImage());
             imageView.setFitHeight(48);
             imageView.setFitWidth(48);
             alert.setGraphic(imageView);

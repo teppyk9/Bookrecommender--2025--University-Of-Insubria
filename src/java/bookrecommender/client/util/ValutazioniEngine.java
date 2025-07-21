@@ -1,5 +1,6 @@
 package bookrecommender.client.util;
 
+import bookrecommender.client.enums.IMGtype;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import java.util.List;
@@ -7,8 +8,7 @@ import java.util.List;
 public abstract class ValutazioniEngine {
     protected void updateStars(List<ImageView> stelle, float pieno) {
         for (int i = 0; i < stelle.size(); i++) {
-            stelle.get(i).setImage(i < pieno ? CliUtil.getInstance().getStarFull() : CliUtil.getInstance().getStarEmpty()
-            );
+            stelle.get(i).setImage(i < pieno ? IMGtype.STAR_4_4.getImage() : IMGtype.STAR_0_4.getImage());
         }
     }
 

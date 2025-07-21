@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
@@ -7,12 +8,10 @@ import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
-import java.util.Objects;
 
 /**
  * Controller JavaFX per la schermata di ricerca avanzata dei libri.
@@ -64,8 +63,14 @@ public class CercaLibroAvanzato extends TableViewEngine {
         initSAggiungiAdvCol();
         librerieCol.setStyle("-fx-alignment: CENTER;");
         librerieCol.setCellFactory(col -> new TableCell<>() {
-            private final ImageView ivTrue  = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")),12,12,true,true));
-            private final ImageView ivFalse = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")),12,12,true,true));
+            private final ImageView ivTrue  = new ImageView(IMGtype.CHECK.getImage());
+            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage());
+            {
+                ivFalse.setFitWidth(12);
+                ivFalse.setFitHeight(12);
+                ivTrue.setFitWidth(12);
+                ivTrue.setFitHeight(12);
+            }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);

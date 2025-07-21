@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TreeTableEngine;
@@ -16,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -25,7 +25,6 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -172,8 +171,14 @@ public class GestioneLibrerie extends TreeTableEngine {
             return new ReadOnlyObjectWrapper<>(null);
         });
         col.setCellFactory(c -> new TreeTableCell<>() {
-            private final ImageView check = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/check-green.png")),16,16,true,true));
-            private final ImageView noCheck = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/alert_icon.png")),16,16,true,true));
+            private final ImageView check = new ImageView(IMGtype.CHECK.getImage());
+            private final ImageView noCheck = new ImageView(IMGtype.RED_CROSS.getImage());
+            {
+                check.setFitWidth(12);
+                check.setFitHeight(12);
+                noCheck.setFitWidth(12);
+                noCheck.setFitHeight(12);
+            }
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
@@ -468,7 +473,10 @@ public class GestioneLibrerie extends TreeTableEngine {
      * @param mb Il pulsante a cui applicare lo stile.
      */
     private void setMenuButtonStyle(MenuButton mb) {
-        mb.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/bookrecommender/client/icons/arrow_down_icon.png")), 14, 14, true, true)));
+        ImageView arrowDown = new ImageView(IMGtype.ARROW_DOWN.getImage());
+        arrowDown.setFitWidth(12);
+        arrowDown.setFitHeight(12);
+        mb.setGraphic(arrowDown);
         CliUtil.getInstance().styleIconControl(mb);
     }
 
