@@ -58,7 +58,7 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         try {
             logger.info("TryLogin called with username: " + username + ", password: " + password + ", client host: " + getClientHost());
         }catch(ServerNotActiveException ignored){}
-        String checkQuery = "SELECT (*) FROM SESSIONI_LOGIN JOIN UTENTI ON UTENTI.ID = IDUTENTE WHERE USERNAME = ?";
+        String checkQuery = "SELECT 1 FROM SESSIONI_LOGIN JOIN UTENTI ON UTENTI.ID = IDUTENTE WHERE USERNAME = ?";
         String query = "SELECT ID, PASSWORD FROM UTENTI WHERE USERNAME = ?";
         try(Connection conn = ServerUtil.getInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(checkQuery)) {
             stmt.setString(1, username);
