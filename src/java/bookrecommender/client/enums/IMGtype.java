@@ -25,7 +25,11 @@ public enum IMGtype {
         this.path = path;
     }
 
-    public Image getImage(){
+    public Image getImage(double width, double height, boolean preserveRatio, boolean smooth) {
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)),width, height, preserveRatio, smooth);
+    }
+
+    public Image getImage() {
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
     }
 }

@@ -63,14 +63,8 @@ public class CercaLibroAvanzato extends TableViewEngine {
         initSAggiungiAdvCol();
         librerieCol.setStyle("-fx-alignment: CENTER;");
         librerieCol.setCellFactory(col -> new TableCell<>() {
-            private final ImageView ivTrue  = new ImageView(IMGtype.CHECK.getImage());
-            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage());
-            {
-                ivFalse.setFitWidth(12);
-                ivFalse.setFitHeight(12);
-                ivTrue.setFitWidth(12);
-                ivTrue.setFitHeight(12);
-            }
+            private final ImageView ivTrue  = new ImageView(IMGtype.CHECK.getImage(12,12, true, true));
+            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage(12,12, true, true));
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);

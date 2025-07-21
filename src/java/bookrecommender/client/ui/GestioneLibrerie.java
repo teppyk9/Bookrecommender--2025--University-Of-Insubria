@@ -171,14 +171,8 @@ public class GestioneLibrerie extends TreeTableEngine {
             return new ReadOnlyObjectWrapper<>(null);
         });
         col.setCellFactory(c -> new TreeTableCell<>() {
-            private final ImageView check = new ImageView(IMGtype.CHECK.getImage());
-            private final ImageView noCheck = new ImageView(IMGtype.RED_CROSS.getImage());
-            {
-                check.setFitWidth(12);
-                check.setFitHeight(12);
-                noCheck.setFitWidth(12);
-                noCheck.setFitHeight(12);
-            }
+            private final ImageView check = new ImageView(IMGtype.CHECK.getImage(12,12,true,true));
+            private final ImageView noCheck = new ImageView(IMGtype.RED_CROSS.getImage(12,12,true,true));
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
@@ -473,10 +467,7 @@ public class GestioneLibrerie extends TreeTableEngine {
      * @param mb Il pulsante a cui applicare lo stile.
      */
     private void setMenuButtonStyle(MenuButton mb) {
-        ImageView arrowDown = new ImageView(IMGtype.ARROW_DOWN.getImage());
-        arrowDown.setFitWidth(12);
-        arrowDown.setFitHeight(12);
-        mb.setGraphic(arrowDown);
+        mb.setGraphic(new ImageView(IMGtype.ARROW_DOWN.getImage(12,12,true,true)));
         CliUtil.getInstance().styleIconControl(mb);
     }
 

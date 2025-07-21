@@ -79,14 +79,8 @@ public class AddLibroLibreria extends TreeTableEngine {
 
         // Icone visive per colonna "presente"
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
-            private final ImageView ivTrue = new ImageView(IMGtype.CHECK.getImage());
-            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage());
-            {
-                ivTrue.setFitWidth(12);
-                ivTrue.setFitHeight(12);
-                ivFalse.setFitWidth(12);
-                ivFalse.setFitHeight(12);
-            }
+            private final ImageView ivTrue = new ImageView(IMGtype.CHECK.getImage(12,12,true,true));
+            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage(12,12,true,true));
             @Override
             protected void updateItem(Boolean present, boolean empty) {
                 super.updateItem(present, empty);

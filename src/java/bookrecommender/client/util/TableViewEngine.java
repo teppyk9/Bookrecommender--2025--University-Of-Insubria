@@ -176,9 +176,7 @@ public abstract class TableViewEngine {
     protected void initBasicSearch() {
         getCampoRicercaAnno().setVisible(false);
         getCampoRicercaAnno().setDisable(true);
-        ImageView arrow = new ImageView(IMGtype.ARROW_DOWN.getImage());
-        arrow.setFitWidth(12);
-        arrow.setFitHeight(12);
+        ImageView arrow = new ImageView(IMGtype.ARROW_DOWN.getImage(12,12,true,true));
         getMenuTipoRicerca().setGraphic(arrow);
         Platform.runLater(() -> {
             Node a = getMenuTipoRicerca().lookup(".arrow");
@@ -209,14 +207,8 @@ public abstract class TableViewEngine {
 
     protected void initSRecensioniCol(){
         getSRecensioniCol().setCellFactory(col -> new TableCell<>() {
-            private final ImageView check = new ImageView(IMGtype.CHECK.getImage());
-            private final ImageView noCheck = new ImageView(IMGtype.RED_CROSS.getImage());
-            {
-                check.setFitWidth(12);
-                check.setFitHeight(12);
-                noCheck.setFitWidth(12);
-                noCheck.setFitHeight(12);
-            }
+            private final ImageView check = new ImageView(IMGtype.CHECK.getImage(12,12,true,true));
+            private final ImageView noCheck = new ImageView(IMGtype.RED_CROSS.getImage(12,12,true,true));
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -251,10 +243,7 @@ public abstract class TableViewEngine {
         getSAddRemCol().setCellFactory(col -> new TableCell<>() {
             private final MenuButton menu = new MenuButton();
             {
-                ImageView arrow = new ImageView(IMGtype.ARROW_DOWN.getImage());
-                arrow.setFitHeight(12);
-                arrow.setFitWidth(12);
-                menu.setGraphic(arrow);
+                menu.setGraphic(new ImageView(IMGtype.ARROW_DOWN.getImage(12,12,true,true)));
                 CliUtil.getInstance().styleIconControl(menu);
                 MenuItem aggiungi = new MenuItem("Aggiungi");
                 MenuItem rimuovi = new MenuItem("Rimuovi");
@@ -333,10 +322,7 @@ public abstract class TableViewEngine {
         getOActionCol().setCellFactory(col -> new TableCell<>() {
             private final Button rimuovi = new Button();
             {
-                ImageView removeIcon = new ImageView(IMGtype.RIMUOVI.getImage());
-                removeIcon.setFitWidth(12);
-                removeIcon.setFitHeight(12);
-                rimuovi.setGraphic(removeIcon);
+                rimuovi.setGraphic(new ImageView(IMGtype.RIMUOVI.getImage(12,12,true,true)));
                 CliUtil.getInstance().styleIconControl(rimuovi);
                 rimuovi.setOnAction(evt -> {
                     Libro l = getTableView().getItems().get(getIndex());
@@ -397,10 +383,7 @@ public abstract class TableViewEngine {
 
     private MenuButton menuAzioni(TableView<Libro> tableView, int idx) {
         MenuButton menu = new MenuButton();
-        ImageView arrow = new ImageView(IMGtype.ARROW_DOWN.getImage());
-        arrow.setFitWidth(12);
-        arrow.setFitHeight(12);
-        menu.setGraphic(arrow);
+        menu.setGraphic(new ImageView(IMGtype.ARROW_DOWN.getImage(12,12,true,true)));
         CliUtil.getInstance().styleIconControl(menu);
         MenuItem libreria = new MenuItem("Aggiungi ad una libreria");
         libreria.setOnAction(evt -> {
