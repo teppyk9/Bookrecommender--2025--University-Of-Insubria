@@ -389,14 +389,7 @@ public abstract class TableViewEngine {
         });
         if (inLib.get(tableView.getItems().get(idx))) {
             if( hasVal.get(tableView.getItems().get(idx))) {
-                MenuItem modValuta = new MenuItem("Modifica Valutazione");
-                modValuta.setOnAction(evt -> {
-                    try {
-                        CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
-                    } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
-                    }
-                });
+                MenuItem modValuta = getMenuItem(tableView, idx);
                 menu.getItems().add(modValuta);
             } else {
                 MenuItem valuta = new MenuItem("Valuta");
@@ -415,6 +408,18 @@ public abstract class TableViewEngine {
         }
         menu.getItems().add(libreria);
         return menu;
+    }
+
+    private MenuItem getMenuItem(TableView<Libro> tableView, int idx) {
+        MenuItem modValuta = new MenuItem("Modifica Valutazione");
+        modValuta.setOnAction(evt -> {
+            try {
+                CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
+            } catch (RemoteException e) {
+                CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+            }
+        });
+        return modValuta;
     }
 
     private void switchType(String key, String text) {

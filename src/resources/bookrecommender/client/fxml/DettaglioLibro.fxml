@@ -14,127 +14,160 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/DettaglioLibro.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.DettaglioLibro">
    <Label fx:id="titoloLabel" layoutY="7.0" prefHeight="29.0" prefWidth="800.0" textAlignment="CENTER" />
    <Pane layoutX="8.0" layoutY="45.0" prefHeight="395.0" prefWidth="378.0" styleClass="box">
-      <children>
-         <Label layoutX="14.0" layoutY="33.0" prefHeight="18.0" prefWidth="55.0" styleClass="etichettaLabel" text="Autore:" />
-         <Label layoutX="14.0" layoutY="61.0" prefHeight="18.0" prefWidth="82.0" styleClass="etichettaLabel" text="Categoria:" />
-         <Label fx:id="categoriaLabel" layoutX="89.0" layoutY="56.0" prefHeight="29.0" prefWidth="275.0" />
-         <Label layoutX="14.0" layoutY="90.0" prefHeight="18.0" prefWidth="55.0" styleClass="etichettaLabel" text="Editore:" />
-         <Label fx:id="editoreLabel" layoutX="69.0" layoutY="85.0" prefHeight="29.0" prefWidth="293.0" />
-         <Label layoutX="14.0" layoutY="120.0" prefHeight="18.0" prefWidth="70.0" styleClass="etichettaLabel" text="Prezzo: €" />
-         <Label fx:id="prezzoLabel" layoutX="78.0" layoutY="115.0" prefHeight="29.0" prefWidth="199.0" />
-         <Label layoutX="15.0" layoutY="149.0" prefHeight="18.0" prefWidth="162.0" styleClass="etichettaLabel" text="Anno di pubblicazione:" />
-         <Label fx:id="annoLabel" layoutX="177.0" layoutY="144.0" prefHeight="29.0" prefWidth="183.0" />
-         <Label layoutX="15.0" layoutY="178.0" prefHeight="18.0" prefWidth="162.0" styleClass="etichettaLabel" text="Mese di pubblicazione:" />
-         <Label fx:id="meseLabel" layoutX="177.0" layoutY="173.0" prefHeight="29.0" prefWidth="183.0" />
-         <Label layoutX="14.0" layoutY="207.0" styleClass="etichettaLabel" text="Descrizione:" />
-         <Label fx:id="autoreLabel" layoutX="69.0" layoutY="28.0" prefHeight="29.0" prefWidth="293.0" />
-         <Text layoutX="34.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sottotitolo" text="Informazioni generali" textAlignment="CENTER" wrappingWidth="347.65904235839844" />
-         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="96.0" layoutY="207.0" prefHeight="163.0" vbarPolicy="ALWAYS">
-           <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="163.0" prefWidth="270.0">
-                  <children>
-                     <Label fx:id="descrizioneArea" maxHeight="1.0E7" maxWidth="1.0E7" prefHeight="163.0" prefWidth="268.0" wrapText="true" />
-                  </children>
-               </AnchorPane>
-           </content>
-         </ScrollPane>
-      </children>
+      <Label layoutX="14.0" layoutY="33.0" prefHeight="18.0" prefWidth="55.0" styleClass="etichettaLabel"
+             text="Autore:"/>
+      <Label layoutX="14.0" layoutY="61.0" prefHeight="18.0" prefWidth="82.0" styleClass="etichettaLabel"
+             text="Categoria:"/>
+      <Label fx:id="categoriaLabel" layoutX="89.0" layoutY="56.0" prefHeight="29.0" prefWidth="275.0"/>
+      <Label layoutX="14.0" layoutY="90.0" prefHeight="18.0" prefWidth="55.0" styleClass="etichettaLabel"
+             text="Editore:"/>
+      <Label fx:id="editoreLabel" layoutX="69.0" layoutY="85.0" prefHeight="29.0" prefWidth="293.0"/>
+      <Label layoutX="14.0" layoutY="120.0" prefHeight="18.0" prefWidth="70.0" styleClass="etichettaLabel"
+             text="Prezzo: €"/>
+      <Label fx:id="prezzoLabel" layoutX="78.0" layoutY="115.0" prefHeight="29.0" prefWidth="199.0"/>
+      <Label layoutX="15.0" layoutY="149.0" prefHeight="18.0" prefWidth="162.0" styleClass="etichettaLabel"
+             text="Anno di pubblicazione:"/>
+      <Label fx:id="annoLabel" layoutX="177.0" layoutY="144.0" prefHeight="29.0" prefWidth="183.0"/>
+      <Label layoutX="15.0" layoutY="178.0" prefHeight="18.0" prefWidth="162.0" styleClass="etichettaLabel"
+             text="Mese di pubblicazione:"/>
+      <Label fx:id="meseLabel" layoutX="177.0" layoutY="173.0" prefHeight="29.0" prefWidth="183.0"/>
+      <Label layoutX="14.0" layoutY="207.0" styleClass="etichettaLabel" text="Descrizione:"/>
+      <Label fx:id="autoreLabel" layoutX="69.0" layoutY="28.0" prefHeight="29.0" prefWidth="293.0"/>
+      <Text layoutX="34.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sottotitolo"
+            text="Informazioni generali" textAlignment="CENTER" wrappingWidth="347.65904235839844"/>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="96.0" layoutY="207.0" prefHeight="163.0"
+                  vbarPolicy="ALWAYS">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="163.0" prefWidth="270.0">
+            <Label fx:id="descrizioneArea" maxHeight="1.0E7" maxWidth="1.0E7" prefHeight="163.0" prefWidth="268.0"
+                   wrapText="true"/>
+         </AnchorPane>
+      </ScrollPane>
    </Pane>
    <Pane layoutX="400.0" layoutY="45.0" prefHeight="395.0" prefWidth="378.0" styleClass="box">
-      <children>
-         <VBox layoutX="14.0" layoutY="121.0" prefHeight="184.0" prefWidth="183.0">
-            <VBox prefHeight="50.0" prefWidth="185.0">
-               <Label styleClass="etichettaLabel" text="Stile">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <HBox prefHeight="43.0" prefWidth="286.0">
-                  <ImageView fx:id="starStile1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starStile2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starStile3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starStile4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starStile5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="votoStile" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
-               </HBox>
-            </VBox>
-            <VBox prefHeight="50.0" prefWidth="185.0">
-               <Label styleClass="etichettaLabel" text="Contenuto">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <HBox prefHeight="43.0" prefWidth="286.0">
-                  <ImageView fx:id="starContenuto1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starContenuto2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starContenuto3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starContenuto4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starContenuto5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="votoContenuto" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
-               </HBox>
-            </VBox>
-            <VBox prefHeight="50.0" prefWidth="185.0">
-               <Label styleClass="etichettaLabel" text="Gradevolezza">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <HBox prefHeight="43.0" prefWidth="286.0">
-                  <ImageView fx:id="starGradevolezza1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starGradevolezza2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starGradevolezza3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starGradevolezza4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starGradevolezza5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="votoGradevolezza" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
-               </HBox>
-            </VBox>
-            <VBox prefHeight="50.0" prefWidth="185.0">
-               <Label styleClass="etichettaLabel" text="Originalità">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <HBox prefHeight="43.0" prefWidth="286.0">
-                  <ImageView fx:id="starOriginalita1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starOriginalita2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starOriginalita3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starOriginalita4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starOriginalita5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="votoOriginalita" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
-               </HBox>
-            </VBox>
-            <VBox prefHeight="23.0" prefWidth="183.0">
-               <Label styleClass="etichettaLabel" text="Edizione">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <HBox prefHeight="43.0" prefWidth="286.0">
-                  <ImageView fx:id="starEdizione1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starEdizione2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starEdizione3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starEdizione4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starEdizione5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="votoEdizione" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" />
-               </HBox>
-            </VBox>
+      <VBox layoutX="14.0" layoutY="121.0" prefHeight="184.0" prefWidth="183.0">
+         <VBox prefHeight="50.0" prefWidth="185.0">
+            <Label styleClass="etichettaLabel" text="Stile">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+            <HBox prefHeight="43.0" prefWidth="286.0">
+               <ImageView fx:id="starStile1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starStile2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starStile3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starStile4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starStile5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <Label fx:id="votoStile" alignment="CENTER" prefHeight="30.0" prefWidth="30.0"/>
+            </HBox>
          </VBox>
-         <ListView fx:id="listaValutazioni" layoutX="202.0" layoutY="101.0" onMouseClicked="#clickValutazione" prefHeight="134.0" prefWidth="169.0" />
-         <ListView fx:id="listaConsigli" layoutX="202.0" layoutY="242.0" onMouseClicked="#clickConsiglio" prefHeight="134.0" prefWidth="169.0" />
-         <Text layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sottotitolo" text="Valutazioni e Consigli" textAlignment="CENTER" wrappingWidth="347.65904235839844" />
-         <Label layoutX="14.0" layoutY="51.0" prefHeight="43.0" prefWidth="95.0" styleClass="etichettaLabel" text="Media Valutazione" wrapText="true">
-            <font>
-               <Font size="14.0" />
-            </font>
-         </Label>
-         <HBox layoutX="109.0" layoutY="51.0" prefHeight="43.0" prefWidth="262.0">
-            <ImageView fx:id="starTotal1" fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="starTotal2" fitHeight="43.0" fitWidth="43.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="starTotal3" fitHeight="43.0" fitWidth="43.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="starTotal4" fitHeight="43.0" fitWidth="43.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="starTotal5" fitHeight="43.0" fitWidth="43.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="votoTotal" alignment="CENTER" prefHeight="43.0" prefWidth="43.0" />
-         </HBox>
-      </children>
+         <VBox prefHeight="50.0" prefWidth="185.0">
+            <Label styleClass="etichettaLabel" text="Contenuto">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+            <HBox prefHeight="43.0" prefWidth="286.0">
+               <ImageView fx:id="starContenuto1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
+                          preserveRatio="true"/>
+               <ImageView fx:id="starContenuto2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starContenuto3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starContenuto4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starContenuto5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <Label fx:id="votoContenuto" alignment="CENTER" prefHeight="30.0" prefWidth="30.0"/>
+            </HBox>
+         </VBox>
+         <VBox prefHeight="50.0" prefWidth="185.0">
+            <Label styleClass="etichettaLabel" text="Gradevolezza">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+            <HBox prefHeight="43.0" prefWidth="286.0">
+               <ImageView fx:id="starGradevolezza1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
+                          preserveRatio="true"/>
+               <ImageView fx:id="starGradevolezza2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starGradevolezza3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starGradevolezza4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starGradevolezza5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <Label fx:id="votoGradevolezza" alignment="CENTER" prefHeight="30.0" prefWidth="30.0"/>
+            </HBox>
+         </VBox>
+         <VBox prefHeight="50.0" prefWidth="185.0">
+            <Label styleClass="etichettaLabel" text="Originalità">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+            <HBox prefHeight="43.0" prefWidth="286.0">
+               <ImageView fx:id="starOriginalita1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
+                          preserveRatio="true"/>
+               <ImageView fx:id="starOriginalita2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starOriginalita3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starOriginalita4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starOriginalita5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <Label fx:id="votoOriginalita" alignment="CENTER" prefHeight="30.0" prefWidth="30.0"/>
+            </HBox>
+         </VBox>
+         <VBox prefHeight="23.0" prefWidth="183.0">
+            <Label styleClass="etichettaLabel" text="Edizione">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+            <HBox prefHeight="43.0" prefWidth="286.0">
+               <ImageView fx:id="starEdizione1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true"
+                          preserveRatio="true"/>
+               <ImageView fx:id="starEdizione2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starEdizione3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starEdizione4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starEdizione5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <Label fx:id="votoEdizione" alignment="CENTER" prefHeight="30.0" prefWidth="30.0"/>
+            </HBox>
+         </VBox>
+      </VBox>
+      <ListView fx:id="listaValutazioni" layoutX="202.0" layoutY="101.0" onMouseClicked="#clickValutazione"
+                prefHeight="134.0" prefWidth="169.0"/>
+      <ListView fx:id="listaConsigli" layoutX="202.0" layoutY="242.0" onMouseClicked="#clickConsiglio"
+                prefHeight="134.0" prefWidth="169.0"/>
+      <Text layoutX="28.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sottotitolo"
+            text="Valutazioni e Consigli" textAlignment="CENTER" wrappingWidth="347.65904235839844"/>
+      <Label layoutX="14.0" layoutY="51.0" prefHeight="43.0" prefWidth="95.0" styleClass="etichettaLabel"
+             text="Media Valutazione" wrapText="true">
+         <font>
+            <Font size="14.0"/>
+         </font>
+      </Label>
+      <HBox layoutX="109.0" layoutY="51.0" prefHeight="43.0" prefWidth="262.0">
+         <ImageView fx:id="starTotal1" fitHeight="43.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true"/>
+         <ImageView fx:id="starTotal2" fitHeight="43.0" fitWidth="43.0" layoutX="10.0" layoutY="10.0"
+                    pickOnBounds="true" preserveRatio="true"/>
+         <ImageView fx:id="starTotal3" fitHeight="43.0" fitWidth="43.0" layoutX="10.0" layoutY="10.0"
+                    pickOnBounds="true" preserveRatio="true"/>
+         <ImageView fx:id="starTotal4" fitHeight="43.0" fitWidth="43.0" layoutX="53.0" layoutY="10.0"
+                    pickOnBounds="true" preserveRatio="true"/>
+         <ImageView fx:id="starTotal5" fitHeight="43.0" fitWidth="43.0" layoutX="53.0" layoutY="10.0"
+                    pickOnBounds="true" preserveRatio="true"/>
+         <Label fx:id="votoTotal" alignment="CENTER" prefHeight="43.0" prefWidth="43.0"/>
+      </HBox>
    </Pane>
 </AnchorPane>

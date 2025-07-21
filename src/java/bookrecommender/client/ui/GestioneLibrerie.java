@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
  */
 public class GestioneLibrerie extends TreeTableEngine {
 
+    @FXML private Button ExitButton;
     /** Colonna che mostra il nome della libreria o il titolo del libro. */
     @FXML private TreeTableColumn<Object, String> nameColumn;
 
@@ -97,6 +98,7 @@ public class GestioneLibrerie extends TreeTableEngine {
      */
     @FXML
     public void initialize() {
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         initializeTree();
 
         nameColumn.setCellValueFactory(c -> {

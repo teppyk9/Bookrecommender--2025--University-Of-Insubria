@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.ValutazioniEngine;
@@ -14,6 +15,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public class ModificaValutazione extends ValutazioniEngine {
+    @FXML private Button GoBackButton;
     @FXML private Button SalvaModificheButton;
     @FXML private ImageView starStile1,starStile2,starStile3,starStile4,starStile5;
     @FXML private Label votoStile;
@@ -37,6 +39,7 @@ public class ModificaValutazione extends ValutazioniEngine {
     private boolean isMod = false;
 
     @FXML public void initialize() {
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
         Platform.runLater(() -> {
             Stage s = (Stage) SalvaModificheButton.getScene().getWindow();
             s.setOnCloseRequest(evt -> { ExitApplication(); evt.consume(); });

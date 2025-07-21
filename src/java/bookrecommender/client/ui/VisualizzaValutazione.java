@@ -1,8 +1,10 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.ValutazioniEngine;
 import bookrecommender.common.model.Valutazione;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -10,6 +12,7 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class VisualizzaValutazione extends ValutazioniEngine {
+    @FXML private Button GoBackButton;
     @FXML private Label TitoloLabel;
     @FXML private Label recensioneDiLabel;
     @FXML private ImageView starStile1, starStile2, starStile3, starStile4, starStile5;
@@ -25,6 +28,10 @@ public class VisualizzaValutazione extends ValutazioniEngine {
     @FXML private ImageView starMedia1, starMedia2, starMedia3, starMedia4, starMedia5;
     @FXML private Label votoMedia;
     @FXML private Label stileTextArea, contenutoTextArea, gradevolezzaTextArea, originalitaTextArea, edizioneTextArea, finaleTextArea;
+
+    public void initialize() {
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
+    }
 
     public void setValutazione(Valutazione v) {
         stileTextArea.setWrapText(true);
@@ -48,7 +55,7 @@ public class VisualizzaValutazione extends ValutazioniEngine {
         displayGroup(new ImageView[]{starMedia1,starMedia2,starMedia3,starMedia4,starMedia5}, votoMedia, com.get(5), finaleTextArea,val.get(5), "Nessuna recensione per la valutazione finale");
     }
 
-    public void exitApplication() {
+    @FXML private void exitApplication() {
         Stage stage = (Stage) TitoloLabel.getScene().getWindow();
         stage.close();
     }

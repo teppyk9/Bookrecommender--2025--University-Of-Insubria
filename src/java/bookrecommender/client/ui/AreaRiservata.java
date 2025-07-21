@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import javafx.application.Platform;
@@ -29,6 +30,7 @@ public class AreaRiservata {
 
     /** Bottone per effettuare il logout e tornare alla schermata principale */
     public Button BottoneLogOut;
+    public Button impostazioniButton;
 
     /**
      * Inizializza il comportamento della finestra.
@@ -38,6 +40,7 @@ public class AreaRiservata {
      * </p>
      */
     public void initialize() {
+        impostazioniButton.setGraphic(IMGtype.IMPOSTAZIONI.getImageView(32,32));
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneLogOut.getScene().getWindow();
             stage.setOnCloseRequest(event -> {

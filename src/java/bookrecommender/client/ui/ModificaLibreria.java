@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModificaLibreria extends TableViewEngine {
+    @FXML private Button ExitButton;
+    @FXML private Button bottoneCerca;
     @FXML private ProgressIndicator loadingCircle;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
@@ -43,6 +46,8 @@ public class ModificaLibreria extends TableViewEngine {
 
     @FXML
     public void initialize() {
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
+        bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         OriginalLibri = new ArrayList<>();
         NomeLibreria.setDisable(true);
         NomeLibreria.setEditable(false);

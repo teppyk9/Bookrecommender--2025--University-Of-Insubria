@@ -30,6 +30,8 @@ import java.rmi.RemoteException;
  */
 public class CercaLibroAvanzato extends TableViewEngine {
 
+    @FXML private Button GoBackButton_MainMenu;
+    @FXML private Button bottoneCerca;
     @FXML private ProgressIndicator loadingCircle;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
@@ -57,6 +59,8 @@ public class CercaLibroAvanzato extends TableViewEngine {
      * </ul>
      */
     public void initialize() {
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
+        bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         initBasicSearch();
         initSRecensioniCol();
         initSAggiungiAdvCol();

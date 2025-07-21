@@ -55,5 +55,5 @@
       <Button fx:id="ShowP1Button" layoutX="745.0" layoutY="142.0" mnemonicParsing="false" onAction="#showP1" />
       <Button fx:id="ShowP2Button" layoutX="745.0" layoutY="191.0" mnemonicParsing="false" onAction="#showP2" />
    </Pane>
-   <Button mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="45.0" styleClass="indietro" />
+   <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="47.0" styleClass="indietro" />
 </AnchorPane>

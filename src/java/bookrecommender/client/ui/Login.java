@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.PasswordEngine;
@@ -14,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Login extends PasswordEngine{
+    @FXML private Button GoBackButton;
     @FXML private Button ShowPButton;
     @FXML private PasswordField PasswordField;
     @FXML private Button AccediButton;
@@ -23,6 +25,7 @@ public class Login extends PasswordEngine{
     @FXML private TextField VisiblePasswordField;
 
     public void initialize() {
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(47,47));
         ErrorToLogin.setVisible(false);
         ErrorToLogin.setManaged(false);
         NonHaiUnAccountFiled.setOnMouseEntered(event -> {

@@ -6,21 +6,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Principale.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Home">
-   <children>
-      <VBox layoutX="189.0" layoutY="462.0" prefHeight="450.0" prefWidth="508.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="329.0" prefWidth="426.0" spacing="40.0" />
-         </children>
-      </VBox>
-      <Pane layoutY="115.0" opacity="0.85" prefHeight="220.0" prefWidth="800.0" styleClass="box">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="14.0" prefHeight="66.0" prefWidth="692.0" styleClass="titolo" text="Book Recommender" />
-            <Label alignment="CENTER" layoutX="179.0" layoutY="62.0" prefHeight="66.0" prefWidth="442.0" styleClass="descrizione" text="Il tuo spazio digitale per gestire librerie e scoprire nuove letture." textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="LoginButton" layoutX="111.0" layoutY="146.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#OpenLoginPage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Login" />
-            <Button fx:id="SignUpButton" layoutX="332.0" layoutY="146.0" mnemonicParsing="false" onAction="#OpenSignUpPage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Registrazione" />
-            <Button fx:id="CercaLibroBaseButton" layoutX="553.0" layoutY="146.0" mnemonicParsing="false" onAction="#OpenCercaLibroBasePage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Cerca un libro" />
-         </children>
-      </Pane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
+            prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Principale.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bookrecommender.client.ui.Home">
+   <VBox layoutX="189.0" layoutY="462.0" prefHeight="450.0" prefWidth="508.0">
+      <VBox alignment="CENTER" prefHeight="329.0" prefWidth="426.0" spacing="40.0"/>
+   </VBox>
+   <Pane layoutY="115.0" opacity="0.85" prefHeight="220.0" prefWidth="800.0" styleClass="box">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="14.0" prefHeight="66.0"
+             prefWidth="692.0" styleClass="titolo" text="Book Recommender"/>
+      <Label alignment="CENTER" layoutX="179.0" layoutY="62.0" prefHeight="66.0" prefWidth="442.0"
+             styleClass="descrizione" text="Il tuo spazio digitale per gestire librerie e scoprire nuove letture."
+             textAlignment="CENTER" wrapText="true"/>
+      <Button fx:id="LoginButton" layoutX="111.0" layoutY="146.0" maxHeight="1.7976931348623157E308"
+              minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#OpenLoginPage"
+              prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Login"/>
+      <Button fx:id="SignUpButton" layoutX="332.0" layoutY="146.0" mnemonicParsing="false" onAction="#OpenSignUpPage"
+              prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Registrazione"/>
+      <Button fx:id="CercaLibroBaseButton" layoutX="553.0" layoutY="146.0" mnemonicParsing="false"
+              onAction="#OpenCercaLibroBasePage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone"
+              text="Cerca un libro"/>
+   </Pane>
 </AnchorPane>

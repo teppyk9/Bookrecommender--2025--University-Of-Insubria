@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
@@ -19,6 +20,8 @@ import java.util.List;
  */
 public class CreaLibreria extends TableViewEngine {
 
+    @FXML private Button ExitButton;
+    @FXML private Button bottoneCerca;
     @FXML private ProgressIndicator loadingCircle;
     /** Tabella dei risultati di ricerca. */
     @FXML private TableView <Libro>tableView;
@@ -76,6 +79,8 @@ public class CreaLibreria extends TableViewEngine {
      */
     @FXML
     public void initialize() {
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
+        bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         initBasicSearch();
         initSAddRemCol();
         initOActionCol();

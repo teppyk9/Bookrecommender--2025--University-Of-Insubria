@@ -22,7 +22,7 @@
                <Font size="21.0" />
             </font>
          </Label>
-         <Button mnemonicParsing="false" onAction="#exitApplication" prefHeight="43.0" prefWidth="45.0" styleClass="indietro" />
+         <Button fx:id="ExitButton" mnemonicParsing="false" onAction="#exitApplication" prefHeight="43.0" prefWidth="43.0" styleClass="indietro" />
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="800.0">
          <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0" styleClass="box">
@@ -117,13 +117,11 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <TextField fx:id="testoFinale" layoutX="385.0" layoutY="7.0" onMouseClicked="#resetMessaggioErrore" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
          <HBox layoutX="14.0" layoutY="8.0" prefHeight="50.0" prefWidth="185.0" styleClass="box_finale">
-            <children>
-               <Label prefHeight="50.0" prefWidth="185.0" styleClass="etichetta_finale" text="Commento finale">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-            </children>
+            <Label prefHeight="50.0" prefWidth="185.0" styleClass="etichetta_finale" text="Commento finale">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
          </HBox>
       </AnchorPane>
    </VBox>

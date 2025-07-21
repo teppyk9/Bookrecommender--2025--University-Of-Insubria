@@ -39,39 +39,37 @@
           </items>
       </MenuButton>
       <TextField fx:id="campoRicerca" layoutX="173.0" layoutY="68.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="520.0" />
-      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="440.0" layoutY="68.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="29.0" styleClass="cerca">
+      <Button fx:id="bottoneCerca" alignment="CENTER_RIGHT" layoutX="440.0" layoutY="68.0" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="25.0" styleClass="cerca">
           <opaqueInsets>
               <Insets />
           </opaqueInsets>
       </Button>
       <TextField fx:id="campoRicercaAnno" layoutX="14.0" layoutY="68.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="157.0" promptText="Anno..." styleClass="field" />
-      <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="-3.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="50.0" prefWidth="53.0" styleClass="indietro" />
+      <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" layoutY="-3.0" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="50.0" prefWidth="50.0" styleClass="indietro" />
    <TextField fx:id="NomeLibreria" layoutX="490.0" layoutY="68.0" prefHeight="25.0" prefWidth="457.0" promptText="Dai un nome alla tua libreria" styleClass="field" />
-      <Button fx:id="BottoneSalvaLibreria" layoutX="490.0" layoutY="100.0" mnemonicParsing="false" onAction="#SalvaLibreria" prefHeight="25.0" prefWidth="457.0" styleClass="bottone" text="Salva Libreria" />
-   <Pane layoutX="14.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
-      <children>
-             <TableView fx:id="tableView" prefHeight="379.0" prefWidth="457.0">
-                 <columns>
-                     <TableColumn fx:id="titoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo" />
-                     <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="Autore" />
-                     <TableColumn fx:id="annoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno" />
-                     <TableColumn fx:id="azioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni" />
-                 </columns>
-             </TableView>
-      </children>
-   </Pane>
-   <Pane layoutX="490.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
-      <children>
-             <TableView fx:id="risTableView" prefHeight="379.0" prefWidth="457.0">
-                 <columns>
-                     <TableColumn fx:id="risTitoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo" />
-                     <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="Autore" />
-                     <TableColumn fx:id="risAnnoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno" />
-                     <TableColumn fx:id="risAzioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni" />
-                 </columns>
-             </TableView>
-      </children>
-   </Pane>
+      <Button layoutX="490.0" layoutY="100.0" mnemonicParsing="false" onAction="#SalvaLibreria" prefHeight="25.0" prefWidth="457.0" styleClass="bottone" text="Salva Libreria" />
+    <Pane layoutX="14.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
+        <TableView fx:id="tableView" prefHeight="379.0" prefWidth="457.0">
+            <columns>
+                <TableColumn fx:id="titoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo"/>
+                <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;"
+                             text="Autore"/>
+                <TableColumn fx:id="annoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno"/>
+                <TableColumn fx:id="azioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni"/>
+            </columns>
+        </TableView>
+    </Pane>
+    <Pane layoutX="490.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
+        <TableView fx:id="risTableView" prefHeight="379.0" prefWidth="457.0">
+            <columns>
+                <TableColumn fx:id="risTitoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo"/>
+                <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;"
+                             text="Autore"/>
+                <TableColumn fx:id="risAnnoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno"/>
+                <TableColumn fx:id="risAzioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni"/>
+            </columns>
+        </TableView>
+    </Pane>
    <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="442.0" layoutY="100.0" prefHeight="25.0" prefWidth="19.0" />
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />

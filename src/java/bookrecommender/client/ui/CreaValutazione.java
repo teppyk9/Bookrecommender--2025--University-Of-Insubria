@@ -24,6 +24,7 @@ import java.util.List;
  */
 public class CreaValutazione {
 
+    @FXML private Button ExitButton;
     /** Etichetta che visualizza il titolo del libro da valutare*/
     @FXML private Label titoloLibro;
 
@@ -109,6 +110,7 @@ public class CreaValutazione {
      * per ogni categoria di valutazione. Metodo chiamato automaticamente da JavaFX dopo il caricamento del file FXML.
      */
     public void initialize() {
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         messaggioErrore.setText("");
         configuraValutazione(List.of(starStile1, starStile2, starStile3, starStile4, starStile5), votoStile);
         configuraValutazione(List.of(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5), votoContenuto);

@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Principale.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.AreaRiservata">
-   <children>
-      <Pane layoutY="115.0" opacity="0.85" prefHeight="220.0" prefWidth="800.0" styleClass="box">
-         <children>
-            <Label layoutX="274.0" layoutY="14.0" prefHeight="45.0" prefWidth="253.0" styleClass="titolo" text="Area Riservata" textAlignment="CENTER" wrapText="true" />
-            <Label layoutX="183.0" layoutY="59.0" prefHeight="62.0" prefWidth="436.0" styleClass="descrizione" text="Benvenuto nella tua Area Riservata! Qui potrai usufruire delle funzionalità avanzate dell'applicazione. Che cosa vuoi fare?" textAlignment="CENTER" wrapText="true" />
-            <Button fx:id="BottoneVisualizzaLibrerie" layoutX="320.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenVisualizzaLibrerie" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Visualizza Librerie" textAlignment="CENTER" />
-            <Button fx:id="BottoneCercaLibroAvanzato" alignment="CENTER" layoutX="102.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenCercaLibroAvanzato" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Cerca Un Libro" />
-            <Button fx:id="BottoneLogOut" layoutX="537.0" layoutY="147.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="LogOut" />
-         </children>
-      </Pane>
-      <Button fx:id="impostazioniButton" layoutX="684.0" layoutY="395.0" mnemonicParsing="false" onAction="#openImpostazioni" text="Impostazioni" />
-   </children>
+<AnchorPane id="background" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Principale.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.AreaRiservata">
+   <Pane layoutY="115.0" opacity="0.85" prefHeight="220.0" prefWidth="800.0" styleClass="box">
+      <Label layoutX="274.0" layoutY="14.0" prefHeight="45.0" prefWidth="253.0" styleClass="titolo" text="Area Riservata" textAlignment="CENTER" wrapText="true" />
+      <Label layoutX="183.0" layoutY="59.0" prefHeight="62.0" prefWidth="436.0" styleClass="descrizione" text="Benvenuto nella tua Area Riservata! Qui potrai usufruire delle funzionalità avanzate dell'applicazione. Che cosa vuoi fare?" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="BottoneVisualizzaLibrerie" layoutX="320.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenVisualizzaLibrerie" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Visualizza Librerie" textAlignment="CENTER" />
+      <Button fx:id="BottoneCercaLibroAvanzato" alignment="CENTER" layoutX="102.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenCercaLibroAvanzato" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Cerca Un Libro" />
+      <Button fx:id="BottoneLogOut" layoutX="537.0" layoutY="147.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="LogOut" />
+   </Pane>
+   <Button fx:id="impostazioniButton" layoutX="729.0" layoutY="385.0" mnemonicParsing="false" onAction="#openImpostazioni" prefHeight="32.0" prefWidth="32.0" />
 </AnchorPane>

@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.PasswordEngine;
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
 import java.rmi.RemoteException;
 
 public class Impostazioni extends PasswordEngine{
+    @FXML private Button goBackButton;
     @FXML private Button ShowP1Button;
     @FXML private Button ShowP2Button;
     @FXML private TextField VisiblePasswordField1;
@@ -29,6 +31,7 @@ public class Impostazioni extends PasswordEngine{
     private boolean isChangingPassword = false;
 
     public void initialize() {
+        goBackButton.setGraphic(IMGtype.INDIETRO.getImageView(40,40));
         firstPasswordField.setVisible(false);
         secondPasswordField.setVisible(false);
         labelErrore.setVisible(false);

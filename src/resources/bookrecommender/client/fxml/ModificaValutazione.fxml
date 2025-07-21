@@ -103,15 +103,13 @@
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <TextField fx:id="testoFinale" layoutX="384.0" layoutY="3.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
-         <HBox layoutX="14.0" layoutY="3.0" prefHeight="50.0" prefWidth="185.0" styleClass="box_finale">
-            <children>
-               <Label prefHeight="50.0" prefWidth="185.0" styleClass="etichetta_finale" text="Commento finale">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
+            <HBox layoutX="14.0" layoutY="3.0" prefHeight="50.0" prefWidth="185.0" styleClass="box_finale">
+                <Label prefHeight="50.0" prefWidth="185.0" styleClass="etichetta_finale" text="Commento finale">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+            </HBox>
         </AnchorPane>
     </VBox>
      <AnchorPane prefHeight="58.0" prefWidth="800.0" styleClass="box_titolo">
@@ -120,13 +118,13 @@
                  <Font size="21.0" />
              </font>
          </Label>
-      <Button mnemonicParsing="false" onAction="#ExitApplication" prefHeight="50.0" prefWidth="46.0" styleClass="indietro" />
+      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="50.0" prefWidth="50.0" styleClass="indietro" />
       <Label layoutX="54.0" layoutY="12.0" styleClass="titoloLibroDaValutare" text="Modifica:">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
      </AnchorPane>
-   <Button fx:id="EliminaValutazioneButton" layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#eliminaValutazione" styleClass="salva-elimina" text="Elimina Valutazione" />
+   <Button layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#eliminaValutazione" styleClass="salva-elimina" text="Elimina Valutazione" />
    <Button fx:id="SalvaModificheButton" layoutX="648.0" layoutY="416.0" mnemonicParsing="false" onAction="#salvaModifiche" styleClass="salva-elimina" text="Salva Modifiche" />
 </AnchorPane>

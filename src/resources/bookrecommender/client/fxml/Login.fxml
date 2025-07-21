@@ -38,5 +38,5 @@
       </Text>
       <Button fx:id="ShowPButton" layoutX="557.0" layoutY="145.0" mnemonicParsing="false" onAction="#showP1" />
    </Pane>
-   <Button mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="49.0" styleClass="indietro" />
+   <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="47.0" styleClass="indietro" />
 </AnchorPane>

@@ -39,7 +39,6 @@
 
 .indietro{
     -fx-background-color: transparent;
-    -fx-background-image: url('../icons/indietro_r.png');
     -fx-scale-x: 1;
     -fx-scale-y: 1;
     -fx-transition: all 0.2s;

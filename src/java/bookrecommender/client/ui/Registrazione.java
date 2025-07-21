@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.PasswordEngine;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 import java.util.regex.Pattern;
 
 public class Registrazione extends PasswordEngine {
+    @FXML private Button GoBackButton;
     @FXML private Button ShowP1Button;
     @FXML private Button ShowP2Button;
     @FXML private TextField NomeField;
@@ -30,6 +32,7 @@ public class Registrazione extends PasswordEngine {
     @FXML private TextField VisiblePasswordField2;
 
     public void initialize() {
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(47,47));
         AccediTextField.setOnMouseEntered(event -> {
             AccediTextField.setUnderline(true);
             AccediTextField.setCursor(Cursor.HAND);

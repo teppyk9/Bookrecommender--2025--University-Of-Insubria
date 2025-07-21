@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 public class CreaConsiglio extends TableViewEngine {
 
+    @FXML private Button bottoneCerca;
     @FXML private ProgressIndicator loadingCircle;
     /** Campo di testo per la ricerca del titolo o autore */
     @FXML private TextField campoRicerca;
@@ -87,7 +89,9 @@ public class CreaConsiglio extends TableViewEngine {
      */
     @FXML
     public void initialize() {
-       initForConsigli();
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
+        bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
+        initForConsigli();
         Platform.runLater(() -> {
             Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {

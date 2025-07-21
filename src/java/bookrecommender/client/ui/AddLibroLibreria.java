@@ -37,6 +37,7 @@ import java.util.*;
  * @see TreeTableEngine
  */
 public class AddLibroLibreria extends TreeTableEngine {
+    @FXML private Button ExitButton;
     @FXML private Text titoloLibreria;
     @FXML private TreeTableColumn<Object, String> nameColumn;
     @FXML private TreeTableColumn<Object, Integer> countColumn;
@@ -57,6 +58,7 @@ public class AddLibroLibreria extends TreeTableEngine {
      */
     @FXML
     public void initialize() {
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(42,42));
         titoloLibreria.setText("Le tue librerie");
         initializeTree();
 

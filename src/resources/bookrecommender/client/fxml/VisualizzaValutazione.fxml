@@ -21,7 +21,7 @@
                <Font size="19.0" />
             </font>
          </Label>
-         <Button layoutY="1.0" mnemonicParsing="false" onAction="#exitApplication" prefHeight="50.0" prefWidth="50.0" styleClass="indietro" />
+         <Button fx:id="GoBackButton" layoutY="1.0" mnemonicParsing="false" onAction="#exitApplication" prefHeight="50.0" prefWidth="50.0" styleClass="indietro" />
       </AnchorPane>
       <AnchorPane prefHeight="35.0" prefWidth="800.0">
          <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0" styleClass="box">
@@ -116,21 +116,23 @@
       <AnchorPane prefHeight="14.0" prefWidth="800.0">
          <Label fx:id="finaleTextArea" wrapText="true" layoutX="385.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
          <VBox layoutX="14.0" layoutY="6.0" prefHeight="50.0" prefWidth="185.0" styleClass="box_finale">
-            <children>
-               <Label style="-fx-font-weight: bold;" styleClass="etichetta_finale" text="Commento finale">
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Label>
-               <HBox prefHeight="30.0" prefWidth="180.0">
-                  <ImageView fx:id="starMedia1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starMedia2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starMedia3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starMedia4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fx:id="starMedia5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="votoMedia" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="voto_finale" />
-               </HBox>
-            </children>
+            <Label style="-fx-font-weight: bold;" styleClass="etichetta_finale" text="Commento finale">
+               <font>
+                  <Font size="14.0"/>
+               </font>
+            </Label>
+            <HBox prefHeight="30.0" prefWidth="180.0">
+               <ImageView fx:id="starMedia1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starMedia2" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starMedia3" fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starMedia4" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <ImageView fx:id="starMedia5" fitHeight="30.0" fitWidth="30.0" layoutX="53.0" layoutY="10.0"
+                          pickOnBounds="true" preserveRatio="true"/>
+               <Label fx:id="votoMedia" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="voto_finale"/>
+            </HBox>
          </VBox>
       </AnchorPane>
    </VBox>

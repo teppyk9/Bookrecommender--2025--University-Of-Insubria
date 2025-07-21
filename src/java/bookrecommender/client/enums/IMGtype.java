@@ -21,8 +21,10 @@ public enum IMGtype {
     STAR_3_4("/bookrecommender/client/icons/star-3-4.png"),
     STAR_4_4("/bookrecommender/client/icons/star-full.png"),
     VISIBLE_PASSWORD("/bookrecommender/client/icons/visible-password.png"),
-    INVISIBLE_PASSWORD("/bookrecommender/client/icons/invisible-password.png");
-
+    INVISIBLE_PASSWORD("/bookrecommender/client/icons/invisible-password.png"),
+    INDIETRO("/bookrecommender/client/icons/indietro_r.png"),
+    CERCA("/bookrecommender/client/icons/cerca_r.png"),
+    IMPOSTAZIONI("/bookrecommender/client/icons/impostazioni.png");
 
     private final String path;
     IMGtype(String path){
