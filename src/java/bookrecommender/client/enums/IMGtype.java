@@ -18,7 +18,10 @@ public enum IMGtype {
     STAR_1_4("/bookrecommender/client/icons/star-1-4.png"),
     STAR_2_4("/bookrecommender/client/icons/star-half.png"),
     STAR_3_4("/bookrecommender/client/icons/star-3-4.png"),
-    STAR_4_4("/bookrecommender/client/icons/star-full.png");
+    STAR_4_4("/bookrecommender/client/icons/star-full.png"),
+    VISIBLE_PASSWORD("/bookrecommender/client/icons/visible-password.png"),
+    INVISIBLE_PASSWORD("/bookrecommender/client/icons/invisible-password.png");
+
 
     private final String path;
     IMGtype(String path){

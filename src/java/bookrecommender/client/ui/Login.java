@@ -2,8 +2,10 @@ package bookrecommender.client.ui;
 
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
+import bookrecommender.client.util.PasswordEngine;
 import bookrecommender.common.model.Token;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -11,15 +13,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Login {
-
-    public PasswordField PasswordField;
-    public Button AccediButton;
-    public Label NonHaiUnAccountFiled;
-    public Text ErrorToLogin;
-    public Button GoBackButton;
-    public TextField UsernameField;
-
+public class Login extends PasswordEngine{
+    @FXML private Button ShowPButton;
+    @FXML private PasswordField PasswordField;
+    @FXML private Button AccediButton;
+    @FXML private Label NonHaiUnAccountFiled;
+    @FXML private Text ErrorToLogin;
+    @FXML private TextField UsernameField;
+    @FXML private TextField VisiblePasswordField;
 
     public void initialize() {
         ErrorToLogin.setVisible(false);
@@ -32,6 +33,7 @@ public class Login {
             NonHaiUnAccountFiled.setUnderline(false);
             NonHaiUnAccountFiled.setCursor(Cursor.DEFAULT);
         });
+        initP1();
         Platform.runLater(() -> {
             UsernameField.requestFocus();
             Stage stage = (Stage) AccediButton.getScene().getWindow();
@@ -42,13 +44,13 @@ public class Login {
         });
     }
 
-    public void EnterController(KeyEvent keyEvent) {
+    @FXML private void EnterController(KeyEvent keyEvent) {
         if(keyEvent.getCode().getName().equals("Enter")) {
             TryLogin();
         }
     }
 
-    public void TryLogin() {
+    @FXML private void TryLogin() {
         String username = UsernameField.getText().toLowerCase();
         String password = PasswordField.getText();
 
@@ -74,13 +76,43 @@ public class Login {
         }
     }
 
-    public void GoToRegisterPage(MouseEvent mouseEvent) {
+    @FXML private void GoToRegisterPage(MouseEvent mouseEvent) {
         if(mouseEvent.getClickCount() == 1 || mouseEvent.getClickCount() == 2) {
             CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null, null);
         }
     }
 
-    public void GoBackMainMenu() {
+    @FXML private void GoBackMainMenu() {
         CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
+    }
+
+    @Override
+    protected PasswordField getPasswordField1() {
+        return PasswordField;
+    }
+
+    @Override
+    protected PasswordField getPasswordField2() {
+        return null;
+    }
+
+    @Override
+    protected TextField getVisiblePasswordField1() {
+        return VisiblePasswordField;
+    }
+
+    @Override
+    protected TextField getVisiblePasswordField2() {
+        return null;
+    }
+
+    @Override
+    protected Button getButton1() {
+        return ShowPButton;
+    }
+
+    @Override
+    protected Button getButton2() {
+        return null;
     }
 }

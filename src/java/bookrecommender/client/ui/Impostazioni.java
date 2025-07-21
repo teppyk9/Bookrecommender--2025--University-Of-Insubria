@@ -2,18 +2,21 @@ package bookrecommender.client.ui;
 
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
+import bookrecommender.client.util.PasswordEngine;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
 import java.rmi.RemoteException;
 
-public class Impostazioni {
+public class Impostazioni extends PasswordEngine{
+    @FXML private Button ShowP1Button;
+    @FXML private Button ShowP2Button;
+    @FXML private TextField VisiblePasswordField1;
+    @FXML private TextField VisiblePasswordField2;
 
-    //TODO: implementare anagrafica utente e cambio username + invio su password2
+    //TODO: implementare anagrafica utente e cambio username
 
     @FXML private HBox firstPasswordField;
     @FXML private PasswordField PasswordField1;
@@ -32,10 +35,17 @@ public class Impostazioni {
 
         PasswordField1.textProperty().addListener((obs, old, neu) -> validatePasswords());
         PasswordField2.textProperty().addListener((obs, old, neu) -> validatePasswords());
+        initP1();
+        initP2();
+        ShowP1Button.setVisible(false);
+        ShowP2Button.setVisible(false);
+        ShowP1Button.setManaged(false);
+        ShowP2Button.setManaged(false);
+        ShowP1Button.setDisable(true);
+        ShowP2Button.setDisable(true);
     }
 
-    @FXML
-    private void cambiaPassword() {
+    @FXML private void cambiaPassword() {
         if (!isChangingPassword) {
             isChangingPassword = true;
             eliminaAccountButton.setDisable(true);
@@ -43,6 +53,12 @@ public class Impostazioni {
             secondPasswordField.setVisible(true);
             labelErrore.setVisible(false);
             cambiaPasswordButton.setDisable(true);
+            ShowP1Button.setVisible(true);
+            ShowP2Button.setVisible(true);
+            ShowP1Button.setManaged(true);
+            ShowP2Button.setManaged(true);
+            ShowP1Button.setDisable(false);
+            ShowP2Button.setDisable(false);
         }
         else {
             String p1 = PasswordField1.getText();
@@ -68,8 +84,7 @@ public class Impostazioni {
         }
     }
 
-    @FXML
-    private void eliminaAccount() {
+    @FXML private void eliminaAccount() {
         cambiaPasswordButton.setDisable(true);
         isChangingPassword = false;
         firstPasswordField.setVisible(false);
@@ -90,11 +105,12 @@ public class Impostazioni {
             }catch (RemoteException e) {
                 CliUtil.getInstance().createAlert("Errore di rete", "Impossibile eliminare l'account").showAndWait();
             }
+        }else{
+            resetPasswordUI();
         }
     }
 
-    @FXML
-    private void goBackAreaRiservata() {
+    @FXML private void goBackAreaRiservata() {
         CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
     }
 
@@ -124,5 +140,47 @@ public class Impostazioni {
         PasswordField2.clear();
         eliminaAccountButton.setDisable(false);
         cambiaPasswordButton.setDisable(false);
+        ShowP1Button.setVisible(false);
+        ShowP2Button.setVisible(false);
+        ShowP1Button.setManaged(false);
+        ShowP2Button.setManaged(false);
+        ShowP1Button.setDisable(true);
+        ShowP2Button.setDisable(true);
+    }
+
+    @FXML private void enterControl(KeyEvent keyEvent) {
+        if(keyEvent.getCode().getName().equals("Enter")) {
+            cambiaPassword();
+        }
+    }
+
+    @Override
+    protected PasswordField getPasswordField1() {
+        return PasswordField1;
+    }
+
+    @Override
+    protected PasswordField getPasswordField2() {
+        return PasswordField2;
+    }
+
+    @Override
+    protected TextField getVisiblePasswordField1() {
+        return VisiblePasswordField1;
+    }
+
+    @Override
+    protected TextField getVisiblePasswordField2() {
+        return VisiblePasswordField2;
+    }
+
+    @Override
+    protected Button getButton1() {
+        return ShowP1Button;
+    }
+
+    @Override
+    protected Button getButton2() {
+        return ShowP2Button;
     }
 }

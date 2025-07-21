@@ -1,79 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Form.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Registrazione">
-   <children>
-      <Pane layoutY="48.0" opacity="0.85" prefHeight="353.0" prefWidth="800.0" styleClass="box">
-         <children>
-            <HBox prefHeight="47.0" prefWidth="200.0" />
-            <VBox layoutX="40.0" layoutY="82.0" prefHeight="205.0" prefWidth="355.0">
-               <children>
-                  <HBox prefHeight="47.0" prefWidth="400.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="155.0" styleClass="etichetta" text="Nome" />
-                        <TextField fx:id="NomeField" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="400.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="155.0" styleClass="etichetta" text="Cognome" />
-                        <TextField fx:id="CognomeField" prefHeight="38.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="400.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Codice Fiscale" wrapText="true" />
-                        <TextField fx:id="CFFiled" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="400.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="155.0" styleClass="etichetta" text="Email" />
-                        <TextField fx:id="EmailField" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox layoutX="400.0" layoutY="82.0" prefHeight="145.0" prefWidth="400.0">
-               <children>
-                  <HBox prefHeight="47.0" prefWidth="355.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="155.0" styleClass="etichetta" text="Username" textAlignment="CENTER" />
-                        <TextField fx:id="UsernameFiled" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="400.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Password" />
-                        <PasswordField fx:id="PasswordField1" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="400.0">
-                     <children>
-                        <Label contentDisplay="CENTER" prefHeight="49.0" prefWidth="155.0" styleClass="etichetta" text="Ripeti Password" wrapText="true" />
-                        <PasswordField fx:id="PasswordField2" onKeyPressed="#RegAction" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <Button fx:id="AccediButton" layoutX="342.0" layoutY="279.0" mnemonicParsing="false" onAction="#TryReg" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Registrati" />
-            <Label fx:id="AccediTextField" alignment="CENTER" layoutX="285.0" layoutY="314.0" onMouseClicked="#GoToLoginPage" prefHeight="41.0" prefWidth="230.0" styleClass="reg" text="Hai già un account? Accedi" textAlignment="CENTER">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </Label>
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="14.0" prefHeight="26.0" prefWidth="366.0" styleClass="titolo" text="REGISTRAZIONE" textAlignment="CENTER" />
-         </children>
-      </Pane>
-      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="45.0" styleClass="indietro" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Form.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Registrazione">
+   <Pane layoutY="48.0" opacity="0.85" prefHeight="353.0" prefWidth="800.0" styleClass="box">
+      <HBox prefHeight="47.0" prefWidth="200.0" />
+      <VBox layoutX="40.0" layoutY="82.0" prefHeight="205.0" prefWidth="355.0">
+         <HBox prefHeight="47.0" prefWidth="400.0">
+            <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="155.0" styleClass="etichetta" text="Nome" />
+            <TextField fx:id="NomeField" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="400.0">
+            <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="155.0" styleClass="etichetta" text="Cognome" />
+            <TextField fx:id="CognomeField" prefHeight="38.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="400.0">
+            <Label contentDisplay="CENTER" prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Codice Fiscale" wrapText="true" />
+            <TextField fx:id="CFFiled" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="400.0">
+            <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="155.0" styleClass="etichetta" text="Email" />
+            <TextField fx:id="EmailField" prefHeight="25.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+      </VBox>
+      <VBox layoutX="400.0" layoutY="82.0" prefHeight="145.0" prefWidth="345.0">
+         <HBox prefHeight="47.0" prefWidth="355.0">
+            <Label contentDisplay="CENTER" prefHeight="68.0" prefWidth="155.0" styleClass="etichetta" text="Username" textAlignment="CENTER" />
+            <TextField fx:id="UsernameFiled" prefHeight="35.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="400.0">
+            <Label contentDisplay="CENTER" prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Password" />
+            <StackPane prefHeight="31.0" prefWidth="185.0">
+               <PasswordField fx:id="PasswordField1" prefHeight="35.0" prefWidth="185.0" styleClass="field" />
+               <TextField fx:id="VisiblePasswordField1" prefHeight="36.0" prefWidth="185.0" styleClass="field" />
+            </StackPane>
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="400.0">
+            <Label contentDisplay="CENTER" prefHeight="49.0" prefWidth="155.0" styleClass="etichetta" text="Ripeti Password" wrapText="true" />
+            <StackPane prefHeight="47.0" prefWidth="184.0">
+               <PasswordField fx:id="PasswordField2" onKeyPressed="#RegAction" prefHeight="36.0" prefWidth="184.0" styleClass="field" />
+               <TextField fx:id="VisiblePasswordField2" prefHeight="23.0" prefWidth="184.0" styleClass="field" />
+            </StackPane>
+         </HBox>
+      </VBox>
+      <Button fx:id="AccediButton" layoutX="342.0" layoutY="279.0" mnemonicParsing="false" onAction="#TryReg" prefHeight="33.0" prefWidth="116.0" styleClass="bottone" text="Registrati" />
+      <Label fx:id="AccediTextField" alignment="CENTER" layoutX="285.0" layoutY="314.0" onMouseClicked="#GoToLoginPage" prefHeight="41.0" prefWidth="230.0" styleClass="reg" text="Hai già un account? Accedi" textAlignment="CENTER">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="14.0" prefHeight="26.0" prefWidth="366.0" styleClass="titolo" text="REGISTRAZIONE" textAlignment="CENTER" />
+      <Button fx:id="ShowP1Button" layoutX="745.0" layoutY="142.0" mnemonicParsing="false" onAction="#showP1" />
+      <Button fx:id="ShowP2Button" layoutX="745.0" layoutY="191.0" mnemonicParsing="false" onAction="#showP2" />
+   </Pane>
+   <Button mnemonicParsing="false" onAction="#GoBackMainMenu" prefHeight="47.0" prefWidth="45.0" styleClass="indietro" />
 </AnchorPane>

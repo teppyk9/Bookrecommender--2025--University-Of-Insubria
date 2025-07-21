@@ -2,9 +2,11 @@ package bookrecommender.client.ui;
 
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
+import bookrecommender.client.util.PasswordEngine;
 import bookrecommender.common.model.RegToken;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -12,17 +14,20 @@ import javafx.stage.Stage;
 
 import java.util.regex.Pattern;
 
-public class Registrazione {
-    public TextField NomeField;
-    public TextField CognomeField;
-    public TextField CFFiled;
-    public TextField EmailField;
-    public TextField UsernameFiled;
-    public PasswordField PasswordField1;
-    public PasswordField PasswordField2;
-    public Button AccediButton;
-    public Label AccediTextField;
-    public Button GoBackButton;
+public class Registrazione extends PasswordEngine {
+    @FXML private Button ShowP1Button;
+    @FXML private Button ShowP2Button;
+    @FXML private TextField NomeField;
+    @FXML private TextField CognomeField;
+    @FXML private TextField CFFiled;
+    @FXML private TextField EmailField;
+    @FXML private TextField UsernameFiled;
+    @FXML private PasswordField PasswordField1;
+    @FXML private PasswordField PasswordField2;
+    @FXML private Button AccediButton;
+    @FXML private Label AccediTextField;
+    @FXML private TextField VisiblePasswordField1;
+    @FXML private TextField VisiblePasswordField2;
 
     public void initialize() {
         AccediTextField.setOnMouseEntered(event -> {
@@ -33,6 +38,8 @@ public class Registrazione {
             AccediTextField.setUnderline(false);
         AccediTextField.setCursor(Cursor.DEFAULT);
         });
+        initP1();
+        initP2();
         Platform.runLater(() -> {
             Stage stage = (Stage) AccediButton.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
@@ -42,15 +49,15 @@ public class Registrazione {
         });
     }
 
-    public void GoBackMainMenu() {
+    @FXML private void GoBackMainMenu() {
         CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
     }
 
-    public void GoToLoginPage() {
+    @FXML private void GoToLoginPage() {
         CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null, null);
     }
 
-    public void TryReg() {
+    @FXML private void TryReg() {
         String nome = NomeField.getText().trim();
         String cognome = CognomeField.getText().trim();
         String cf = CFFiled.getText().trim().toUpperCase();
@@ -132,9 +139,39 @@ public class Registrazione {
         }
     }
 
-    public void RegAction(KeyEvent keyEvent) {
+    @FXML private void RegAction(KeyEvent keyEvent) {
         if(keyEvent.getCode().getName().equals("Enter")) {
             TryReg();
         }
+    }
+
+    @Override
+    protected PasswordField getPasswordField1() {
+        return PasswordField1;
+    }
+
+    @Override
+    protected PasswordField getPasswordField2() {
+        return PasswordField2;
+    }
+
+    @Override
+    protected TextField getVisiblePasswordField1() {
+        return VisiblePasswordField1;
+    }
+
+    @Override
+    protected TextField getVisiblePasswordField2() {
+        return VisiblePasswordField2;
+    }
+
+    @Override
+    protected Button getButton1() {
+        return ShowP1Button;
+    }
+
+    @Override
+    protected Button getButton2() {
+        return ShowP2Button;
     }
 }
