@@ -404,12 +404,9 @@ public final class CliUtil {
         alert.setTitle(titolo);
         alert.setContentText(messaggio);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        ImageView imageView = new ImageView(IMGtype.RED_CROSS.getImage());
-        imageView.setFitHeight(48);
-        imageView.setFitWidth(48);
-        alert.setGraphic(imageView);
+        alert.setGraphic(IMGtype.RED_CROSS.getImageView(48,48));
         alert.getButtonTypes().setAll(ButtonType.OK);
-        stage.getIcons().setAll(imageView.getImage());
+        stage.getIcons().setAll(IMGtype.RED_CROSS.getImage());
         return alert;
     }
 
@@ -426,11 +423,8 @@ public final class CliUtil {
         alert.setTitle(titolo);
         alert.setContentText(messaggio);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        ImageView imageView = new ImageView(IMGtype.CONFIRM.getImage());
-        imageView.setFitHeight(48);
-        imageView.setFitWidth(48);
-        alert.setGraphic(imageView);
-        stage.getIcons().setAll(imageView.getImage());
+        alert.setGraphic(IMGtype.CONFIRM.getImageView(48,48));
+        stage.getIcons().setAll(IMGtype.CONFIRM.getImage());
         if (binary) {
             alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
         }else

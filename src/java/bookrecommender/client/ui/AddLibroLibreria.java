@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 import java.rmi.RemoteException;
@@ -79,15 +78,13 @@ public class AddLibroLibreria extends TreeTableEngine {
 
         // Icone visive per colonna "presente"
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
-            private final ImageView ivTrue = new ImageView(IMGtype.CHECK.getImage(12,12,true,true));
-            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage(12,12,true,true));
             @Override
             protected void updateItem(Boolean present, boolean empty) {
                 super.updateItem(present, empty);
                 if (empty || present == null)
                     setGraphic(null);
                 else
-                    setGraphic(present ? ivTrue : ivFalse);
+                    setGraphic(present ? IMGtype.CHECK.getImageView(12,12) : IMGtype.RED_CROSS.getImageView(12,12));
             }
         });
 

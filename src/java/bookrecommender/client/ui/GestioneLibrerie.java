@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
@@ -171,14 +170,12 @@ public class GestioneLibrerie extends TreeTableEngine {
             return new ReadOnlyObjectWrapper<>(null);
         });
         col.setCellFactory(c -> new TreeTableCell<>() {
-            private final ImageView check = new ImageView(IMGtype.CHECK.getImage(12,12,true,true));
-            private final ImageView noCheck = new ImageView(IMGtype.RED_CROSS.getImage(12,12,true,true));
             @Override
             protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item == null || empty) setGraphic(null);
                 else {
-                    setGraphic(item ? check : noCheck);
+                    setGraphic(item ? IMGtype.CHECK.getImageView(12,12) : IMGtype.RED_CROSS.getImageView(12,12));
                     setAlignment(Pos.CENTER);
                 }
             }
@@ -467,7 +464,7 @@ public class GestioneLibrerie extends TreeTableEngine {
      * @param mb Il pulsante a cui applicare lo stile.
      */
     private void setMenuButtonStyle(MenuButton mb) {
-        mb.setGraphic(new ImageView(IMGtype.ARROW_DOWN.getImage(12,12,true,true)));
+        mb.setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
         CliUtil.getInstance().styleIconControl(mb);
     }
 

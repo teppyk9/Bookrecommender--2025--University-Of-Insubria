@@ -8,7 +8,6 @@ import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
@@ -63,8 +62,6 @@ public class CercaLibroAvanzato extends TableViewEngine {
         initSAggiungiAdvCol();
         librerieCol.setStyle("-fx-alignment: CENTER;");
         librerieCol.setCellFactory(col -> new TableCell<>() {
-            private final ImageView ivTrue  = new ImageView(IMGtype.CHECK.getImage(12,12, true, true));
-            private final ImageView ivFalse = new ImageView(IMGtype.RED_CROSS.getImage(12,12, true, true));
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -73,7 +70,7 @@ public class CercaLibroAvanzato extends TableViewEngine {
                     return;
                 }
                 Libro libro = getTableView().getItems().get(getIndex());
-                setGraphic(getInLib().get(libro) ? ivTrue : ivFalse);
+                setGraphic(getInLib().get(libro) ? (IMGtype.CHECK.getImageView(12,12)) : IMGtype.RED_CROSS.getImageView(12,12));
             }
         });
         initTableViews();

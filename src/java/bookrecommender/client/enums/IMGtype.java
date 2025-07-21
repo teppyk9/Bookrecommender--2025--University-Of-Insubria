@@ -1,6 +1,7 @@
 package bookrecommender.client.enums;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.Objects;
 
@@ -28,11 +29,14 @@ public enum IMGtype {
         this.path = path;
     }
 
-    public Image getImage(double width, double height, boolean preserveRatio, boolean smooth) {
-        return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)),width, height, preserveRatio, smooth);
+    public ImageView getImageView(double width, double height) {
+        ImageView imageView = new ImageView(getImage());
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        return imageView;
     }
-
-    public Image getImage() {
+    public Image getImage(){
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
     }
 }
