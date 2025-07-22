@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -19,6 +18,13 @@
         <URL value="@../stylesheets/TableUtil.css" />
     </stylesheets>
     <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="47.0" styleClass="indietro" />
+    <MenuButton fx:id="MenuTipoRicerca" layoutX="29.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="693.0" styleClass="sceltaRicerca" text="Tipologia ricerca" AnchorPane.rightAnchor="77.85714285714289">
+        <items>
+            <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" styleClass="sceltaRicerca" text="Titolo" />
+            <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore" />
+            <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore e Anno di Pubblicazione" />
+        </items>
+    </MenuButton>
     <TextField fx:id="campoRicercaAnno" layoutX="288.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="167.0" promptText="Anno.." styleClass="field" />
     <TableView fx:id="tableView" layoutX="29.0" layoutY="148.0" prefHeight="287.0" prefWidth="726.0">
         <columns>
@@ -34,17 +40,6 @@
             <Font name="Century Gothic" size="1.0" />
         </font>
     </TextField>
-    <Button fx:id="bottoneCerca" contentDisplay="CENTER" layoutX="729.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="25.0" styleClass="cerca" />
-   <Pane layoutX="29.0" layoutY="84.0" prefHeight="25.0" prefWidth="726.0">
-      <children>
-          <ProgressIndicator fx:id="loadingCircle" layoutX="701.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
-          <MenuButton fx:id="MenuTipoRicerca" mnemonicParsing="false" prefHeight="25.0" prefWidth="693.0" styleClass="sceltaRicerca" text="Tipologia ricerca">
-              <items>
-                  <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" styleClass="sceltaRicerca" text="Titolo" />
-                  <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore" />
-                  <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore e Anno di Pubblicazione" />
-              </items>
-          </MenuButton>
-      </children>
-   </Pane>
+    <Button fx:id="bottoneCerca" contentDisplay="CENTER" layoutX="734.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="25.0" styleClass="cerca" />
+    <ProgressIndicator fx:id="loadingCircle" layoutX="731.0" layoutY="78.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
 </AnchorPane>
