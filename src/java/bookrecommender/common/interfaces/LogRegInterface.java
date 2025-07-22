@@ -5,6 +5,7 @@ import bookrecommender.common.model.Token;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * Interfaccia remota RMI che definisce le operazioni di login, registrazione e logout per un utente.
@@ -45,4 +46,10 @@ public interface LogRegInterface extends Remote {
     boolean cambiaPassword(Token token, String newPassword) throws RemoteException;
 
     boolean eliminaAccount(Token token) throws RemoteException;
+
+    boolean cambiaEmail(Token token, String newEmail) throws RemoteException;
+
+    boolean cambiaUsername(Token token, String newUsername) throws RemoteException;
+
+    List<String> getUserInfo(Token token) throws RemoteException;
 }

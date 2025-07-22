@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -267,6 +268,81 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
             logger.log(Level.SEVERE, "Errore di gestione transazione per eliminazione account", e);
         }
         return false;
+    }
+
+    @Override
+    public boolean cambiaEmail(Token token, String newEmail) throws RemoteException {
+        try {
+            logger.info("EmailChange called for token: " + token.token() + ", client host: " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        if (ServerUtil.getInstance().isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
+            return false;
+        }
+        String updateEmail = "UPDATE UTENTI SET EMAIL = ? WHERE ID = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(updateEmail)) {
+            stmt.setString(1, newEmail);
+            stmt.setInt(2, token.userId());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.userId(), e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean cambiaUsername(Token token, String newUsername) throws RemoteException {
+        try {
+            logger.info("UsernameChange called for token: " + token.token() + ", client host: " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        if (ServerUtil.getInstance().isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
+            return false;
+        }
+        String update = "UPDATE UTENTI SET USERNAME = ? WHERE ID = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(update)) {
+            stmt.setString(1, newUsername);
+            stmt.setInt(2, token.userId());
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.userId(), e);
+        }
+        return false;
+    }
+
+    @Override
+    public List<String> getUserInfo(Token token) throws RemoteException {
+        try {
+            logger.info("UserInfo called for token: " + token.token() + ", client host: " + getClientHost());
+        } catch (ServerNotActiveException ignored) {}
+        if (ServerUtil.getInstance().isTokenNotValid(token)) {
+            logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
+            return List.of();
+        }
+        String getter = "SELECT USERNAME, NOME, COGNOME, CODICE_FISCALE, EMAIL FROM UTENTI WHERE ID = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(getter)) {
+            stmt.setInt(1, token.userId());
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String username = rs.getString("USERNAME");
+                    String nome = rs.getString("NOME");
+                    String cognome = rs.getString("COGNOME");
+                    String codiceFiscale = rs.getString("CODICE_FISCALE");
+                    String email = rs.getString("EMAIL");
+                    return List.of(username, nome, cognome, codiceFiscale, email);
+                }
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Errore nel recupero delle informazioni utente", e);
+                return List.of();
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nel cambio password per utente " + token.userId(), e);
+            return List.of();
+        }
+        return List.of();
     }
 
     /**
