@@ -41,7 +41,7 @@
             <Label contentDisplay="CENTER" prefHeight="49.0" prefWidth="155.0" styleClass="etichetta" text="Ripeti Password" wrapText="true" />
             <StackPane prefHeight="47.0" prefWidth="184.0">
                <PasswordField fx:id="PasswordField2" onKeyPressed="#RegAction" prefHeight="36.0" prefWidth="184.0" styleClass="field" />
-               <TextField fx:id="VisiblePasswordField2" prefHeight="23.0" prefWidth="184.0" styleClass="field" />
+               <TextField fx:id="VisiblePasswordField2" onKeyPressed="#RegAction" prefHeight="23.0" prefWidth="184.0" styleClass="field" />
             </StackPane>
          </HBox>
       </VBox>

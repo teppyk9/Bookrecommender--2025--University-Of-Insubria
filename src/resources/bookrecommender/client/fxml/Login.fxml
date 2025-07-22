@@ -22,7 +22,7 @@
          <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
          <StackPane prefHeight="0.0" prefWidth="200.0">
             <PasswordField fx:id="PasswordField" onKeyPressed="#EnterController" styleClass="field" />
-            <TextField fx:id="VisiblePasswordField" styleClass="field" />
+            <TextField fx:id="VisiblePasswordField" onKeyPressed="#EnterController" styleClass="field" />
          </StackPane>
       </HBox>
       <Label fx:id="NonHaiUnAccountFiled" alignment="CENTER" layoutX="242.0" layoutY="224.0" onMouseClicked="#GoToRegisterPage" prefHeight="38.0" prefWidth="316.0" styleClass="reg" text="Non hai ancora un account? Registrati qui" textAlignment="CENTER">
