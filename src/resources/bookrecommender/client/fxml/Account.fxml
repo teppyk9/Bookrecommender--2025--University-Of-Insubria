@@ -48,7 +48,7 @@
                   <HBox prefHeight="47.0" prefWidth="355.0">
                      <children>
                         <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Username" />
-                        <Label prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+                        <TextField prefHeight="47.0" prefWidth="185.0" styleClass="field" />
                      </children>
                   </HBox>
                   <HBox prefHeight="47.0" prefWidth="345.0">
