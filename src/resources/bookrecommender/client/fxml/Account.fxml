@@ -48,6 +48,6 @@
       <Button fx:id="changeUButton" layoutX="761.0" layoutY="165.0" mnemonicParsing="false" onAction="#changeUsername" prefHeight="25.0" prefWidth="16.0" />
       <Button fx:id="changeEButton" layoutX="761.0" layoutY="116.0" mnemonicParsing="false" onAction="#changeEmail" prefHeight="25.0" prefWidth="16.0" />
    </Pane>
-   <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
-   <Button fx:id="BottoneLogOut" layoutX="753.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
+   <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
+   <Button fx:id="BottoneLogOut" layoutX="740.0" layoutY="14.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
 </AnchorPane>

@@ -27,7 +27,8 @@ public class Account extends PasswordEngine {
 
     public void initialize(){
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(46,46));
-        BottoneLogOut.setGraphic(IMGtype.IMPOSTAZIONI.getImageView(46,46));
+        BottoneLogOut.setGraphic(IMGtype.LOGOUT.getImageView(46,46));
+        initP1();
         List<String> userInfo = List.of();
         try {
             userInfo = CliUtil.getInstance().getLogRegService().getUserInfo(CliUtil.getInstance().getCurrentToken());
@@ -44,6 +45,8 @@ public class Account extends PasswordEngine {
         CFLabel.setText(userInfo.get(3));
         emailTextField.setText(userInfo.get(4));
         PasswordField1.setText(userInfo.get(5));
+        PasswordField1.setEditable(false);
+        VisiblePasswordField1.setEditable(false);
     }
 
     public void eliminaAccount() {

@@ -98,7 +98,7 @@ public enum FXMLtype {
     /**
      * Schermata per modificare la password dell'utente o per eliminare l'account.
      */
-    CAMBIAPASSWORD("/bookrecommender/client/fxml/CambiaPassword.fxml", "Impostazioni"),
+    CAMBIAPASSWORD("/bookrecommender/client/fxml/CambiaPassword.fxml", "CambiaPassword"),
 
     ACCOUNT("/bookrecommender/client/fxml/Account.fxml", "Account");
 
