@@ -71,6 +71,7 @@
 
 .errore{
     -fx-fill: #fcf7f8;
+    -fx-text-fill: #FCF7F8;
     -fx-font-family: "Century Gothic";
     -fx-font-weight: bold;
     -fx-font-size: 20px;

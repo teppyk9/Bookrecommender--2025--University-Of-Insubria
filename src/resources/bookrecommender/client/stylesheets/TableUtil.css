@@ -101,6 +101,9 @@
     -fx-background-color: transparent;
 }
 
+
+
+
 /* TableView
 crea libreria
 crea consiglio
@@ -198,3 +201,8 @@ modifica consiglio
     -fx-background-color: transparent;
 }
 
+.MenuItem{
+    -fx-text-fill: #fcf7f8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 12px;
+}
