@@ -75,21 +75,10 @@ public class AreaRiservata {
      * </p>
      */
     public void LogOut(){
-        try {
-            if (CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken())) {
-                CliUtil.getInstance().setCurrentToken(null);
-                CliUtil.getInstance().createConfirmation("Logout effettuato", "Sei stato disconnesso con successo.", false).showAndWait();
-            }
-            else
-                CliUtil.getInstance().createAlert("Errore di Logout", "Si è verificato un errore durante il logout");
-        }catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore di Logout", e.getMessage());
-        }
-        CliUtil.getInstance().setCurrentToken(null);
-        CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
+        CliUtil.getInstance().LogOut();
     }
 
     public void openImpostazioni() {
-        CliUtil.getInstance().buildStage(FXMLtype.IMPOSTAZIONI, null,null);
+        CliUtil.getInstance().buildStage(FXMLtype.CAMBIAPASSWORD, null,null);
     }
 }

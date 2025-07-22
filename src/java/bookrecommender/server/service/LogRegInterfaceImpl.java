@@ -355,7 +355,7 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
             logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return List.of();
         }
-        String getter = "SELECT USERNAME, NOME, COGNOME, CODICE_FISCALE, EMAIL FROM UTENTI WHERE ID = ?";
+        String getter = "SELECT USERNAME, NOME, COGNOME, CODICE_FISCALE, EMAIL, PASSWORD FROM UTENTI WHERE ID = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(getter)) {
             stmt.setInt(1, token.userId());
@@ -366,7 +366,8 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
                     String cognome = rs.getString("COGNOME");
                     String codiceFiscale = rs.getString("CODICE_FISCALE");
                     String email = rs.getString("EMAIL");
-                    return List.of(username, nome, cognome, codiceFiscale, email);
+                    String password = rs.getString("PASSWORD");
+                    return List.of(username, nome, cognome, codiceFiscale, email, password);
                 }
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, "Errore nel recupero delle informazioni utente", e);

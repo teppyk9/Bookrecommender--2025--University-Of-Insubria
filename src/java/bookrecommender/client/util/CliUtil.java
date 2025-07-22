@@ -278,7 +278,8 @@ public final class CliUtil {
                     stage.show();
                     stage.getScene().getRoot().requestFocus();
                     return;
-                case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO, GESTIONELIBRERIE, CREALIBRERIA, IMPOSTAZIONI:
+                case HOME, LOGIN, REGISTRAZIONE, AREARISERVATA, CERCA, CERCA_AVANZATO, GESTIONELIBRERIE, CREALIBRERIA,
+                     CAMBIAPASSWORD, ACCOUNT:
                     stage = primaryStage;
                     lock = null;
                     break;
@@ -516,5 +517,20 @@ public final class CliUtil {
         shrink.setToY(1.0);
         control.setOnMouseEntered(e -> { shrink.stop(); enlarge.playFromStart(); });
         control.setOnMouseExited (e -> { enlarge.stop(); shrink.playFromStart(); });
+    }
+
+    public void LogOut(){
+        try {
+            if (getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken())) {
+                setCurrentToken(null);
+                createConfirmation("Logout effettuato", "Sei stato disconnesso con successo.", false).showAndWait();
+            }
+            else
+                createAlert("Errore di Logout", "Si è verificato un errore durante il logout");
+        }catch (RemoteException e) {
+            createAlert("Errore di Logout", e.getMessage());
+        }
+        setCurrentToken(null);
+        buildStage(FXMLtype.HOME, null, null);
     }
 }

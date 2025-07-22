@@ -17,15 +17,11 @@ public class Impostazioni extends PasswordEngine{
     @FXML private Button ShowP2Button;
     @FXML private TextField VisiblePasswordField1;
     @FXML private TextField VisiblePasswordField2;
-
-    //TODO: implementare anagrafica utente e cambio username
-
     @FXML private HBox firstPasswordField;
     @FXML private PasswordField PasswordField1;
     @FXML private HBox secondPasswordField;
     @FXML private PasswordField PasswordField2;
     @FXML private Label labelErrore;
-    @FXML private Button eliminaAccountButton;
     @FXML private Button cambiaPasswordButton;
 
     private boolean isChangingPassword = false;
@@ -51,7 +47,6 @@ public class Impostazioni extends PasswordEngine{
     @FXML private void cambiaPassword() {
         if (!isChangingPassword) {
             isChangingPassword = true;
-            eliminaAccountButton.setDisable(true);
             firstPasswordField.setVisible(true);
             secondPasswordField.setVisible(true);
             labelErrore.setVisible(false);
@@ -87,34 +82,8 @@ public class Impostazioni extends PasswordEngine{
         }
     }
 
-    @FXML private void eliminaAccount() {
-        cambiaPasswordButton.setDisable(true);
-        isChangingPassword = false;
-        firstPasswordField.setVisible(false);
-        secondPasswordField.setVisible(false);
-        labelErrore.setVisible(false);
-        PasswordField1.clear();
-        PasswordField2.clear();
-
-        if(CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro di voler eliminare l'account?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
-            try {
-                if (CliUtil.getInstance().getLogRegService().eliminaAccount(CliUtil.getInstance().getCurrentToken())) {
-                    CliUtil.getInstance().setCurrentToken(null);
-                    CliUtil.getInstance().createConfirmation("Successo", "Account eliminato", false).showAndWait();
-                    CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
-                } else {
-                    cambiaPasswordButton.setDisable(false);
-                }
-            }catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore di rete", "Impossibile eliminare l'account").showAndWait();
-            }
-        }else{
-            resetPasswordUI();
-        }
-    }
-
     @FXML private void goBackAreaRiservata() {
-        CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
+        CliUtil.getInstance().buildStage(FXMLtype.ACCOUNT, null, null);
     }
 
     private void validatePasswords() {
@@ -141,7 +110,6 @@ public class Impostazioni extends PasswordEngine{
         labelErrore.setVisible(false);
         PasswordField1.clear();
         PasswordField2.clear();
-        eliminaAccountButton.setDisable(false);
         cambiaPasswordButton.setDisable(false);
         ShowP1Button.setVisible(false);
         ShowP2Button.setVisible(false);

@@ -1,81 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Pane layoutY="63.0" opacity="0.85" prefHeight="353.0" prefWidth="800.0" styleClass="box">
-         <children>
-            <VBox layoutX="45.0" layoutY="95.0" prefHeight="164.0" prefWidth="355.0">
-               <children>
-                  <HBox prefHeight="47.0" prefWidth="355.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Nome" />
-                        <Label prefHeight="47.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="355.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Cognome" />
-                        <Label prefHeight="47.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="355.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Codice Fiscale" />
-                        <Label prefHeight="47.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox layoutX="400.0" layoutY="95.0" prefHeight="164.0" prefWidth="345.0">
-               <children>
-                  <HBox prefHeight="47.0" prefWidth="355.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Email" />
-                        <Label prefHeight="47.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="355.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Username" />
-                        <TextField prefHeight="47.0" prefWidth="185.0" styleClass="field" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="47.0" prefWidth="345.0">
-                     <children>
-                        <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Password" />
-                        <StackPane prefHeight="47.0" prefWidth="185.0">
-                           <children>
-                              <PasswordField fx:id="PasswordField1" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
-                              <TextField fx:id="VisiblePasswordField1" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
-                           </children>
-                        </StackPane>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <Button fx:id="ShowP2Button" alignment="CENTER" layoutX="745.0" layoutY="206.0" mnemonicParsing="false" onAction="#showP2" />
-            <Button fx:id="eliminaAccountButton" layoutX="325.0" layoutY="294.0" mnemonicParsing="false" onAction="#eliminaAccount" styleClass="bottone" text="Elimina Account" />
-            <Label layoutX="238.0" prefHeight="38.0" prefWidth="325.0" styleClass="titolo" text="Gestisci il tuo account" />
-            <Button layoutX="761.0" layoutY="206.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="16.0" text="m" />
-            <Button layoutX="761.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="16.0" text="m" />
-         </children>
-      </Pane>
-      <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="46.0" styleClass="indietro" />
-      <Button fx:id="BottoneLogOut" layoutX="753.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="47.0" prefWidth="46.0" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Account">
    <stylesheets>
       <URL value="@../stylesheets/Account.css" />
       <URL value="@../stylesheets/Form.css" />
    </stylesheets>
+   <Pane layoutY="63.0" opacity="0.85" prefHeight="353.0" prefWidth="800.0" styleClass="box">
+      <VBox layoutX="45.0" layoutY="95.0" prefHeight="164.0" prefWidth="355.0">
+         <HBox prefHeight="47.0" prefWidth="355.0">
+            <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Nome" />
+            <Label fx:id="nomeLabel" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="355.0">
+            <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Cognome" />
+            <Label fx:id="cognomeLabel" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="355.0">
+            <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Codice Fiscale" />
+            <Label fx:id="CFLabel" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+      </VBox>
+      <VBox layoutX="400.0" layoutY="95.0" prefHeight="164.0" prefWidth="345.0">
+         <HBox prefHeight="47.0" prefWidth="355.0">
+            <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Email" />
+            <TextField fx:id="emailTextField" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="355.0">
+            <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Username" />
+            <TextField fx:id="usernameTextField" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+         </HBox>
+         <HBox prefHeight="47.0" prefWidth="345.0">
+            <Label prefHeight="47.0" prefWidth="155.0" styleClass="etichetta" text="Password" />
+            <StackPane prefHeight="47.0" prefWidth="185.0">
+               <PasswordField fx:id="PasswordField1" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+               <TextField fx:id="VisiblePasswordField1" prefHeight="47.0" prefWidth="185.0" styleClass="field" />
+            </StackPane>
+         </HBox>
+      </VBox>
+      <Button fx:id="ShowP1Button" alignment="CENTER" layoutX="745.0" layoutY="206.0" mnemonicParsing="false" onAction="#showP1" />
+      <Button layoutX="325.0" layoutY="294.0" mnemonicParsing="false" onAction="#eliminaAccount" styleClass="bottone" text="Elimina Account" />
+      <Label layoutX="238.0" prefHeight="38.0" prefWidth="325.0" styleClass="titolo" text="Gestisci il tuo account" />
+      <Button layoutX="761.0" layoutY="206.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="25.0" prefWidth="16.0" />
+      <Button fx:id="changeUButton" layoutX="761.0" layoutY="165.0" mnemonicParsing="false" onAction="#changeUsername" prefHeight="25.0" prefWidth="16.0" />
+      <Button fx:id="changeEButton" layoutX="761.0" layoutY="116.0" mnemonicParsing="false" onAction="#changeEmail" prefHeight="25.0" prefWidth="16.0" />
+   </Pane>
+   <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
+   <Button fx:id="BottoneLogOut" layoutX="753.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
 </AnchorPane>
