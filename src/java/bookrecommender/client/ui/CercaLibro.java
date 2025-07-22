@@ -8,6 +8,7 @@ import bookrecommender.common.model.Libro;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 /**
@@ -50,7 +51,10 @@ public class CercaLibro extends TableViewEngine {
     @FXML
     public void initialize() {
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
-        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(47,47));
+        bottoneCerca.setAlignment(Pos.CENTER_LEFT);
+        bottoneCerca.setStyle("-fx-padding: 0");
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
         initBasicSearch();
         initSRecensioniCol();
         initTableViews();

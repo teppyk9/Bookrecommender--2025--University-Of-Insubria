@@ -55,6 +55,7 @@
 
 .indietro{
     -fx-background-color: transparent;
+    -fx-padding: 0;
     -fx-scale-x: 1;
     -fx-scale-y: 1;
     -fx-transition: all 0.2s;
@@ -189,4 +190,8 @@
     -fx-font-weight: bold ;
     -fx-font-family: "Century Gothic";
     -fx-padding: 2px;
+}
+
+.progress-indicator{
+    -fx-alignment: center;
 }

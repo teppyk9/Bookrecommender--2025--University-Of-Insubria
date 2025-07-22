@@ -9,45 +9,42 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.CercaLibro">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.CercaLibro">
     <stylesheets>
-        <URL value="@../stylesheets/CercaCreaModifica.css"/>
-        <URL value="@../stylesheets/TableUtil.css"/>
+        <URL value="@../stylesheets/CercaCreaModifica.css" />
+        <URL value="@../stylesheets/TableUtil.css" />
     </stylesheets>
-    <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-            onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="47.0" styleClass="indietro"/>
-    <MenuButton fx:id="MenuTipoRicerca" layoutX="29.0" layoutY="77.0" mnemonicParsing="false" prefHeight="25.0"
-                prefWidth="685.0" styleClass="sceltaRicerca" text="Tipologia ricerca" AnchorPane.rightAnchor="78.0">
-        <items>
-            <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" styleClass="sceltaRicerca" text="Titolo"/>
-            <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore"/>
-            <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" styleClass="sceltaRicerca"
-                      text="Autore e Anno di Pubblicazione"/>
-        </items>
-    </MenuButton>
-    <TextField fx:id="campoRicercaAnno" layoutX="288.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_2"
-               prefHeight="25.0" prefWidth="167.0" promptText="Anno.." styleClass="field"/>
+    <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="47.0" styleClass="indietro" />
+    <TextField fx:id="campoRicercaAnno" layoutX="288.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="167.0" promptText="Anno.." styleClass="field" />
     <TableView fx:id="tableView" layoutX="29.0" layoutY="148.0" prefHeight="287.0" prefWidth="726.0">
         <columns>
-            <TableColumn fx:id="titoloCol" prefWidth="340.0" text="Titolo"/>
-            <TableColumn fx:id="autoreCol" prefWidth="207.0" text="Autore"/>
-            <TableColumn fx:id="annoCol" prefWidth="86.0" text="Anno"/>
-            <TableColumn fx:id="recensioniCol" prefWidth="92.0" text="Recensioni"/>
+            <TableColumn fx:id="titoloCol" prefWidth="340.0" text="Titolo" />
+            <TableColumn fx:id="autoreCol" prefWidth="207.0" text="Autore" />
+            <TableColumn fx:id="annoCol" prefWidth="86.0" text="Anno" />
+            <TableColumn fx:id="recensioniCol" prefWidth="92.0" text="Recensioni" />
         </columns>
     </TableView>
-    <Text layoutX="316.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Cerca Libro"/>
-    <TextField fx:id="campoRicerca" layoutX="455.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0"
-               prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="78.0">
+    <Text layoutX="316.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Cerca Libro" />
+    <TextField fx:id="campoRicerca" layoutX="455.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="78.0">
         <font>
-            <Font name="Century Gothic" size="1.0"/>
+            <Font name="Century Gothic" size="1.0" />
         </font>
     </TextField>
-    <Button fx:id="bottoneCerca" contentDisplay="CENTER" layoutX="722.0" layoutY="110.0" mnemonicParsing="false"
-            onAction="#handleClickCerca" prefHeight="25.0" prefWidth="25.0" styleClass="cerca"/>
-    <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="724.0" layoutY="78.0" prefHeight="25.0"
-                       prefWidth="19.0"/>
+    <Button fx:id="bottoneCerca" contentDisplay="CENTER" layoutX="729.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="25.0" styleClass="cerca" />
+   <Pane layoutX="29.0" layoutY="84.0" prefHeight="25.0" prefWidth="726.0">
+      <children>
+          <ProgressIndicator fx:id="loadingCircle" layoutX="701.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
+          <MenuButton fx:id="MenuTipoRicerca" mnemonicParsing="false" prefHeight="25.0" prefWidth="693.0" styleClass="sceltaRicerca" text="Tipologia ricerca">
+              <items>
+                  <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" styleClass="sceltaRicerca" text="Titolo" />
+                  <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore" />
+                  <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore e Anno di Pubblicazione" />
+              </items>
+          </MenuButton>
+      </children>
+   </Pane>
 </AnchorPane>

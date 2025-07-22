@@ -8,6 +8,7 @@ import bookrecommender.common.model.Libro;
 import bookrecommender.common.model.Token;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
@@ -58,11 +59,13 @@ public class AddLibroLibreria extends TreeTableEngine {
      */
     @FXML
     public void initialize() {
-        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(42,42));
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        ExitButton.setAlignment(Pos.TOP_LEFT);
         titoloLibreria.setText("Le tue librerie");
         initializeTree();
 
         // Colonna con nomi librerie e titoli libro
+        //TODO: css name column
         nameColumn.setStyle("-fx-alignment: CENTER;");
         nameColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
@@ -79,6 +82,7 @@ public class AddLibroLibreria extends TreeTableEngine {
         loadSimple(presentColumn, libPresent);
 
         // Icone visive per colonna "presente"
+        //TODO: presentColumn style
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
             @Override
             protected void updateItem(Boolean present, boolean empty) {

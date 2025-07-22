@@ -27,9 +27,10 @@ public enum IMGtype {
     STAR_4_4_WHITE("/bookrecommender/client/icons/star-white-4-4.png"),
     VISIBLE_PASSWORD("/bookrecommender/client/icons/visible-password.png"),
     INVISIBLE_PASSWORD("/bookrecommender/client/icons/invisible-password.png"),
-    INDIETRO("/bookrecommender/client/icons/indietro_r.png"),
-    CERCA("/bookrecommender/client/icons/cerca_r.png"),
-    IMPOSTAZIONI("/bookrecommender/client/icons/impostazioni.png");
+    INDIETRO("/bookrecommender/client/icons/GoBack_a31621_100OK.png"),
+    CERCA("/bookrecommender/client/icons/Search_a31621_OK.png"),
+    IMPOSTAZIONI("/bookrecommender/client/icons/impostazioni.png"),
+    LOGOUT("/bookrecommender/client/icons/Logout_a31621_OK.png");
 
     private final String path;
     IMGtype(String path){
