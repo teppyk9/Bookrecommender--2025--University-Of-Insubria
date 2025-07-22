@@ -279,6 +279,23 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
             logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
+        String checkEmail = "SELECT 1 FROM UTENTI WHERE EMAIL = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+             PreparedStatement checkStmt = conn.prepareStatement(checkEmail)) {
+            checkStmt.setString(1, newEmail);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next()) {
+                    logger.warning("Email già in uso: " + newEmail);
+                    return false;
+                }
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Errore nel controllo dell'unicità dell'email", e);
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella connessione al database per il controllo dell'email", e);
+            return false;
+        }
         String updateEmail = "UPDATE UTENTI SET EMAIL = ? WHERE ID = ?";
         try (Connection conn = ServerUtil.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(updateEmail)) {
@@ -298,6 +315,23 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         } catch (ServerNotActiveException ignored) {}
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
             logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
+            return false;
+        }
+        String checkUsername = "SELECT 1 FROM UTENTI WHERE USERNAME = ?";
+        try (Connection conn = ServerUtil.getInstance().getConnection();
+        PreparedStatement checkStmt = conn.prepareStatement(checkUsername)) {
+            checkStmt.setString(1, newUsername);
+            try (ResultSet rs = checkStmt.executeQuery()) {
+                if (rs.next()) {
+                    logger.warning("Username già in uso: " + newUsername);
+                    return false;
+                }
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Errore nel controllo dell'unicità dello username", e);
+                return false;
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Errore nella connessione al database per il controllo dello username", e);
             return false;
         }
         String update = "UPDATE UTENTI SET USERNAME = ? WHERE ID = ?";

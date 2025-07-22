@@ -10,16 +10,14 @@
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/resources/META-INF" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Maven: org.checkerframework:checker-qual:3.42.0" level="project" />
-    <orderEntry type="library" exported="" name="openjfx.javafx.base" level="project" />
-    <orderEntry type="library" exported="" name="openjfx.javafx.controls" level="project" />
-    <orderEntry type="library" exported="" name="openjfx.javafx.fxml" level="project" />
-    <orderEntry type="library" exported="" name="openjfx.javafx.graphics" level="project" />
-    <orderEntry type="library" exported="" name="openjfx.javafx.media" level="application" />
     <orderEntry type="library" exported="" name="postgresql" level="project" />
     <orderEntry type="library" exported="" name="zaxxer.HikariCP" level="project" />
-    <orderEntry type="library" exported="" name="slf4j.jdk14" level="project" />
+    <orderEntry type="library" name="javafx.controls" level="project" />
+    <orderEntry type="library" name="javafx.fxml" level="project" />
+    <orderEntry type="library" name="javafx.graphics" level="project" />
+    <orderEntry type="library" name="javafx.media" level="project" />
+    <orderEntry type="library" name="javafx.base" level="project" />
   </component>
 </module>
