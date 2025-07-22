@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class ValutazioniEngine {
     protected void updateStars(List<ImageView> stelle, float pieno) {
         for (int i = 0; i < stelle.size(); i++) {
-            stelle.get(i).setImage(i < pieno ? IMGtype.STAR_4_4.getImage() : IMGtype.STAR_0_4.getImage());
+            stelle.get(i).setImage(i < pieno ? IMGtype.STAR_4_4_BLACK.getImage() : IMGtype.STAR_0_4_BLACK.getImage());
         }
     }
 

@@ -447,15 +447,15 @@ public final class CliUtil {
         for (int i = 0; i < stars.length; i++) {
             float diff = voto - i;
             if (diff >= 1) {
-                stars[i].setImage(IMGtype.STAR_4_4.getImage());
+                stars[i].setImage(IMGtype.STAR_4_4_BLACK.getImage());
             } else if (diff >= 0.75) {
-                stars[i].setImage(IMGtype.STAR_3_4.getImage());
+                stars[i].setImage(IMGtype.STAR_3_4_BLACK.getImage());
             } else if (diff >= 0.5) {
-                stars[i].setImage(IMGtype.STAR_2_4.getImage());
+                stars[i].setImage(IMGtype.STAR_2_4_BLACK.getImage());
             } else if (diff >= 0.25) {
-                stars[i].setImage(IMGtype.STAR_1_4.getImage());
+                stars[i].setImage(IMGtype.STAR_1_4_BLACK.getImage());
             } else {
-                stars[i].setImage(IMGtype.STAR_0_4.getImage());
+                stars[i].setImage(IMGtype.STAR_0_4_BLACK.getImage());
             }
         }
     }
