@@ -79,6 +79,6 @@ public class AreaRiservata {
     }
 
     public void openImpostazioni() {
-        CliUtil.getInstance().buildStage(FXMLtype.CAMBIAPASSWORD, null,null);
+        CliUtil.getInstance().buildStage(FXMLtype.ACCOUNT, null,null);
     }
 }
