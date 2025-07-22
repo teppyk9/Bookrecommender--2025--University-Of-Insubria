@@ -10,7 +10,7 @@ public enum IMGtype {
     CONFIRM("/bookrecommender/client/icons/alert_confirmation_icon.png"),
     RED_CROSS("/bookrecommender/client/icons/alert_icon.png"),
     INFO("/bookrecommender/client/icons/alert_info_icon.png"),
-    ARROW_DOWN("/bookrecommender/client/icons/arrow_down_icon.png"),
+    ARROW_DOWN("/bookrecommender/client/icons/Expand_arrowDown_fcf7f8_OK.png"),
     CHECK("/bookrecommender/client/icons/check-green.png"),
     RIMUOVI("/bookrecommender/client/icons/minus-circle-red.png"),
     ICONA_PROG("/bookrecommender/client/icons/program_icon.png"),
