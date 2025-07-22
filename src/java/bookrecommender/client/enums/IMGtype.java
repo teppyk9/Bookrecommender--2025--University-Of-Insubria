@@ -30,7 +30,9 @@ public enum IMGtype {
     INDIETRO("/bookrecommender/client/icons/GoBack_a31621_100OK.png"),
     CERCA("/bookrecommender/client/icons/Search_a31621_OK.png"),
     IMPOSTAZIONI("/bookrecommender/client/icons/impostazioni.png"),
-    LOGOUT("/bookrecommender/client/icons/Logout_a31621_OK.png");
+    LOGOUT("/bookrecommender/client/icons/Logout_a31621_OK.png"),
+    EDIT("/bookrecommender/client/icons/Edit_fcf7f8_OK.png"),
+    SAVE("/bookrecommender/client/icons/Save_fcf7f8_OK.png"),;
 
     private final String path;
     IMGtype(String path){
