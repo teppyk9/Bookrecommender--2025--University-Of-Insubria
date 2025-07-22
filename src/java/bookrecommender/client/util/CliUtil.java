@@ -442,20 +442,20 @@ public final class CliUtil {
      * @param star5 quinta stella
      * @param voto  valore da 0 a 5 (con frazioni)
      */
-    public void setStar(ImageView star1, ImageView star2, ImageView star3, ImageView star4, ImageView star5, float voto) {
+    public void setStar(ImageView star1, ImageView star2, ImageView star3, ImageView star4, ImageView star5, float voto, IMGtype.STARtype type) {
         ImageView[] stars = {star1, star2, star3, star4, star5};
         for (int i = 0; i < stars.length; i++) {
             float diff = voto - i;
             if (diff >= 1) {
-                stars[i].setImage(IMGtype.STAR_4_4_BLACK.getImage());
+                stars[i].setImage(type.getStar(4).getImage());
             } else if (diff >= 0.75) {
-                stars[i].setImage(IMGtype.STAR_3_4_BLACK.getImage());
+                stars[i].setImage(type.getStar(3).getImage());
             } else if (diff >= 0.5) {
-                stars[i].setImage(IMGtype.STAR_2_4_BLACK.getImage());
+                stars[i].setImage(type.getStar(2).getImage());
             } else if (diff >= 0.25) {
-                stars[i].setImage(IMGtype.STAR_1_4_BLACK.getImage());
+                stars[i].setImage(type.getStar(1).getImage());
             } else {
-                stars[i].setImage(IMGtype.STAR_0_4_BLACK.getImage());
+                stars[i].setImage(type.getStar(0).getImage());
             }
         }
     }

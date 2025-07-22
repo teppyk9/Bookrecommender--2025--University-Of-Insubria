@@ -15,11 +15,6 @@ public enum IMGtype {
     RIMUOVI("/bookrecommender/client/icons/minus-circle-red.png"),
     ICONA_PROG("/bookrecommender/client/icons/program_icon.png"),
     SERVER("/bookrecommender/client/icons/server_connection.png"),
-    STAR_0_4_BLACK("/bookrecommender/client/icons/star-empty.png"),
-    STAR_1_4_BLACK("/bookrecommender/client/icons/star-1-4.png"),
-    STAR_2_4_BLACK("/bookrecommender/client/icons/star-half.png"),
-    STAR_3_4_BLACK("/bookrecommender/client/icons/star-3-4.png"),
-    STAR_4_4_BLACK("/bookrecommender/client/icons/star-full.png"),
     STAR_0_4_RED("/bookrecommender/client/icons/star-red-0-4.png"),
     STAR_1_4_RED("/bookrecommender/client/icons/star-red-1-4.png"),
     STAR_2_4_RED("/bookrecommender/client/icons/star-red-2-4.png"),
@@ -50,5 +45,22 @@ public enum IMGtype {
     }
     public Image getImage(){
         return new Image(Objects.requireNonNull(getClass().getResourceAsStream(path)));
+    }
+
+    public enum STARtype{
+        RED(STAR_0_4_RED, STAR_1_4_RED, STAR_2_4_RED, STAR_3_4_RED, STAR_4_4_RED),
+        WHITE(STAR_0_4_WHITE, STAR_1_4_WHITE, STAR_2_4_WHITE, STAR_3_4_WHITE, STAR_4_4_WHITE);
+        private final IMGtype[] stars;
+
+        STARtype(IMGtype... stars) {
+            this.stars = stars;
+        }
+
+        public IMGtype getStar(int index) {
+            if (index < 0 || index >= stars.length) {
+                return stars[0];
+            }
+            return stars[index];
+        }
     }
 }

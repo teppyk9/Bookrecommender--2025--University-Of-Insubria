@@ -3,7 +3,6 @@ package bookrecommender.client.ui;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
-import bookrecommender.client.util.ValutazioniEngine;
 import bookrecommender.common.model.Valutazione;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -14,7 +13,7 @@ import javafx.stage.Stage;
 import java.rmi.RemoteException;
 import java.util.List;
 
-public class ModificaValutazione extends ValutazioniEngine {
+public class ModificaValutazione {
     @FXML private Button GoBackButton;
     @FXML private Button SalvaModificheButton;
     @FXML private ImageView starStile1,starStile2,starStile3,starStile4,starStile5;
@@ -62,11 +61,11 @@ public class ModificaValutazione extends ValutazioniEngine {
         List<Float> val = v.getValutazioni();
         List<String> com = v.getCommenti();
 
-        CliUtil.getInstance().setStar(starStile1,starStile2,starStile3,starStile4,starStile5, val.get(0));
-        CliUtil.getInstance().setStar(starContenuto1,starContenuto2,starContenuto3,starContenuto4,starContenuto5, val.get(1));
-        CliUtil.getInstance().setStar(starGradevolezza1,starGradevolezza2,starGradevolezza3,starGradevolezza4,starGradevolezza5, val.get(2));
-        CliUtil.getInstance().setStar(starOriginalita1,starOriginalita2,starOriginalita3,starOriginalita4,starOriginalita5, val.get(3));
-        CliUtil.getInstance().setStar(starEdizione1,starEdizione2,starEdizione3,starEdizione4,starEdizione5, val.get(4));
+        CliUtil.getInstance().setStar(starStile1,starStile2,starStile3,starStile4,starStile5, val.get(0), IMGtype.STARtype.WHITE);
+        CliUtil.getInstance().setStar(starContenuto1,starContenuto2,starContenuto3,starContenuto4,starContenuto5, val.get(1), IMGtype.STARtype.WHITE);
+        CliUtil.getInstance().setStar(starGradevolezza1,starGradevolezza2,starGradevolezza3,starGradevolezza4,starGradevolezza5, val.get(2), IMGtype.STARtype.WHITE);
+        CliUtil.getInstance().setStar(starOriginalita1,starOriginalita2,starOriginalita3,starOriginalita4,starOriginalita5, val.get(3), IMGtype.STARtype.WHITE);
+        CliUtil.getInstance().setStar(starEdizione1,starEdizione2,starEdizione3,starEdizione4,starEdizione5, val.get(4), IMGtype.STARtype.WHITE);
 
         votoStile.setText(String.valueOf(val.get(0)));
         votoContenuto.setText(String.valueOf(val.get(1)));
@@ -112,7 +111,7 @@ public class ModificaValutazione extends ValutazioniEngine {
         testoFinale.textProperty().addListener((o,oldN,newN)-> setModified());
     }
 
-    public void salvaModifiche() {
+    @FXML private void salvaModifiche() {
         float s,c,g,o,e;
         try {
             s = Float.parseFloat(votoStile.getText());
@@ -137,7 +136,7 @@ public class ModificaValutazione extends ValutazioniEngine {
         }
     }
 
-    @FXML public void eliminaValutazione() {
+    @FXML private void eliminaValutazione() {
         if (CliUtil.getInstance().createConfirmation("Conferma eliminazione", "Sei sicuro di voler eliminare questa valutazione? Non potrà essere recuperata.", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
             try {
                 if (CliUtil.getInstance().getLibService().deleteVal(CliUtil.getInstance().getCurrentToken(), myVal.getLibro())) {
@@ -162,5 +161,27 @@ public class ModificaValutazione extends ValutazioniEngine {
     private void setModified() {
         isMod = true;
         SalvaModificheButton.setDisable(false);
+    }
+
+    private void configureInteractive(List<ImageView> stelle, Label labelVoto, Runnable onModify) {
+        updateStars(stelle, 0);
+        for (int i = 0; i < stelle.size(); i++) {
+            int idx = i;
+            ImageView st = stelle.get(i);
+            st.setOnMouseEntered(e -> updateStars(stelle, idx + 1));
+            st.setOnMouseExited (e -> updateStars(stelle, Float.parseFloat(labelVoto.getText())));
+            st.setOnMouseClicked(e -> {
+                float v = idx + 1;
+                labelVoto.setText(String.valueOf(v));
+                updateStars(stelle, v);
+                onModify.run();
+            });
+        }
+    }
+
+    private void updateStars(List<ImageView> stelle, float pieno) {
+        for (int i = 0; i < stelle.size(); i++) {
+            stelle.get(i).setImage(i < pieno ? IMGtype.STAR_4_4_WHITE.getImage() : IMGtype.STAR_0_4_WHITE.getImage());
+        }
     }
 }

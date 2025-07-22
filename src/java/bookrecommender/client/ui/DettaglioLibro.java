@@ -1,5 +1,6 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.common.model.Libro;
@@ -156,17 +157,17 @@ public class DettaglioLibro {
             CliUtil.getInstance().createAlert("Errore di connessione", "Impossibile recuperare i dettagli del libro.").showAndWait();
         }
 
-        CliUtil.getInstance().setStar(starTotal1, starTotal2, starTotal3, starTotal4, starTotal5, details.getmFinale());
+        CliUtil.getInstance().setStar(starTotal1, starTotal2, starTotal3, starTotal4, starTotal5, details.getmFinale(), IMGtype.STARtype.WHITE);
         votoTotal.setText(String.format("%.1f", details.getmFinale()));
-        CliUtil.getInstance().setStar(starStile1, starStile2, starStile3, starStile4, starStile5, details.getmStile());
+        CliUtil.getInstance().setStar(starStile1, starStile2, starStile3, starStile4, starStile5, details.getmStile(), IMGtype.STARtype.RED);
         votoStile.setText(String.format("%.1f", details.getmStile()));
-        CliUtil.getInstance().setStar(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5, details.getmContenuto());
+        CliUtil.getInstance().setStar(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5, details.getmContenuto(), IMGtype.STARtype.RED);
         votoContenuto.setText(String.format("%.1f", details.getmContenuto()));
-        CliUtil.getInstance().setStar(starGradevolezza1, starGradevolezza2, starGradevolezza3, starGradevolezza4, starGradevolezza5, details.getmGradevolezza());
+        CliUtil.getInstance().setStar(starGradevolezza1, starGradevolezza2, starGradevolezza3, starGradevolezza4, starGradevolezza5, details.getmGradevolezza(), IMGtype.STARtype.RED);
         votoGradevolezza.setText(String.format("%.1f", details.getmGradevolezza()));
-        CliUtil.getInstance().setStar(starOriginalita1, starOriginalita2, starOriginalita3, starOriginalita4, starOriginalita5, details.getmOriginalita());
+        CliUtil.getInstance().setStar(starOriginalita1, starOriginalita2, starOriginalita3, starOriginalita4, starOriginalita5, details.getmOriginalita(), IMGtype.STARtype.RED);
         votoOriginalita.setText(String.format("%.1f", details.getmOriginalita()));
-        CliUtil.getInstance().setStar(starEdizione1, starEdizione2, starEdizione3, starEdizione4, starEdizione5, details.getmEdizione());
+        CliUtil.getInstance().setStar(starEdizione1, starEdizione2, starEdizione3, starEdizione4, starEdizione5, details.getmEdizione(), IMGtype.STARtype.RED);
         votoEdizione.setText(String.format("%.1f", details.getmEdizione()));
 
         listaValutazioni.setItems(FXCollections.observableArrayList(details.getValutazioni()));

@@ -1,7 +1,7 @@
 package bookrecommender.client.ui;
 
 import bookrecommender.client.enums.IMGtype;
-import bookrecommender.client.util.ValutazioniEngine;
+import bookrecommender.client.util.CliUtil;
 import bookrecommender.common.model.Valutazione;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class VisualizzaValutazione extends ValutazioniEngine {
+public class VisualizzaValutazione {
     @FXML private Button GoBackButton;
     @FXML private Label TitoloLabel;
     @FXML private Label recensioneDiLabel;
@@ -47,16 +47,22 @@ public class VisualizzaValutazione extends ValutazioniEngine {
         List<Float> val = v.getValutazioni();
         List<String> com = v.getCommenti();
 
-        displayGroup(new ImageView[]{starStile1,starStile2,starStile3,starStile4,starStile5}, votoStile, com.get(0), stileTextArea,val.get(0), "Nessuna recensione per lo stile");
-        displayGroup(new ImageView[]{starContenuto1,starContenuto2,starContenuto3,starContenuto4,starContenuto5}, votoContenuto, com.get(1), contenutoTextArea,val.get(1), "Nessuna recensione per il contenuto");
-        displayGroup(new ImageView[]{starGradevolezza1,starGradevolezza2,starGradevolezza3,starGradevolezza4,starGradevolezza5}, votoGradevolezza, com.get(2), gradevolezzaTextArea,val.get(2), "Nessuna recensione per la gradevolezza");
-        displayGroup(new ImageView[]{starOriginalita1,starOriginalita2,starOriginalita3,starOriginalita4,starOriginalita5}, votoOriginalita, com.get(3), originalitaTextArea,val.get(3), "Nessuna recensione per l'originalità");
-        displayGroup(new ImageView[]{starEdizione1,starEdizione2,starEdizione3,starEdizione4,starEdizione5}, votoEdizione, com.get(4), edizioneTextArea,val.get(4), "Nessuna recensione per l'edizione");
-        displayGroup(new ImageView[]{starMedia1,starMedia2,starMedia3,starMedia4,starMedia5}, votoMedia, com.get(5), finaleTextArea,val.get(5), "Nessuna recensione per la valutazione finale");
+        displayGroup(new ImageView[]{starStile1,starStile2,starStile3,starStile4,starStile5}, votoStile, com.get(0), stileTextArea,val.get(0), "Nessuna recensione per lo stile", IMGtype.STARtype.WHITE);
+        displayGroup(new ImageView[]{starContenuto1,starContenuto2,starContenuto3,starContenuto4,starContenuto5}, votoContenuto, com.get(1), contenutoTextArea,val.get(1), "Nessuna recensione per il contenuto", IMGtype.STARtype.WHITE);
+        displayGroup(new ImageView[]{starGradevolezza1,starGradevolezza2,starGradevolezza3,starGradevolezza4,starGradevolezza5}, votoGradevolezza, com.get(2), gradevolezzaTextArea,val.get(2), "Nessuna recensione per la gradevolezza", IMGtype.STARtype.WHITE);
+        displayGroup(new ImageView[]{starOriginalita1,starOriginalita2,starOriginalita3,starOriginalita4,starOriginalita5}, votoOriginalita, com.get(3), originalitaTextArea,val.get(3), "Nessuna recensione per l'originalità", IMGtype.STARtype.WHITE);
+        displayGroup(new ImageView[]{starEdizione1,starEdizione2,starEdizione3,starEdizione4,starEdizione5}, votoEdizione, com.get(4), edizioneTextArea,val.get(4), "Nessuna recensione per l'edizione", IMGtype.STARtype.WHITE);
+        displayGroup(new ImageView[]{starMedia1,starMedia2,starMedia3,starMedia4,starMedia5}, votoMedia, com.get(5), finaleTextArea,val.get(5), "Nessuna recensione per la valutazione finale", IMGtype.STARtype.RED);
     }
 
     @FXML private void exitApplication() {
         Stage stage = (Stage) TitoloLabel.getScene().getWindow();
         stage.close();
+    }
+
+    private void displayGroup(ImageView[] stars, Label voto, String commento, Label area,float valore, String emptyMsg, IMGtype.STARtype type) {
+        CliUtil.getInstance().setStar(stars[0], stars[1], stars[2], stars[3], stars[4], valore, type);
+        voto.setText(String.valueOf(valore));
+        area.setText(commento.isEmpty() ? emptyMsg : commento);
     }
 }

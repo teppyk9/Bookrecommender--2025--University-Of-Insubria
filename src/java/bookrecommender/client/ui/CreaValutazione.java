@@ -199,7 +199,7 @@ public class CreaValutazione {
      */
     private void aggiornaStelle(int numeroPiene, List<ImageView> stelle) {
         for (int i = 0; i < stelle.size(); i++) {
-            stelle.get(i).setImage(i < numeroPiene ? IMGtype.STAR_4_4_BLACK.getImage() : IMGtype.STAR_0_4_BLACK.getImage());
+            stelle.get(i).setImage(i < numeroPiene ? IMGtype.STAR_4_4_WHITE.getImage() : IMGtype.STAR_0_4_WHITE.getImage());
         }
     }
 
@@ -215,7 +215,7 @@ public class CreaValutazione {
         for (int i = 0; i < stelle.size(); i++) {
             final int index = i;
             ImageView stella = stelle.get(i);
-            stella.setImage(IMGtype.STAR_0_4_BLACK.getImage());
+            stella.setImage(IMGtype.STAR_0_4_WHITE.getImage());
 
             stella.setOnMouseEntered(e -> aggiornaStelle(index + 1, stelle));
             stella.setOnMouseExited(e -> aggiornaStelle(valore[0], stelle));
