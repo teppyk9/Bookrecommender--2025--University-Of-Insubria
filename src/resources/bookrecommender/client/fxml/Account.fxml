@@ -48,13 +48,13 @@
             </StackPane>
          </HBox>
       </VBox>
-      <Button fx:id="ShowP1Button" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="745.0" layoutY="206.0" mnemonicParsing="false" onAction="#showP1" styleClass="indietro" />
+      <Button fx:id="ShowP1Button" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="737.0" layoutY="211.0" mnemonicParsing="false" onAction="#showP1" prefHeight="15.0" prefWidth="15.0" styleClass="modifica" />
       <Button layoutX="325.0" layoutY="294.0" mnemonicParsing="false" onAction="#eliminaAccount" styleClass="bottone" text="Elimina Account" />
       <Label layoutX="238.0" prefHeight="38.0" prefWidth="325.0" styleClass="titolo" text="Gestisci il tuo account" />
-      <Button fx:id="changePButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="761.0" layoutY="206.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="25.0" prefWidth="16.0" styleClass="indietro" />
-      <Button fx:id="changeUButton" alignment="TOP_LEFT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="749.0" layoutY="152.0" mnemonicParsing="false" onAction="#changeUsername" prefHeight="24.0" prefWidth="24.0" styleClass="indietro" />
-      <Button fx:id="changeEButton" alignment="TOP_LEFT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="749.0" layoutY="107.0" mnemonicParsing="false" onAction="#changeEmail" prefHeight="24.0" prefWidth="24.0" styleClass="indietro" />
+      <Button fx:id="changePButton" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="766.0" layoutY="211.0" mnemonicParsing="false" onAction="#changePassword" prefHeight="25.0" prefWidth="25.0" styleClass="modifica" />
+      <Button fx:id="changeUButton" alignment="TOP_LEFT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="766.0" layoutY="165.0" mnemonicParsing="false" onAction="#changeUsername" prefHeight="25.0" prefWidth="25.0" styleClass="modifica" />
+      <Button fx:id="changeEButton" alignment="TOP_LEFT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="766.0" layoutY="116.0" mnemonicParsing="false" onAction="#changeEmail" prefHeight="25.0" prefWidth="25.0" styleClass="modifica" />
    </Pane>
    <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
-   <Button fx:id="BottoneLogOut" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="754.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="46.0" prefWidth="46.0" styleClass="indietro" />
+   <Button fx:id="BottoneLogOut" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="750.0" layoutY="2.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="41.0" prefWidth="41.0" styleClass="indietro" />
 </AnchorPane>

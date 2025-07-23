@@ -5,6 +5,7 @@ import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.util.PasswordEngine;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
 import java.rmi.RemoteException;
@@ -36,11 +37,15 @@ public class Account extends PasswordEngine {
 
 
     public void initialize(){
-        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(46,46));
-        BottoneLogOut.setGraphic(IMGtype.LOGOUT.getImageView(46,46));
-        changeEButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
-        changeUButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
-        changePButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
+        BottoneLogOut.setGraphic(IMGtype.LOGOUT.getImageView(40,40));
+        BottoneLogOut.setAlignment(Pos.TOP_RIGHT);
+        BottoneLogOut.setPadding(new javafx.geometry.Insets(3, 3, 3, 3));
+        changeEButton.setGraphic(IMGtype.EDIT.getImageView(25,25));
+        changeUButton.setGraphic(IMGtype.EDIT.getImageView(25,25));
+        changePButton.setGraphic(IMGtype.EDIT.getImageView(25,25));
+        ShowP1Button.setGraphic(IMGtype.VISIBLE_PASSWORD.getImageView(20,20));
         PasswordField1.setEditable(false);
         VisiblePasswordField1.setEditable(false);
         emailTextField.setEditable(false);
