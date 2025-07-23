@@ -22,7 +22,6 @@ public abstract class PasswordEngine {
         getVisiblePasswordField1().setVisible(false);
         getVisiblePasswordField1().setManaged(false);
         getButton1().setGraphic(IMGtype.VISIBLE_PASSWORD.getImageView(24,24));
-        CliUtil.getInstance().styleIconControl(getButton1());
     }
 
     protected void initP2() {
@@ -30,7 +29,6 @@ public abstract class PasswordEngine {
         getVisiblePasswordField2().setVisible(false);
         getVisiblePasswordField2().setManaged(false);
         getButton2().setGraphic(IMGtype.VISIBLE_PASSWORD.getImageView(24,24));
-        CliUtil.getInstance().styleIconControl(getButton2());
     }
 
     @FXML

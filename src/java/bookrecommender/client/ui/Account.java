@@ -4,30 +4,53 @@ import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.util.PasswordEngine;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Account extends PasswordEngine {
-    public Label nomeLabel;
-    public Label cognomeLabel;
-    public Label CFLabel;
-    public TextField emailTextField;
-    public TextField usernameTextField;
-    public PasswordField PasswordField1;
-    public TextField VisiblePasswordField1;
-    public Button ShowP1Button;
+    @FXML private Label nomeLabel;
+    @FXML private Label cognomeLabel;
+    @FXML private Label CFLabel;
+    @FXML private TextField emailTextField;
+    @FXML private TextField usernameTextField;
+    @FXML private PasswordField PasswordField1;
+    @FXML private TextField VisiblePasswordField1;
+    @FXML private Button ShowP1Button;
+    @FXML private Button changeUButton;
+    @FXML private Button changeEButton;
+    @FXML private Button GoBackButton_MainMenu;
+    @FXML private Button BottoneLogOut;
+    @FXML private Button changePButton;
 
-    public Button changeUButton; //DA FARE
-    public Button changeEButton; //DA FARE
+    private String oldUsername = "";
+    private String oldEmail = "";
+    private Tooltip Uinfo;
+    private Tooltip Einfo;
+    private boolean isUsernameChanged = false;
+    private boolean isEmailChanged = false;
+    private final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$", Pattern.CASE_INSENSITIVE);
 
-    public Button GoBackButton_MainMenu;
-    public Button BottoneLogOut;
 
     public void initialize(){
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(46,46));
         BottoneLogOut.setGraphic(IMGtype.LOGOUT.getImageView(46,46));
+        changeEButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+        changeUButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+        changePButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+        PasswordField1.setEditable(false);
+        VisiblePasswordField1.setEditable(false);
+        emailTextField.setEditable(false);
+        usernameTextField.setEditable(false);
+        Uinfo = new Tooltip("Lo username deve essere tra 5 e 20 caratteri.");
+        Uinfo.setAutoHide(true);
+        Einfo = new Tooltip("L'email non è valida.");
+        Einfo.setAutoHide(true);
+        emailTextField.textProperty().addListener((observable, oldValue, newValue) -> validateEmail());
+        usernameTextField.textProperty().addListener((observable, oldValue, newValue) -> validateUsername());
         initP1();
         List<String> userInfo = List.of();
         try {
@@ -40,16 +63,16 @@ public class Account extends PasswordEngine {
             CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
         }
         usernameTextField.setText(userInfo.get(0));
+        oldUsername = userInfo.get(0);
         nomeLabel.setText(userInfo.get(1));
         cognomeLabel.setText(userInfo.get(2));
         CFLabel.setText(userInfo.get(3));
         emailTextField.setText(userInfo.get(4));
+        oldEmail = userInfo.get(4);
         PasswordField1.setText(userInfo.get(5));
-        PasswordField1.setEditable(false);
-        VisiblePasswordField1.setEditable(false);
     }
 
-    public void eliminaAccount() {
+    @FXML private void eliminaAccount() {
         if(CliUtil.getInstance().createConfirmation("Conferma", "Sei sicuro di voler eliminare l'account?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
             try {
                 if (CliUtil.getInstance().getLogRegService().eliminaAccount(CliUtil.getInstance().getCurrentToken())) {
@@ -67,24 +90,109 @@ public class Account extends PasswordEngine {
         }
     }
 
-    public void changePassword() {
+    @FXML private void changePassword() {
         CliUtil.getInstance().buildStage(FXMLtype.CAMBIAPASSWORD,null,null);
     }
 
-    public void changeUsername() {
+    @FXML private void changeUsername() {
+        if(!isUsernameChanged) {
+            changeUButton.setGraphic(IMGtype.SAVE.getImageView(24,24));
+            changeUButton.setDisable(true);
+            usernameTextField.setEditable(true);
+            isUsernameChanged = true;
+        }else{
+            String newUsername = usernameTextField.getText().trim().toLowerCase();
+            if (newUsername.equals(oldUsername)) {
+                CliUtil.getInstance().createAlert("Errore", "Lo username non è cambiato.").showAndWait();
+                isUsernameChanged = false;
+                usernameTextField.setEditable(false);
+                changeUButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+                changeUButton.setDisable(false);
+                return;
+            }
+            try {
+                if (CliUtil.getInstance().getLogRegService().cambiaUsername(CliUtil.getInstance().getCurrentToken(), newUsername)) {
+                    oldUsername = newUsername;
+                    CliUtil.getInstance().createConfirmation("Successo", "Username cambiato con successo", false).showAndWait();
+                    isUsernameChanged = false;
+                    usernameTextField.setEditable(false);
+                    changeUButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+                    changeUButton.setDisable(false);
+                } else {
+                    CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare lo username").showAndWait();
+                }
+            } catch (RemoteException e) {
+                CliUtil.getInstance().createAlert("Errore di rete", "Impossibile cambiare lo username").showAndWait();
+            }
+        }
     }
 
-    public void changeEmail() {
+    @FXML private void changeEmail() {
+        if(!isEmailChanged) {
+            changeEButton.setGraphic(IMGtype.SAVE.getImageView(24,24));
+            changeEButton.setDisable(true);
+            emailTextField.setEditable(true);
+            isEmailChanged = true;
+        }else{
+            String newEmail = emailTextField.getText().trim().toLowerCase();
+            if (newEmail.equals(oldEmail)) {
+                CliUtil.getInstance().createAlert("Errore", "L'email non è cambiata.").showAndWait();
+                isEmailChanged = false;
+                emailTextField.setEditable(false);
+                changeEButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+                changeEButton.setDisable(false);
+                return;
+            }
+            if( !EMAIL_PATTERN.matcher(newEmail).matches()) {
+                CliUtil.getInstance().createAlert("Errore", "L'email non è valida.").showAndWait();
+                return;
+            }
+            try {
+                if (CliUtil.getInstance().getLogRegService().cambiaEmail(CliUtil.getInstance().getCurrentToken(), newEmail)) {
+                    oldEmail = newEmail;
+                    CliUtil.getInstance().createConfirmation("Successo", "Email cambiata con successo", false).showAndWait();
+                    isEmailChanged = false;
+                    emailTextField.setEditable(false);
+                    changeEButton.setGraphic(IMGtype.EDIT.getImageView(24,24));
+                    changeEButton.setDisable(false);
+                } else {
+                    CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare l'email").showAndWait();
+                }
+            } catch (RemoteException e) {
+                CliUtil.getInstance().createAlert("Errore di rete", "Impossibile cambiare l'email").showAndWait();
+            }
+        }
     }
 
-    public void GoToMainMenu() {
+    @FXML private void GoToMainMenu() {
         CliUtil.getInstance().buildStage(FXMLtype.AREARISERVATA, null, null);
     }
 
-    public void LogOut() {
+    @FXML private void LogOut() {
         CliUtil.getInstance().LogOut();
     }
 
+    private void validateUsername(){
+        String newU = usernameTextField.getText().trim().toLowerCase();
+        if (newU.length() < 5 || newU.length() > 20) {
+            usernameTextField.setTooltip(Uinfo);
+            changeUButton.setDisable(true);
+        }else{
+            usernameTextField.setTooltip(null);
+            changeUButton.setDisable(false);
+        }
+    }
+
+    private void validateEmail() {
+        String newE = emailTextField.getText().trim().toLowerCase();
+        if (!EMAIL_PATTERN.matcher(newE).matches()) {
+            emailTextField.setTooltip(Einfo);
+            changeEButton.setDisable(true);
+        } else {
+            emailTextField.setTooltip(null);
+            changeEButton.setDisable(false);
+        }
+    }
 
     @Override
     protected PasswordField getPasswordField1() {

@@ -26,8 +26,8 @@ public class CambiaPassword extends PasswordEngine{
         labelErrore.setVisible(false);
         cambiaPasswordButton.setDisable(true);
         PasswordField1.requestFocus();
-        PasswordField1.textProperty().addListener((obs, old, neu) -> validatePasswords());
-        PasswordField2.textProperty().addListener((obs, old, neu) -> validatePasswords());
+        PasswordField1.textProperty().addListener((observable, oldValue, newValue) -> validatePasswords());
+        PasswordField2.textProperty().addListener((observable, oldValue, newValue) -> validatePasswords());
         initP1();
         initP2();
     }

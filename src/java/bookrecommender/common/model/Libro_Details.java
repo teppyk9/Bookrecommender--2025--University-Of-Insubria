@@ -70,6 +70,9 @@ public class Libro_Details implements Serializable {
      * @return media dello stile, oppure 0 se nessuna valutazione è presente
      */
     public float getmStile() {
+        if(!(mStile >= 0 || mStile <= 5) || valutazioni.isEmpty()) {
+            return 0;
+        }
         return mStile / valutazioni.size();
     }
 
@@ -78,6 +81,9 @@ public class Libro_Details implements Serializable {
      * @return media del contenuto, oppure 0 se nessuna valutazione è presente
      */
     public float getmContenuto() {
+        if(!(mContenuto >= 0 || mContenuto <= 5) || valutazioni.isEmpty()) {
+            return 0;
+        }
         return mContenuto / valutazioni.size();
     }
 
@@ -86,6 +92,9 @@ public class Libro_Details implements Serializable {
      * @return media della gradevolezza, oppure 0 se nessuna valutazione è presente
      */
     public float getmGradevolezza() {
+        if(!(mGradevolezza >= 0 || mGradevolezza <= 5) || valutazioni.isEmpty()) {
+            return 0;
+        }
         return mGradevolezza / valutazioni.size();
     }
 
@@ -94,6 +103,9 @@ public class Libro_Details implements Serializable {
      * @return media dell'originalità, oppure 0 se nessuna valutazione è presente
      */
     public float getmOriginalita() {
+        if(!(mOriginalita >= 0 || mOriginalita <= 5) || valutazioni.isEmpty()) {
+            return 0;
+        }
         return mOriginalita / valutazioni.size();
     }
 
@@ -102,6 +114,9 @@ public class Libro_Details implements Serializable {
      * @return media dell'edizione, oppure 0 se nessuna valutazione è presente
      */
     public float getmEdizione() {
+        if(!(mEdizione >= 0 || mEdizione <= 5) || valutazioni.isEmpty()) {
+            return 0;
+        }
         return mEdizione / valutazioni.size();
     }
 
@@ -110,6 +125,9 @@ public class Libro_Details implements Serializable {
      * @return media del finale, oppure 0 se nessuna valutazione è presente
      */
     public float getmFinale() {
+        if(!(mFinale >= 0 || mFinale <= 5) || valutazioni.isEmpty()) {
+            return 0;
+        }
         return mFinale / valutazioni.size();
     }
 
