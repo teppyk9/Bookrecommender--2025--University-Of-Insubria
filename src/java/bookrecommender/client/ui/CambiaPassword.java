@@ -5,6 +5,7 @@ import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.PasswordEngine;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 
@@ -22,7 +23,8 @@ public class CambiaPassword extends PasswordEngine{
     @FXML private Button cambiaPasswordButton;
 
     public void initialize() {
-        goBackButton.setGraphic(IMGtype.INDIETRO.getImageView(40,40));
+        goBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        goBackButton.setAlignment(Pos.TOP_LEFT);
         labelErrore.setVisible(false);
         cambiaPasswordButton.setDisable(true);
         PasswordField1.requestFocus();
