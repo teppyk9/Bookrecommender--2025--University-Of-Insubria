@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<!-- TODO: controllare box rosso-->
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Form.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Registrazione">
    <Pane layoutY="48.0" opacity="0.85" prefHeight="353.0" prefWidth="800.0" styleClass="box">
       <HBox prefHeight="47.0" prefWidth="200.0" />

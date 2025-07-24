@@ -1,7 +1,9 @@
 /* CONTAINER */
 .background { /* ok */
     -fx-background-image: url("../icons/copertina_chiara.jpeg");
-
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 
 }
 

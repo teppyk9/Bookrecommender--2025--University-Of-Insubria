@@ -7,6 +7,7 @@ import bookrecommender.client.util.PasswordEngine;
 import bookrecommender.common.model.Token;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -25,7 +26,8 @@ public class Login extends PasswordEngine{
     @FXML private TextField VisiblePasswordField;
 
     public void initialize() {
-        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(47,47));
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton.setAlignment(Pos.TOP_LEFT);
         ErrorToLogin.setVisible(false);
         ErrorToLogin.setManaged(false);
         NonHaiUnAccountFiled.setOnMouseEntered(event -> {

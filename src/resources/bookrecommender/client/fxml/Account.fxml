@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<!-- TODO: controllare box rosso-->
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Account">
    <stylesheets>
-      <URL value="@../stylesheets/Account.css" />
       <URL value="@../stylesheets/Form.css" />
    </stylesheets>
    <Pane layoutY="63.0" opacity="0.85" prefHeight="353.0" prefWidth="800.0" styleClass="box">

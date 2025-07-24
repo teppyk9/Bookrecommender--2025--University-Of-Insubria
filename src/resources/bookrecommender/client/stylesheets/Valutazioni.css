@@ -6,6 +6,9 @@
 
 .background{
     -fx-background-image: url('../icons/copertina_chiara.jpeg');
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 }
 /* sfondo per titolo e autore recensione*/
 .box_titolo{

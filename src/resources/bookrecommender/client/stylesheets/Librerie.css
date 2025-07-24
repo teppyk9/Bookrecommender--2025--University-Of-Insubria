@@ -6,6 +6,9 @@
 */
 .background {
     -fx-background-image: url('../icons/copertina_chiara.jpeg');
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 }
 
 .box_chiaro{ /* style da add libro */

@@ -1,6 +1,9 @@
 .background {
     -fx-background-color: #FCF7F8;
     -fx-background-image: url('../icons/copertina.jpeg');
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
 
 }
 
