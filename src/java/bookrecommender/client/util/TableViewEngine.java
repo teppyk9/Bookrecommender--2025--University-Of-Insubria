@@ -167,7 +167,7 @@ public abstract class TableViewEngine {
 
     protected abstract ProgressIndicator getProgressIndicator();
 
-    protected abstract ChoiceBox<String> getLimiterBox();
+    protected abstract MenuButton getLimiterBox();
 
     private String searchType = "";
     private final Map<Libro, Boolean> hasRec = new HashMap<>();
@@ -383,20 +383,35 @@ public abstract class TableViewEngine {
     }
 
     protected void initLimiter(){
-        getLimiterBox().setItems(FXCollections.observableArrayList("200", "500", "1000", "2000", "No Limit"));
-        getLimiterBox().getSelectionModel().select("200");
+        List<String> options = List.of("200", "500", "1000", "2000", "No Limit");
+        for (String label : options) {
+            MenuItem item = new MenuItem(label);
+            item.setOnAction(e -> getLimiterBox().setText(label));
+            getLimiterBox().getItems().add(item);
+        }
+        getLimiterBox().setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
+        getLimiterBox().skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            if (newSkin != null) {
+                Node arrow = getLimiterBox().lookup(".arrow");
+                if (arrow != null) {
+                    arrow.setVisible(false);
+                    arrow.setManaged(false);
+                }
+            }
+        });
     }
 
     private int getMaxResults() {
-        if(getLimiterBox() == null) {
+        if (getLimiterBox() == null) {
             return 200;
         }
-        String selected = getLimiterBox().getSelectionModel().getSelectedItem();
-        if (selected == null || selected.equals("No Limit")) {
+
+        if (getLimiterBox().getText() == null || getLimiterBox().getText().equals("No Limit")) {
             return Integer.MAX_VALUE;
         }
+
         try {
-            return Integer.parseInt(selected);
+            return Integer.parseInt(getLimiterBox().getText());
         } catch (NumberFormatException e) {
             return 200;
         }

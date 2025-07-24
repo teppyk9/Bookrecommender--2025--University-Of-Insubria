@@ -33,7 +33,7 @@ public class CercaLibro extends TableViewEngine {
     @FXML private MenuItem MenuCercaTitolo;
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
-    @FXML private ChoiceBox<String> limiterBox;
+    @FXML private MenuButton limiterBox;
 
     @FXML private TableView<Libro> tableView;
     @FXML private TableColumn<Libro, String> titoloCol;
@@ -225,7 +225,7 @@ public class CercaLibro extends TableViewEngine {
     }
 
     @Override
-    protected ChoiceBox<String> getLimiterBox() {
+    protected MenuButton getLimiterBox() {
         return limiterBox;
     }
 

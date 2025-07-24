@@ -77,7 +77,7 @@ public class CreaConsiglio extends TableViewEngine {
     /** Bottone per tornare al menu principale */
     @FXML private Button GoBackButton_MainMenu;
 
-    @FXML private ChoiceBox<String> limiterBox;
+    @FXML private MenuButton limiterBox;
 
     /** Libro principale a cui si associano i consigli */
     private Libro myLibro;
@@ -306,7 +306,7 @@ public class CreaConsiglio extends TableViewEngine {
     }
 
     @Override
-    protected ChoiceBox<String> getLimiterBox() {
+    protected MenuButton getLimiterBox() {
         return limiterBox;
     }
 

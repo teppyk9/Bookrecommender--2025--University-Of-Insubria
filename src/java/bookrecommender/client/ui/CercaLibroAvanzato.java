@@ -31,7 +31,7 @@ import java.rmi.RemoteException;
  */
 public class CercaLibroAvanzato extends TableViewEngine {
 
-    @FXML private ChoiceBox<String> limiterBox;
+    @FXML private MenuButton limiterBox;
     @FXML private Button GoBackButton_MainMenu;
     @FXML private Button bottoneCerca;
     @FXML private ProgressIndicator loadingCircle;
@@ -234,7 +234,7 @@ public class CercaLibroAvanzato extends TableViewEngine {
     }
 
     @Override
-    protected ChoiceBox<String> getLimiterBox() {return limiterBox;}
+    protected MenuButton getLimiterBox() {return limiterBox;}
 
     /**
      * Torna al menu principale (area riservata) chiudendo la schermata corrente.

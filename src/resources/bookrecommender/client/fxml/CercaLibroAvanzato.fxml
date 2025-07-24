@@ -39,7 +39,10 @@
      </columns>
    </TableView>
    <ProgressIndicator fx:id="loadingCircle" layoutX="743.0" layoutY="72.0" prefHeight="25.0" prefWidth="19.0" visible="false" />
-    <ChoiceBox fx:id="limiterBox" layoutX="193.0" layoutY="103.0" prefHeight="25.0" prefWidth="106.0" styleClass="choice-box-popup" />
+    <MenuButton fx:id="limiterBox" layoutX="190.0" layoutY="103.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" styleClass="sceltaRicerca" text="Limite risultati">
+        <tooltip>
+            <Tooltip text="Limite Risultati" />
+        </tooltip></MenuButton>
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />
       <URL value="@../stylesheets/TableUtil.css" />

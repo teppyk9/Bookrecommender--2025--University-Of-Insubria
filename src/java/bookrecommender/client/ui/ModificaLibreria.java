@@ -40,7 +40,7 @@ public class ModificaLibreria extends TableViewEngine {
     @FXML private Text Titolo_Librerie;
     @FXML private Button BottoneCambiaNome;
     @FXML private Button BottoneEliminaLibreria;
-    @FXML private ChoiceBox<String> limiterBox;
+    @FXML private MenuButton limiterBox;
 
     private String LibName;
     private List<Libro> OriginalLibri;
@@ -117,7 +117,7 @@ public class ModificaLibreria extends TableViewEngine {
     }
 
     @Override
-    protected ChoiceBox<String> getLimiterBox() {
+    protected MenuButton getLimiterBox() {
         return limiterBox;
     }
 

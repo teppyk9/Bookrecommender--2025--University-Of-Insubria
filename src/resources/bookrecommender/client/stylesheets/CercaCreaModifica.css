@@ -199,26 +199,3 @@
 .progress-indicator{
     -fx-alignment: center;
 }
-
-.choice-box-popup{
-    -fx-background-color: #A31621;
-    -fx-border-color: #A31621;
-    -fx-text-fill: #FCF7F8;
-    -fx-font-size: 12px;
-    -fx-font-family: "Century Gothic";
-}
-
-.choice-box-popup .list-view {
-    -fx-text-fill: #FCF7F8;
-    -fx-background-color: #A31621;
-}
-
-.choice-box-popup .list-cell {
-    -fx-text-fill: #FCF7F8;
-    -fx-background-color: transparent;
-}
-
-.choice-box-popup .list-cell:hover {
-    -fx-text-fill: #FCF7F8;
-    -fx-background-color: #8E141C;
-}

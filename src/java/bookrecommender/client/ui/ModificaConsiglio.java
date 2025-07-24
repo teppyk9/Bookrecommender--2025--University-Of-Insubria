@@ -35,7 +35,7 @@ public class ModificaConsiglio extends TableViewEngine {
     @FXML private TableColumn <Libro, String> risAutoreCol;
     @FXML private TableColumn <Libro, Integer> risAnnoCol;
     @FXML private TableColumn <Libro, Void> risAzioniCol;
-    @FXML private ChoiceBox<String> limiterBox;
+    @FXML private MenuButton limiterBox;
 
     private Libro myLibro;
     private FXMLtype oldFXMLType;
@@ -175,7 +175,7 @@ public class ModificaConsiglio extends TableViewEngine {
     }
 
     @Override
-    protected ChoiceBox<String> getLimiterBox() {
+    protected MenuButton getLimiterBox() {
         return limiterBox;
     }
 
