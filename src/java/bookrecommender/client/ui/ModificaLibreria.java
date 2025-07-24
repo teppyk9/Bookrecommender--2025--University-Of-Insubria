@@ -40,6 +40,7 @@ public class ModificaLibreria extends TableViewEngine {
     @FXML private Text Titolo_Librerie;
     @FXML private Button BottoneCambiaNome;
     @FXML private Button BottoneEliminaLibreria;
+    @FXML private ChoiceBox<String> limiterBox;
 
     private String LibName;
     private List<Libro> OriginalLibri;
@@ -52,6 +53,7 @@ public class ModificaLibreria extends TableViewEngine {
         NomeLibreria.setDisable(true);
         NomeLibreria.setEditable(false);
         NomeLibreria.setVisible(false);
+        initLimiter();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
             stage.setOnCloseRequest(event -> saveFlag());
@@ -112,6 +114,11 @@ public class ModificaLibreria extends TableViewEngine {
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
+    }
+
+    @Override
+    protected ChoiceBox<String> getLimiterBox() {
+        return limiterBox;
     }
 
     @Override protected MenuButton getMenuTipoRicerca(){

@@ -74,6 +74,8 @@ public class CreaLibreria extends TableViewEngine {
     /** Campo di input per il nome della nuova libreria. */
     @FXML private TextField NomeLibreria;
 
+    @FXML private ChoiceBox<String> limiterBox;
+
     /**
      * Inizializza il controller, configurando la tabella e i controlli per la ricerca e selezione dei libri.
      */
@@ -86,6 +88,7 @@ public class CreaLibreria extends TableViewEngine {
         initOActionCol();
         initOTableView();
         initTableViews();
+        initLimiter();
     }
 
     /** @return il campo di testo per la ricerca per titolo/autore. */
@@ -165,6 +168,11 @@ public class CreaLibreria extends TableViewEngine {
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
+    }
+
+    @Override
+    protected ChoiceBox<String> getLimiterBox() {
+        return limiterBox;
     }
 
     /**

@@ -35,6 +35,7 @@ public class ModificaConsiglio extends TableViewEngine {
     @FXML private TableColumn <Libro, String> risAutoreCol;
     @FXML private TableColumn <Libro, Integer> risAnnoCol;
     @FXML private TableColumn <Libro, Void> risAzioniCol;
+    @FXML private ChoiceBox<String> limiterBox;
 
     private Libro myLibro;
     private FXMLtype oldFXMLType;
@@ -46,6 +47,7 @@ public class ModificaConsiglio extends TableViewEngine {
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(46,46));
         initForConsigli();
+        initLimiter();
         Platform.runLater(() -> {
             Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {
@@ -170,6 +172,11 @@ public class ModificaConsiglio extends TableViewEngine {
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
+    }
+
+    @Override
+    protected ChoiceBox<String> getLimiterBox() {
+        return limiterBox;
     }
 
     @FXML

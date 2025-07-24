@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressIndicator?>
@@ -31,7 +32,7 @@
       </effect>
    </Separator>
    <Text layoutX="307.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Crea una nuova libreria" />
-      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="429.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE" AnchorPane.rightAnchor="520.0">
+      <MenuButton fx:id="MenuTipoRicerca" alignment="CENTER" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="312.0" styleClass="sceltaRicerca" text="Tipo di ricerca" textFill="WHITE" AnchorPane.rightAnchor="520.0">
           <items>
               <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" text="Titolo" />
               <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" text="Autore" />
@@ -51,26 +52,25 @@
     <Pane layoutX="14.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
         <TableView fx:id="tableView" prefHeight="379.0" prefWidth="457.0">
             <columns>
-                <TableColumn fx:id="titoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo"/>
-                <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;"
-                             text="Autore"/>
-                <TableColumn fx:id="annoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno"/>
-                <TableColumn fx:id="azioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni"/>
+                <TableColumn fx:id="titoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo" />
+                <TableColumn fx:id="autoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="Autore" />
+                <TableColumn fx:id="annoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno" />
+                <TableColumn fx:id="azioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni" />
             </columns>
         </TableView>
     </Pane>
     <Pane layoutX="490.0" layoutY="142.0" prefHeight="379.0" prefWidth="457.0" styleClass="sfondo-tabella">
         <TableView fx:id="risTableView" prefHeight="379.0" prefWidth="457.0">
             <columns>
-                <TableColumn fx:id="risTitoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo"/>
-                <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;"
-                             text="Autore"/>
-                <TableColumn fx:id="risAnnoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno"/>
-                <TableColumn fx:id="risAzioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni"/>
+                <TableColumn fx:id="risTitoloCol" prefWidth="162.0" style="-fx-alignment: CENTER;" text="Titolo" />
+                <TableColumn fx:id="risAutoreCol" minWidth="0.0" prefWidth="159.0" style="-fx-alignment: CENTER;" text="Autore" />
+                <TableColumn fx:id="risAnnoCol" prefWidth="82.0" style="-fx-alignment: CENTER;" text="Anno" />
+                <TableColumn fx:id="risAzioniCol" prefWidth="54.0" style="-fx-alignment: CENTER;" text="Azioni" />
             </columns>
         </TableView>
     </Pane>
-   <ProgressIndicator fx:id="loadingCircle" visible="false" layoutX="442.0" layoutY="100.0" prefHeight="25.0" prefWidth="19.0" />
+   <ProgressIndicator fx:id="loadingCircle" layoutX="442.0" layoutY="100.0" prefHeight="25.0" prefWidth="19.0" visible="false" />
+   <ChoiceBox fx:id="limiterBox" layoutX="14.0" layoutY="100.0" prefHeight="25.0" prefWidth="106.0" styleClass="choice-box-popup" />
    <stylesheets>
       <URL value="@../stylesheets/CercaCreaModifica.css" />
       <URL value="@../stylesheets/TableUtil.css" />

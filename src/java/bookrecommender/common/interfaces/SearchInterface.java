@@ -32,7 +32,7 @@ public interface SearchInterface extends Remote {
      * @return lista di libri che corrispondono al titolo
      * @throws RemoteException in caso di errore di comunicazione remota
      */
-    List<Libro> searchByName(String title) throws RemoteException;
+    List<Libro> searchByName(String title, int maxResults) throws RemoteException;
 
     /**
      * Cerca libri scritti dall'autore specificato.
@@ -40,7 +40,7 @@ public interface SearchInterface extends Remote {
      * @return lista di libri scritti dall'autore
      * @throws RemoteException in caso di errore di comunicazione remota
      */
-    List<Libro> searchByAuthor(String author) throws RemoteException;
+    List<Libro> searchByAuthor(String author, int maxResults) throws RemoteException;
 
     /**
      * Cerca libri scritti dall'autore specificato e pubblicati nell'anno indicato.
@@ -49,7 +49,7 @@ public interface SearchInterface extends Remote {
      * @return lista di libri corrispondenti ai criteri di ricerca
      * @throws RemoteException in caso di errore di comunicazione remota
      */
-    List<Libro> searchByAuthorAndYear(String author, int year) throws RemoteException;
+    List<Libro> searchByAuthorAndYear(String author, int year, int maxResults) throws RemoteException;
 
     /**
      * Ottiene i dettagli completi di un libro specifico.

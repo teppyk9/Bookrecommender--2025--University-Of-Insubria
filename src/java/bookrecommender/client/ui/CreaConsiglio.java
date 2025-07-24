@@ -77,6 +77,8 @@ public class CreaConsiglio extends TableViewEngine {
     /** Bottone per tornare al menu principale */
     @FXML private Button GoBackButton_MainMenu;
 
+    @FXML private ChoiceBox<String> limiterBox;
+
     /** Libro principale a cui si associano i consigli */
     private Libro myLibro;
 
@@ -92,6 +94,7 @@ public class CreaConsiglio extends TableViewEngine {
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         initForConsigli();
+        initLimiter();
         Platform.runLater(() -> {
             Stage stage = (Stage) GoBackButton_MainMenu.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {
@@ -300,6 +303,11 @@ public class CreaConsiglio extends TableViewEngine {
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
+    }
+
+    @Override
+    protected ChoiceBox<String> getLimiterBox() {
+        return limiterBox;
     }
 
     /**

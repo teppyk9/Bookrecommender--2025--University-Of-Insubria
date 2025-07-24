@@ -166,6 +166,8 @@ public abstract class TableViewEngine {
 
     protected abstract ProgressIndicator getProgressIndicator();
 
+    protected abstract ChoiceBox<String> getLimiterBox();
+
     private String searchType = "";
     private final Map<Libro, Boolean> hasRec = new HashMap<>();
     private final Map<Libro, Boolean> hasVal = new HashMap<>();
@@ -365,6 +367,26 @@ public abstract class TableViewEngine {
         initOActionCol();
         initOTableView();
         initTableViews();
+    }
+
+    protected void initLimiter(){
+        getLimiterBox().setItems(FXCollections.observableArrayList("200", "500", "1000", "2000", "No Limit"));
+        getLimiterBox().getSelectionModel().select("200");
+    }
+
+    private int getMaxResults() {
+        if(getLimiterBox() == null) {
+            return 200;
+        }
+        String selected = getLimiterBox().getSelectionModel().getSelectedItem();
+        if (selected == null || selected.equals("No Limit")) {
+            return Integer.MAX_VALUE;
+        }
+        try {
+            return Integer.parseInt(selected);
+        } catch (NumberFormatException e) {
+            return 200;
+        }
     }
 
     private TableRow<Libro> initRows(){
@@ -570,7 +592,7 @@ public abstract class TableViewEngine {
         try {
             return getSearchType()
                     ? CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo)
-                    : CliUtil.getInstance().getSearchService().searchByName(testo);
+                    : CliUtil.getInstance().getSearchService().searchByName(testo, getMaxResults());
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
@@ -581,7 +603,7 @@ public abstract class TableViewEngine {
         try {
             return getSearchType()
                     ? CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo)
-                    : CliUtil.getInstance().getSearchService().searchByAuthor(testo);
+                    : CliUtil.getInstance().getSearchService().searchByAuthor(testo, getMaxResults());
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;
@@ -592,7 +614,7 @@ public abstract class TableViewEngine {
         try {
             return getSearchType()
                     ? CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno)
-                    : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno);
+                    : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno, getMaxResults());
         } catch (RemoteException e) {
             CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
             return null;

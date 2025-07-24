@@ -30,6 +30,7 @@ import java.rmi.RemoteException;
  */
 public class CercaLibroAvanzato extends TableViewEngine {
 
+    @FXML private ChoiceBox<String> limiterBox;
     @FXML private Button GoBackButton_MainMenu;
     @FXML private Button bottoneCerca;
     @FXML private ProgressIndicator loadingCircle;
@@ -64,6 +65,7 @@ public class CercaLibroAvanzato extends TableViewEngine {
         initBasicSearch();
         initSRecensioniCol();
         initSAggiungiAdvCol();
+        initLimiter();
         librerieCol.setStyle("-fx-alignment: CENTER;");
         librerieCol.setCellFactory(col -> new TableCell<>() {
             @Override
@@ -227,6 +229,9 @@ public class CercaLibroAvanzato extends TableViewEngine {
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
     }
+
+    @Override
+    protected ChoiceBox<String> getLimiterBox() {return limiterBox;}
 
     /**
      * Torna al menu principale (area riservata) chiudendo la schermata corrente.

@@ -67,13 +67,44 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
      * @throws RemoteException se si verifica un errore di comunicazione RMI.
      */
     @Override
-    public List<Libro> searchByName(String title) throws RemoteException {
+    public List<Libro> searchByName(String title, int maxResults) throws RemoteException {
         try {
             logger.info("Searching for books with title: " + title + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
         List<Libro> risultati = new ArrayList<>();
-        String query = "SELECT * FROM LIBRI WHERE LOWER(TITOLO) LIKE LOWER(?)";
-        return libroTypeSearch(title, risultati, query);
+        String baseWhere = "FROM LIBRI WHERE LOWER(TITOLO) LIKE LOWER(?)";
+        String countSql = "SELECT COUNT(*) " + baseWhere;
+        String dataSql  = "SELECT * " + baseWhere;
+        String orderedAndLimitedSql = "SELECT * " + baseWhere + " ORDER BY STRPOS(LOWER(?), LOWER(TITOLO))" + "LIMIT (?)";
+
+        try (Connection conn = ServerUtil.getInstance().getConnection()) {
+            int total;
+            try ( PreparedStatement cstmt = conn.prepareStatement(countSql) ) {
+                cstmt.setString(1, "%" + title + "%");
+                try ( ResultSet crs = cstmt.executeQuery() ) {
+                    if(crs.next())
+                        total = crs.getInt(1);
+                    else {
+                        return risultati;
+                    }
+                }
+            }
+
+            String chosenSql = (total <= maxResults ? dataSql : orderedAndLimitedSql);
+            try ( PreparedStatement stmt = conn.prepareStatement(chosenSql) ) {
+                stmt.setString(1, "%" + title + "%");
+                if (total > maxResults) {
+                    stmt.setString(2, title);
+                    stmt.setInt(3, maxResults);
+                }
+                ServerUtil.getInstance().resultStmt(risultati, stmt);
+            }
+
+        } catch (SQLException e) {
+            logger.warning("Errore nella connessione al database: " + e.getMessage());
+        }
+
+        return risultati;
     }
 
     /**
@@ -83,26 +114,40 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
      * @throws RemoteException se si verifica un errore di comunicazione RMI.
      */
     @Override
-    public List<Libro> searchByAuthor(String author) throws RemoteException {
+    public List<Libro> searchByAuthor(String author, int maxResults) throws RemoteException {
         try {
             logger.info("Searching for books by author: " + author + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
         List<Libro> risultati = new ArrayList<>();
-        String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?)";
-        return libroTypeSearch(author, risultati, query);
-    }
-
-    private List<Libro> libroTypeSearch(String title, List<Libro> risultati, String query) {
-        try(
-                Connection conn = ServerUtil.getInstance().getConnection();
-                PreparedStatement stmt = conn.prepareStatement(query)){
-            stmt.setString(1, "%" + title + "%");
-            ServerUtil.getInstance().resultStmt(risultati, stmt);
-            return risultati;
+        String baseWhere = "FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?)";
+        String countSql = "SELECT COUNT(*) " + baseWhere;
+        String dataSql = "SELECT * " + baseWhere;
+        String orderedLimitedSql = "SELECT * " + baseWhere + " ORDER BY STRPOS(LOWER(AUTORE), LOWER(?))" + " LIMIT (?)";
+        try (Connection conn = ServerUtil.getInstance().getConnection()) {
+            int total;
+            try (PreparedStatement cstmt = conn.prepareStatement(countSql)) {
+                cstmt.setString(1, "%" + author + "%");
+                try (ResultSet crs = cstmt.executeQuery()) {
+                    if(crs.next())
+                        total = crs.getInt(1);
+                    else {
+                        return risultati;
+                    }
+                }
+            }
+            String chosenSql = (total <= maxResults ? dataSql : orderedLimitedSql);
+            try (PreparedStatement stmt = conn.prepareStatement(chosenSql)) {
+                stmt.setString(1, "%" + author + "%");
+                if (total > maxResults) {
+                    stmt.setString(2, author);
+                    stmt.setInt(3, maxResults);
+                }
+                ServerUtil.getInstance().resultStmt(risultati, stmt);
+            }
         } catch (SQLException e) {
             logger.warning("Errore nella connessione al database: " + e.getMessage());
-            return List.of();
         }
+        return risultati;
     }
 
     /**
@@ -113,24 +158,43 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
      * @throws RemoteException se si verifica un errore di comunicazione RMI.
      */
     @Override
-    public List<Libro> searchByAuthorAndYear(String author, int year) throws RemoteException {
+    public List<Libro> searchByAuthorAndYear(String author, int year, int maxResults) throws RemoteException {
         try {
             logger.info("Searching for books by author: " + author + " and year: " + year + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
         List<Libro> risultati = new ArrayList<>();
-        String query = "SELECT * FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) AND CAST(ANNOPUBBLICAZIONE AS TEXT) LIKE ?";
-
-        try (Connection conn = ServerUtil.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, "%" + author + "%");
-            stmt.setString(2, "%" + year + "%");
-
-            ServerUtil.getInstance().resultStmt(risultati, stmt);
+        String baseWhere = "FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) " + "AND CAST(ANNOPUBBLICAZIONE AS TEXT) LIKE ?";
+        String countSql = "SELECT COUNT(*) " + baseWhere;
+        String dataSql = "SELECT * " + baseWhere;
+        String orderedLimitedSql = "SELECT * " + baseWhere + " ORDER BY STRPOS(LOWER(AUTORE), LOWER(?))" + " LIMIT (?)";
+        try (Connection conn = ServerUtil.getInstance().getConnection()) {
+            int total;
+            try (PreparedStatement cstmt = conn.prepareStatement(countSql)) {
+                cstmt.setString(1, "%" + author + "%");
+                cstmt.setString(2, "%" + year + "%");
+                try (ResultSet crs = cstmt.executeQuery()) {
+                    if(crs.next())
+                        total = crs.getInt(1);
+                    else {
+                        return risultati;
+                    }
+                }
+            }
+            String chosenSql = (total <= maxResults ? dataSql : orderedLimitedSql);
+            try (PreparedStatement stmt = conn.prepareStatement(chosenSql)) {
+                stmt.setString(1, "%" + author + "%");
+                stmt.setString(2, "%" + year + "%");
+                if (total > maxResults) {
+                    stmt.setString(3, author);
+                    stmt.setInt(4, maxResults);
+                }
+                ServerUtil.getInstance().resultStmt(risultati, stmt);
+            }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore nella ricerca di un libro", e);
+            logger.warning("Errore nella connessione al database: " + e.getMessage());
         }
+
         return risultati;
     }
 
