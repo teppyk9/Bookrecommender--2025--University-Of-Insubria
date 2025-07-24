@@ -6,6 +6,7 @@ import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
 import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -45,8 +46,8 @@ public class CercaLibroAvanzato extends TableViewEngine {
     @FXML private TableColumn<Libro, String> titoloCol;
     @FXML private TableColumn<Libro, String> autoreCol;
     @FXML private TableColumn<Libro, Integer> annoCol;
-    @FXML private TableColumn<Libro, Void> recensioniCol;
-    @FXML private TableColumn<Libro, Void> librerieCol;
+    @FXML private TableColumn<Libro, Boolean> recensioniCol;
+    @FXML private TableColumn<Libro, Boolean> librerieCol;
     @FXML private TableColumn<Libro, Void> aggiungiCol;
 
     private boolean searchType = false;
@@ -67,16 +68,18 @@ public class CercaLibroAvanzato extends TableViewEngine {
         initSAggiungiAdvCol();
         initLimiter();
         librerieCol.setStyle("-fx-alignment: CENTER;");
+        librerieCol.setCellValueFactory(cellData ->
+            new ReadOnlyBooleanWrapper(getInLib().get(cellData.getValue()))
+        );
         librerieCol.setCellFactory(col -> new TableCell<>() {
             @Override
-            protected void updateItem(Void item, boolean empty) {
+            protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
                     return;
                 }
-                Libro libro = getTableView().getItems().get(getIndex());
-                setGraphic(getInLib().get(libro) ? (IMGtype.CHECK.getImageView(12,12)) : IMGtype.RED_CROSS.getImageView(12,12));
+                setGraphic(getInLib().get(getTableView().getItems().get(getIndex())) ? (IMGtype.CHECK.getImageView(12,12)) : IMGtype.RED_CROSS.getImageView(12,12));
             }
         });
         initTableViews();
@@ -153,7 +156,7 @@ public class CercaLibroAvanzato extends TableViewEngine {
 
     /** @return colonna con il bottone per visualizzare recensioni */
     @Override
-    protected TableColumn<Libro, Void> getSRecensioniCol() {
+    protected TableColumn<Libro, Boolean> getSRecensioniCol() {
         return recensioniCol;
     }
 

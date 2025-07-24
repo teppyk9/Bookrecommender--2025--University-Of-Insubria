@@ -39,7 +39,7 @@ public class CercaLibro extends TableViewEngine {
     @FXML private TableColumn<Libro, String> titoloCol;
     @FXML private TableColumn<Libro, String> autoreCol;
     @FXML private TableColumn<Libro, Integer> annoCol;
-    @FXML private TableColumn<Libro, Void> recensioniCol;
+    @FXML private TableColumn<Libro, Boolean> recensioniCol;
 
     /**
      * Inizializza la schermata:
@@ -131,7 +131,7 @@ public class CercaLibro extends TableViewEngine {
 
     /** @return colonna con il bottone per visualizzare le recensioni del libro */
     @Override
-    protected TableColumn<Libro, Void> getSRecensioniCol() {
+    protected TableColumn<Libro, Boolean> getSRecensioniCol() {
         return recensioniCol;
     }
 

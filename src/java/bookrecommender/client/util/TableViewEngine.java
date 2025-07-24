@@ -4,6 +4,7 @@ import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -94,7 +95,7 @@ public abstract class TableViewEngine {
      *
      * @return la TableColumn che mostra lo stato delle recensioni
      */
-    protected abstract TableColumn<Libro, Void> getSRecensioniCol();
+    protected abstract TableColumn<Libro, Boolean> getSRecensioniCol();
 
     /**
      * Restituisce la colonna dei comandi di aggiunta/avviso nella TableView.
@@ -206,14 +207,17 @@ public abstract class TableViewEngine {
     }
 
     protected void initSRecensioniCol(){
+        getSRecensioniCol().setCellValueFactory(cellData ->
+                new ReadOnlyBooleanWrapper(hasRec.get(cellData.getValue())));
+
         getSRecensioniCol().setCellFactory(col -> new TableCell<>() {
             @Override
-            protected void updateItem(Void item, boolean empty) {
+            protected void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(hasRec.get(getTableView().getItems().get(getIndex())) ? IMGtype.CHECK.getImageView(12,12) : IMGtype.RED_CROSS.getImageView(12,12));
+                    setGraphic(item ? IMGtype.CHECK.getImageView(12,12) : IMGtype.RED_CROSS.getImageView(12,12));
                     setAlignment(Pos.CENTER);
                 }
             }
@@ -246,6 +250,15 @@ public abstract class TableViewEngine {
                 MenuItem aggiungi = new MenuItem("Aggiungi");
                 MenuItem rimuovi = new MenuItem("Rimuovi");
                 menu.getItems().addAll(aggiungi, rimuovi);
+                menu.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+                    if (newSkin != null) {
+                        Node arrow = menu.lookup(".arrow");
+                        if (arrow != null) {
+                            arrow.setVisible(false);
+                            arrow.setManaged(false);
+                        }
+                    }
+                });
 
                 aggiungi.setOnAction(evt -> {
                     Libro l = getTableView().getItems().get(getIndex());
@@ -429,6 +442,15 @@ public abstract class TableViewEngine {
             }
         }
         menu.getItems().add(libreria);
+        menu.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            if (newSkin != null) {
+                Node arrow = menu.lookup(".arrow");
+                if (arrow != null) {
+                    arrow.setVisible(false);
+                    arrow.setManaged(false);
+                }
+            }
+        });
         return menu;
     }
 

@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuButton;
@@ -468,6 +469,15 @@ public class GestioneLibrerie extends TreeTableEngine {
     private void setMenuButtonStyle(MenuButton mb) {
         mb.setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
         CliUtil.getInstance().styleIconControl(mb);
+        mb.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            if (newSkin != null) {
+                Node arrow = mb.lookup(".arrow");
+                if (arrow != null) {
+                    arrow.setVisible(false);
+                    arrow.setManaged(false);
+                }
+            }
+        });
     }
 
     /**

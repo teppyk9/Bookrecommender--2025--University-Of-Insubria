@@ -208,7 +208,7 @@ public class CreaConsiglio extends TableViewEngine {
      * @return {@code null}
      */
     @Override
-    protected TableColumn<Libro, Void> getSRecensioniCol() {
+    protected TableColumn<Libro, Boolean> getSRecensioniCol() {
         return null;
     }
 

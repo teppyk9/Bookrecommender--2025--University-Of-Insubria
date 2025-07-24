@@ -139,7 +139,7 @@ public class ModificaLibreria extends TableViewEngine {
 
     @Override protected TableColumn<Libro, Integer> getSAnnoCol() {return annoCol;}
 
-    @Override protected TableColumn<Libro, Void> getSRecensioniCol() {return null;}
+    @Override protected TableColumn<Libro, Boolean> getSRecensioniCol() {return null;}
 
     @Override protected TableColumn<Libro, Void> getSAggiungiAdvCol() {return null;}
 

@@ -114,7 +114,7 @@ public class CreaLibreria extends TableViewEngine {
     @Override protected TableColumn<Libro, Integer> getSAnnoCol() {return annoCol;}
 
     /** @return sempre null perché la colonna recensioni non è usata in questa vista. */
-    @Override protected TableColumn<Libro, Void> getSRecensioniCol() {return null;}
+    @Override protected TableColumn<Libro, Boolean> getSRecensioniCol() {return null;}
 
     /** @return sempre null perché la colonna aggiungi avanzata non è usata in questa vista. */
     @Override protected TableColumn<Libro, Void> getSAggiungiAdvCol() {return null;}
