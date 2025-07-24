@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <!-- TODO: controllare box rosso-->
+<!-- TODO: inserire USERNAME/PASSWORD -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Form.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Form.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.Login">
    <Pane layoutY="83.0" opacity="0.85" prefHeight="302.0" prefWidth="800.0" styleClass="box">
       <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="217.0" layoutY="33.0" prefHeight="33.0" prefWidth="366.0" styleClass="titolo" text="LOGIN" textAlignment="CENTER" />
       <HBox layoutX="242.0" layoutY="81.0" prefHeight="47.0" prefWidth="316.0">
          <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Username" />
-         <TextField fx:id="UsernameField" prefHeight="38.0" prefWidth="200.0" styleClass="field" />
+         <TextField fx:id="UsernameField" prefHeight="38.0" prefWidth="200.0" promptText="Username/Email" styleClass="field" />
       </HBox>
       <HBox layoutX="242.0" layoutY="138.0" prefHeight="38.0" prefWidth="316.0">
          <Label contentDisplay="CENTER" prefHeight="33.0" prefWidth="105.0" styleClass="etichetta" text="Password" />
          <StackPane prefHeight="0.0" prefWidth="200.0">
-            <PasswordField fx:id="PasswordField" onKeyPressed="#EnterController" styleClass="field" />
-            <TextField fx:id="VisiblePasswordField" onKeyPressed="#EnterController" styleClass="field" />
+            <PasswordField fx:id="PasswordField" onKeyPressed="#EnterController" promptText="Password" styleClass="field" />
+            <TextField fx:id="VisiblePasswordField" onKeyPressed="#EnterController" promptText="Password" styleClass="field" />
          </StackPane>
       </HBox>
       <Label fx:id="NonHaiUnAccountFiled" alignment="CENTER" layoutX="242.0" layoutY="224.0" onMouseClicked="#GoToRegisterPage" prefHeight="38.0" prefWidth="316.0" styleClass="reg" text="Non hai ancora un account? Registrati qui" textAlignment="CENTER">

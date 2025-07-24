@@ -57,12 +57,13 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
     @Override
     public Token TryLogin(String username, String password) throws RemoteException {
         try {
-            logger.info("TryLogin called with username: " + username + ", password: " + password + ", client host: " + getClientHost());
+            logger.info("TryLogin called with username/email: " + username + ", password: " + password + ", client host: " + getClientHost());
         }catch(ServerNotActiveException ignored){}
-        String checkQuery = "SELECT 1 FROM SESSIONI_LOGIN JOIN UTENTI ON UTENTI.ID = IDUTENTE WHERE USERNAME = ?";
-        String query = "SELECT ID, PASSWORD FROM UTENTI WHERE USERNAME = ?";
+        String checkQuery = "SELECT 1 FROM SESSIONI_LOGIN JOIN UTENTI ON UTENTI.ID = IDUTENTE WHERE USERNAME = ? OR EMAIL = ?";
+        String query = "SELECT ID, PASSWORD FROM UTENTI WHERE USERNAME = ? OR EMAIL = ?";
         try(Connection conn = ServerUtil.getInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(checkQuery)) {
             stmt.setString(1, username);
+            stmt.setString(2, username);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     logger.warning("Utente già loggato: " + username);
@@ -74,6 +75,7 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         }
         try (Connection conn = ServerUtil.getInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
+            stmt.setString(2, username);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     int userId = rs.getInt("ID");
