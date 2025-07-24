@@ -31,6 +31,18 @@
     -fx-font-weight: bold;
 }
 
+.command{
+    -fx-background-color: transparent;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.2s;
+}
+
+.command:hover{
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
 
 
 .descrizione{
@@ -39,5 +51,12 @@
     -fx-font-size: 14px;
 }
 
+.message{ /* label a comparsa logout*/
+    -fx-text-fill: #A31621;
+    -fx-font-family: "Century Gothic", "Harlow Solid Italic";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
 
 
