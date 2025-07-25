@@ -89,8 +89,7 @@ public class CreaConsiglio extends TableViewEngine {
      * Inizializza la schermata e registra il comportamento di chiusura della finestra.
      * Se l’utente chiude la finestra, viene eseguito il metodo {@code GoToMainMenu()}.
      */
-    @FXML
-    public void initialize() {
+    @FXML private void initialize() {
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         initForConsigli();
@@ -334,8 +333,7 @@ public class CreaConsiglio extends TableViewEngine {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito").showAndWait();
             }
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
-        }
+            CliUtil.getInstance().LogOut(e);        }
     }
 
     /**

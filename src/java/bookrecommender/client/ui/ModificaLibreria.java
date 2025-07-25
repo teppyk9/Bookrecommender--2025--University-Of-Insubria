@@ -45,8 +45,7 @@ public class ModificaLibreria extends TableViewEngine {
     private String LibName;
     private List<Libro> OriginalLibri;
 
-    @FXML
-    public void initialize() {
+    @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         OriginalLibri = new ArrayList<>();
@@ -67,7 +66,7 @@ public class ModificaLibreria extends TableViewEngine {
             OriginalLibri = new ArrayList<>(CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLibreria));
             risTableView.setItems(FXCollections.observableArrayList(OriginalLibri));
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore", "Impossibile caricare la libreria: " + e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
         for(Libro l : OriginalLibri){
             try {
@@ -81,7 +80,7 @@ public class ModificaLibreria extends TableViewEngine {
                     getHasCon().put(l, false);
                 }
             } catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                CliUtil.getInstance().LogOut(e);
             }
         }
         initBasicSearch();

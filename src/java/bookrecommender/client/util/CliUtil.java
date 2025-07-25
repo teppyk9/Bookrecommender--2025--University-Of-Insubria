@@ -491,7 +491,7 @@ public final class CliUtil {
             }
             createAlert("Errore", sb.toString()).showAndWait();
         }catch (RemoteException e){
-            createAlert("Errore", "Errore nel recupero dati dei libri\n" + e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
 
@@ -519,18 +519,19 @@ public final class CliUtil {
         control.setOnMouseExited (e -> { enlarge.stop(); shrink.playFromStart(); });
     }
 
-    public void LogOut(){
+    public void LogOut(Exception ex){
         try {
             if (getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken())) {
-                setCurrentToken(null);
                 createConfirmation("Logout effettuato", "Sei stato disconnesso con successo.", false).showAndWait();
             }
             else
-                createAlert("Errore di Logout", "Si è verificato un errore durante il logout");
+                createAlert("Errore di Logout", "Si è verificato un errore durante il logout").showAndWait();
         }catch (RemoteException e) {
-            createAlert("Errore di Logout", e.getMessage());
+            if(ex!=null)
+                createAlert(ex.getLocalizedMessage(), e.getMessage()).showAndWait();
+            else
+                createAlert("Errore", e.getMessage()).showAndWait();
         }
-        setCurrentToken(null);
-        buildStage(FXMLtype.HOME, null, null);
+        softRestart();
     }
 }

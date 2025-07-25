@@ -1,5 +1,6 @@
 package bookrecommender.client.util;
 
+import bookrecommender.common.model.Libro;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
@@ -46,16 +47,22 @@ public abstract class TreeTableEngine {
         rootItem.getChildren().clear();
         getLibCounts().clear();
         getLibDates().clear();
+        if(getLibPresent() != null) {
+            getLibPresent().clear();
+        }
         try {
             List<String> libs = CliUtil.getInstance().getLibService().getLibs(CliUtil.getInstance().getCurrentToken());
             for (String nome : libs) {
-                List<?> list = fetchLibraryContents(nome);
+                List<Libro> list = CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nome);
                 getLibCounts().put(nome, list.size());
                 getLibDates().put(nome, CliUtil.getInstance().getLibService().getCreationDate(CliUtil.getInstance().getCurrentToken(), nome));
+                if (getLibPresent() != null) {
+                    getLibPresent().put(nome, list.contains(getMyLibro()));
+                }
                 creaFigliLibri(nome);
             }
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore caricamento librerie", e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
 
@@ -74,11 +81,13 @@ public abstract class TreeTableEngine {
 
     protected abstract void handleDoubleClick(Object value);
 
-    protected abstract List<?> fetchLibraryContents(String nomeLib) throws RemoteException;
-
     protected abstract Map<String, Integer> getLibCounts();
 
     protected abstract Map<String, LocalDate> getLibDates();
+
+    protected abstract Map<String, Boolean> getLibPresent();
+
+    protected abstract Libro getMyLibro();
 
     protected abstract void caricaFigliLibri(TreeItem<Object> libNode, String nomeLib);
 

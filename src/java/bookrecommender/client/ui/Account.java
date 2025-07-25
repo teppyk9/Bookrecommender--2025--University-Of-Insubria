@@ -36,7 +36,7 @@ public class Account extends PasswordEngine {
     private final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$", Pattern.CASE_INSENSITIVE);
 
 
-    public void initialize(){
+    @FXML private void initialize(){
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
         BottoneLogOut.setGraphic(IMGtype.LOGOUT.getImageView(40,40));
@@ -61,7 +61,7 @@ public class Account extends PasswordEngine {
         try {
             userInfo = CliUtil.getInstance().getLogRegService().getUserInfo(CliUtil.getInstance().getCurrentToken());
         }catch (RemoteException e){
-            CliUtil.getInstance().createAlert("Errore di rete", "Impossibile recuperare le informazioni dell'utente").showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
         if (userInfo.isEmpty() || userInfo.size() < 6) {
             CliUtil.getInstance().createAlert("Errore", "Impossibile recuperare le informazioni dell'utente").showAndWait();
@@ -88,7 +88,7 @@ public class Account extends PasswordEngine {
                     CliUtil.getInstance().createAlert("Errore", "Impossibile eliminare l'account").showAndWait();
                 }
             }catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore di rete", "Impossibile eliminare l'account").showAndWait();
+                CliUtil.getInstance().LogOut(e);
             }
         }else{
             CliUtil.getInstance().createAlert("Operazione annullata", "Eliminazione account annullata").showAndWait();
@@ -127,8 +127,7 @@ public class Account extends PasswordEngine {
                     CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare lo username").showAndWait();
                 }
             } catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore di rete", "Impossibile cambiare lo username").showAndWait();
-            }
+                CliUtil.getInstance().LogOut(e);            }
         }
     }
 
@@ -164,8 +163,7 @@ public class Account extends PasswordEngine {
                     CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare l'email").showAndWait();
                 }
             } catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore di rete", "Impossibile cambiare l'email").showAndWait();
-            }
+                CliUtil.getInstance().LogOut(e);            }
         }
     }
 
@@ -174,7 +172,7 @@ public class Account extends PasswordEngine {
     }
 
     @FXML private void LogOut() {
-        CliUtil.getInstance().LogOut();
+        CliUtil.getInstance().LogOut(null);
     }
 
     private void validateUsername(){

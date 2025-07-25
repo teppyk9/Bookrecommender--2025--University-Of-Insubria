@@ -11,8 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
-
 /**
  * Controller JavaFX per la schermata di ricerca avanzata dei libri.
  * <p>
@@ -60,7 +58,7 @@ public class CercaLibroAvanzato extends TableViewEngine {
      *     <li>Registra il comportamento di chiusura dell'app (logout automatico)</li>
      * </ul>
      */
-    public void initialize() {
+    @FXML private void initialize() {
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         initBasicSearch();
@@ -86,9 +84,7 @@ public class CercaLibroAvanzato extends TableViewEngine {
         Platform.runLater(() -> {
             Stage stage = (Stage) MenuTipoRicerca.getScene().getWindow();
             stage.setOnCloseRequest(evt -> {
-                try {
-                    CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
-                } catch (RemoteException ignored) {}
+                CliUtil.getInstance().LogOut(null);
                 Platform.exit();
                 System.exit(0);
             });
@@ -248,7 +244,7 @@ public class CercaLibroAvanzato extends TableViewEngine {
      * Inverte il valore booleano interno {@code searchType}, che distingue le modalità di ricerca.
      * Usato per aggiornare il comportamento dei metodi ereditati.
      */
-    public void setRicerca() {
+    @FXML private void setRicerca() {
         searchType = !searchType;
     }
 }

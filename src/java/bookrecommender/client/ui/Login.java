@@ -25,7 +25,7 @@ public class Login extends PasswordEngine{
     @FXML private TextField UsernameField;
     @FXML private TextField VisiblePasswordField;
 
-    public void initialize() {
+    @FXML private void initialize() {
         GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         GoBackButton.setAlignment(Pos.TOP_LEFT);
         ErrorToLogin.setVisible(false);

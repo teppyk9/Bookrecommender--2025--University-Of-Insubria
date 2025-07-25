@@ -31,7 +31,7 @@ public class Registrazione extends PasswordEngine {
     @FXML private TextField VisiblePasswordField1;
     @FXML private TextField VisiblePasswordField2;
 
-    public void initialize() {
+    @FXML private void initialize() {
         GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(47,47));
         AccediTextField.setOnMouseEntered(event -> {
             AccediTextField.setUnderline(true);

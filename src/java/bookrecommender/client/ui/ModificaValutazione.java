@@ -37,7 +37,7 @@ public class ModificaValutazione {
     private FXMLtype oldFXMLType;
     private boolean isMod = false;
 
-    @FXML public void initialize() {
+    @FXML private void initialize() {
         GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
         Platform.runLater(() -> {
             Stage s = (Stage) SalvaModificheButton.getScene().getWindow();
@@ -132,7 +132,7 @@ public class ModificaValutazione {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito\nNon è stato possibile salvare la valutazione. Riprova più tardi.").showAndWait();
             }
         } catch (RemoteException ex) {
-            CliUtil.getInstance().createAlert("Errore di rete", "Si è verificato un errore di rete durante il salvataggio della valutazione. Riprova più tardi.").showAndWait();
+            CliUtil.getInstance().LogOut(ex);
         }
     }
 
@@ -146,12 +146,12 @@ public class ModificaValutazione {
                     CliUtil.getInstance().createAlert("Errore", "Eliminazione fallita\nNon è stato possibile eliminare la valutazione. Riprova più tardi.").showAndWait();
                 }
             } catch (RemoteException ex) {
-                CliUtil.getInstance().createAlert("Errore di rete", "Si è verificato un errore di rete durante l'eliminazione della valutazione. Riprova più tardi.").showAndWait();
+                CliUtil.getInstance().LogOut(ex);
             }
         }
     }
 
-    @FXML public void ExitApplication() {
+    @FXML private void ExitApplication() {
         if (isMod && CliUtil.getInstance().createConfirmation("Conferma uscita", "Hai modificato la valutazione. Vuoi salvare le modifiche prima di uscire?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {salvaModifiche();
         } else {
             CliUtil.getInstance().buildStage(oldFXMLType,null,null);

@@ -49,8 +49,7 @@ public class CercaLibro extends TableViewEngine {
      *     <li>Imposta la chiusura dell'applicazione con {@code System.exit}</li>
      * </ul>
      */
-    @FXML
-    public void initialize() {
+    @FXML private void initialize() {
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         bottoneCerca.setAlignment(Pos.CENTER_LEFT);
         bottoneCerca.setStyle("-fx-padding: 0");

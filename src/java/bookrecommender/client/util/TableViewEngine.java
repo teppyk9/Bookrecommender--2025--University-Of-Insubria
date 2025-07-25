@@ -280,7 +280,7 @@ public abstract class TableViewEngine {
                                 hasCon.put(l, false);
                             }
                         } catch (RemoteException e) {
-                            CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                            CliUtil.getInstance().LogOut(e);
                         }
                         items.add(l);
                     }
@@ -475,7 +475,7 @@ public abstract class TableViewEngine {
             try {
                 CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
             } catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                CliUtil.getInstance().LogOut(e);
             }
         });
         return modValuta;
@@ -557,7 +557,7 @@ public abstract class TableViewEngine {
 
         searchTask.setOnFailed(evt -> {
             Throwable ex = searchTask.getException();
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", ex.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut((Exception) ex);
             getProgressIndicator().setVisible(false);
         });
 
@@ -583,7 +583,7 @@ public abstract class TableViewEngine {
                         hasCon.put(l, false);
                     }
                 } catch (RemoteException e) {
-                    CliUtil.getInstance().createAlert("Errore", "Connessione all'interfaccia scaduta\n" + e.getLocalizedMessage()).showAndWait();
+                    CliUtil.getInstance().LogOut(e);
                 }
             }
         }
@@ -608,7 +608,7 @@ public abstract class TableViewEngine {
             libri.remove(getMyLibro());
             getSTableView().setItems(FXCollections.observableArrayList(libri));
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore", "Impossibile caricare i libri").showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
 
@@ -631,7 +631,7 @@ public abstract class TableViewEngine {
                     ? CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo)
                     : CliUtil.getInstance().getSearchService().searchByName(testo, getMaxResults());
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
             return null;
         }
     }
@@ -642,7 +642,7 @@ public abstract class TableViewEngine {
                     ? CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo)
                     : CliUtil.getInstance().getSearchService().searchByAuthor(testo, getMaxResults());
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
             return null;
         }
     }
@@ -653,7 +653,7 @@ public abstract class TableViewEngine {
                     ? CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno)
                     : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno, getMaxResults());
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore durante la ricerca", e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
             return null;
         }
     }

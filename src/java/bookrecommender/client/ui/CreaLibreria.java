@@ -79,8 +79,7 @@ public class CreaLibreria extends TableViewEngine {
     /**
      * Inizializza il controller, configurando la tabella e i controlli per la ricerca e selezione dei libri.
      */
-    @FXML
-    public void initialize() {
+    @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         initBasicSearch();

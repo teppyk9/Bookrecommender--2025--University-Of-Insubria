@@ -57,8 +57,7 @@ public class AddLibroLibreria extends TreeTableEngine {
      * Metodo di inizializzazione della GUI. Carica le librerie dell'utente,
      * imposta il comportamento delle colonne e i listener per la selezione.
      */
-    @FXML
-    public void initialize() {
+    @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         ExitButton.setAlignment(Pos.TOP_LEFT);
         titoloLibreria.setText("Le tue librerie");
@@ -108,31 +107,6 @@ public class AddLibroLibreria extends TreeTableEngine {
     }
 
     /**
-     * Carica le librerie dell'utente e i relativi contenuti da remoto.
-     * Popola le strutture dati interne con le informazioni sulle librerie.
-     */
-    @Override
-    protected void loadLibraries() {
-        rootItem.getChildren().clear();
-        libCounts.clear();
-        libDates.clear();
-        libPresent.clear();
-        try {
-            Token token = CliUtil.getInstance().getCurrentToken();
-            List<String> libs = CliUtil.getInstance().getLibService().getLibs(token);
-            for (String nome : libs) {
-                List<Libro> libri = CliUtil.getInstance().getLibService().getLib(token, nome);
-                libCounts.put(nome, libri.size());
-                libDates.put(nome, CliUtil.getInstance().getLibService().getCreationDate(token, nome));
-                libPresent.put(nome, libri.contains(libro));
-                creaFigliLibri(nome);
-            }
-        } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore durante il caricamento delle librerie", e.getMessage()).showAndWait();
-        }
-    }
-
-    /**
      * Gestisce il doppio click su un nodo della TreeTableView per mostrare i dettagli del libro.
      *
      * @param v oggetto selezionato (di tipo {@code Libro} se valido)
@@ -142,18 +116,6 @@ public class AddLibroLibreria extends TreeTableEngine {
         if (v instanceof Libro l) {
             CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, null, l);
         }
-    }
-
-    /**
-     * Recupera la lista dei libri contenuti in una libreria specifica.
-     *
-     * @param nomeLib nome della libreria
-     * @return lista di {@link Libro} presenti nella libreria
-     * @throws RemoteException in caso di errore RMI
-     */
-    @Override
-    protected List<Libro> fetchLibraryContents(String nomeLib) throws RemoteException {
-        return CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLib);
     }
 
     /**
@@ -174,6 +136,16 @@ public class AddLibroLibreria extends TreeTableEngine {
     @Override
     protected Map<String, LocalDate> getLibDates() {
         return libDates;
+    }
+
+    @Override
+    protected Map<String, Boolean> getLibPresent() {
+        return libPresent;
+    }
+
+    @Override
+    protected Libro getMyLibro() {
+        return libro;
     }
 
     /**
@@ -229,8 +201,7 @@ public class AddLibroLibreria extends TreeTableEngine {
                 CliUtil.getInstance().reviewLibUpdate(risultati);
             }
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore di connessione", "Impossibile connettersi al server.\n" + e.getLocalizedMessage()).showAndWait();
-        }
+            CliUtil.getInstance().LogOut(e);        }
     }
 
     /**

@@ -3,6 +3,7 @@ package bookrecommender.client.ui;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -18,19 +19,19 @@ import javafx.stage.Stage;
 public class Connessione {
 
     /** Campo di testo per l'inserimento dell'indirizzo host */
-    public TextField hostField;
+    @FXML private TextField hostField;
 
     /** Campo di testo per l'inserimento della porta */
-    public TextField portField;
+    @FXML private TextField portField;
 
     /** Bottone per confermare la connessione */
-    public Button confermaButton;
+    @FXML private Button confermaButton;
 
     /** Bottone per testare la connessione */
-    public Button testButton;
+    @FXML private Button testButton;
 
     /** Etichetta usata per mostrare messaggi di errore o successo */
-    public Label testLabel;
+    @FXML private Label testLabel;
 
     /**
      * Metodo di inizializzazione della schermata.
@@ -39,7 +40,7 @@ public class Connessione {
      *   <li>Registra un'azione sulla chiusura della finestra per terminare il programma</li>
      * </ul>
      */
-    public void initialize() {
+    @FXML private void initialize() {
         hostField.setText("localhost");
         portField.setText("1099");
         testLabel.setText("");
@@ -61,7 +62,7 @@ public class Connessione {
      *   <li>In caso di rifiuto o errore, termina l'applicazione</li>
      * </ul>
      */
-    public void conferma() {
+    @FXML private void conferma() {
         String host = hostField.getText();
         String port = portField.getText();
 
@@ -77,13 +78,8 @@ public class Connessione {
             if(CliUtil.getInstance().testConnection()) {
                 Stage stage = (Stage) confermaButton.getScene().getWindow();
                 stage.close();
-                if (CliUtil.getInstance().createConfirmation("Connessione riuscita", "La connessione al server è stata stabilita con successo. Continuare?", true).showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
-                    CliUtil.getInstance().setMonitorService();
-                    CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
-                } else {
-                    Platform.exit();
-                    System.exit(0);
-                }
+                CliUtil.getInstance().setMonitorService();
+                CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
             }else{
                 testLabel.setStyle("-fx-text-fill: red;");
                 testLabel.setText("Connessione fallita");
@@ -102,7 +98,7 @@ public class Connessione {
      *   <li>Aggiorna l'etichetta {@code testLabel} con il risultato</li>
      * </ul>
      */
-    public void test() {
+    @FXML private void test() {
         String host = hostField.getText();
         String port = portField.getText();
 
@@ -132,7 +128,7 @@ public class Connessione {
      * Ripristina lo stato iniziale dell'etichetta {@code testLabel},
      * rimuovendo eventuali messaggi e colori di errore.
      */
-    public void resetLabel() {
+    @FXML private void resetLabel() {
         testLabel.setText("");
         testLabel.setStyle("-fx-text-fill: black;");
     }

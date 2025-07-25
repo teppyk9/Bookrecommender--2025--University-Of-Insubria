@@ -42,8 +42,7 @@ public class ModificaConsiglio extends TableViewEngine {
 
     private List<Libro> oldLibri = new ArrayList<>();
 
-    @FXML
-    public void initialize() {
+    @FXML private void initialize() {
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(46,46));
         initForConsigli();
@@ -66,7 +65,7 @@ public class ModificaConsiglio extends TableViewEngine {
             oldLibri = listaConsigli;
             risTableView.setItems(FXCollections.observableArrayList(listaConsigli));
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore durante il recupero dei consigli del libro", e.getMessage());
+            CliUtil.getInstance().LogOut(e);
         }
 
     }
@@ -195,7 +194,7 @@ public class ModificaConsiglio extends TableViewEngine {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito").showAndWait();
             }
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
     @FXML
@@ -209,7 +208,7 @@ public class ModificaConsiglio extends TableViewEngine {
         }
     }
 
-    public void eliminaConsigli() {
+    @FXML private void eliminaConsigli() {
         if(CliUtil.getInstance().createConfirmation("Eliminazione Consiglio", "Sei sicuro di voler eliminare questo consiglio?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES){
             try {
                 if (CliUtil.getInstance().getLibService().deleteCon(CliUtil.getInstance().getCurrentToken(), myLibro)) {
@@ -219,7 +218,7 @@ public class ModificaConsiglio extends TableViewEngine {
                     CliUtil.getInstance().createAlert("Errore", "Eliminazione fallita").showAndWait();
                 }
             } catch (RemoteException e) {
-                CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+                CliUtil.getInstance().LogOut(e);
             }
         }
     }

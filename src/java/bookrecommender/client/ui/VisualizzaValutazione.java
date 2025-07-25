@@ -29,7 +29,7 @@ public class VisualizzaValutazione {
     @FXML private Label votoMedia;
     @FXML private Label stileTextArea, contenutoTextArea, gradevolezzaTextArea, originalitaTextArea, edizioneTextArea, finaleTextArea;
 
-    public void initialize() {
+    @FXML private void initialize() {
         GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
     }
 

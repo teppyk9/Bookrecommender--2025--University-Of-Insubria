@@ -12,8 +12,8 @@
    <Pane layoutY="115.0" opacity="0.85" prefHeight="220.0" prefWidth="800.0" styleClass="box">
       <Label layoutX="274.0" layoutY="14.0" prefHeight="45.0" prefWidth="253.0" styleClass="titolo" text="Area Riservata" textAlignment="CENTER" wrapText="true" />
       <Label layoutX="183.0" layoutY="59.0" prefHeight="62.0" prefWidth="436.0" styleClass="descrizione" text="Benvenuto nella tua Area Riservata! Qui potrai usufruire delle funzionalità avanzate dell'applicazione. Che cosa vuoi fare?" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="BottoneVisualizzaLibrerie" layoutX="445.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenVisualizzaLibrerie" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Visualizza Librerie" textAlignment="CENTER" />
-      <Button fx:id="BottoneCercaLibroAvanzato" alignment="CENTER" layoutX="193.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenCercaLibroAvanzato" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Cerca Un Libro" />
+      <Button layoutX="445.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenVisualizzaLibrerie" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Visualizza Librerie" textAlignment="CENTER" />
+      <Button alignment="CENTER" layoutX="193.0" layoutY="147.0" mnemonicParsing="false" onAction="#OpenCercaLibroAvanzato" prefHeight="35.0" prefWidth="163.0" styleClass="bottone" text="Cerca Un Libro" />
    </Pane>
    <Button fx:id="BottoneLogOut" layoutX="752.0" mnemonicParsing="false" onAction="#LogOut" prefHeight="40.0" prefWidth="40.0" styleClass="command">
       <tooltip>

@@ -3,15 +3,14 @@ package bookrecommender.client.ui;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class Home {
-    public Button LoginButton;
-    public Button SignUpButton;
-    public Button CercaLibroBaseButton;
+    @FXML private Button LoginButton;
 
-    public void initialize() {
+    @FXML private void initialize() {
         Platform.runLater(() -> {
             Stage stage = (Stage) LoginButton.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
@@ -21,15 +20,15 @@ public class Home {
         });
     }
 
-    public void OpenLoginPage() {
+    @FXML private void OpenLoginPage() {
         CliUtil.getInstance().buildStage(FXMLtype.LOGIN, null, null);
     }
 
-    public void OpenSignUpPage() {
+    @FXML private void OpenSignUpPage() {
         CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null, null);
     }
 
-    public void OpenCercaLibroBasePage() {
+    @FXML private void OpenCercaLibroBasePage() {
         CliUtil.getInstance().buildStage(FXMLtype.CERCA, null, null);
     }
 }

@@ -109,7 +109,7 @@ public class CreaValutazione {
      * Inizializza l’interfaccia grafica impostando le stelle e le etichette di voto
      * per ogni categoria di valutazione. Metodo chiamato automaticamente da JavaFX dopo il caricamento del file FXML.
      */
-    public void initialize() {
+    @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         messaggioErrore.setText("");
         configuraValutazione(List.of(starStile1, starStile2, starStile3, starStile4, starStile5), votoStile);
@@ -187,8 +187,7 @@ public class CreaValutazione {
                 messaggioErrore.setText("Errore durante il salvataggio della valutazione, potrebbe essere già stata effettuata una valutazione per questo libro.");
             }
         } catch (RemoteException e) {
-            messaggioErrore.setText("Errore durante il controllo della valutazione: " + e.getMessage());
-        }
+            CliUtil.getInstance().LogOut(e);        }
     }
 
     /**

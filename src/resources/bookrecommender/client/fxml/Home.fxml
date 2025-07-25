@@ -10,7 +10,7 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="14.0" prefHeight="66.0" prefWidth="692.0" styleClass="titolo" text="Book Recommender" />
       <Label alignment="CENTER" layoutX="179.0" layoutY="62.0" prefHeight="66.0" prefWidth="442.0" styleClass="descrizione" text="Il tuo spazio digitale per gestire librerie e scoprire nuove letture." textAlignment="CENTER" wrapText="true" />
       <Button fx:id="LoginButton" layoutX="111.0" layoutY="146.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#OpenLoginPage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Login" />
-      <Button fx:id="SignUpButton" layoutX="332.0" layoutY="146.0" mnemonicParsing="false" onAction="#OpenSignUpPage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Registrazione" />
-      <Button fx:id="CercaLibroBaseButton" layoutX="553.0" layoutY="146.0" mnemonicParsing="false" onAction="#OpenCercaLibroBasePage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Cerca un libro" />
+      <Button layoutX="332.0" layoutY="146.0" mnemonicParsing="false" onAction="#OpenSignUpPage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Registrazione" />
+      <Button layoutX="553.0" layoutY="146.0" mnemonicParsing="false" onAction="#OpenCercaLibroBasePage" prefHeight="35.0" prefWidth="136.0" styleClass="bottone" text="Cerca un libro" />
    </Pane>
 </AnchorPane>

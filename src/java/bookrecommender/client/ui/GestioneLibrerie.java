@@ -97,8 +97,7 @@ public class GestioneLibrerie extends TreeTableEngine {
      * Viene anche registrato un evento per la chiusura della finestra e viene disabilitato il pulsante
      * {@code BottoneCambiaNome} se non è selezionata una libreria.
      */
-    @FXML
-    public void initialize() {
+    @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         initializeTree();
 
@@ -201,18 +200,6 @@ public class GestioneLibrerie extends TreeTableEngine {
     }
 
     /**
-     * Recupera i contenuti di una libreria dal server.
-     *
-     * @param nomeLib Nome della libreria da caricare.
-     * @return Lista di {@link Libro} contenuti nella libreria.
-     * @throws RemoteException Se la comunicazione con il server fallisce.
-     */
-    @Override
-    protected List<Libro> fetchLibraryContents(String nomeLib) throws RemoteException {
-        return CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLib);
-    }
-
-    /**
      * Restituisce la mappa con i conteggi dei libri per ciascuna libreria.
      *
      * @return Mappa nome libreria → numero di libri.
@@ -230,6 +217,16 @@ public class GestioneLibrerie extends TreeTableEngine {
     @Override
     protected Map<String, LocalDate> getLibDates() {
         return libDates;
+    }
+
+    @Override
+    protected Map<String, Boolean> getLibPresent() {
+        return null;
+    }
+
+    @Override
+    protected Libro getMyLibro() {
+        return null;
     }
 
     /**
@@ -255,8 +252,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                 libNode.getChildren().add(new TreeItem<>(row));
             }
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore caricamento libri", e.getMessage()).showAndWait();
-        }
+            CliUtil.getInstance().LogOut(e);        }
     }
 
     /**
@@ -290,7 +286,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                         CliUtil.getInstance().createAlert("Errore", "Modifica fallita").showAndWait();
                     }
                 } catch (RemoteException e) {
-                    CliUtil.getInstance().createAlert("Errore", "Connessione").showAndWait();
+                    CliUtil.getInstance().LogOut(e);
                 }
             }
         } else {
@@ -309,8 +305,7 @@ public class GestioneLibrerie extends TreeTableEngine {
     /**
      * Apre la schermata per la creazione di una nuova libreria.
      */
-    @FXML
-    void creaLibreria() {
+    @FXML private void creaLibreria() {
         CliUtil.getInstance().buildStage(FXMLtype.CREALIBRERIA, null, null);
     }
 
@@ -349,7 +344,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                             CliUtil.getInstance().createAlert("Errore", "Errore nell'eliminazione").showAndWait();
                         }
                     } catch (RemoteException e) {
-                        CliUtil.getInstance().createAlert("Failed to delete", e.getMessage()).showAndWait();
+                        CliUtil.getInstance().LogOut(e);
                     }
                 }
             } else {
@@ -425,7 +420,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                         CliUtil.getInstance().reviewLibUpdate(results);
                     }
                 } catch (RemoteException e) {
-                    CliUtil.getInstance().createAlert("Errore", e.getMessage()).showAndWait();
+                    CliUtil.getInstance().LogOut(e);
                 }
             }
         });
@@ -436,7 +431,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                 try {
                     CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, FXMLtype.GESTIONELIBRERIE, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), lr.getLibro()));
                 } catch (RemoteException e) {
-                    throw new RuntimeException(e);
+                    CliUtil.getInstance().LogOut(e);
                 }
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Consiglia needs Libro, got " + o.getClass()).showAndWait();

@@ -4,11 +4,10 @@ import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
-import java.rmi.RemoteException;
 
 /**
  * Controller JavaFX per l'area riservata dell'utente autenticato.
@@ -23,17 +22,11 @@ import java.rmi.RemoteException;
  * </p>
  */
 public class AreaRiservata {
-    /** Bottone per accedere alla ricerca avanzata dei libri */
-    public Button BottoneCercaLibroAvanzato;
-
-    /** Bottone per aprire la sezione di gestione delle librerie */
-    public Button BottoneVisualizzaLibrerie;
-
     /** Bottone per effettuare il logout e tornare alla schermata principale */
-    public Button BottoneLogOut;
+    @FXML private Button BottoneLogOut;
 
     /** Bottone per accedere alle impostazioni dell'account */
-    public Button impostazioniButton;
+    @FXML private Button impostazioniButton;
 
     /**
      * Inizializza il comportamento della finestra.
@@ -42,7 +35,7 @@ public class AreaRiservata {
      * effettuare correttamente il logout e terminare l'applicazione.
      * </p>
      */
-    public void initialize() {
+    @FXML private void initialize() {
         impostazioniButton.setGraphic(IMGtype.IMPOSTAZIONI.getImageView(40,40));
         impostazioniButton.setAlignment(Pos.TOP_RIGHT);
         BottoneLogOut.setGraphic(IMGtype.LOGOUT.getImageView(40,40));
@@ -51,9 +44,7 @@ public class AreaRiservata {
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneLogOut.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
-                try {
-                    CliUtil.getInstance().getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken());
-                }catch (RemoteException ignored) {}
+                CliUtil.getInstance().LogOut(null);
                 Platform.exit();
                 System.exit(0);
             });
@@ -63,14 +54,14 @@ public class AreaRiservata {
     /**
      * Apre la finestra per effettuare una ricerca avanzata dei libri.
      */
-    public void OpenCercaLibroAvanzato() {
+    @FXML private void OpenCercaLibroAvanzato() {
         CliUtil.getInstance().buildStage(FXMLtype.CERCA_AVANZATO, null,null);
     }
 
     /**
      * Apre la schermata di gestione delle librerie dell'utente.
      */
-    public void OpenVisualizzaLibrerie() {
+    @FXML private void OpenVisualizzaLibrerie() {
         CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null, null);
     }
 
@@ -81,11 +72,11 @@ public class AreaRiservata {
      * In caso contrario, mostra un messaggio di errore.
      * </p>
      */
-    public void LogOut(){
-        CliUtil.getInstance().LogOut();
+    @FXML private void LogOut(){
+        CliUtil.getInstance().LogOut(null);
     }
 
-    public void openImpostazioni() {
+    @FXML private void openImpostazioni() {
         CliUtil.getInstance().buildStage(FXMLtype.ACCOUNT, null,null);
     }
 }

@@ -22,7 +22,7 @@ public class CambiaPassword extends PasswordEngine{
     @FXML private Label labelErrore;
     @FXML private Button cambiaPasswordButton;
 
-    public void initialize() {
+    @FXML private void initialize() {
         goBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         goBackButton.setAlignment(Pos.TOP_LEFT);
         labelErrore.setVisible(false);
@@ -47,8 +47,7 @@ public class CambiaPassword extends PasswordEngine{
                         CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare la password").showAndWait();
                     }
                 } catch (RemoteException e) {
-                    CliUtil.getInstance().createAlert("Errore di rete", "Impossibile cambiare la password").showAndWait();
-                }
+                    CliUtil.getInstance().LogOut(e);                }
                 CliUtil.getInstance().buildStage(FXMLtype.ACCOUNT,null,null);
             }
         } else {

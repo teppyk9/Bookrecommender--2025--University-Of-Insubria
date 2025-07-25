@@ -7,6 +7,7 @@ import bookrecommender.common.model.Libro;
 import bookrecommender.common.model.Libro_Details;
 import bookrecommender.common.model.Valutazione;
 import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
@@ -28,68 +29,68 @@ import java.util.List;
  */
 public class DettaglioLibro {
     // Etichette per i metadati testuali del libro
-    public Label titoloLabel;          // Mostra il titolo del libro
-    public Label autoreLabel;          // Mostra l'autore del libro
-    public Label categoriaLabel;       // Mostra la categoria (genere) del libro
-    public Label editoreLabel;         // Mostra la casa editrice
-    public Label prezzoLabel;          // Mostra il prezzo
-    public Label annoLabel;            // Mostra l'anno di pubblicazione
-    public Label meseLabel;            // Mostra il mese di pubblicazione
+    @FXML private Label titoloLabel;          // Mostra il titolo del libro
+    @FXML private Label autoreLabel;          // Mostra l'autore del libro
+    @FXML private Label categoriaLabel;       // Mostra la categoria (genere) del libro
+    @FXML private Label editoreLabel;         // Mostra la casa editrice
+    @FXML private Label prezzoLabel;          // Mostra il prezzo
+    @FXML private Label annoLabel;            // Mostra l'anno di pubblicazione
+    @FXML private Label meseLabel;            // Mostra il mese di pubblicazione
 
     // Area per la descrizione del libro
-    public Label descrizioneArea;
+    @FXML private Label descrizioneArea;
 
     // Stelle e voto medio complessivo
-    public ImageView starTotal1;
-    public ImageView starTotal2;
-    public ImageView starTotal3;
-    public ImageView starTotal4;
-    public ImageView starTotal5;
-    public Label votoTotal;
+    @FXML private ImageView starTotal1;
+    @FXML private ImageView starTotal2;
+    @FXML private ImageView starTotal3;
+    @FXML private ImageView starTotal4;
+    @FXML private ImageView starTotal5;
+    @FXML private Label votoTotal;
 
     // Stelle grafiche e voto medio per lo "Stile" del libro
-    public ImageView starStile1;
-    public ImageView starStile2;
-    public ImageView starStile3;
-    public ImageView starStile4;
-    public ImageView starStile5;
-    public Label votoStile;
+    @FXML private ImageView starStile1;
+    @FXML private ImageView starStile2;
+    @FXML private ImageView starStile3;
+    @FXML private ImageView starStile4;
+    @FXML private ImageView starStile5;
+    @FXML private Label votoStile;
 
     // Stelle grafiche e voto medio per il "Contenuto"
-    public ImageView starContenuto1;
-    public ImageView starContenuto2;
-    public ImageView starContenuto3;
-    public ImageView starContenuto4;
-    public ImageView starContenuto5;
-    public Label votoContenuto;
+    @FXML private ImageView starContenuto1;
+    @FXML private ImageView starContenuto2;
+    @FXML private ImageView starContenuto3;
+    @FXML private ImageView starContenuto4;
+    @FXML private ImageView starContenuto5;
+    @FXML private Label votoContenuto;
 
     // Stelle grafiche e voto medio sulla "Gradevolezza"
-    public ImageView starGradevolezza1;
-    public ImageView starGradevolezza2;
-    public ImageView starGradevolezza3;
-    public ImageView starGradevolezza4;
-    public ImageView starGradevolezza5;
-    public Label votoGradevolezza;
+    @FXML private ImageView starGradevolezza1;
+    @FXML private ImageView starGradevolezza2;
+    @FXML private ImageView starGradevolezza3;
+    @FXML private ImageView starGradevolezza4;
+    @FXML private ImageView starGradevolezza5;
+    @FXML private Label votoGradevolezza;
 
     // Stelle grafiche e voto medio sull'"Originalità"
-    public ImageView starOriginalita1;
-    public ImageView starOriginalita2;
-    public ImageView starOriginalita3;
-    public ImageView starOriginalita4;
-    public ImageView starOriginalita5;
-    public Label votoOriginalita;
+    @FXML private ImageView starOriginalita1;
+    @FXML private ImageView starOriginalita2;
+    @FXML private ImageView starOriginalita3;
+    @FXML private ImageView starOriginalita4;
+    @FXML private ImageView starOriginalita5;
+    @FXML private Label votoOriginalita;
 
     // Stelle grafiche e voto medio sull'"Edizione"
-    public ImageView starEdizione1;
-    public ImageView starEdizione2;
-    public ImageView starEdizione3;
-    public ImageView starEdizione4;
-    public ImageView starEdizione5;
-    public Label votoEdizione;
+    @FXML private ImageView starEdizione1;
+    @FXML private ImageView starEdizione2;
+    @FXML private ImageView starEdizione3;
+    @FXML private ImageView starEdizione4;
+    @FXML private ImageView starEdizione5;
+    @FXML private Label votoEdizione;
 
     // Liste delle valutazioni e dei libri consigliati
-    public ListView<Valutazione> listaValutazioni;
-    public ListView<Libro> listaConsigli;
+    @FXML private ListView<Valutazione> listaValutazioni;
+    @FXML private ListView<Libro> listaConsigli;
 
     /** Dettagli del libro ottenuti dal server (valutazioni e consigli)*/
     private Libro_Details details;
@@ -154,8 +155,7 @@ public class DettaglioLibro {
         try {
             details = CliUtil.getInstance().getSearchService().getDetails(libro);
         } catch (RemoteException e) {
-            CliUtil.getInstance().createAlert("Errore di connessione", "Impossibile recuperare i dettagli del libro.").showAndWait();
-        }
+            CliUtil.getInstance().LogOut(e);        }
 
         CliUtil.getInstance().setStar(starTotal1, starTotal2, starTotal3, starTotal4, starTotal5, details.getmFinale(), IMGtype.STARtype.WHITE);
         votoTotal.setText(String.format("%.1f", details.getmFinale()));
@@ -180,7 +180,7 @@ public class DettaglioLibro {
      *
      * @param mouseEvent Evento del mouse generato dal clic.
      */
-    public void clickValutazione(MouseEvent mouseEvent) {
+    @FXML private void clickValutazione(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             Valutazione selezionato = listaValutazioni.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
@@ -195,7 +195,7 @@ public class DettaglioLibro {
      *
      * @param mouseEvent Evento del mouse generato dal clic.
      */
-    public void clickConsiglio(MouseEvent mouseEvent) {
+    @FXML private void clickConsiglio(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             Libro selezionato = listaConsigli.getSelectionModel().getSelectedItem();
             if (selezionato != null) {
