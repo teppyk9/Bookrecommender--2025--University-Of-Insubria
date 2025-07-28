@@ -203,18 +203,20 @@ public abstract class TableViewEngine {
         getSTitoloCol().setCellValueFactory(cellData ->
                 new ReadOnlyStringWrapper(cellData.getValue().getTitolo())
         );
+        getSTitoloCol().setResizable(false);
         getSAutoreCol().setCellValueFactory(cellData ->
                 new ReadOnlyStringWrapper(cellData.getValue().getAutore())
         );
+        getSAutoreCol().setResizable(false);
         getSAnnoCol().setCellValueFactory(cellData ->
                 new ReadOnlyObjectWrapper<>((int) cellData.getValue().getAnnoPubblicazione())
         );
+        getSAnnoCol().setResizable(false);
     }
 
     protected void initSRecensioniCol(){
-        getSRecensioniCol().setCellValueFactory(cellData ->
-                new ReadOnlyBooleanWrapper(hasRec.get(cellData.getValue())));
-
+        getSRecensioniCol().setCellValueFactory(cellData -> new ReadOnlyBooleanWrapper(hasRec.get(cellData.getValue())));
+        getSRecensioniCol().setResizable(false);
         getSRecensioniCol().setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
@@ -230,6 +232,8 @@ public abstract class TableViewEngine {
     }
 
     protected void initSAggiungiAdvCol(){
+        getSAggiungiAdvCol().setSortable(false);
+        getSAggiungiAdvCol().setResizable(false);
         getSAggiungiAdvCol().setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -247,6 +251,8 @@ public abstract class TableViewEngine {
     }
 
     protected void initSAddRemCol(){
+        getSAddRemCol().setSortable(false);
+        getSAddRemCol().setResizable(false);
         getSAddRemCol().setCellFactory(col -> new TableCell<>() {
             private final MenuButton menu = new MenuButton();
             {
@@ -284,7 +290,7 @@ public abstract class TableViewEngine {
                                 hasVal.put(l, false);
                                 hasCon.put(l, false);
                             }
-                        } catch (RemoteException e) {
+                        } catch (Exception e) {
                             CliUtil.getInstance().LogOut(e);
                         }
                         items.add(l);
@@ -335,6 +341,8 @@ public abstract class TableViewEngine {
      *
      */
     protected void initOActionCol(){
+        getOActionCol().setSortable(false);
+        getOActionCol().setResizable(false);
         getOActionCol().setCellFactory(col -> new TableCell<>() {
             private final Button rimuovi = new Button();
             {
@@ -363,15 +371,12 @@ public abstract class TableViewEngine {
     }
 
     protected void initOTableView() {
-        getOTitoloCol().setCellValueFactory(cellData ->
-                new ReadOnlyStringWrapper(cellData.getValue().getTitolo())
-        );
-        getOAutoreCol().setCellValueFactory(cellData ->
-                new ReadOnlyStringWrapper(cellData.getValue().getAutore())
-        );
-        getOAnnoCol().setCellValueFactory(cellData ->
-                new ReadOnlyObjectWrapper<>((int) cellData.getValue().getAnnoPubblicazione())
-        );
+        getOTitoloCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getTitolo()));
+        getOTitoloCol().setResizable(false);
+        getOAutoreCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAutore()));
+        getOAutoreCol().setResizable(false);
+        getOAnnoCol().setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>((int) cellData.getValue().getAnnoPubblicazione()));
+        getOAnnoCol().setResizable(false);
     }
 
     protected void initTableViews(){
@@ -479,7 +484,7 @@ public abstract class TableViewEngine {
         modValuta.setOnAction(evt -> {
             try {
                 CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 CliUtil.getInstance().LogOut(e);
             }
         });
@@ -574,7 +579,7 @@ public abstract class TableViewEngine {
         searchTask.setOnFailed(evt -> {
             Throwable ex = searchTask.getException();
             getProgressIndicator().setVisible(false);
-            if(ex instanceof RemoteException)
+            if(ex instanceof RemoteException || ex instanceof NullPointerException)
                 CliUtil.getInstance().LogOut((Exception) ex);
             else
                 CliUtil.getInstance().createAlert("Errore", "Si è verificato un errore durante la ricerca: " + ex.getMessage()).showAndWait();
@@ -601,7 +606,7 @@ public abstract class TableViewEngine {
                         hasVal.put(l, false);
                         hasCon.put(l, false);
                     }
-                } catch (RemoteException e) {
+                } catch (Exception e) {
                     CliUtil.getInstance().LogOut(e);
                 }
             }
@@ -626,7 +631,7 @@ public abstract class TableViewEngine {
             List<Libro> libri = CliUtil.getInstance().getSearchService().getAllBooks(CliUtil.getInstance().getCurrentToken());
             libri.remove(getMyLibro());
             getSTableView().setItems(FXCollections.observableArrayList(libri));
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);
         }
     }
@@ -644,37 +649,22 @@ public abstract class TableViewEngine {
         return list.stream().anyMatch(item -> Objects.equals(item, target));
     }
 
-    private List<Libro> searchByTitle(String testo){
-        try {
-            return getSearchType()
-                    ? CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo)
-                    : CliUtil.getInstance().getSearchService().searchByName(testo, getMaxResults());
-        } catch (RemoteException e) {
-            CliUtil.getInstance().LogOut(e);
-            return null;
-        }
+    private List<Libro> searchByTitle(String testo) throws Exception{
+        return getSearchType()
+                ? CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo)
+                : CliUtil.getInstance().getSearchService().searchByName(testo, getMaxResults());
     }
 
-    private List<Libro> searchByAuthor(String testo){
-        try {
-            return getSearchType()
-                    ? CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo)
-                    : CliUtil.getInstance().getSearchService().searchByAuthor(testo, getMaxResults());
-        } catch (RemoteException e) {
-            CliUtil.getInstance().LogOut(e);
-            return null;
-        }
+    private List<Libro> searchByAuthor(String testo) throws Exception{
+        return getSearchType()
+                ? CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo)
+                : CliUtil.getInstance().getSearchService().searchByAuthor(testo, getMaxResults());
     }
 
-    private List<Libro> searchByAuthorAndYear(String testo, int anno){
-        try {
-            return getSearchType()
-                    ? CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno)
-                    : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno, getMaxResults());
-        } catch (RemoteException e) {
-            CliUtil.getInstance().LogOut(e);
-            return null;
-        }
+    private List<Libro> searchByAuthorAndYear(String testo, int anno) throws Exception{
+        return getSearchType()
+                ? CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno)
+                : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno, getMaxResults());
     }
 
     protected Map<Libro, Boolean> getHasRec() {

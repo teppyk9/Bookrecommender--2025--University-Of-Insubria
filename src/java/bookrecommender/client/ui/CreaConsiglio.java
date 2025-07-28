@@ -1,8 +1,8 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
 import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -332,7 +331,7 @@ public class CreaConsiglio extends TableViewEngine {
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito").showAndWait();
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);        }
     }
 

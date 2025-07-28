@@ -1,8 +1,8 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.common.model.Libro;
 import bookrecommender.common.model.Libro_Details;
 import bookrecommender.common.model.Valutazione;
@@ -13,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -154,7 +153,7 @@ public class DettaglioLibro {
 
         try {
             details = CliUtil.getInstance().getSearchService().getDetails(libro);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);        }
 
         CliUtil.getInstance().setStar(starTotal1, starTotal2, starTotal3, starTotal4, starTotal5, details.getmFinale(), IMGtype.STARtype.WHITE);

@@ -1,16 +1,18 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.common.model.Valutazione;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
 public class ModificaValutazione {
@@ -131,7 +133,7 @@ public class ModificaValutazione {
             } else {
                 CliUtil.getInstance().createAlert("Errore", "Salvataggio fallito\nNon è stato possibile salvare la valutazione. Riprova più tardi.").showAndWait();
             }
-        } catch (RemoteException ex) {
+        } catch (Exception ex) {
             CliUtil.getInstance().LogOut(ex);
         }
     }
@@ -145,7 +147,7 @@ public class ModificaValutazione {
                 } else {
                     CliUtil.getInstance().createAlert("Errore", "Eliminazione fallita\nNon è stato possibile eliminare la valutazione. Riprova più tardi.").showAndWait();
                 }
-            } catch (RemoteException ex) {
+            } catch (Exception ex) {
                 CliUtil.getInstance().LogOut(ex);
             }
         }

@@ -1,8 +1,8 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.common.model.Libro;
 import bookrecommender.common.model.Valutazione;
 import javafx.application.Platform;
@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -186,7 +185,7 @@ public class CreaValutazione {
             }else{
                 messaggioErrore.setText("Errore durante il salvataggio della valutazione, potrebbe essere già stata effettuata una valutazione per questo libro.");
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);        }
     }
 

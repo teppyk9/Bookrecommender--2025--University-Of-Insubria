@@ -1,8 +1,8 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TreeTableEngine;
 import bookrecommender.common.model.Libro;
 import bookrecommender.common.model.Token;
@@ -15,9 +15,11 @@ import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.text.Text;
 
-import java.rmi.RemoteException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Controller JavaFX che gestisce la finestra per l'aggiunta di un {@link Libro}
@@ -166,7 +168,7 @@ public class AddLibroLibreria extends TreeTableEngine {
             libNode.setExpanded(true);
             treeTableView.refresh();
         } catch (Exception e) {
-            CliUtil.getInstance().createAlert("Errore durante il caricamento dei libri", e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
 
@@ -200,7 +202,7 @@ public class AddLibroLibreria extends TreeTableEngine {
             } else {
                 CliUtil.getInstance().reviewLibUpdate(risultati);
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);        }
     }
 

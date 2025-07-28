@@ -1,8 +1,8 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
 import bookrecommender.common.model.Libro;
 import javafx.application.Platform;

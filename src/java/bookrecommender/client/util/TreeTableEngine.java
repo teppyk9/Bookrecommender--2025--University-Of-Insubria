@@ -8,7 +8,6 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 
-import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +60,7 @@ public abstract class TreeTableEngine {
                 }
                 creaFigliLibri(nome);
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);
         }
     }

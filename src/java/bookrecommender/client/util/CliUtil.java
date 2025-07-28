@@ -1,8 +1,8 @@
 package bookrecommender.client.util;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.listener.ClientListener;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.ui.*;
 import bookrecommender.common.interfaces.LibInterface;
 import bookrecommender.common.interfaces.LogRegInterface;
@@ -24,10 +24,13 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-import java.rmi.RemoteException;
+import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -490,7 +493,7 @@ public final class CliUtil {
                     sb.append(System.lineSeparator());
             }
             createAlert("Errore", sb.toString()).showAndWait();
-        }catch (RemoteException e){
+        }catch (Exception e){
             CliUtil.getInstance().LogOut(e);
         }
     }
@@ -521,17 +524,13 @@ public final class CliUtil {
 
     public void LogOut(Exception ex){
         if(ex != null){
-            createAlert("Errore", ex.getMessage()).showAndWait();
+            createAlert("Errore", ex.getLocalizedMessage()).showAndWait();
         }
         try {
             if (getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken())) {
                 createConfirmation("Logout effettuato", "Sei stato disconnesso con successo.", false).showAndWait();
             }
-            else
-                createAlert("Errore di Logout", "Si è verificato un errore durante il logout").showAndWait();
-        }catch (RemoteException e) {
-            createAlert("Errore di Logout", "Si è verificato un errore durante il logout: " + e.getMessage()).showAndWait();
-        }
+        }catch (IOException | NullPointerException ignored) {}
         softRestart();
     }
 }

@@ -1,8 +1,8 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
 import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class ModificaLibreria extends TableViewEngine {
         try {
             OriginalLibri = new ArrayList<>(CliUtil.getInstance().getLibService().getLib(CliUtil.getInstance().getCurrentToken(), nomeLibreria));
             risTableView.setItems(FXCollections.observableArrayList(OriginalLibri));
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);
         }
         for(Libro l : OriginalLibri){
@@ -79,7 +78,7 @@ public class ModificaLibreria extends TableViewEngine {
                     getHasVal().put(l, false);
                     getHasCon().put(l, false);
                 }
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 CliUtil.getInstance().LogOut(e);
             }
         }
@@ -188,7 +187,7 @@ public class ModificaLibreria extends TableViewEngine {
                         CliUtil.getInstance().createAlert("Errore", "Impossibile eliminare la libreria.").showAndWait();
                     }
                 } catch (Exception e) {
-                    CliUtil.getInstance().createAlert("Errore", "Impossibile eliminare la libreria: " + e.getMessage()).showAndWait();
+                    CliUtil.getInstance().LogOut(e);
                 }
             }
         });
@@ -201,7 +200,7 @@ public class ModificaLibreria extends TableViewEngine {
                 if(!CliUtil.getInstance().getLibService().modifyLibName(CliUtil.getInstance().getCurrentToken(), LibName, NomeLibreria.getText().trim()))
                     CliUtil.getInstance().createAlert("Errore", "Impossibile modificare il nome della libreria.").showAndWait();
             } catch (Exception e) {
-                CliUtil.getInstance().createAlert("Errore", "Impossibile modificare il nome della libreria: " + e.getMessage()).showAndWait();
+                CliUtil.getInstance().LogOut(e);
                 return;
             }
             LibName = NomeLibreria.getText().trim();

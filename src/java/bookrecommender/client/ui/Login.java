@@ -1,15 +1,18 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.PasswordEngine;
 import bookrecommender.common.model.Token;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -77,7 +80,7 @@ public class Login extends PasswordEngine{
                 ErrorToLogin.setText("Credenziali errate. Riprova.");
             }
         } catch (Exception e) {
-            CliUtil.getInstance().createAlert("Errore", "Impossibile effettuare il login. Riprova più tardi.").showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
 

@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -60,7 +59,7 @@ public class Account extends PasswordEngine {
         List<String> userInfo = List.of();
         try {
             userInfo = CliUtil.getInstance().getLogRegService().getUserInfo(CliUtil.getInstance().getCurrentToken());
-        }catch (RemoteException e){
+        }catch (Exception e){
             CliUtil.getInstance().LogOut(e);
         }
         if (userInfo.isEmpty() || userInfo.size() < 6) {
@@ -87,7 +86,7 @@ public class Account extends PasswordEngine {
                 } else {
                     CliUtil.getInstance().createAlert("Errore", "Impossibile eliminare l'account").showAndWait();
                 }
-            }catch (RemoteException e) {
+            }catch (Exception e) {
                 CliUtil.getInstance().LogOut(e);
             }
         }else{
@@ -126,7 +125,7 @@ public class Account extends PasswordEngine {
                 } else {
                     CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare lo username").showAndWait();
                 }
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 CliUtil.getInstance().LogOut(e);            }
         }
     }
@@ -162,7 +161,7 @@ public class Account extends PasswordEngine {
                 } else {
                     CliUtil.getInstance().createAlert("Errore", "Impossibile cambiare l'email").showAndWait();
                 }
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 CliUtil.getInstance().LogOut(e);            }
         }
     }

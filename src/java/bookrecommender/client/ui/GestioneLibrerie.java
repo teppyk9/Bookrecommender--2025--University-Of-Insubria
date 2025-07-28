@@ -1,8 +1,8 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TreeTableEngine;
 import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
@@ -10,17 +10,9 @@ import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -251,7 +243,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                 LibroRow row = new LibroRow(l, hasVal, hasCons, valD, consD);
                 libNode.getChildren().add(new TreeItem<>(row));
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);        }
     }
 
@@ -285,7 +277,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                     } else {
                         CliUtil.getInstance().createAlert("Errore", "Modifica fallita").showAndWait();
                     }
-                } catch (RemoteException e) {
+                } catch (Exception e) {
                     CliUtil.getInstance().LogOut(e);
                 }
             }
@@ -343,7 +335,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                         } else {
                             CliUtil.getInstance().createAlert("Errore", "Errore nell'eliminazione").showAndWait();
                         }
-                    } catch (RemoteException e) {
+                    } catch (Exception e) {
                         CliUtil.getInstance().LogOut(e);
                     }
                 }
@@ -419,7 +411,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                     } else {
                         CliUtil.getInstance().reviewLibUpdate(results);
                     }
-                } catch (RemoteException e) {
+                } catch (Exception e) {
                     CliUtil.getInstance().LogOut(e);
                 }
             }
@@ -430,7 +422,7 @@ public class GestioneLibrerie extends TreeTableEngine {
             if (o instanceof LibroRow lr) {
                 try {
                     CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, FXMLtype.GESTIONELIBRERIE, CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), lr.getLibro()));
-                } catch (RemoteException e) {
+                } catch (Exception e) {
                     CliUtil.getInstance().LogOut(e);
                 }
             } else {

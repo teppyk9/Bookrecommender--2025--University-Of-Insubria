@@ -1,11 +1,11 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.TableViewEngine;
-import bookrecommender.common.model.Libro;
 import bookrecommender.common.interfaces.LibInterface;
+import bookrecommender.common.model.Libro;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -214,7 +214,7 @@ public class CreaLibreria extends TableViewEngine {
                 CliUtil.getInstance().createAlert("Errore", "Impossibile salvare la libreria").showAndWait();
             }
         } catch (Exception e) {
-            CliUtil.getInstance().createAlert("Errore", "Impossibile salvare la libreria: " + e.getMessage()).showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
 

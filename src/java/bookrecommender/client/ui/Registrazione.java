@@ -1,15 +1,17 @@
 package bookrecommender.client.ui;
 
+import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
-import bookrecommender.client.enums.FXMLtype;
 import bookrecommender.client.util.PasswordEngine;
 import bookrecommender.common.model.RegToken;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -138,7 +140,7 @@ public class Registrazione extends PasswordEngine {
                 }
             }
         } catch (Exception e) {
-            CliUtil.getInstance().createAlert("Errore", "Impossibile completare la registrazione. Riprova più tardi.\n " + e).showAndWait();
+            CliUtil.getInstance().LogOut(e);
         }
     }
 

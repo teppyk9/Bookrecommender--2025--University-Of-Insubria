@@ -1,7 +1,7 @@
 package bookrecommender.client.ui;
 
-import bookrecommender.client.util.CliUtil;
 import bookrecommender.client.enums.FXMLtype;
+import bookrecommender.client.util.CliUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
