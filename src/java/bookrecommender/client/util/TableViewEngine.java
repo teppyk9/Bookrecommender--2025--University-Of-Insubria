@@ -187,6 +187,11 @@ public abstract class TableViewEngine {
             }
         });
 
+        Label placeholder = new Label("Nessun libro nella tabella");
+        placeholder.setStyle("-fx-font-style: italic;");
+        placeholder.setAlignment(Pos.CENTER);
+        getSTableView().setPlaceholder(placeholder);
+
         getMenuCercaTitolo().setOnAction(e -> switchType("Titolo", "Titolo"));
         getMenuCercaAutore().setOnAction(e -> switchType("Autore", "Autore"));
         getMenuCercaAutoreAnno().setOnAction(e -> {
@@ -511,6 +516,11 @@ public abstract class TableViewEngine {
             return;
         }
 
+        if(searchType.isEmpty()) {
+            CliUtil.getInstance().createAlert("Errore", "Selezionare un tipo di ricerca.").showAndWait();
+            return;
+        }
+
         getProgressIndicator().setProgress(-1);
         getProgressIndicator().setVisible(true);
 
@@ -532,7 +542,7 @@ public abstract class TableViewEngine {
                         risultati = searchByAuthorAndYear(testo, Integer.parseInt(anno));
                         break;
                     default:
-                        throw new IllegalStateException("Tipo di ricerca non selezionato.");
+                        return Collections.emptyList();
                 }
                 if(getMyFXMLtype() == FXMLtype.CERCA || getMyFXMLtype() == FXMLtype.CERCA_AVANZATO || getMyFXMLtype() == FXMLtype.GESTIONELIBRERIE) {
                     hasRec.clear();
@@ -547,6 +557,12 @@ public abstract class TableViewEngine {
 
         searchTask.setOnSucceeded(evt -> {
             List<Libro> risultati = searchTask.getValue();
+            if(risultati.isEmpty()) {
+                CliUtil.getInstance().createAlert("Nessun Risultato", "Nessun libro trovato con i criteri di ricerca specificati.").showAndWait();
+                getSTableView().setItems(FXCollections.observableArrayList());
+                getProgressIndicator().setVisible(false);
+                return;
+            }
             ObservableList<Libro> data = FXCollections.observableArrayList(risultati);
             if(getMyFXMLtype() == FXMLtype.CERCA_AVANZATO || getMyFXMLtype() == FXMLtype.GESTIONELIBRERIE) {
                 setLibriP(risultati);
@@ -557,8 +573,11 @@ public abstract class TableViewEngine {
 
         searchTask.setOnFailed(evt -> {
             Throwable ex = searchTask.getException();
-            CliUtil.getInstance().LogOut((Exception) ex);
             getProgressIndicator().setVisible(false);
+            if(ex instanceof RemoteException)
+                CliUtil.getInstance().LogOut((Exception) ex);
+            else
+                CliUtil.getInstance().createAlert("Errore", "Si è verificato un errore durante la ricerca: " + ex.getMessage()).showAndWait();
         });
 
         Thread thread = new Thread(searchTask);

@@ -95,19 +95,19 @@ public final class CliUtil {
      * Chiude tutte le finestre, resetta lo stato del client e riapre la schermata di connessione.
      */
     public void softRestart() {
+        this.currentToken = null;
+        this.logRegService = null;
+        this.searchService = null;
+        this.libService = null;
+        this.monitorService = null;
+        RMI_HOST = null;
+        RMI_PORT = 0;
         Platform.runLater(() -> {
             for (Window w : new ArrayList<>(Window.getWindows())) {
                 if (w instanceof Stage s) {
                     s.close();
                 }
             }
-            this.currentToken = null;
-            this.logRegService = null;
-            this.searchService = null;
-            this.libService = null;
-            this.monitorService = null;
-            RMI_HOST = null;
-            RMI_PORT = 0;
             buildStage(FXMLtype.CONNESSIONE, null,null);
         });
     }
@@ -520,6 +520,9 @@ public final class CliUtil {
     }
 
     public void LogOut(Exception ex){
+        if(ex != null){
+            createAlert("Errore", ex.getMessage()).showAndWait();
+        }
         try {
             if (getLogRegService().LogOut(CliUtil.getInstance().getCurrentToken())) {
                 createConfirmation("Logout effettuato", "Sei stato disconnesso con successo.", false).showAndWait();
@@ -527,10 +530,7 @@ public final class CliUtil {
             else
                 createAlert("Errore di Logout", "Si è verificato un errore durante il logout").showAndWait();
         }catch (RemoteException e) {
-            if(ex!=null)
-                createAlert(ex.getLocalizedMessage(), e.getMessage()).showAndWait();
-            else
-                createAlert("Errore", e.getMessage()).showAndWait();
+            createAlert("Errore di Logout", "Si è verificato un errore durante il logout: " + e.getMessage()).showAndWait();
         }
         softRestart();
     }
