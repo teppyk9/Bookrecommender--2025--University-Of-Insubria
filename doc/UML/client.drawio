@@ -1,0 +1,375 @@
+<mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" background="none" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="node1" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Account&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Account(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- PasswordField1: PasswordField&lt;br/&gt;- VisiblePasswordField1: TextField&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- changeUsername(): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- changeEmail(): void&lt;br/&gt;- validateEmail(): void&lt;br/&gt;- LogOut(): void&lt;br/&gt;- eliminaAccount(): void&lt;br/&gt;- GoToMainMenu(): void&lt;br/&gt;- validateUsername(): void&lt;br/&gt;- changePassword(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; passwordField2: PasswordField&lt;br/&gt; PasswordField1: PasswordField&lt;br/&gt; button2: Button&lt;br/&gt; VisiblePasswordField1: TextField&lt;br/&gt; visiblePasswordField2: TextField&lt;br/&gt; button1: Button&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="36" y="1658" width="246" height="454" as="geometry" />
+    </mxCell>
+    <mxCell id="node18" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AddLibroLibreria&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ AddLibroLibreria(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- libCounts: Map&amp;lt;String, Integer&amp;gt;&lt;br/&gt;- libPresent: Map&amp;lt;String, Boolean&amp;gt;&lt;br/&gt;- libDates: Map&amp;lt;String, LocalDate&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# caricaFigliLibri(TreeItem&amp;lt;Object&amp;gt;, String): void&lt;br/&gt;# handleDoubleClick(Object): void&lt;br/&gt;- ExitApplication(): void&lt;br/&gt;+ setLibro(Libro, FXMLtype): void&lt;br/&gt;- handleAddBook(): void&lt;br/&gt;- initialize(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; libDates: Map&amp;lt;String, LocalDate&amp;gt;&lt;br/&gt; libCounts: Map&amp;lt;String, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; libPresent: Map&amp;lt;String, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="232" y="4224" width="335" height="362" as="geometry" />
+    </mxCell>
+    <mxCell id="node11" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AreaRiservata&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ AreaRiservata(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- initialize(): void&lt;br/&gt;- OpenCercaLibroAvanzato(): void&lt;br/&gt;- openImpostazioni(): void&lt;br/&gt;- OpenVisualizzaLibrerie(): void&lt;br/&gt;- LogOut(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="375" y="2259" width="248" height="172" as="geometry" />
+    </mxCell>
+    <mxCell id="node26" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CambiaPassword&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ CambiaPassword(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- VisiblePasswordField2: TextField&lt;br/&gt;- PasswordField2: PasswordField&lt;br/&gt;- VisiblePasswordField1: TextField&lt;br/&gt;- PasswordField1: PasswordField&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- enterControl(KeyEvent): void&lt;br/&gt;- validatePasswords(): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- cambiaPassword(): void&lt;br/&gt;- goBackAreaRiservata(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; PasswordField1: PasswordField&lt;br/&gt; PasswordField2: PasswordField&lt;br/&gt; button2: Button&lt;br/&gt; VisiblePasswordField1: TextField&lt;br/&gt; VisiblePasswordField2: TextField&lt;br/&gt; button1: Button&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="935" y="1681" width="248" height="408" as="geometry" />
+    </mxCell>
+    <mxCell id="node12" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CercaLibro&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ CercaLibro(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- MenuCercaAutore: MenuItem&lt;br/&gt;- limiterBox: MenuButton&lt;br/&gt;- MenuCercaTitolo: MenuItem&lt;br/&gt;- campoRicercaAnno: TextField&lt;br/&gt;- MenuTipoRicerca: MenuButton&lt;br/&gt;- MenuCercaAutoreAnno: MenuItem&lt;br/&gt;- campoRicerca: TextField&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- GoToMainMenu(): void&lt;br/&gt;- initialize(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; MenuCercaAutore: MenuItem&lt;br/&gt; SAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; campoRicerca: TextField&lt;br/&gt; STableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; MenuCercaAutoreAnno: MenuItem&lt;br/&gt; OAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; limiterBox: MenuButton&lt;br/&gt; SAggiungiAdvCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; OTitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; progressIndicator: ProgressIndicator&lt;br/&gt; MenuCercaTitolo: MenuItem&lt;br/&gt; OTableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; OActionCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; SAddRemCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; campoRicercaAnno: TextField&lt;br/&gt; MenuTipoRicerca: MenuButton&lt;br/&gt; searchType: boolean&lt;br/&gt; OAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; myFXMLtype: FXMLtype&lt;br/&gt; SAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; STitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; SRecensioniCol: TableColumn&amp;lt;Libro, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1871" y="4926" width="337" height="799" as="geometry" />
+    </mxCell>
+    <mxCell id="node3" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CercaLibroAvanzato&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ CercaLibroAvanzato(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- MenuCercaTitolo: MenuItem&lt;br/&gt;- MenuTipoRicerca: MenuButton&lt;br/&gt;- campoRicercaAnno: TextField&lt;br/&gt;- MenuCercaAutoreAnno: MenuItem&lt;br/&gt;- campoRicerca: TextField&lt;br/&gt;- limiterBox: MenuButton&lt;br/&gt;- searchType: boolean&lt;br/&gt;- MenuCercaAutore: MenuItem&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- GoToMainMenu(): void&lt;br/&gt;- setRicerca(): void&lt;br/&gt;- initialize(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; MenuCercaAutore: MenuItem&lt;br/&gt; SAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; campoRicerca: TextField&lt;br/&gt; STableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; MenuCercaAutoreAnno: MenuItem&lt;br/&gt; OAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; limiterBox: MenuButton&lt;br/&gt; SAggiungiAdvCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; OTitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; progressIndicator: ProgressIndicator&lt;br/&gt; MenuCercaTitolo: MenuItem&lt;br/&gt; OTableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; OActionCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; SAddRemCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; campoRicercaAnno: TextField&lt;br/&gt; MenuTipoRicerca: MenuButton&lt;br/&gt; searchType: boolean&lt;br/&gt; OAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; myFXMLtype: FXMLtype&lt;br/&gt; SAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; STitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; SRecensioniCol: TableColumn&amp;lt;Libro, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1671" y="3983" width="337" height="845" as="geometry" />
+    </mxCell>
+    <mxCell id="node16" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CliUtil&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- CliUtil(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- currentToken: Token&lt;br/&gt;- libService: LibInterface&lt;br/&gt;- logRegService: LogRegInterface&lt;br/&gt;- searchService: SearchInterface&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ buildStage(FXMLtype, FXMLtype, Object): void&lt;br/&gt;+ testConnection(): boolean&lt;br/&gt;+ createConfirmation(String, String, boolean): Alert&lt;br/&gt;+ LogOut(Exception): void&lt;br/&gt;+ softRestart(): void&lt;br/&gt;+ createAlert(String, String): Alert&lt;br/&gt;+ setStar(ImageView, ImageView, ImageView, ImageView, ImageView, float, STARtype): void&lt;br/&gt;+ setMonitorService(): void&lt;br/&gt;+ reviewLibUpdate(List&amp;lt;Integer&amp;gt;): void&lt;br/&gt;+ setServer(String, int): void&lt;br/&gt;+ init(Stage): void&lt;br/&gt;+ hannoDifferenze(List&amp;lt;Libro&amp;gt;, List&amp;lt;Libro&amp;gt;): boolean&lt;br/&gt;+ styleIconControl(Labeled): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; libService: LibInterface&lt;br/&gt; currentToken: Token&lt;br/&gt; logRegService: LogRegInterface&lt;br/&gt; instance: CliUtil&lt;br/&gt; searchService: SearchInterface&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-191" y="41" width="461" height="569" as="geometry" />
+    </mxCell>
+    <mxCell id="node13" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ClientListener&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ ClientListener(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ serverWillStop(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-50" y="-135" width="178" height="86" as="geometry" />
+    </mxCell>
+    <mxCell id="node17" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Connessione&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Connessione(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- conferma(): void&lt;br/&gt;- test(): void&lt;br/&gt;- resetLabel(): void&lt;br/&gt;- initialize(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="283" y="3111" width="153" height="149" as="geometry" />
+    </mxCell>
+    <mxCell id="node6" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CreaConsiglio&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ CreaConsiglio(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- MenuCercaAutoreAnno: MenuItem&lt;br/&gt;- myLibro: Libro&lt;br/&gt;- MenuCercaAutore: MenuItem&lt;br/&gt;- MenuCercaTitolo: MenuItem&lt;br/&gt;- limiterBox: MenuButton&lt;br/&gt;- campoRicerca: TextField&lt;br/&gt;- MenuTipoRicerca: MenuButton&lt;br/&gt;- campoRicercaAnno: TextField&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- GoToMainMenu(): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- salvaConsiglio(): void&lt;br/&gt;+ setLibro(Libro, FXMLtype): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; MenuCercaAutore: MenuItem&lt;br/&gt; SAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; campoRicerca: TextField&lt;br/&gt; STableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; MenuCercaAutoreAnno: MenuItem&lt;br/&gt; OAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; limiterBox: MenuButton&lt;br/&gt; SAggiungiAdvCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; OTitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; progressIndicator: ProgressIndicator&lt;br/&gt; MenuCercaTitolo: MenuItem&lt;br/&gt; OTableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; OActionCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; SAddRemCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; campoRicercaAnno: TextField&lt;br/&gt; MenuTipoRicerca: MenuButton&lt;br/&gt; searchType: boolean&lt;br/&gt; OAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; myFXMLtype: FXMLtype&lt;br/&gt; SAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; STitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; SRecensioniCol: TableColumn&amp;lt;Libro, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1271" y="3971" width="337" height="868" as="geometry" />
+    </mxCell>
+    <mxCell id="node9" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CreaLibreria&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ CreaLibreria(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- campoRicercaAnno: TextField&lt;br/&gt;- MenuTipoRicerca: MenuButton&lt;br/&gt;- MenuCercaAutore: MenuItem&lt;br/&gt;- MenuCercaAutoreAnno: MenuItem&lt;br/&gt;- limiterBox: MenuButton&lt;br/&gt;- campoRicerca: TextField&lt;br/&gt;- MenuCercaTitolo: MenuItem&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- initialize(): void&lt;br/&gt;- SalvaLibreria(): void&lt;br/&gt;- ExitApplication(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; MenuCercaAutore: MenuItem&lt;br/&gt; SAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; campoRicerca: TextField&lt;br/&gt; STableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; MenuCercaAutoreAnno: MenuItem&lt;br/&gt; OAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; limiterBox: MenuButton&lt;br/&gt; SAggiungiAdvCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; OTitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; progressIndicator: ProgressIndicator&lt;br/&gt; MenuCercaTitolo: MenuItem&lt;br/&gt; OTableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; OActionCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; SAddRemCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; campoRicercaAnno: TextField&lt;br/&gt; MenuTipoRicerca: MenuButton&lt;br/&gt; searchType: boolean&lt;br/&gt; OAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; myFXMLtype: FXMLtype&lt;br/&gt; SAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; STitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; SRecensioniCol: TableColumn&amp;lt;Libro, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1471" y="4914" width="337" height="822" as="geometry" />
+    </mxCell>
+    <mxCell id="node0" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CreaValutazione&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ CreaValutazione(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- resetMessaggioErrore(): void&lt;br/&gt;- aggiornaStelle(int, List&amp;lt;ImageView&amp;gt;): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- exitApplication(): void&lt;br/&gt;- configuraValutazione(List&amp;lt;ImageView&amp;gt;, Label): void&lt;br/&gt;+ setLibro(Libro, FXMLtype): void&lt;br/&gt;- SalvaValutazione(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="415" y="5216" width="368" height="218" as="geometry" />
+    </mxCell>
+    <mxCell id="node2" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;DettaglioLibro&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ DettaglioLibro(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- clickValutazione(MouseEvent): void&lt;br/&gt;- clickConsiglio(MouseEvent): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; libro: Libro&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="847" y="3121" width="264" height="139" as="geometry" />
+    </mxCell>
+    <mxCell id="node8" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;FXMLtype&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- FXMLtype(String, String): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- path: String&lt;br/&gt;- title: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ values(): FXMLtype[]&lt;br/&gt;+ valueOf(String): FXMLtype&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; path: String&lt;br/&gt; title: String&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1715" y="2245" width="208" height="201" as="geometry" />
+    </mxCell>
+    <mxCell id="node10" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GestioneLibrerie&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ GestioneLibrerie(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- libDates: Map&amp;lt;String, LocalDate&amp;gt;&lt;br/&gt;- libCounts: Map&amp;lt;String, Integer&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- creaLibreria(): void&lt;br/&gt;# handleDoubleClick(Object): void&lt;br/&gt;- ExitApplication(): void&lt;br/&gt;- cambiaNome(): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- createMenuLibrerieActions(TreeTableCell&amp;lt;Object, Void&amp;gt;): MenuButton&lt;br/&gt;- createMenuBookActions(TreeTableCell&amp;lt;Object, Void&amp;gt;): MenuButton&lt;br/&gt;- setupCheckColumn(TreeTableColumn&amp;lt;Object, Boolean&amp;gt;, Function&amp;lt;LibroRow, BooleanProperty&amp;gt;): void&lt;br/&gt;# caricaFigliLibri(TreeItem&amp;lt;Object&amp;gt;, String): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; libDates: Map&amp;lt;String, LocalDate&amp;gt;&lt;br/&gt; libCounts: Map&amp;lt;String, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; menuButtonStyle: MenuButton&lt;br/&gt; libPresent: Map&amp;lt;String, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-203" y="5110" width="484" height="431" as="geometry" />
+    </mxCell>
+    <mxCell id="node28" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Holder&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Holder(): &lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-132" y="718" width="103" height="58" as="geometry" />
+    </mxCell>
+    <mxCell id="node5" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Home&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Home(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- OpenLoginPage(): void&lt;br/&gt;- OpenSignUpPage(): void&lt;br/&gt;- OpenCercaLibroBasePage(): void&lt;br/&gt;- initialize(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="533" y="3111" width="252" height="149" as="geometry" />
+    </mxCell>
+    <mxCell id="node4" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;IMGtype&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- IMGtype(String): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ values(): IMGtype[]&lt;br/&gt;+ valueOf(String): IMGtype&lt;br/&gt;+ getImageView(double, double): ImageView&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; image: Image&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="684" y="1349" width="310" height="152" as="geometry" />
+    </mxCell>
+    <mxCell id="node29" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;LibroRow&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ LibroRow(Libro, boolean, boolean, LocalDate, LocalDate): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- libro: Libro&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ lastConsDateProperty(): ObjectProperty&amp;lt;LocalDate&amp;gt;&lt;br/&gt;+ hasConsiglio(): boolean&lt;br/&gt;+ titoloProperty(): StringProperty&lt;br/&gt;+ hasValutazione(): boolean&lt;br/&gt;+ hasValutazioneProperty(): BooleanProperty&lt;br/&gt;+ hasConsiglioProperty(): BooleanProperty&lt;br/&gt;+ lastValDateProperty(): ObjectProperty&amp;lt;LocalDate&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; libro: Libro&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1036" y="2210" width="406" height="270" as="geometry" />
+    </mxCell>
+    <mxCell id="node15" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Login&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Login(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- GoToRegisterPage(MouseEvent): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- TryLogin(): void&lt;br/&gt;- EnterController(KeyEvent): void&lt;br/&gt;- GoBackMainMenu(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; passwordField2: PasswordField&lt;br/&gt; passwordField1: PasswordField&lt;br/&gt; button2: Button&lt;br/&gt; visiblePasswordField2: TextField&lt;br/&gt; visiblePasswordField1: TextField&lt;br/&gt; button1: Button&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="459" y="1729" width="281" height="313" as="geometry" />
+    </mxCell>
+    <mxCell id="node22" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Main_Client&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Main_Client(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ start(Stage): void&lt;br/&gt;+ main(String[]): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-203" y="3134" width="164" height="111" as="geometry" />
+    </mxCell>
+    <mxCell id="node24" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ModificaConsiglio&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ ModificaConsiglio(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- myLibro: Libro&lt;br/&gt;- campoRicerca: TextField&lt;br/&gt;- MenuCercaAutore: MenuItem&lt;br/&gt;- limiterBox: MenuButton&lt;br/&gt;- MenuCercaAutoreAnno: MenuItem&lt;br/&gt;- MenuCercaTitolo: MenuItem&lt;br/&gt;- campoRicercaAnno: TextField&lt;br/&gt;- MenuTipoRicerca: MenuButton&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- GoToMainMenu(): void&lt;br/&gt;- eliminaConsigli(): void&lt;br/&gt;- salvaConsiglio(): void&lt;br/&gt;+ setLibro(Libro, FXMLtype): void&lt;br/&gt;- initialize(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; MenuCercaAutore: MenuItem&lt;br/&gt; SAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; campoRicerca: TextField&lt;br/&gt; STableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; MenuCercaAutoreAnno: MenuItem&lt;br/&gt; OAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; limiterBox: MenuButton&lt;br/&gt; SAggiungiAdvCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; OTitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; progressIndicator: ProgressIndicator&lt;br/&gt; MenuCercaTitolo: MenuItem&lt;br/&gt; OTableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; OActionCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; SAddRemCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; campoRicercaAnno: TextField&lt;br/&gt; MenuTipoRicerca: MenuButton&lt;br/&gt; searchType: boolean&lt;br/&gt; OAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; myFXMLtype: FXMLtype&lt;br/&gt; SAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; STitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; SRecensioniCol: TableColumn&amp;lt;Libro, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="991" y="4880" width="337" height="891" as="geometry" />
+    </mxCell>
+    <mxCell id="node19" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ModificaLibreria&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ ModificaLibreria(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- campoRicercaAnno: TextField&lt;br/&gt;- limiterBox: MenuButton&lt;br/&gt;- MenuCercaTitolo: MenuItem&lt;br/&gt;- campoRicerca: TextField&lt;br/&gt;- MenuTipoRicerca: MenuButton&lt;br/&gt;- MenuCercaAutoreAnno: MenuItem&lt;br/&gt;- MenuCercaAutore: MenuItem&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- ExitApplication(): void&lt;br/&gt;- eliminaLibreria(): void&lt;br/&gt;- cambiaNome(): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- SalvaLibreria(): void&lt;br/&gt;- saveFlag(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; MenuCercaAutore: MenuItem&lt;br/&gt; SAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; campoRicerca: TextField&lt;br/&gt; STableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; MenuCercaAutoreAnno: MenuItem&lt;br/&gt; OAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; limiterBox: MenuButton&lt;br/&gt; SAggiungiAdvCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; OTitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; progressIndicator: ProgressIndicator&lt;br/&gt; MenuCercaTitolo: MenuItem&lt;br/&gt; OTableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; OActionCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; SAddRemCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; campoRicercaAnno: TextField&lt;br/&gt; MenuTipoRicerca: MenuButton&lt;br/&gt; searchType: boolean&lt;br/&gt; OAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; myFXMLtype: FXMLtype&lt;br/&gt; SAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; STitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; libreria: String&lt;br/&gt; SRecensioniCol: TableColumn&amp;lt;Libro, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="2071" y="3948" width="337" height="914" as="geometry" />
+    </mxCell>
+    <mxCell id="node7" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ModificaValutazione&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ ModificaValutazione(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- ExitApplication(): void&lt;br/&gt;- setModified(): void&lt;br/&gt;- updateStars(List&amp;lt;ImageView&amp;gt;, float): void&lt;br/&gt;+ setValutazione(Valutazione, FXMLtype): void&lt;br/&gt;- configureInteractive(List&amp;lt;ImageView&amp;gt;, Label, Runnable): void&lt;br/&gt;- eliminaValutazione(): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- salvaModifiche(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="627" y="4285" width="425" height="241" as="geometry" />
+    </mxCell>
+    <mxCell id="node23" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PasswordEngine&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ PasswordEngine(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- showP2(): void&lt;br/&gt;# initP1(): void&lt;br/&gt;# initP2(): void&lt;br/&gt;- showP1(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; passwordField2: PasswordField&lt;br/&gt; passwordField1: PasswordField&lt;br/&gt; button2: Button&lt;br/&gt; visiblePasswordField2: TextField&lt;br/&gt; visiblePasswordField1: TextField&lt;br/&gt; button1: Button&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="36" y="820" width="246" height="290" as="geometry" />
+    </mxCell>
+    <mxCell id="node20" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Registrazione&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Registrazione(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- PasswordField2: PasswordField&lt;br/&gt;- VisiblePasswordField1: TextField&lt;br/&gt;- PasswordField1: PasswordField&lt;br/&gt;- VisiblePasswordField2: TextField&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- RegAction(KeyEvent): void&lt;br/&gt;- GoToLoginPage(): void&lt;br/&gt;- TryReg(): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- GoBackMainMenu(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; PasswordField1: PasswordField&lt;br/&gt; PasswordField2: PasswordField&lt;br/&gt; button2: Button&lt;br/&gt; VisiblePasswordField1: TextField&lt;br/&gt; VisiblePasswordField2: TextField&lt;br/&gt; button1: Button&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="315" y="1221" width="248" height="408" as="geometry" />
+    </mxCell>
+    <mxCell id="node27" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;STARtype&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- STARtype(IMGtype[]): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ values(): STARtype[]&lt;br/&gt;+ getStar(int): IMGtype&lt;br/&gt;+ valueOf(String): STARtype&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="715" y="2282" width="208" height="158" as="geometry" />
+    </mxCell>
+    <mxCell id="node25" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TableViewEngine&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ TableViewEngine(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- inLib: Map&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt;- searchType: String&lt;br/&gt;- hasCon: Map&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt;- hasRec: Map&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt;- hasVal: Map&amp;lt;Libro, Boolean&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- validateYear(String): boolean&lt;br/&gt;- keyEnterPressed_2(KeyEvent): void&lt;br/&gt;- keyEnterPressed_1(KeyEvent): void&lt;br/&gt;# initOActionCol(): void&lt;br/&gt;# initBasicSearch(): void&lt;br/&gt;- searchByAuthor(String): List&amp;lt;Libro&amp;gt;&lt;br/&gt;- menuAzioni(TableView&amp;lt;Libro&amp;gt;, int): MenuButton&lt;br/&gt;# initForConsigli(): void&lt;br/&gt;# initSAggiungiAdvCol(): void&lt;br/&gt;# initLimiter(): void&lt;br/&gt;# initSRecensioniCol(): void&lt;br/&gt;# initOTableView(): void&lt;br/&gt;# initTableViews(): void&lt;br/&gt;- containsLibro(List&amp;lt;Libro&amp;gt;, Libro): boolean&lt;br/&gt;- switchType(String, String): void&lt;br/&gt;- handleClickCerca(): void&lt;br/&gt;- getMenuItem(TableView&amp;lt;Libro&amp;gt;, int): MenuItem&lt;br/&gt;# initSAddRemCol(): void&lt;br/&gt;- searchByTitle(String): List&amp;lt;Libro&amp;gt;&lt;br/&gt;- searchByAuthorAndYear(String, int): List&amp;lt;Libro&amp;gt;&lt;br/&gt;- getAllBooks(): void&lt;br/&gt;- initRows(): TableRow&amp;lt;Libro&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; campoRicerca: TextField&lt;br/&gt; menuCercaAutoreAnno: MenuItem&lt;br/&gt; STableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; OAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; OTitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; OTableView: TableView&amp;lt;Libro&amp;gt;&lt;br/&gt; SAddRemCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; OAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; searchType: boolean&lt;br/&gt; myLibro: Libro&lt;br/&gt; STitoloCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; SRecensioniCol: TableColumn&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt; menuCercaAutore: MenuItem&lt;br/&gt; SAnnoCol: TableColumn&amp;lt;Libro, Integer&amp;gt;&lt;br/&gt; libriP: List&amp;lt;Libro&amp;gt;&lt;br/&gt; menuCercaTitolo: MenuItem&lt;br/&gt; limiterBox: MenuButton&lt;br/&gt; SAggiungiAdvCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; hasRec: Map&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt; progressIndicator: ProgressIndicator&lt;br/&gt; OActionCol: TableColumn&amp;lt;Libro, Void&amp;gt;&lt;br/&gt; hasCon: Map&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt; campoRicercaAnno: TextField&lt;br/&gt; myFXMLtype: FXMLtype&lt;br/&gt; menuTipoRicerca: MenuButton&lt;br/&gt; SAutoreCol: TableColumn&amp;lt;Libro, String&amp;gt;&lt;br/&gt; hasVal: Map&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt; inLib: Map&amp;lt;Libro, Boolean&amp;gt;&lt;br/&gt; maxResults: int&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1867" y="2510" width="345" height="1351" as="geometry" />
+    </mxCell>
+    <mxCell id="node14" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TreeTableEngine&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ TreeTableEngine(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# creaFigliLibri(String): void&lt;br/&gt;# handleDoubleClick(Object): void&lt;br/&gt;# caricaFigliLibri(TreeItem&amp;lt;Object&amp;gt;, String): void&lt;br/&gt;# loadLibraries(): void&lt;br/&gt;# loadSimple(TreeTableColumn&amp;lt;Object, T&amp;gt;, Map&amp;lt;String, T&amp;gt;): void&lt;br/&gt;# initializeTree(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; libDates: Map&amp;lt;String, LocalDate&amp;gt;&lt;br/&gt; libCounts: Map&amp;lt;String, Integer&amp;gt;&lt;br/&gt; myLibro: Libro&lt;br/&gt; libPresent: Map&amp;lt;String, Boolean&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1356" y="3040" width="446" height="290" as="geometry" />
+    </mxCell>
+    <mxCell id="node21" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;VisualizzaValutazione&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ VisualizzaValutazione(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- displayGroup(ImageView[], Label, String, Label, float, String, STARtype): void&lt;br/&gt;- initialize(): void&lt;br/&gt;- exitApplication(): void&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt; valutazione: Valutazione&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-98" y="2269" width="435" height="152" as="geometry" />
+    </mxCell>
+    <mxCell id="edge9" edge="1" value="" parent="1" source="node1" target="node23" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge18" edge="1" value="" parent="1" source="node18" target="node8" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=diamondThinstartSize=12;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.750;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="483" y="3945" />
+          <mxPoint x="1079" y="3945" />
+          <mxPoint x="1079" y="3345" />
+          <mxPoint x="1819" y="3345" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label108" parent="edge18" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="472" y="4168" as="geometry" />
+    </mxCell>
+    <mxCell id="label112" parent="edge18" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1808" y="2451" as="geometry" />
+    </mxCell>
+    <mxCell id="label113" parent="edge18" vertex="1" connectable="0" value="odlFXML" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1819" y="2885" as="geometry" />
+    </mxCell>
+    <mxCell id="edge5" edge="1" value="" parent="1" source="node18" target="node14" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.250;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="315" y="4185" />
+          <mxPoint x="319" y="4185" />
+          <mxPoint x="319" y="3365" />
+          <mxPoint x="1579" y="3365" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge4" edge="1" value="" parent="1" source="node26" target="node23" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1059" y="1185" />
+          <mxPoint x="159" y="1185" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge1" edge="1" value="" parent="1" source="node12" target="node25" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge10" edge="1" value="" parent="1" source="node3" target="node25" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1839" y="3925" />
+          <mxPoint x="2039" y="3925" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge22" edge="1" value="" parent="1" source="node16" target="node13" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=1;startArrow=none;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.001;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label134" parent="edge22" vertex="1" connectable="0" value="«create»" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="-11" y="-41" as="geometry" />
+    </mxCell>
+    <mxCell id="edge16" edge="1" value="" parent="1" source="node6" target="node8" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=diamondThinstartSize=12;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.250;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1355" y="3945" />
+          <mxPoint x="1079" y="3945" />
+          <mxPoint x="1079" y="3345" />
+          <mxPoint x="1819" y="3345" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label96" parent="edge16" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1211" y="3925" as="geometry" />
+    </mxCell>
+    <mxCell id="label100" parent="edge16" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1808" y="2735" as="geometry" />
+    </mxCell>
+    <mxCell id="label101" parent="edge16" vertex="1" connectable="0" value="oldFXMLType" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1819" y="2451" as="geometry" />
+    </mxCell>
+    <mxCell id="edge3" edge="1" value="" parent="1" source="node6" target="node25" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.750;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1523" y="3925" />
+          <mxPoint x="2039" y="3925" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge6" edge="1" value="" parent="1" source="node9" target="node25" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1639" y="3925" />
+          <mxPoint x="2039" y="3925" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge24" edge="1" value="" parent="1" source="node0" target="node8" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=diamondThinstartSize=12;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="599" y="3945" />
+          <mxPoint x="1079" y="3945" />
+          <mxPoint x="1079" y="3345" />
+          <mxPoint x="1819" y="3345" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label144" parent="edge24" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="588" y="5191" as="geometry" />
+    </mxCell>
+    <mxCell id="label148" parent="edge24" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1808" y="2585" as="geometry" />
+    </mxCell>
+    <mxCell id="label149" parent="edge24" vertex="1" connectable="0" value="oldFXMLType" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1819" y="3185" as="geometry" />
+    </mxCell>
+    <mxCell id="edge17" edge="1" value="" parent="1" source="node10" target="node29" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=1;startArrow=none;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.167;exitY=0.000;exitDx=0;exitDy=0;entryX=0.250;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="-122" y="3385" />
+          <mxPoint x="1138" y="3385" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label104" parent="edge17" vertex="1" connectable="0" value="«create»" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="231" y="3365" as="geometry" />
+    </mxCell>
+    <mxCell id="edge0" edge="1" value="" parent="1" source="node10" target="node14" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.833;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="200" y="4185" />
+          <mxPoint x="319" y="4185" />
+          <mxPoint x="319" y="3365" />
+          <mxPoint x="1579" y="3365" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge14" edge="1" value="" parent="1" source="node28" target="node16" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=circlePlus;startFill=0;endArrow=none;strokeColor=#820000;exitX=0.500;exitY=0.001;exitDx=0;exitDy=0;entryX=0.250;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="-81" y="685" />
+          <mxPoint x="-76" y="685" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge15" edge="1" value="" parent="1" source="node28" target="node16" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=1;startArrow=none;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.167;exitY=0.001;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="-115" y="685" />
+          <mxPoint x="-221" y="685" />
+          <mxPoint x="-221" y="5" />
+          <mxPoint x="39" y="5" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label92" parent="edge15" vertex="1" connectable="0" value="«create»" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="-271" y="335" as="geometry" />
+    </mxCell>
+    <mxCell id="edge23" edge="1" value="" parent="1" source="node28" target="node16" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=diamondThinstartSize=12;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.833;exitY=0.001;exitDx=0;exitDy=0;entryX=0.750;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="-47" y="685" />
+          <mxPoint x="154" y="685" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label138" parent="edge23" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="-58" y="692" as="geometry" />
+    </mxCell>
+    <mxCell id="label142" parent="edge23" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="143" y="615" as="geometry" />
+    </mxCell>
+    <mxCell id="label143" parent="edge23" vertex="1" connectable="0" value="INSTANCE" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="154" y="615" as="geometry" />
+    </mxCell>
+    <mxCell id="edge13" edge="1" value="" parent="1" source="node29" target="node10" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=circlePlus;startFill=0;endArrow=none;strokeColor=#820000;exitX=0.750;exitY=1.000;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1341" y="3905" />
+          <mxPoint x="39" y="3905" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge7" edge="1" value="" parent="1" source="node15" target="node23" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="599" y="1185" />
+          <mxPoint x="159" y="1185" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge20" edge="1" value="" parent="1" source="node24" target="node8" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=diamondThinstartSize=12;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.250;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1075" y="3945" />
+          <mxPoint x="1079" y="3945" />
+          <mxPoint x="1079" y="3345" />
+          <mxPoint x="1819" y="3345" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label120" parent="edge20" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1064" y="4855" as="geometry" />
+    </mxCell>
+    <mxCell id="label124" parent="edge20" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1808" y="2885" as="geometry" />
+    </mxCell>
+    <mxCell id="label125" parent="edge20" vertex="1" connectable="0" value="oldFXMLType" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1819" y="2735" as="geometry" />
+    </mxCell>
+    <mxCell id="edge2" edge="1" value="" parent="1" source="node24" target="node25" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.750;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1243" y="3925" />
+          <mxPoint x="2039" y="3925" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge11" edge="1" value="" parent="1" source="node19" target="node25" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="2239" y="3925" />
+          <mxPoint x="2039" y="3925" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge21" edge="1" value="" parent="1" source="node7" target="node8" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=diamondThinstartSize=12;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="839" y="3945" />
+          <mxPoint x="1079" y="3945" />
+          <mxPoint x="1079" y="3345" />
+          <mxPoint x="1819" y="3345" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label126" parent="edge21" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="828" y="4260" as="geometry" />
+    </mxCell>
+    <mxCell id="label130" parent="edge21" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1768" y="2585" as="geometry" />
+    </mxCell>
+    <mxCell id="label131" parent="edge21" vertex="1" connectable="0" value="oldFXMLType" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="1819" y="2585" as="geometry" />
+    </mxCell>
+    <mxCell id="edge8" edge="1" value="" parent="1" source="node20" target="node23" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="439" y="1185" />
+          <mxPoint x="159" y="1185" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge12" edge="1" value="" parent="1" source="node27" target="node4" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=circlePlus;startFill=0;endArrow=none;strokeColor=#820000;exitX=0.250;exitY=0.000;exitDx=0;exitDy=0;entryX=0.250;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="767" y="2245" />
+          <mxPoint x="762" y="2245" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge19" edge="1" value="" parent="1" source="node27" target="node4" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=diamondThinstartSize=12;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.750;exitY=0.000;exitDx=0;exitDy=0;entryX=0.750;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="871" y="2245" />
+          <mxPoint x="917" y="2245" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="label114" parent="edge19" vertex="1" connectable="0" value="1" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="860" y="2254" as="geometry" />
+    </mxCell>
+    <mxCell id="label118" parent="edge19" vertex="1" connectable="0" value="*" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="908" y="1506" as="geometry" />
+    </mxCell>
+    <mxCell id="label119" parent="edge19" vertex="1" connectable="0" value="stars" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=top;strokeColor=default;">
+      <mxGeometry x="917" y="1506" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel>
