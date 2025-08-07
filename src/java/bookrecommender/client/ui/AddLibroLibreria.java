@@ -56,8 +56,12 @@ public class AddLibroLibreria extends TreeTableEngine {
     private final Map<String, LocalDate> libDates = new HashMap<>();
 
     /**
-     * Metodo di inizializzazione della GUI. Carica le librerie dell'utente,
-     * imposta il comportamento delle colonne e i listener per la selezione.
+     * Inizializza la schermata e la {@code TreeTableView} delle librerie.
+     * <p>
+     * Configura le colonne della tabella, assegna le icone grafiche e
+     * imposta i listener di selezione. Carica i dati delle librerie
+     * dall'utente autenticato.
+     * </p>
      */
     @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
@@ -65,7 +69,6 @@ public class AddLibroLibreria extends TreeTableEngine {
         titoloLibreria.setText("Le tue librerie");
         initializeTree();
 
-        // Colonna con nomi librerie e titoli libro
         //TODO: css name column
         nameColumn.setStyle("-fx-alignment: CENTER;");
         nameColumn.setCellValueFactory(c -> {
@@ -77,12 +80,10 @@ public class AddLibroLibreria extends TreeTableEngine {
             return new ReadOnlyStringWrapper("");
         });
 
-        // Caricamento colonne semplici (conteggio, date, presenza)
         loadSimple(countColumn,libCounts);
         loadSimple(dateColumn, libDates);
         loadSimple(presentColumn, libPresent);
 
-        // Icone visive per colonna "presente"
         //TODO: presentColumn style
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
             @Override
@@ -95,7 +96,6 @@ public class AddLibroLibreria extends TreeTableEngine {
             }
         });
 
-        // Listener su selezione libreria
         treeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null && newSel.getValue() instanceof String nomeLib) {
                 addButton.setDisable(libPresent.getOrDefault(nomeLib, true));
@@ -140,11 +140,21 @@ public class AddLibroLibreria extends TreeTableEngine {
         return libDates;
     }
 
+    /**
+     * Restituisce una mappa che indica se il libro è presente in ciascuna libreria.
+     *
+     * @return mappa nome libreria → stato di presenza del libro
+     */
     @Override
     protected Map<String, Boolean> getLibPresent() {
         return libPresent;
     }
 
+    /**
+     * Restituisce il libro da aggiungere alle librerie.
+     *
+     * @return il libro da aggiungere
+     */
     @Override
     protected Libro getMyLibro() {
         return libro;
@@ -173,9 +183,11 @@ public class AddLibroLibreria extends TreeTableEngine {
     }
 
     /**
-     * Imposta il {@link Libro} da aggiungere alle librerie.
+     * Imposta il libro da aggiungere e la schermata da cui è stato chiamato il controller.
+     * <p>Ricarica le librerie aggiornando la visualizzazione.</p>
      *
-     * @param libro libro da aggiungere
+     * @param libro    Il libro da aggiungere
+     * @param odlFXML  La schermata precedente da riaprire al termine
      */
     public void setLibro(Libro libro, FXMLtype odlFXML) {
         this.odlFXML = odlFXML;
@@ -184,8 +196,11 @@ public class AddLibroLibreria extends TreeTableEngine {
     }
 
     /**
-     * Gestisce il click sul bottone "Aggiungi".
-     * Aggiunge il libro alla libreria selezionata e aggiorna il server remoto.
+     * Gestisce l'aggiunta del libro alla libreria selezionata.
+     * <p>
+     * Esegue l'aggiornamento remoto della libreria e mostra
+     * un messaggio di conferma o errore in base al risultato.
+     * </p>
      */
     @FXML
     private void handleAddBook() {
@@ -207,7 +222,8 @@ public class AddLibroLibreria extends TreeTableEngine {
     }
 
     /**
-     * Chiude la finestra corrente senza eseguire modifiche.
+     * Chiude la schermata corrente e ritorna alla schermata precedente,
+     * senza effettuare modifiche alle librerie.
      */
     @FXML
     private void ExitApplication() {

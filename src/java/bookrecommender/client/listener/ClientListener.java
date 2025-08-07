@@ -60,11 +60,7 @@ public class ClientListener extends UnicastRemoteObject implements ServerListene
                     s.close();
                 }
             });
-
-            // Crea dialogo informativo
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Il server sta per chiudere.\nVuoi ritentare la connessione?", ButtonType.OK, ButtonType.CLOSE);
-
-            // Imposta icona personalizzata
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             ImageView imageView = new ImageView(IMGtype.INFO.getImage());
             imageView.setFitHeight(48);
@@ -73,8 +69,6 @@ public class ClientListener extends UnicastRemoteObject implements ServerListene
             stage.getIcons().setAll(imageView.getImage());
             alert.setTitle("Server Shutdown");
             alert.showAndWait();
-
-            // Gestione della scelta dell’utente
             if(alert.getResult() == ButtonType.OK) {
                 CliUtil.getInstance().softRestart();
             } else {

@@ -17,6 +17,7 @@ import javafx.stage.Stage;
  * </p>
  * <p>
  * Alla chiusura della finestra, l'applicazione viene terminata.
+ * </p>
  */
 public class Connessione {
 

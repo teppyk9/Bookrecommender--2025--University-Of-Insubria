@@ -15,11 +15,12 @@ import javafx.stage.Stage;
  * <p>
  * Permette all’utente di cercare libri per titolo, autore o anno,
  * e visualizzare i risultati in una {@link TableView}.
- * I risultati includono una colonna per accedere alle recensioni.
+ * I risultati includono una colonna con pulsanti per accedere alle recensioni.
  * </p>
  * <p>
  * Estende {@link TableViewEngine} per riutilizzare la logica comune
- * alle ricerche tabellari presenti nell'applicazione.
+ * alle ricerche tabellari dell'applicazione.
+ * </p>
  */
 public class CercaLibro extends TableViewEngine {
 
@@ -41,11 +42,12 @@ public class CercaLibro extends TableViewEngine {
     @FXML private TableColumn<Libro, Boolean> recensioniCol;
 
     /**
-     * Inizializza la schermata:
+     * Inizializza la schermata e i componenti grafici.
      * <ul>
-     *     <li>Configura la logica base di ricerca</li>
-     *     <li>Inizializza la colonna delle recensioni</li>
-     *     <li>Imposta la chiusura dell'applicazione con {@code System.exit}</li>
+     *     <li>Configura i bottoni e le icone</li>
+     *     <li>Inizializza la logica di ricerca semplice</li>
+     *     <li>Prepara le colonne della tabella, comprese quelle con recensioni</li>
+     *     <li>Registra un handler per la chiusura forzata dell'applicazione</li>
      * </ul>
      */
     @FXML private void initialize() {
@@ -217,11 +219,16 @@ public class CercaLibro extends TableViewEngine {
         return FXMLtype.CERCA;
     }
 
+    /** Indicatore di caricamento per operazioni asincrone.
+     * @return l'indicatore di questa interfaccia*/
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
     }
 
+    /**
+     * @return Menu per limitare il numero di risultati mostrati.
+     */
     @Override
     protected MenuButton getLimiterBox() {
         return limiterBox;

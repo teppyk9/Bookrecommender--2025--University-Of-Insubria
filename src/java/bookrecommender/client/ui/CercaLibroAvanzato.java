@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  * Controller JavaFX per la schermata di ricerca avanzata dei libri.
  * <p>
  * Consente di cercare libri per:
+ * <ul>
  *     <li>Titolo</li>
  *     <li>Autore</li>
  *     <li>Autore e anno</li>
@@ -25,7 +26,7 @@ import javafx.stage.Stage;
  *     <li>Colonna per accedere alle recensioni</li>
  *     <li>Bottone per aggiungere libri</li>
  * </ul>
- * Estende {@link TableViewEngine} per ereditare la logica di gestione tabelle e ricerca.
+ * Estende {@link TableViewEngine} per ereditare la logica di gestione delle tabelle e della ricerca.
  */
 public class CercaLibroAvanzato extends TableViewEngine {
 
@@ -53,9 +54,10 @@ public class CercaLibroAvanzato extends TableViewEngine {
     /**
      * Inizializza la GUI al momento del caricamento FXML.
      * <ul>
-     *     <li>Imposta i menu e le colonne della tabella</li>
-     *     <li>Configura il controllo per visualizzare la presenza del libro nelle librerie</li>
-     *     <li>Registra il comportamento di chiusura dell'app (logout automatico)</li>
+     *     <li>Imposta icone e stile dei pulsanti</li>
+     *     <li>Configura la tabella e le colonne (inclusa la presenza del libro nelle librerie)</li>
+     *     <li>Inizializza i componenti base per la ricerca</li>
+     *     <li>Registra il comportamento di chiusura forzata con logout</li>
      * </ul>
      */
     @FXML private void initialize() {
@@ -224,11 +226,20 @@ public class CercaLibroAvanzato extends TableViewEngine {
         return FXMLtype.CERCA_AVANZATO;
     }
 
+    /**
+     * @return l'indicatore di progresso di questa interfaccia
+     */
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
     }
 
+    /**
+     * Restituisce il menu per la selezione del tipo di limitazione dei risultati.
+     * Utilizzato per filtrare i risultati della ricerca in base a criteri specifici.
+     *
+     * @return il menu di limitazione
+     */
     @Override
     protected MenuButton getLimiterBox() {return limiterBox;}
 

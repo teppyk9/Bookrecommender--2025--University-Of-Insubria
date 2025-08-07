@@ -16,23 +16,23 @@ import javafx.stage.Stage;
  * <ul>
  *     <li>Accedere alla ricerca avanzata dei libri</li>
  *     <li>Gestire le proprie librerie personali</li>
+ *     <li>Accedere alle impostazioni dell'account</li>
  *     <li>Effettuare il logout</li>
  * </ul>
- * In fase di chiusura della finestra, viene effettuata automaticamente la disconnessione dell'utente dal server remoto.
+ * Alla chiusura della finestra viene automaticamente effettuata
+ * la disconnessione dell'utente dal server remoto.
  * </p>
  */
 public class AreaRiservata {
-    /** Bottone per effettuare il logout e tornare alla schermata principale */
     @FXML private Button BottoneLogOut;
-
-    /** Bottone per accedere alle impostazioni dell'account */
     @FXML private Button impostazioniButton;
 
     /**
-     * Inizializza il comportamento della finestra.
+     * Inizializza la finestra dell'area riservata.
      * <p>
-     * Registra un handler sulla chiusura del {@link Stage} principale per
-     * effettuare correttamente il logout e terminare l'applicazione.
+     * Imposta le icone sui pulsanti e registra un handler di chiusura
+     * sullo {@link Stage} corrente per effettuare il logout automatico
+     * alla chiusura della finestra.
      * </p>
      */
     @FXML private void initialize() {
@@ -76,6 +76,12 @@ public class AreaRiservata {
         CliUtil.getInstance().LogOut(null);
     }
 
+    /**
+     * Apre la schermata delle impostazioni dell'account utente.
+     * <p>
+     * Consente all'utente di modificare le proprie informazioni e preferenze.
+     * </p>
+     */
     @FXML private void openImpostazioni() {
         CliUtil.getInstance().buildStage(FXMLtype.ACCOUNT, null,null);
     }

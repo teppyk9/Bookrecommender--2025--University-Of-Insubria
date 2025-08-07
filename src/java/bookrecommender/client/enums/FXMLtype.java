@@ -41,7 +41,7 @@ public enum FXMLtype {
     CERCA("/bookrecommender/client/fxml/CercaLibro.fxml", "Cerca Libro"),
 
     /**
-     * Ricerca avanzata con filtri specifici.
+     * Ricerca avanzata con filtri specifici, riservata agli utenti autenticati.
      */
     CERCA_AVANZATO("/bookrecommender/client/fxml/CercaLibroAvanzato.fxml", "Cerca Libro"),
 
@@ -96,10 +96,14 @@ public enum FXMLtype {
     MODIFICAVALUTAZIONE("/bookrecommender/client/fxml/ModificaValutazione.fxml", "Modifica Valutazione"),
 
     /**
-     * Schermata per modificare la password dell'utente o per eliminare l'account.
+     * Schermata per modificare la password dell'utente.
      */
     CAMBIAPASSWORD("/bookrecommender/client/fxml/CambiaPassword.fxml", "CambiaPassword"),
 
+
+    /**
+     * Schermata per visualizzare le informazioni del profilo utente e modificarle.
+     */
     ACCOUNT("/bookrecommender/client/fxml/Account.fxml", "Account");
 
 
