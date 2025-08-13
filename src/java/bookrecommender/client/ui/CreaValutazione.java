@@ -7,10 +7,8 @@ import bookrecommender.common.model.Libro;
 import bookrecommender.common.model.Valutazione;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -44,7 +42,7 @@ public class CreaValutazione {
     @FXML private Label votoStile;
 
     /** Campo testuale per commentare lo stile*/
-    @FXML private TextField testoStile;
+    @FXML private TextArea testoStile;
 
     /** Stelle cliccabili per la valutazione del "Contenuto"*/
     @FXML private ImageView starContenuto1;
@@ -57,7 +55,7 @@ public class CreaValutazione {
     @FXML private Label votoContenuto;
 
     /** Campo testuale per commentare il contenuto*/
-    @FXML private TextField testoContenuto;
+    @FXML private TextArea testoContenuto;
 
     /** Stelle cliccabili per la valutazione della "Gradevolezza"*/
     @FXML private ImageView starGradevolezza1;
@@ -70,7 +68,7 @@ public class CreaValutazione {
     @FXML private Label votoGradevolezza;
 
     /** Campo testuale per commentare la gradevolezza*/
-    @FXML private TextField testoGradevolezza;
+    @FXML private TextArea testoGradevolezza;
 
     /** Stelle cliccabili per la valutazione dell'"Originalità"*/
     @FXML private ImageView starOriginalita1;
@@ -83,7 +81,7 @@ public class CreaValutazione {
     @FXML private Label votoOriginalita;
 
     /** Campo testuale per commentare l'originalità*/
-    @FXML private TextField testoOriginalita;
+    @FXML private TextArea testoOriginalita;
 
     /** Stelle cliccabili per la valutazione dell'"Edizione"*/
     @FXML private ImageView starEdizione1;
@@ -96,10 +94,10 @@ public class CreaValutazione {
     @FXML private Label votoEdizione;
 
     /** Campo testuale per commentare l'edizione*/
-    @FXML private TextField testoEdizione;
+    @FXML private TextArea testoEdizione;
 
     /** Campo testuale per un commento finale generico alla valutazione*/
-    @FXML private TextField testoFinale;
+    @FXML private TextArea testoFinale;
 
     private Libro libro;
     private FXMLtype oldFXMLType;
@@ -110,7 +108,15 @@ public class CreaValutazione {
      */
     @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        ExitButton.setAlignment(Pos.TOP_LEFT);
         messaggioErrore.setText("");
+        messaggioErrore.setVisible(false);
+        testoStile.setEditable(true);
+        testoContenuto.setEditable(true);
+        testoGradevolezza.setEditable(true);
+        testoOriginalita.setEditable(true);
+        testoEdizione.setEditable(true);
+        testoFinale.setEditable(true);
         configuraValutazione(List.of(starStile1, starStile2, starStile3, starStile4, starStile5), votoStile);
         configuraValutazione(List.of(starContenuto1, starContenuto2, starContenuto3, starContenuto4, starContenuto5), votoContenuto);
         configuraValutazione(List.of(starGradevolezza1, starGradevolezza2, starGradevolezza3, starGradevolezza4, starGradevolezza5), votoGradevolezza);
@@ -164,10 +170,12 @@ public class CreaValutazione {
             if (Integer.parseInt(votoStile.getText()) == 0 || Integer.parseInt(votoContenuto.getText()) == 0 || Integer.parseInt(votoGradevolezza.getText()) == 0 ||
                     Integer.parseInt(votoOriginalita.getText()) == 0 || Integer.parseInt(votoEdizione.getText()) == 0) {
                 messaggioErrore.setText("Completa tutte le valutazioni prima di salvare.");
+                messaggioErrore.setVisible(true);
                 return;
             }
         }catch (NumberFormatException e) {
             messaggioErrore.setText("Completa tutte le valutazioni prima di salvare.");
+            messaggioErrore.setVisible(true);
             return;
         }
         Valutazione valutazione = new Valutazione(
@@ -184,6 +192,7 @@ public class CreaValutazione {
                 CliUtil.getInstance().buildStage(oldFXMLType,null, null);
             }else{
                 messaggioErrore.setText("Errore durante il salvataggio della valutazione, potrebbe essere già stata effettuata una valutazione per questo libro.");
+                messaggioErrore.setVisible(true);
             }
         } catch (Exception e) {
             CliUtil.getInstance().LogOut(e);        }
@@ -233,6 +242,7 @@ public class CreaValutazione {
     @FXML
     private void resetMessaggioErrore() {
         messaggioErrore.setText("");
+        messaggioErrore.setVisible(false);
     }
 
     /**

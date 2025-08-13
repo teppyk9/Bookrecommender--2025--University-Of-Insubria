@@ -8,6 +8,7 @@ import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -61,13 +62,15 @@ public class CercaLibroAvanzato extends TableViewEngine {
      * </ul>
      */
     @FXML private void initialize() {
-        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
+        bottoneCerca.setAlignment(Pos.CENTER_LEFT);
+        bottoneCerca.setStyle("-fx-padding: 0");
         initBasicSearch();
         initSRecensioniCol();
         initSAggiungiAdvCol();
         initLimiter();
-        librerieCol.setStyle("-fx-alignment: CENTER;");
         librerieCol.setCellValueFactory(cellData ->
             new ReadOnlyBooleanWrapper(getInLib().get(cellData.getValue()))
         );
@@ -79,7 +82,9 @@ public class CercaLibroAvanzato extends TableViewEngine {
                     setGraphic(null);
                     return;
                 }
-                setGraphic(getInLib().get(getTableView().getItems().get(getIndex())) ? (IMGtype.CHECK.getImageView(12,12)) : IMGtype.RED_CROSS.getImageView(12,12));
+                setGraphic(getInLib().get(getTableView().getItems().get(getIndex())) ? (IMGtype.CHECK.getImageView(18,18)) : IMGtype.RED_CROSS.getImageView(18,18));
+                setAlignment(Pos.CENTER_RIGHT);
+
             }
         });
         initTableViews();

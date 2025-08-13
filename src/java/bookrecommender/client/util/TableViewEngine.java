@@ -15,7 +15,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -188,7 +187,7 @@ public abstract class TableViewEngine {
         });
 
         Label placeholder = new Label("Nessun libro nella tabella");
-        placeholder.setStyle("-fx-font-style: italic;");
+        placeholder.setStyle("-fx-font-size: 13px; -fx-text-fill: #fcf7f8; -fx-font-weight: bold;");
         placeholder.setAlignment(Pos.CENTER);
         getSTableView().setPlaceholder(placeholder);
 
@@ -204,19 +203,24 @@ public abstract class TableViewEngine {
                 new ReadOnlyStringWrapper(cellData.getValue().getTitolo())
         );
         getSTitoloCol().setResizable(false);
+        getSTitoloCol().setStyle("-fx-alignment: CENTER;");
         getSAutoreCol().setCellValueFactory(cellData ->
                 new ReadOnlyStringWrapper(cellData.getValue().getAutore())
         );
         getSAutoreCol().setResizable(false);
+        getSAutoreCol().setStyle("-fx-alignment: CENTER;");
         getSAnnoCol().setCellValueFactory(cellData ->
                 new ReadOnlyObjectWrapper<>((int) cellData.getValue().getAnnoPubblicazione())
         );
         getSAnnoCol().setResizable(false);
+        getSAnnoCol().setStyle("-fx-alignment: CENTER;");
+
     }
 
     protected void initSRecensioniCol(){
         getSRecensioniCol().setCellValueFactory(cellData -> new ReadOnlyBooleanWrapper(hasRec.get(cellData.getValue())));
         getSRecensioniCol().setResizable(false);
+        getSRecensioniCol().setStyle("-fx-alignment: CENTER;");
         getSRecensioniCol().setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Boolean item, boolean empty) {
@@ -224,7 +228,8 @@ public abstract class TableViewEngine {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(item ? IMGtype.CHECK.getImageView(12,12) : IMGtype.RED_CROSS.getImageView(12,12));
+                    setGraphic(item ? IMGtype.CHECK.getImageView(18,18) : IMGtype.RED_CROSS.getImageView(18,18));
+                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                     setAlignment(Pos.CENTER);
                 }
             }
@@ -234,6 +239,7 @@ public abstract class TableViewEngine {
     protected void initSAggiungiAdvCol(){
         getSAggiungiAdvCol().setSortable(false);
         getSAggiungiAdvCol().setResizable(false);
+        getSAggiungiAdvCol().setStyle("-fx-alignment: CENTER;");
         getSAggiungiAdvCol().setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -244,8 +250,7 @@ public abstract class TableViewEngine {
                 }
                 MenuButton menu = menuAzioni(getTableView(), getIndex());
                 menu.getItems().removeIf(menuItem -> menuItem.getText().equals("Rimuovi"));
-                setGraphic(menu);
-                setAlignment(Pos.CENTER);
+                setGraphic(CliUtil.setMenuButtonStyle(menu));
             }
         });
     }
@@ -258,8 +263,15 @@ public abstract class TableViewEngine {
             {
                 menu.setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
                 CliUtil.getInstance().styleIconControl(menu);
+                menu.setMaxSize(5,5);
+                menu.setMinSize(5,5);
+                menu.setPrefSize(5,5);
+                menu.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                menu.setAlignment(Pos.CENTER);
                 MenuItem aggiungi = new MenuItem("Aggiungi");
+                aggiungi.getStyleClass().add("dinamicMenu");
                 MenuItem rimuovi = new MenuItem("Rimuovi");
+                rimuovi.getStyleClass().add("dinamicMenu");
                 menu.getItems().addAll(aggiungi, rimuovi);
                 menu.skinProperty().addListener((obs, oldSkin, newSkin) -> {
                     if (newSkin != null) {
@@ -313,8 +325,8 @@ public abstract class TableViewEngine {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : menu);
-                setAlignment(Pos.CENTER);
+                setGraphic(empty ? null : CliUtil.setMenuButtonStyle(menu));
+                menu.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             }
         });
     }
@@ -343,10 +355,13 @@ public abstract class TableViewEngine {
     protected void initOActionCol(){
         getOActionCol().setSortable(false);
         getOActionCol().setResizable(false);
+        getOActionCol().setStyle("-fx-alignment: CENTER;");
         getOActionCol().setCellFactory(col -> new TableCell<>() {
             private final Button rimuovi = new Button();
             {
-                rimuovi.setGraphic(IMGtype.RIMUOVI.getImageView(12,12));
+                rimuovi.setGraphic(IMGtype.RIMUOVI.getImageView(22,22));
+                rimuovi.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                rimuovi.setAlignment(Pos.CENTER);
                 CliUtil.getInstance().styleIconControl(rimuovi);
                 rimuovi.setOnAction(evt -> {
                     Libro l = getTableView().getItems().get(getIndex());
@@ -365,7 +380,8 @@ public abstract class TableViewEngine {
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 setGraphic(empty ? null : rimuovi);
-                setAlignment(Pos.CENTER);
+                rimuovi.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                rimuovi.setAlignment(Pos.CENTER);
             }
         });
     }
@@ -373,14 +389,19 @@ public abstract class TableViewEngine {
     protected void initOTableView() {
         getOTitoloCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getTitolo()));
         getOTitoloCol().setResizable(false);
+        getOTitoloCol().setStyle("-fx-alignment: CENTER;");
         getOAutoreCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAutore()));
         getOAutoreCol().setResizable(false);
+        getOAutoreCol().setStyle("-fx-alignment: CENTER;");
         getOAnnoCol().setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>((int) cellData.getValue().getAnnoPubblicazione()));
         getOAnnoCol().setResizable(false);
+        getOAnnoCol().setStyle("-fx-alignment: CENTER;");
+        getOTableView().setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     protected void initTableViews(){
         getSTableView().setRowFactory(tv -> initRows());
+        getSTableView().setStyle("-fx-alignment: CENTER;");
         if(getOTableView() != null) getOTableView().setRowFactory(tv -> initRows());
     }
 
@@ -440,8 +461,14 @@ public abstract class TableViewEngine {
     private MenuButton menuAzioni(TableView<Libro> tableView, int idx) {
         MenuButton menu = new MenuButton();
         menu.setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
+        menu.setMaxSize(5,5);
+        menu.setMinSize(5,5);
+        menu.setPrefSize(5,5);
+        menu.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        menu.setAlignment(Pos.CENTER);
         CliUtil.getInstance().styleIconControl(menu);
         MenuItem libreria = new MenuItem("Aggiungi ad una libreria");
+        libreria.getStyleClass().add("dinamicMenu");
         libreria.setOnAction(evt -> {
             Libro l = tableView.getItems().get(idx);
             if(l != null)
@@ -450,18 +477,22 @@ public abstract class TableViewEngine {
         if (inLib.get(tableView.getItems().get(idx))) {
             if( hasVal.get(tableView.getItems().get(idx))) {
                 MenuItem modValuta = getMenuItem(tableView, idx);
+                modValuta.getStyleClass().add("dinamicMenu");
                 menu.getItems().add(modValuta);
             } else {
                 MenuItem valuta = new MenuItem("Valuta");
+                valuta.getStyleClass().add("dinamicMenu");
                 valuta.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREAVALUTAZIONE, getMyFXMLtype(), tableView.getItems().get(idx)));
                 menu.getItems().add(valuta);
             }
             if( hasCon.get(tableView.getItems().get(idx))) {
                 MenuItem modCons = new MenuItem("Modifica Consigli");
+                modCons.getStyleClass().add("dinamicMenu");
                 modCons.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.MODIFICACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
                 menu.getItems().add(modCons);
             } else {
                 MenuItem consiglia = new MenuItem("Aggiungi Consigli");
+                consiglia.getStyleClass().add("dinamicMenu");
                 consiglia.setOnAction(evt -> CliUtil.getInstance().buildStage(FXMLtype.CREACONSIGLIO, getMyFXMLtype(), tableView.getItems().get(idx)));
                 menu.getItems().add(consiglia);
             }
@@ -481,6 +512,7 @@ public abstract class TableViewEngine {
 
     private MenuItem getMenuItem(TableView<Libro> tableView, int idx) {
         MenuItem modValuta = new MenuItem("Modifica Valutazione");
+        modValuta.getStyleClass().add("dinamicMenu");
         modValuta.setOnAction(evt -> {
             try {
                 CliUtil.getInstance().buildStage(FXMLtype.MODIFICAVALUTAZIONE, getMyFXMLtype(), CliUtil.getInstance().getLibService().getValutazione(CliUtil.getInstance().getCurrentToken(), tableView.getItems().get(idx)));
@@ -682,5 +714,4 @@ public abstract class TableViewEngine {
     protected Map<Libro, Boolean> getInLib() {
         return this.inLib;
     }
-
 }

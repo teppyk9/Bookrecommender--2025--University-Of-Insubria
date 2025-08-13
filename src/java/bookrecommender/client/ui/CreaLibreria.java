@@ -7,6 +7,7 @@ import bookrecommender.client.util.TableViewEngine;
 import bookrecommender.common.interfaces.LibInterface;
 import bookrecommender.common.model.Libro;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
@@ -80,8 +81,11 @@ public class CreaLibreria extends TableViewEngine {
      * Inizializza il controller, configurando la tabella e i controlli per la ricerca e selezione dei libri.
      */
     @FXML private void initialize() {
-        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        ExitButton.setAlignment(Pos.TOP_LEFT);
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
+        bottoneCerca.setAlignment(Pos.CENTER_LEFT);
+        bottoneCerca.setStyle("-fx-padding: 0");
         initBasicSearch();
         initSAddRemCol();
         initOActionCol();

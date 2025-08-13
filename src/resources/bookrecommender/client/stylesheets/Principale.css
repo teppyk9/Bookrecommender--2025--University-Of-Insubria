@@ -60,6 +60,7 @@
     -fx-font-size: 13px;
     -fx-font-weight: bold;
     -fx-text-alignment: center;
+    -fx-background-color: transparent;
 }
 
 

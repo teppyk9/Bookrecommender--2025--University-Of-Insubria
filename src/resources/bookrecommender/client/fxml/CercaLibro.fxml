@@ -17,34 +17,35 @@
     <stylesheets>
         <URL value="@../stylesheets/CercaCreaModifica.css" />
         <URL value="@../stylesheets/TableUtil.css" />
+      <URL value="@../stylesheets/ScrollUtil.css" />
     </stylesheets>
-    <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="47.0" prefWidth="47.0" styleClass="indietro" />
-    <MenuButton fx:id="MenuTipoRicerca" layoutX="29.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="693.0" styleClass="sceltaRicerca" text="Tipologia ricerca" AnchorPane.rightAnchor="77.85714285714289">
+    <Button fx:id="GoBackButton_MainMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#GoToMainMenu" prefHeight="17.0" prefWidth="0.0" styleClass="indietro" />
+    <MenuButton fx:id="MenuTipoRicerca" layoutX="37.0" layoutY="78.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="693.0" styleClass="sceltaRicerca" text="Tipologia ricerca" AnchorPane.rightAnchor="69.85714285714289">
         <items>
             <MenuItem fx:id="MenuCercaTitolo" mnemonicParsing="false" styleClass="sceltaRicerca" text="Titolo" />
             <MenuItem fx:id="MenuCercaAutore" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore" />
             <MenuItem fx:id="MenuCercaAutoreAnno" mnemonicParsing="false" styleClass="sceltaRicerca" text="Autore e Anno di Pubblicazione" />
         </items>
     </MenuButton>
-    <TextField fx:id="campoRicercaAnno" layoutX="288.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="167.0" promptText="Anno.." styleClass="field" />
-    <TableView fx:id="tableView" layoutX="29.0" layoutY="148.0" prefHeight="287.0" prefWidth="726.0">
-        <columns>
-            <TableColumn fx:id="titoloCol" prefWidth="340.0" text="Titolo" />
-            <TableColumn fx:id="autoreCol" prefWidth="207.0" text="Autore" />
-            <TableColumn fx:id="annoCol" prefWidth="86.0" text="Anno" />
-            <TableColumn fx:id="recensioniCol" prefWidth="92.0" text="Recensioni" />
-        </columns>
-    </TableView>
+    <TextField fx:id="campoRicercaAnno" layoutX="387.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_2" prefHeight="25.0" prefWidth="75.0" promptText="Anno.." styleClass="field" />
     <Text layoutX="316.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="titolo" text="Cerca Libro" />
-    <TextField fx:id="campoRicerca" layoutX="455.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="78.0">
+    <TextField fx:id="campoRicerca" layoutX="463.0" layoutY="110.0" onKeyPressed="#keyEnterPressed_1" prefHeight="25.0" prefWidth="267.0" promptText="Cerca un libro..." styleClass="field" AnchorPane.rightAnchor="69.57142857142856">
         <font>
             <Font name="Century Gothic" size="1.0" />
         </font>
     </TextField>
-    <Button fx:id="bottoneCerca" contentDisplay="CENTER" layoutX="734.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="25.0" styleClass="cerca" />
-    <ProgressIndicator fx:id="loadingCircle" layoutX="731.0" layoutY="78.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
-   <MenuButton fx:id="limiterBox" layoutX="29.0" layoutY="110.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" styleClass="sceltaRicerca" text="Limite risultati">
+    <Button fx:id="bottoneCerca" contentDisplay="CENTER" layoutX="737.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleClickCerca" prefHeight="25.0" prefWidth="25.0" styleClass="cerca" />
+    <ProgressIndicator fx:id="loadingCircle" layoutX="737.0" layoutY="78.0" prefHeight="25.0" prefWidth="25.0" visible="false" />
+     <MenuButton fx:id="limiterBox" layoutX="37.0" layoutY="110.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="155.0" styleClass="sceltaRicerca" text="Limite risultati" textAlignment="CENTER">
       <tooltip>
          <Tooltip text="Limite Risultati" />
       </tooltip></MenuButton>
+      <TableView fx:id="tableView" layoutX="37.0" layoutY="148.0" prefHeight="287.0" prefWidth="726.0">
+          <columns>
+              <TableColumn fx:id="titoloCol" prefWidth="348.0000305175781" text="Titolo" />
+              <TableColumn fx:id="autoreCol" prefWidth="193.7142333984375" text="Autore" />
+              <TableColumn fx:id="annoCol" prefWidth="64.57147216796875" text="Anno" />
+              <TableColumn fx:id="recensioniCol" prefWidth="106.857177734375" text="Recensioni" />
+          </columns>
+      </TableView>
 </AnchorPane>

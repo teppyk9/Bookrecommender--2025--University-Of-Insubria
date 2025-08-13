@@ -7,6 +7,7 @@ import bookrecommender.client.util.PasswordEngine;
 import bookrecommender.common.model.RegToken;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,8 +35,8 @@ public class Registrazione extends PasswordEngine {
     @FXML private TextField VisiblePasswordField2;
 
     @FXML private void initialize() {
-        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(47,47));
-        AccediTextField.setOnMouseEntered(event -> {
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton.setAlignment(Pos.TOP_LEFT);AccediTextField.setOnMouseEntered(event -> {
             AccediTextField.setUnderline(true);
             AccediTextField.setCursor(Cursor.HAND);
         });

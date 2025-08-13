@@ -14,32 +14,32 @@ public enum IMGtype {
     /**
      * Icona di conferma.
      */
-    CONFIRM("/bookrecommender/client/icons/alert_confirmation_icon.png"),
+    CONFIRM("/bookrecommender/client/icons/AlertConfirmation_a31621.png"),
 
     /**
      * Icona di errore.
      */
-    RED_CROSS("/bookrecommender/client/icons/alert_icon.png"),
+    RED_CROSS("/bookrecommender/client/icons/Alert_red.png"),
 
     /**
      * Icona di informazione.
      */
-    INFO("/bookrecommender/client/icons/alert_info_icon.png"),
+    INFO("/bookrecommender/client/icons/AlertInfo_a31621.png"),
 
     /**
      * Freccia per espandere o ridurre un elemento.
      */
-    ARROW_DOWN("/bookrecommender/client/icons/Expand_arrowDown_fcf7f8_OK.png"),
+    ARROW_DOWN("/bookrecommender/client/icons/Expand_arrowDown_fcf7f8.png"),
 
     /**
      * Spunta verde per indicare un'azione completata con successo.
      */
-    CHECK("/bookrecommender/client/icons/check-green.png"),
+    CHECK("/bookrecommender/client/icons/Check_green.png"),
 
     /**
      * Icona di rimozione elemento, rappresentata da un cerchio rosso con un segno meno.
      */
-    RIMUOVI("/bookrecommender/client/icons/minus-circle-red.png"),
+    RIMUOVI("/bookrecommender/client/icons/Rimuovi_fcf7f8.png"),
 
     /**
      * Icona principale del programma, utilizzata per rappresentare l'applicazione.
@@ -104,42 +104,42 @@ public enum IMGtype {
     /**
      * Icona per visualizzare una password in chiaro.
      */
-    VISIBLE_PASSWORD("/bookrecommender/client/icons/Visible_FCF7F8_OKK.png"),
+    VISIBLE_PASSWORD("/bookrecommender/client/icons/Visible_FCF7F8.png"),
 
     /**
      * Icona per nascondere una password.
      */
-    INVISIBLE_PASSWORD("/bookrecommender/client/icons/Invisible_FCF7F8_OK.png"),
+    INVISIBLE_PASSWORD("/bookrecommender/client/icons/Invisible_FCF7F8.png"),
 
     /**
      * Icona per tornare indietro nella navigazione.
      */
-    INDIETRO("/bookrecommender/client/icons/GoBack_a31621_100OK.png"),
+    INDIETRO("/bookrecommender/client/icons/GoBack_a31621.png"),
 
     /**
      * Icona per avviare una ricerca.
      */
-    CERCA("/bookrecommender/client/icons/Search_a31621_OK.png"),
+    CERCA("/bookrecommender/client/icons/Search_a31621.png"),
 
     /**
      * Icona per visualizzare le impostazioni dell'account.
      */
-    IMPOSTAZIONI("/bookrecommender/client/icons/ImpostazioniAccount_A31621_OK.png"),
+    IMPOSTAZIONI("/bookrecommender/client/icons/ImpostazioniAccount_A31621.png"),
 
     /**
      * Icona per effettuare il logout dall'applicazione.
      */
-    LOGOUT("/bookrecommender/client/icons/Logout_a31621_OK.png"),
+    LOGOUT("/bookrecommender/client/icons/Logout_a31621.png"),
 
     /**
      * Icona per modificare un elemento.
      */
-    EDIT("/bookrecommender/client/icons/Edit_fcf7f8_OK.png"),
+    EDIT("/bookrecommender/client/icons/Edit_fcf7f8.png"),
 
     /**
      * Icona per salvare un elemento.
      */
-    SAVE("/bookrecommender/client/icons/Save_fcf7f8_OK.png"),;
+    SAVE("/bookrecommender/client/icons/Save_fcf7f8.png"),;
 
     private final String path;
 

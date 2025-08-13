@@ -7,6 +7,7 @@ import bookrecommender.client.util.TableViewEngine;
 import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -89,8 +90,12 @@ public class CreaConsiglio extends TableViewEngine {
      * Se l’utente chiude la finestra, viene eseguito il metodo {@code GoToMainMenu()}.
      */
     @FXML private void initialize() {
-        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
+        bottoneCerca.setAlignment(Pos.CENTER_LEFT);
+        bottoneCerca.setStyle("-fx-padding: 0");
+        
         initForConsigli();
         initLimiter();
         Platform.runLater(() -> {

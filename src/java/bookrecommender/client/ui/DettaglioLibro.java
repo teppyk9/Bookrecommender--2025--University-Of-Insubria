@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -37,7 +38,7 @@ public class DettaglioLibro {
     @FXML private Label meseLabel;            // Mostra il mese di pubblicazione
 
     // Area per la descrizione del libro
-    @FXML private Label descrizioneArea;
+    @FXML private TextArea descrizioneArea;
 
     // Stelle e voto medio complessivo
     @FXML private ImageView starTotal1;
@@ -118,6 +119,7 @@ public class DettaglioLibro {
      */
     public void setLibro(Libro libro){
         descrizioneArea.setWrapText(true);
+        descrizioneArea.setEditable(false);
         titoloLabel.setText(libro.getTitolo());
         autoreLabel.setText(libro.getAutore());
         if(libro.getCategoria() == null || libro.getCategoria().isEmpty()) {

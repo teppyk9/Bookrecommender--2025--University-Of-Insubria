@@ -12,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +90,22 @@ public class GestioneLibrerie extends TreeTableEngine {
      */
     @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        ExitButton.setAlignment(Pos.TOP_LEFT);
+        nameColumn.setResizable(false);
+        countColumn.setResizable(false);
+        dateColumn.setResizable(false);
+        isValColumn.setResizable(false);
+        isConsColumn.setResizable(false);
+        lastValColumn.setResizable(false);
+        lastConsColumn.setResizable(false);
+        azioniColumn.setResizable(false);
+        azioniColumn.setSortable(false);
+
+        treeTableView.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        List.of(nameColumn, countColumn, dateColumn, lastValColumn, lastConsColumn, isConsColumn, isValColumn)
+                .forEach(col -> col.setStyle("-fx-alignment: CENTER;"));
+
         initializeTree();
 
         nameColumn.setCellValueFactory(c -> {
@@ -105,7 +120,7 @@ public class GestioneLibrerie extends TreeTableEngine {
 
         setupCheckColumn(isValColumn, LibroRow::hasValutazioneProperty);
 
-        lastValColumn.setStyle("-fx-alignment: CENTER;");
+
         lastValColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
             if (v instanceof LibroRow r) return r.lastValDateProperty();
@@ -114,7 +129,6 @@ public class GestioneLibrerie extends TreeTableEngine {
 
         setupCheckColumn(isConsColumn, LibroRow::hasConsiglioProperty);
 
-        lastConsColumn.setStyle("-fx-alignment: CENTER;");
         lastConsColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
             if (v instanceof LibroRow r) return r.lastConsDateProperty();
@@ -123,7 +137,9 @@ public class GestioneLibrerie extends TreeTableEngine {
 
         azioniColumn.setCellFactory(col -> new TreeTableCell<>() {
             @Override
+
             protected void updateItem(Void item, boolean empty) {
+
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
@@ -133,7 +149,10 @@ public class GestioneLibrerie extends TreeTableEngine {
                 if (v instanceof String) setGraphic(createMenuLibrerieActions(this));
                 else if (v instanceof LibroRow) setGraphic(createMenuBookActions(this));
                 else setGraphic(null);
+                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 setAlignment(Pos.CENTER);
+
+
             }
         });
 
@@ -142,6 +161,7 @@ public class GestioneLibrerie extends TreeTableEngine {
         treeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> BottoneCambiaNome.setDisable(newSel == null || !(newSel.getValue() instanceof String)));
 
         loadLibraries();
+
 
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();
@@ -157,7 +177,6 @@ public class GestioneLibrerie extends TreeTableEngine {
      * @param prop La funzione che restituisce la proprietà booleana da visualizzare.
      */
     private void setupCheckColumn(TreeTableColumn<Object, Boolean> col, Function<LibroRow, BooleanProperty> prop) {
-        col.setStyle("-fx-alignment: CENTER;");
         col.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
             if (v instanceof LibroRow r) return prop.apply(r);
@@ -169,12 +188,15 @@ public class GestioneLibrerie extends TreeTableEngine {
                 super.updateItem(item, empty);
                 if (item == null || empty) setGraphic(null);
                 else {
-                    setGraphic(item ? IMGtype.CHECK.getImageView(12,12) : IMGtype.RED_CROSS.getImageView(12,12));
+                    setGraphic(item ? IMGtype.CHECK.getImageView(18,18) : IMGtype.RED_CROSS.getImageView(18,18));
+                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                     setAlignment(Pos.CENTER);
                 }
             }
         });
     }
+
+
 
     /**
      * Gestisce il doppio clic su un elemento della tabella.
@@ -310,12 +332,13 @@ public class GestioneLibrerie extends TreeTableEngine {
      * @param cell La cella di tabella contenente la libreria selezionata.
      * @return MenuButton con azioni contestuali per la libreria.
      */
-    private MenuButton createMenuLibrerieActions(TreeTableCell<Object, Void> cell) {
+    private Node createMenuLibrerieActions(TreeTableCell<Object, Void> cell) {
         MenuButton mb = new MenuButton();
         MenuItem modifica = new MenuItem("Modifica Libreria");
+        modifica.getStyleClass().add("dinamicMenu");
         MenuItem rimuovi = new MenuItem("Elimina Libreria");
+        rimuovi.getStyleClass().add("dinamicMenu");
         mb.getItems().addAll(modifica, rimuovi);
-        setMenuButtonStyle(mb);
         modifica.setOnAction(evt -> {
             Object o = cell.getTableRow().getItem();
             if (o instanceof String nome) {
@@ -343,7 +366,7 @@ public class GestioneLibrerie extends TreeTableEngine {
                 CliUtil.getInstance().createAlert("Errore", "Elimina button on a " + o.getClass()).showAndWait();
             }
         });
-        return mb;
+        return CliUtil.setMenuButtonStyle(mb);
     }
 
     /**
@@ -360,14 +383,18 @@ public class GestioneLibrerie extends TreeTableEngine {
      * @param cell La cella di tabella contenente il libro selezionato.
      * @return MenuButton con azioni contestuali per il libro.
      */
-    private MenuButton createMenuBookActions(TreeTableCell<Object, Void> cell) {
+    private Node createMenuBookActions(TreeTableCell<Object, Void> cell) {
         MenuButton mb = new MenuButton();
         MenuItem valuta = new MenuItem("Aggiungi Valutazione");
+        valuta.getStyleClass().add("dinamicMenu");
         MenuItem consiglia = new MenuItem("Aggiungi Consigli");
+        consiglia.getStyleClass().add("dinamicMenu");
         MenuItem rimuovi = new MenuItem("Rimuovi dalla libreria");
+        rimuovi.getStyleClass().add("dinamicMenu");
         MenuItem modVal = new MenuItem("Modifica Valutazione");
+        modVal.getStyleClass().add("dinamicMenu");
         MenuItem modCons = new MenuItem("Modifica Consiglio");
-        setMenuButtonStyle(mb);
+        modCons.getStyleClass().add("dinamicMenu");
 
         valuta.setOnAction(evt -> {
             Object o = cell.getTableRow().getItem();
@@ -444,7 +471,7 @@ public class GestioneLibrerie extends TreeTableEngine {
             mb.getItems().addAll((lr.hasValutazione() ? modVal : valuta), (lr.hasConsiglio() ? modCons : consiglia), rimuovi);
         }
 
-        return mb;
+        return CliUtil.setMenuButtonStyle(mb);
     }
 
     /**
@@ -453,19 +480,7 @@ public class GestioneLibrerie extends TreeTableEngine {
      *
      * @param mb Il pulsante a cui applicare lo stile.
      */
-    private void setMenuButtonStyle(MenuButton mb) {
-        mb.setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
-        CliUtil.getInstance().styleIconControl(mb);
-        mb.skinProperty().addListener((obs, oldSkin, newSkin) -> {
-            if (newSkin != null) {
-                Node arrow = mb.lookup(".arrow");
-                if (arrow != null) {
-                    arrow.setVisible(false);
-                    arrow.setManaged(false);
-                }
-            }
-        });
-    }
+
 
     /**
      * Classe di supporto per rappresentare un libro all’interno della TreeTableView.
@@ -588,3 +603,4 @@ public class GestioneLibrerie extends TreeTableEngine {
         public ObjectProperty<LocalDate> lastConsDateProperty() { return lastConsDate; }
     }
 }
+

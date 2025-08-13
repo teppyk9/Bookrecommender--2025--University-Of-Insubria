@@ -8,6 +8,7 @@ import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -45,12 +46,33 @@ public class ModificaLibreria extends TableViewEngine {
     private List<Libro> OriginalLibri;
 
     @FXML private void initialize() {
-        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(45,45));
+        ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        ExitButton.setAlignment(Pos.TOP_LEFT);
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
+        bottoneCerca.setAlignment(Pos.CENTER_LEFT);
+        bottoneCerca.setStyle("-fx-padding: 0");
         OriginalLibri = new ArrayList<>();
         NomeLibreria.setDisable(true);
         NomeLibreria.setEditable(false);
         NomeLibreria.setVisible(false);
+        titoloCol.setResizable(false);
+        annoCol.setResizable(false);
+        autoreCol.setResizable(false);
+        azioniCol.setResizable(false);
+        risTitoloCol.setResizable(false);
+        risAnnoCol.setResizable(false);
+        risAutoreCol.setResizable(false);
+        risAzioniCol.setResizable(false);
+        azioniCol.setSortable(false);
+        risAzioniCol.setSortable(false);
+
+        List.of(titoloCol, annoCol, autoreCol, azioniCol, risTitoloCol, risAnnoCol, risAutoreCol, risAzioniCol)
+                .forEach(col -> col.setStyle("-fx-alignment: CENTER;"));
+
+        tableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        risTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+
+
         initLimiter();
         Platform.runLater(() -> {
             Stage stage = (Stage) BottoneCambiaNome.getScene().getWindow();

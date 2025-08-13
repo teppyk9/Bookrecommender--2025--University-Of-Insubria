@@ -6,7 +6,6 @@
     cerca avanzata
 
 */
-/*TODO: sistemare colore del testo predefinito del ChoiceBox*/
 .background{
     -fx-background-image: url('../icons/copertina_chiara.jpeg');
     -fx-background-repeat: stretch;
@@ -110,7 +109,7 @@
 
 }
 
-.menu-button .menu-item {
+.menu-button .menu-item  {
     -fx-background-color: rgba(163, 22, 33, 0.7);
     -fx-text-fill: #fcf7f8;
     -fx-font-size: 12px;
@@ -118,8 +117,8 @@
     -fx-border-radius: 0px;
 }
 
-.menu-button .menu-item:focused,
-.menu-button .menu-item:hover {
+.menu-button .menu-item:focused ,
+.menu-button .menu-item:hover  {
     -fx-background-color: rgba(163, 22, 33, 0.7);
     -fx-text-fill: #fcf7f8;
     -fx-border-radius: 0px;
@@ -148,9 +147,10 @@
 /* CHECKBOX */
 .checkbox {
     -fx-background-color: rgba(163, 22, 33, 0.7);
-    -fx-border-color: rgba(163, 22, 33, 0.7);
+    -fx-border-width: 0px;
     -fx-background-radius: 6px;
     -fx-border-radius: 6px;
+    -fx-border-color: transparent;
 }
 
 .checkbox .label {

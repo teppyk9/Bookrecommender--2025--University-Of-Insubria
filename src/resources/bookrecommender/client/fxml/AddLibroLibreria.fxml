@@ -14,18 +14,19 @@
 
         <TreeTableView fx:id="treeTableView" layoutY="31.0" prefHeight="230.0" prefWidth="515.0">
             <columns>
-                <TreeTableColumn fx:id="nameColumn" prefWidth="214.28567504882812" text="Nome Libreria" />
-                <TreeTableColumn fx:id="countColumn" prefWidth="89.14288330078125" text="Quantità Libri" />
-                <TreeTableColumn fx:id="dateColumn" prefWidth="144.5714111328125" text="Data Creazione" />
-                <TreeTableColumn fx:id="presentColumn" minWidth="0.0" prefWidth="67.4285888671875" text="Presente" />
+                <TreeTableColumn fx:id="nameColumn" prefWidth="225.71432495117188" text="Nome Libreria" />
+                <TreeTableColumn fx:id="countColumn" prefWidth="100.5714111328125" text="Quantità Libri" />
+                <TreeTableColumn fx:id="dateColumn" prefWidth="110.28570556640625" text="Data Creazione" />
+                <TreeTableColumn fx:id="presentColumn" minWidth="0.0" prefWidth="71.42852783203125" text="Presente" />
             </columns>
         </TreeTableView>
 
         <Button fx:id="addButton" disable="true" layoutX="415.0" layoutY="2.0" onAction="#handleAddBook" styleClass="bottone" text="Aggiungi Libro" />
     </Pane>
-   <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="40.0" prefWidth="40.0" styleClass="indietro" />
+   <Button fx:id="ExitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#ExitApplication" styleClass="indietro" />
    <stylesheets>
       <URL value="@../stylesheets/Librerie.css" />
       <URL value="@../stylesheets/TableUtil.css" />
+      <URL value="@../stylesheets/ScrollUtil.css" />
    </stylesheets>
 </AnchorPane>

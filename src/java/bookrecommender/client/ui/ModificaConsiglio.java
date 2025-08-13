@@ -8,6 +8,7 @@ import bookrecommender.common.model.Libro;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -42,8 +43,19 @@ public class ModificaConsiglio extends TableViewEngine {
     private List<Libro> oldLibri = new ArrayList<>();
 
     @FXML private void initialize() {
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
-        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(46,46));
+        bottoneCerca.setAlignment(Pos.CENTER_LEFT);
+        bottoneCerca.setStyle("-fx-padding: 0");
+        titoloCol.setStyle("-fx-alignment: CENTER;");
+        annoCol.setStyle("-fx-alignment: CENTER;");
+        autoreCol.setStyle("-fx-alignment: CENTER;");
+        azioniCol.setStyle("-fx-alignment: CENTER;");
+        risTitoloCol.setStyle("-fx-alignment: CENTER;");
+        risAnnoCol.setStyle("-fx-alignment: CENTER;");
+        risAutoreCol.setStyle("-fx-alignment: CENTER;");
+        risAzioniCol.setStyle("-fx-alignment: CENTER;");
         initForConsigli();
         initLimiter();
         Platform.runLater(() -> {

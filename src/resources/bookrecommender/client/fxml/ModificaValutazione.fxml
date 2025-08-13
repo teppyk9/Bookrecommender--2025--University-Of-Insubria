@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" stylesheets="@../stylesheets/Valutazioni.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.ModificaValutazione">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bookrecommender.client.ui.ModificaValutazione">
     <VBox layoutY="58.0" prefHeight="346.0" prefWidth="800.0">
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0" styleClass="box">
@@ -27,7 +28,7 @@
                     <Label fx:id="votoStile" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="voto" />
                 </HBox>
             </VBox>
-         <TextField fx:id="testoStile" layoutX="385.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
+         <TextArea fx:id="testoStile" layoutX="384.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" wrapText="true" />
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0" styleClass="box">
@@ -45,7 +46,7 @@
                     <Label fx:id="votoContenuto" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="voto" />
                 </HBox>
             </VBox>
-         <TextField fx:id="testoContenuto" layoutX="385.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
+         <TextArea fx:id="testoContenuto" layoutX="384.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" wrapText="true" />
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0" styleClass="box">
@@ -63,7 +64,7 @@
                     <Label fx:id="votoGradevolezza" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="voto" />
                 </HBox>
             </VBox>
-         <TextField fx:id="testoGradevolezza" layoutX="385.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
+         <TextArea fx:id="testoGradevolezza" layoutX="384.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" wrapText="true" />
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0" styleClass="box">
@@ -81,7 +82,7 @@
                     <Label fx:id="votoOriginalita" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="voto" />
                 </HBox>
             </VBox>
-         <TextField fx:id="testoOriginalita" layoutX="385.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
+         <TextArea fx:id="testoOriginalita" layoutX="384.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" wrapText="true" />
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <VBox layoutX="14.0" layoutY="7.0" prefHeight="50.0" prefWidth="185.0" styleClass="box">
@@ -99,32 +100,36 @@
                     <Label fx:id="votoEdizione" alignment="CENTER" prefHeight="30.0" prefWidth="30.0" styleClass="voto" />
                 </HBox>
             </VBox>
-         <TextField fx:id="testoEdizione" layoutX="385.0" layoutY="3.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
+         <TextArea fx:id="testoEdizione" layoutX="384.0" layoutY="7.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" wrapText="true" />
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <TextField fx:id="testoFinale" layoutX="384.0" layoutY="3.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" />
-            <HBox layoutX="14.0" layoutY="3.0" prefHeight="50.0" prefWidth="185.0" styleClass="box_finale">
+            <HBox layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="185.0" styleClass="box_finale">
                 <Label prefHeight="50.0" prefWidth="185.0" styleClass="etichetta_finale" text="Commento finale">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </Label>
             </HBox>
+         <TextArea fx:id="testoFinale" layoutX="384.0" layoutY="14.0" prefHeight="50.0" prefWidth="401.0" styleClass="box_commento" wrapText="true" />
         </AnchorPane>
     </VBox>
-     <AnchorPane prefHeight="58.0" prefWidth="800.0" styleClass="box_titolo">
-         <Label fx:id="TitoloLabel" layoutX="159.0" layoutY="12.0" styleClass="titoloLibroDaValutare" text="Titolo">
+     <AnchorPane prefHeight="40.0" prefWidth="800.0" styleClass="box_titolo">
+         <Label fx:id="TitoloLabel" layoutX="149.0" layoutY="13.0" prefHeight="25.0" prefWidth="646.0" styleClass="titoloLibroDaValutare" text="Titolo">
              <font>
                  <Font size="21.0" />
              </font>
          </Label>
-      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#ExitApplication" prefHeight="50.0" prefWidth="50.0" styleClass="indietro" />
-      <Label layoutX="54.0" layoutY="12.0" styleClass="titoloLibroDaValutare" text="Modifica:">
+      <Button fx:id="GoBackButton" mnemonicParsing="false" onAction="#ExitApplication" styleClass="indietro" />
+      <Label layoutX="58.0" layoutY="13.0" styleClass="titoloLibroDaValutare" text="Modifica:">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
      </AnchorPane>
    <Button layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#eliminaValutazione" styleClass="salva-elimina" text="Elimina Valutazione" />
-   <Button fx:id="SalvaModificheButton" layoutX="648.0" layoutY="416.0" mnemonicParsing="false" onAction="#salvaModifiche" styleClass="salva-elimina" text="Salva Modifiche" />
+   <Button fx:id="SalvaModificheButton" layoutX="667.0" layoutY="418.0" mnemonicParsing="false" onAction="#salvaModifiche" styleClass="salva-elimina" text="Salva Modifiche" />
+   <stylesheets>
+      <URL value="@../stylesheets/Valutazioni.css" />
+      <URL value="@../stylesheets/ScrollUtil.css" />
+   </stylesheets>
 </AnchorPane>

@@ -4,8 +4,10 @@ import bookrecommender.client.enums.IMGtype;
 import bookrecommender.client.util.CliUtil;
 import bookrecommender.common.model.Valutazione;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -27,10 +29,11 @@ public class VisualizzaValutazione {
     @FXML private Label votoEdizione;
     @FXML private ImageView starMedia1, starMedia2, starMedia3, starMedia4, starMedia5;
     @FXML private Label votoMedia;
-    @FXML private Label stileTextArea, contenutoTextArea, gradevolezzaTextArea, originalitaTextArea, edizioneTextArea, finaleTextArea;
+    @FXML private TextArea stileTextArea, contenutoTextArea, gradevolezzaTextArea, originalitaTextArea, edizioneTextArea, finaleTextArea;
 
     @FXML private void initialize() {
-        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton.setAlignment(Pos.TOP_LEFT);
     }
 
     public void setValutazione(Valutazione v) {
@@ -60,7 +63,7 @@ public class VisualizzaValutazione {
         stage.close();
     }
 
-    private void displayGroup(ImageView[] stars, Label voto, String commento, Label area,float valore, String emptyMsg, IMGtype.STARtype type) {
+    private void displayGroup(ImageView[] stars, Label voto, String commento, TextArea area,float valore, String emptyMsg, IMGtype.STARtype type) {
         CliUtil.getInstance().setStar(stars[0], stars[1], stars[2], stars[3], stars[4], valore, type);
         voto.setText(String.valueOf(valore));
         area.setText(commento.isEmpty() ? emptyMsg : commento);

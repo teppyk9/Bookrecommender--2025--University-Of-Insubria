@@ -92,3 +92,62 @@
     -fx-font-size: 20px;
     -fx-animated: underline;
 }
+
+.text-area {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: #FCF7F8;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 13px;
+    -fx-text-fill: #fcf7f8;
+    -fx-text-alignment: top-left;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-radius: 6px;
+    -fx-padding: 0;
+
+}
+
+.text-area .scroll-pane,
+.text-area .content,
+.text-area .viewport,
+.text-area .corner{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal{
+    -fx-pref-height: 6px;
+    -fx-pref-width: 3px;
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+}
+.scroll-bar:horizontal .track{
+    -fx-background-color: transparent;
+
+}
+.scroll-bar:horizontal .thumb{
+    -fx-background-color: #fcf7f8;
+    -fx-scale-shape: round;
+    -fx-shape-radius: 2px;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button { /*elimina frecce scrollbar*/
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-shape: "";
+    -fx-opacity: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+}
+
+.scroll-bar:vertical {
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+    -fx-min-height: 0;
+    -fx-opacity: 0;
+    -fx-padding: 0;
+    visibility: hidden;
+}

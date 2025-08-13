@@ -109,28 +109,43 @@
     -fx-border-radius: 6px;
     -fx-background-radius: 6px;
 }
-/* label per scrivere commento recensione*/
-.box_commento{
+
+/* text area per scrivere commento recensione*/
+.box_commento {
     -fx-background-color: rgba(163, 22, 33, 0.7);
-    -fx-boder-radius: 6px;
+    -fx-control-inner-background: rgba(163, 22, 33, 0.7);
+    -fx-border-radius: 6px;
     -fx-background-radius: 6px;
-    -fx-text-fill: #fcf7f8;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
     -fx-font-family: "Century Gothic";
-    -fx-font-size: 15px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #fcf7f8;
+    -fx-text-alignment: top-left;
 }
 
-.box_commento .label{
-    -fx-background-color: rgba(163, 22, 33, 0.7);
-    -fx-boder-radius: 6px;
-    -fx-background-radius: 6px;
+.box_commento .scroll-pane,
+.box_commento .viewport,
+.box_commento .corner,
+.box_commento .content{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
+
+
 
 /* errore in crea valutazione */
 .errore {
-    -fx-text-fill: #a31621;
+    -fx-text-fill: #fcf7f8;
     -fx-font-family: "Century Gothic";
     -fx-font-size: 15px;
     -fx-alignment: center-left;
+}
+
+.errore.label{
+    -fx-background-color: rgba(163, 22, 33, 0.7);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
 }
 
 /* bottone per salvare/eliminare la valutazione*/
@@ -138,7 +153,7 @@
     -fx-background-color: #a31621;
     -fx-text-fill: #fcf7f8;
     -fx-font-family: "Century Gothic";
-    -fx-font-size: 15px;
+    -fx-font-size: 13px;
     -fx-background-radius: 6px;
     -fx-scale-x: 1;
     -fx-scale-y: 1;

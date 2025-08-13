@@ -36,7 +36,6 @@
 }
 
 .bottone:hover{
-    -fx-animated: zoom;
     -fx-font-weight: bold;
 }
 

@@ -35,8 +35,21 @@
 .etichettaLabel{ /* ok */
     -fx-font-family: "Century Gothic";
     -fx-font-size: 14px;
-    -fx-text-fill: #FCF7F8;
+    -fx-text-fill: #a31621;
     -fx-font-weight: bold;
+}
+
+.etichettaLabelChiara{
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 14px;
+    -fx-text-fill: #fcf7f8;
+    -fx-font-weight: bold;
+}
+
+.box_val{
+    -fx-background-color: rgba(252, 247, 248, 0.8);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
 }
 
 
@@ -47,106 +60,41 @@
     -fx-text-fill: #FCF7F8;
     -fx-font-family: "Century Gothic";
     -fx-border-color: transparent;
-    -fx-text-alignment: center-left;
+    -fx-text-alignment: left;
 }
-#descrizioneArea {
-    -fx-font-size: 14px;
-    -fx-text-fill: #FCF7F8;
+
+.descrizioneArea {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
     -fx-font-family: "Century Gothic";
-    -fx-border-color: transparent;
-    -fx-alignment: top-left;
-    -fx-background-color: transparent;
-    -fx-control-inner-background: transparent;
-    -fx-label-padding: 0,0,0,0; /* Rimuove il padding */
-
+    -fx-font-size: 13px;
+    -fx-text-fill: #fcf7f8;
+    -fx-text-alignment: top-left;
 }
 
-/*scroll bar descrizione area*/
-
-.scroll-pane {
-    -fx-background-color: transparent;
-    -fx-background: transparent;
-    -fx-control-inner-background: transparent;
-}
-
-/* Contenuto interno dello ScrollPane trasparente */
-.scroll-pane .viewport {
-    -fx-background-color: transparent;
-}
-
-.scroll-pane .scroll-bar .corner,
-.scroll-pane .scroll-bar .corner,
-.scroll-pane .scroll-bar .corner {
-    -fx-border-color: transparent;
-    -fx-background-insets: 0;
-    -fx-border-width: 0;
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-}
-
-/* ScrollPane: scrollbar verticale minimal  */
-.scroll-pane .scroll-bar:vertical {
-    -fx-background-color: #a31621;
-    -fx-opacity: 0.3;
-    -fx-pref-width: 4px;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-}
-.scroll-pane .scroll-bar:vertical:hover {
-    -fx-background-color: #fcf7f8;
-    -fx-opacity: 1;
-}
-.scroll-pane .scroll-bar .thumb {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-pref-width: 4px;
-    -fx-pref-height: 24px;
-    -fx-background-radius: 2px;
-    -fx-padding: 0;
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-}
-.scroll-pane .scroll-bar:vertical:hover .thumb {
-    -fx-background-color: #a31621;
-    -fx-opacity: 1;
-}
-.scroll-pane .scroll-bar .increment-arrow,
-.scroll-pane .scroll-bar .decrement-arrow,
-.scroll-pane .scroll-bar .increment-button,
-.scroll-pane .scroll-bar .decrement-button {
-    -fx-padding: 0;
-    -fx-background-color: transparent;
-    -fx-shape: "";
-    -fx-opacity: 0;
-    -fx-min-width: 0;
-    -fx-min-height: 0;
-    -fx-pref-width: 0;
-    -fx-pref-height: 0;
-    -fx-max-width: 0;
-    -fx-max-height: 0;
-}
-.scroll-pane,
-.scroll-pane .scroll-bar,
-.scroll-pane .scroll-bar .track {
-    -fx-border-color: transparent;
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-border-width: 0;
-    -fx-background-radius: 0;
-    -fx-border-radius: 0;
-    -fx-padding: 0;
-}
-.scroll-pane .corner {
+.descrizioneArea .scroll-pane,
+.descrizioneArea .content,
+.descrizioneArea .viewport,
+.descrizioneArea .corner{
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
+
 
 /* Valori dei voti */
-#votoTotal, #votoStile, #votoContenuto, #votoGradevolezza, #votoOriginalita , #votoEdizione{
+#votoStile, #votoContenuto, #votoGradevolezza, #votoOriginalita , #votoEdizione{
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-text-fill: #a31621;
+    -fx-border-color: #fcf7f8;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-background-color: #fcf7f8;
+}
+
+#votoTotal{
     -fx-font-size: 14px;
     -fx-alignment: center;
     -fx-text-fill: #fcf7f8;

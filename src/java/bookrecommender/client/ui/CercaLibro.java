@@ -51,11 +51,11 @@ public class CercaLibro extends TableViewEngine {
      * </ul>
      */
     @FXML private void initialize() {
+        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
         bottoneCerca.setGraphic(IMGtype.CERCA.getImageView(25,25));
         bottoneCerca.setAlignment(Pos.CENTER_LEFT);
         bottoneCerca.setStyle("-fx-padding: 0");
-        GoBackButton_MainMenu.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
-        GoBackButton_MainMenu.setAlignment(Pos.TOP_LEFT);
         initBasicSearch();
         initSRecensioniCol();
         initTableViews();

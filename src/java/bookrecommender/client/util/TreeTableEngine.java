@@ -32,6 +32,7 @@ public abstract class TreeTableEngine {
     }
 
     protected <T> void loadSimple(TreeTableColumn<Object, T> column, Map<String, T> map) {
+        column.setResizable(false);
         column.setStyle("-fx-alignment: CENTER;");
         column.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
@@ -64,7 +65,6 @@ public abstract class TreeTableEngine {
             CliUtil.getInstance().LogOut(e);
         }
     }
-
     protected void creaFigliLibri(String nome) {
         TreeItem<Object> libNode = new TreeItem<>(nome);
         libNode.getChildren().add(new TreeItem<>());

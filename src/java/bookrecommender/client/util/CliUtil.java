@@ -14,12 +14,13 @@ import bookrecommender.common.model.Valutazione;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Labeled;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -499,19 +500,21 @@ public final class CliUtil {
     }
 
     /**
-     * Applica uno stile trasparente a un controllo con icona (es. pulsante) e
+     * Applica uno stile trasparente a un controllo con icona (es. Pulsante) e
      * aggiunge un’animazione al passaggio del mouse.
      *
      * @param control controllo {@link Labeled} da stilizzare
      */
+
     public void styleIconControl(Labeled control){
-        control.setStyle(
-                "-fx-background-color: transparent;"
+        control.setStyle("-fx-background-color: transparent;"
                         + "-fx-border-color: transparent;"
                         + "-fx-padding: 0;"
                         + "-fx-cursor: hand;"
                         + "-fx-focus-color: transparent;"
-                        + "-fx-faint-focus-color: transparent;");
+                        + "-fx-faint-focus-color: transparent;"
+                        + "-fx-alignment: CENTER;"
+                        + "-fx-content-display: GRAPHIC_ONLY;");
         ScaleTransition enlarge = new ScaleTransition(Duration.millis(100), control);
         enlarge.setToX(1.1);
         enlarge.setToY(1.1);
@@ -532,5 +535,33 @@ public final class CliUtil {
             }
         }catch (IOException | NullPointerException ignored) {}
         softRestart();
+    }
+
+    public static Node setMenuButtonStyle(MenuButton mb) {
+        mb.setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
+        mb.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        mb.setAlignment(Pos.CENTER);
+        mb.setMinSize(5, 5);
+        mb.setPrefSize(25, 25);
+        mb.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        CliUtil.getInstance().styleIconControl(mb);
+
+        mb.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            if (newSkin != null) {
+                Node arrow = mb.lookup(".arrow");
+                if (arrow != null) {
+                    arrow.setVisible(false);
+                    arrow.setManaged(false);
+                }
+            }
+        });
+
+        StackPane wrapper = new StackPane(mb);
+        wrapper.setAlignment(Pos.CENTER);
+        wrapper.setMaxWidth(Double.MAX_VALUE);
+        wrapper.setMaxHeight(Double.MAX_VALUE);
+
+        return wrapper;
     }
 }

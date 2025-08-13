@@ -67,9 +67,12 @@ public class AddLibroLibreria extends TreeTableEngine {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         ExitButton.setAlignment(Pos.TOP_LEFT);
         titoloLibreria.setText("Le tue librerie");
+        nameColumn.setResizable(false);
+        countColumn.setResizable(false);
+        presentColumn.setResizable(false);
+        dateColumn.setResizable(false);
         initializeTree();
 
-        //TODO: css name column
         nameColumn.setStyle("-fx-alignment: CENTER;");
         nameColumn.setCellValueFactory(c -> {
             Object v = c.getValue().getValue();
@@ -84,7 +87,6 @@ public class AddLibroLibreria extends TreeTableEngine {
         loadSimple(dateColumn, libDates);
         loadSimple(presentColumn, libPresent);
 
-        //TODO: presentColumn style
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
             @Override
             protected void updateItem(Boolean present, boolean empty) {
@@ -92,7 +94,7 @@ public class AddLibroLibreria extends TreeTableEngine {
                 if (empty || present == null)
                     setGraphic(null);
                 else
-                    setGraphic(present ? IMGtype.CHECK.getImageView(12,12) : IMGtype.RED_CROSS.getImageView(12,12));
+                    setGraphic(present ? IMGtype.CHECK.getImageView(18,18) : IMGtype.RED_CROSS.getImageView(18,18));
             }
         });
 

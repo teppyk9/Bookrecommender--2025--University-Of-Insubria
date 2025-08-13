@@ -21,11 +21,11 @@ import java.util.regex.Pattern;
  * Estende {@link PasswordEngine} per gestire la visibilità del campo password.
  */
 public class Account extends PasswordEngine {
-    @FXML private Label nomeLabel;
-    @FXML private Label cognomeLabel;
-    @FXML private Label CFLabel;
-    @FXML private TextField emailTextField;
-    @FXML private TextField usernameTextField;
+    @FXML private TextArea nomeLabel;
+    @FXML private TextArea cognomeLabel;
+    @FXML private TextArea CFLabel;
+    @FXML private TextArea emailTextField;
+    @FXML private TextArea usernameTextField;
     @FXML private PasswordField PasswordField1;
     @FXML private TextField VisiblePasswordField1;
     @FXML private Button ShowP1Button;
@@ -64,7 +64,12 @@ public class Account extends PasswordEngine {
         PasswordField1.setEditable(false);
         VisiblePasswordField1.setEditable(false);
         emailTextField.setEditable(false);
+        emailTextField.setWrapText(false);
         usernameTextField.setEditable(false);
+        usernameTextField.setWrapText(false);
+        nomeLabel.setEditable(false);
+        cognomeLabel.setEditable(false);
+        CFLabel.setEditable(false);
         Uinfo = new Tooltip("Lo username deve essere tra 5 e 20 caratteri.");
         Uinfo.setAutoHide(true);
         Einfo = new Tooltip("L'email non è valida.");

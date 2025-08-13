@@ -6,10 +6,8 @@ import bookrecommender.client.util.CliUtil;
 import bookrecommender.common.model.Valutazione;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -20,19 +18,19 @@ public class ModificaValutazione {
     @FXML private Button SalvaModificheButton;
     @FXML private ImageView starStile1,starStile2,starStile3,starStile4,starStile5;
     @FXML private Label votoStile;
-    @FXML private TextField testoStile;
+    @FXML private TextArea testoStile;
     @FXML private ImageView starContenuto1,starContenuto2,starContenuto3,starContenuto4,starContenuto5;
     @FXML private Label votoContenuto;
-    @FXML private TextField testoContenuto;
+    @FXML private TextArea testoContenuto;
     @FXML private ImageView starGradevolezza1,starGradevolezza2,starGradevolezza3,starGradevolezza4,starGradevolezza5;
     @FXML private Label votoGradevolezza;
-    @FXML private TextField testoGradevolezza;
+    @FXML private TextArea testoGradevolezza;
     @FXML private ImageView starOriginalita1,starOriginalita2,starOriginalita3,starOriginalita4,starOriginalita5;
     @FXML private Label votoOriginalita;
-    @FXML private TextField testoOriginalita;
+    @FXML private TextArea testoOriginalita;
     @FXML private ImageView starEdizione1,starEdizione2,starEdizione3,starEdizione4,starEdizione5;
     @FXML private Label votoEdizione;
-    @FXML private TextField testoEdizione, testoFinale;
+    @FXML private TextArea testoEdizione, testoFinale;
     @FXML private Label TitoloLabel;
 
     private Valutazione myVal;
@@ -40,7 +38,14 @@ public class ModificaValutazione {
     private boolean isMod = false;
 
     @FXML private void initialize() {
-        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(50,50));
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
+        GoBackButton.setAlignment(Pos.TOP_LEFT);
+        testoStile.setEditable(true);
+        testoContenuto.setEditable(true);
+        testoGradevolezza.setEditable(true);
+        testoEdizione.setEditable(true);
+        testoOriginalita.setEditable(true);
+        testoFinale.setEditable(true);
         Platform.runLater(() -> {
             Stage s = (Stage) SalvaModificheButton.getScene().getWindow();
             s.setOnCloseRequest(evt -> { ExitApplication(); evt.consume(); });
