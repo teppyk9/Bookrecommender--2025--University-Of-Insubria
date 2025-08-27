@@ -24,7 +24,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- JavaFX (UI admin) -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -38,7 +37,6 @@
             <artifactId>javafx-graphics</artifactId>
         </dependency>
 
-        <!-- DB & CSV -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -68,7 +66,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 
-            <!-- Fat-jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -88,7 +85,6 @@
                 </executions>
             </plugin>
 
-            <!-- Run/jlink in dev -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>

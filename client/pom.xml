@@ -24,7 +24,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -36,17 +35,6 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-        </dependency>
-
-        <!-- Log lato client (usa java.util.logging via bridge SLF4J-JDK14) -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
 
     </dependencies>
@@ -64,7 +52,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 
-            <!-- Fat-jar (opzionale; utile per eseguibili portabili) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -84,7 +71,6 @@
                 </executions>
             </plugin>
 
-            <!-- Run/jlink in dev -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
