@@ -1,7 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 
-<img src="src/resources/bookrecommender/client/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 300px;" alt="Icona Insubria">
+<img src="client/src/main/resources/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 300px;" alt="Icona Insubria">
 
 # BookRecommender
 
