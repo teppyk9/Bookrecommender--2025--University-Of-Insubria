@@ -1,30 +1,20 @@
+set "JMODS=%JAVA_HOME%\jmods"
+set "JFX_MODS=C:\JarLib\javafx-jmods-17.0.15"
+
 CLIENT EXE INSTALLER
 
-set JFX_MODS=C:\JarLib\javafx-jmods-17.0.15
+jlink --module-path "%JMODS%;%JFX_MODS%" --add-modules java.base,java.logging,java.rmi,javafx.controls,javafx.fxml --strip-debug --no-header-files --no-man-pages --compress=2 --output build\runtime-client
 
-set JMODS=%JAVA_HOME%\jmods
+jpackage --name BookRecommenderCli --type app-image --app-version 1.0.0 --runtime-image "build\runtime-client" --input "client\target" --main-jar "client-1.0.0.jar" --dest "dist" --icon "client\src\main\resources\icons\program_icon.ico"
 
-jlink --module-path "%JMODS%;%JFX_MODS%" --add-modules java.base,java.logging,java.desktop,java.rmi,javafx.base,javafx.graphics,javafx.controls,javafx.fxml --strip-debug --no-header-files --no-man-pages --compress=2 --output "build\runtime-client"
+jpackage --type exe --name BookRecommenderCli --app-image "dist\BookRecommenderCli" --dest "dist" --app-version 1.0.0 --vendor "Gianmarco Maffioli, Francesca Rolla, Gabriele Fabbian" --win-menu --win-menu-group "BookRecommender" --win-shortcut --install-dir "BookRecommenderCli" --icon "client\src\main\resources\icons\program_icon.ico" --win-upgrade-uuid 5fdbd358-34cb-4a1e-8bb0-9e7e79a8a4b7
 
-jpackage --name BookRecommenderCli --type app-image --app-version 1.0.0 --runtime-image "build\runtime-client" --input "out\artifacts\EXPORT_LAB_B_jar" --main-jar "EXPORT-LAB-B.jar" --dest "dist" --java-options "--add-modules=javafx.controls,javafx.fxml" --icon "icons\icon.ico"
-
-jpackage --type exe --name BookRecommenderCli --app-image "dist\BookRecommenderCli" --dest "dist" --app-version 1.0.0 --vendor "Gianmarco Maffioli, Francesca Rolla, Gabriele Fabbian" --win-menu --win-menu-group "BookRecommender" --win-shortcut --install-dir "BookRecommenderCli" --icon "icons\icon.ico" --win-upgrade-uuid 5fdbd358-34cb-4a1e-8bb0-9e7e79a8a4b7
-
---------------------------------------------
-
+----------------------------------------------------------------
 
 SERVER EXE INSTALLER
 
-set JMODS=%JAVA_HOME%\jmods
+jlink --module-path "%JMODS%;%JFX_MODS%" --add-modules java.base,java.desktop,java.management,java.naming,java.rmi,java.scripting,java.sql,jdk.unsupported,javafx.controls,javafx.fxml --strip-debug --no-header-files --no-man-pages --compress=2 --output build\runtime-server
 
-set JFX_MODS=C:\JarLib\javafx-jmods-17.0.15
+jpackage --name BookRecommenderSrv --type app-image --app-version 1.0.0 --runtime-image "build\runtime-server" --input "server\target" --main-jar "server-1.0.0.jar" --dest "dist" --icon "server\src\main\resources\icons\program_icon.ico"
 
-set SERVER_ART=out\artifacts\EXPORT_SERVER_LAB_B_jar
-
-set EXT_LIBS=C:\Users\gmtep\Desktop\Programmi\EXPORT-SERVER-LAB-B\lib
-
-jlink --module-path "%JMODS%;%JFX_MODS%" --add-modules java.base,java.desktop,java.logging,java.rmi,java.sql,java.management,java.naming,java.net.http,jdk.crypto.ec,javafx.base,javafx.graphics,javafx.controls,javafx.fxml --strip-debug --no-header-files --no-man-pages --compress=2 --output "build\runtime-server"
-
-jpackage --name BookRecommenderSrv --type app-image --app-version 1.0.0 --runtime-image "build\runtime-server" --input "build\appinput-server" --main-jar "EXPORT-SERVER-LAB-B.jar" --dest "dist" --java-options "--add-modules=javafx.controls,javafx.fxml" --icon "icons\icon.ico"
-
-jpackage --type exe --name BookRecommenderSrv --app-image "dist\BookRecommenderSrv" --dest "dist" --app-version 1.0.0 --vendor "Gianmarco Maffioli, Francesca Rolla, Gabriele Fabbian" --win-menu --win-menu-group "BookRecommender" --win-shortcut --install-dir "BookRecommenderSrv" --icon "icons\icon.ico" --win-upgrade-uuid 8e6c2e17-9a2f-47c4-95bb-14b3a1a0fc61
+jpackage --type exe --name BookRecommenderSrv --app-image "dist\BookRecommenderSrv" --dest "dist" --app-version 1.0.0 --vendor "Gianmarco Maffioli, Francesca Rolla, Gabriele Fabbian" --win-menu --win-menu-group "BookRecommender" --win-shortcut --install-dir "BookRecommenderSrv" --icon "server\src\main\resources\icons\program_icon.ico" --win-upgrade-uuid 8e6c2e17-9a2f-47c4-95bb-14b3a1a0fc61
