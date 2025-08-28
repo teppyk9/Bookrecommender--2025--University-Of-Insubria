@@ -109,8 +109,13 @@ public class CambiaPassword extends PasswordEngine{
     private void validatePasswords() {
         String p1 = PasswordField1.getText();
         String p2 = PasswordField2.getText();
-        boolean match = p1 != null && p1.equals(p2) && p2.length() >= 8;
-        if (match) {
+        if (p1 != null && p1.equals(p2)) {
+            if (p1.length() < 8) {
+                labelErrore.setText("La password deve essere di almeno 8 caratteri");
+                labelErrore.setVisible(true);
+                cambiaPasswordButton.setDisable(true);
+                return;
+            }
             labelErrore.setVisible(false);
             cambiaPasswordButton.setDisable(false);
         } else {
