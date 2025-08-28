@@ -19,5 +19,6 @@ public class Main_Client extends Application {
     }
     public static void main(String[] args) {
         launch(args);
+
     }
 }
