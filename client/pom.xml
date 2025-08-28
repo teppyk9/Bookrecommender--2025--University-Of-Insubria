@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,16 +13,27 @@
     <packaging>jar</packaging>
 
     <properties>
+        <!-- Main class del client -->
         <main.class>bookrecommender.Main_Client</main.class>
     </properties>
 
     <dependencies>
+        <!-- Modulo comune -->
         <dependency>
             <groupId>bookrecommender</groupId>
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <!-- JavaFX (API per compilazione; le versioni sono gestite dal parent) -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -32,12 +42,123 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics</artifactId>
-        </dependency>
 
+        <!-- Logging API (facoltativo, ma utile se in futuro userai un binding) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
     </dependencies>
+
+    <!-- Profili per includere i binari nativi JavaFX corretti nello shaded JAR -->
+    <profiles>
+        <!-- Windows -->
+        <profile>
+            <id>windows-jfx</id>
+            <activation>
+                <os><family>windows</family></os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-base</artifactId>
+                    <version>${javafx.version}</version><classifier>win</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId>
+                    <version>${javafx.version}</version><classifier>win</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-controls</artifactId>
+                    <version>${javafx.version}</version><classifier>win</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-fxml</artifactId>
+                    <version>${javafx.version}</version><classifier>win</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <!-- Linux -->
+        <profile>
+            <id>linux-jfx</id>
+            <activation>
+                <os><family>unix</family></os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-base</artifactId>
+                    <version>${javafx.version}</version><classifier>linux</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId>
+                    <version>${javafx.version}</version><classifier>linux</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-controls</artifactId>
+                    <version>${javafx.version}</version><classifier>linux</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-fxml</artifactId>
+                    <version>${javafx.version}</version><classifier>linux</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <!-- macOS Intel -->
+        <profile>
+            <id>macos-intel-jfx</id>
+            <activation>
+                <os><family>mac</family></os>
+                <property><name>os.arch</name><value>x86_64</value></property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-base</artifactId>
+                    <version>${javafx.version}</version><classifier>mac</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId>
+                    <version>${javafx.version}</version><classifier>mac</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-controls</artifactId>
+                    <version>${javafx.version}</version><classifier>mac</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-fxml</artifactId>
+                    <version>${javafx.version}</version><classifier>mac</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <!-- macOS Apple Silicon -->
+        <profile>
+            <id>macos-arm-jfx</id>
+            <activation>
+                <os><family>mac</family></os>
+                <property><name>os.arch</name><value>aarch64</value></property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-base</artifactId>
+                    <version>${javafx.version}</version><classifier>mac-aarch64</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-graphics</artifactId>
+                    <version>${javafx.version}</version><classifier>mac-aarch64</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-controls</artifactId>
+                    <version>${javafx.version}</version><classifier>mac-aarch64</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId><artifactId>javafx-fxml</artifactId>
+                    <version>${javafx.version}</version><classifier>mac-aarch64</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <build>
         <resources>
@@ -49,6 +170,7 @@
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
 
@@ -72,36 +194,16 @@
             </plugin>
 
             <plugin>
-                <groupId>org.openjfx</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>${main.class}</mainClass>
-                    <launcher>BookRecommenderClient</launcher>
-                    <jlinkZipName>client-runtime</jlinkZipName>
-                    <stripDebug>true</stripDebug>
-                    <noHeaderFiles>true</noHeaderFiles>
-                    <noManPages>true</noManPages>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <doctitle>Client</doctitle>
-                    <failOnError>false</failOnError>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>javadoc-client</id>
-                        <goals><goal>javadoc</goal></goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

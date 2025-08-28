@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -162,7 +163,8 @@ public final class ServerUtil {
             registry.rebind("LogReg_Interface", logRegServer);
             registry.rebind("Lib_Interface", libServer);
             registry.rebind("Monitor_Interface", monitorServer);
-            logger.info("Server ready");
+            InetAddress localHost = InetAddress.getLocalHost();
+            logger.info("Server ready on: " + localHost.getHostAddress() + " port: " + port);
             return true;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Errore nell'inizializzazione del server>", e);
