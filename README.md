@@ -1,13 +1,16 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+<img src="client/src/main/resources/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 250px;" alt="Insubria Logo">
 
-<img src="client/src/main/resources/icons/SigilloAteneoTestoColori.svg" style="float: right; width: 300px;" alt="Icona Insubria">
-
-# BookRecommender
+# 📚 BookRecommender
 
 **Progetto universitario per l'esame di Laboratorio Interdisciplinare B – Università degli Studi dell’Insubria (2025)**
 
-## Autori del progetto
+Sistema client–server scritto in **Java 17** che permette di gestire un database di libri, valutazioni e librerie personali, con interfaccia grafica JavaFX e backend RMI su PostgreSQL.
+
+---
+
+## 👥 Autori
 
 - **Gianmarco Maffioli 757587 VA** – Project Manager
 - **Francesca Rolla 757922 VA** – UI/UX Designer
@@ -15,140 +18,92 @@
 
 ---
 
-## 📦 Dipendenze e Librerie
+## 📦 Dipendenze principali
 
-Il progetto utilizza **Java 17** e richiede l’installazione delle seguenti librerie esterne:
-
-### Librerie Maven (versioni esatte)
+Il progetto utilizza **Maven** per la gestione delle dipendenze.  
+Le versioni esatte sono specificate in `pom.xml`.
 
 | Libreria | Versione |
 |----------|----------|
-| `org.openjfx:javafx-base` | 17.0.8 |
-| `org.openjfx:javafx-base:win` | 17.0.8 |
-| `org.openjfx:javafx-controls` | 17.0.8 |
-| `org.openjfx:javafx-controls:win` | 17.0.8 |
-| `org.openjfx:javafx-fxml` | 17.0.8 |
-| `org.openjfx:javafx-fxml:win` | 17.0.8 |
-| `org.openjfx:javafx-graphics` | 17.0.8 |
-| `org.openjfx:javafx-graphics:win` | 17.0.8 |
-| `org.postgresql:postgresql` | 42.7.3 |
-| `org.apache.commons:commons-lang3` | 3.17.0 |
-| `com.opencsv:opencsv` | 5.9 |
-#### 🔗 Dove reperire le librerie
+| `org.openjfx:javafx-*` | 17.0.15  |
+| `org.postgresql:postgresql` | 42.7.5   |
+| `com.zaxxer:HikariCP` | 5.1.0    |
+| `org.slf4j:slf4j-api` | 2.0.17   |
 
-Puoi scaricare le librerie da:
 
-- [Maven Central Repository](https://search.maven.org/)
-- Oppure usare un sistema di build come **Maven** o **Gradle**
-
-In alternativa, se il progetto è già configurato con Maven o Gradle, sarà sufficiente eseguire una build (`mvn install` o `gradle build`) per scaricare automaticamente tutte le dipendenze.
+📌 Se usi **Maven**, le librerie verranno scaricate automaticamente (`mvn clean install`).  
+In alternativa puoi scaricarle da [Maven Central](https://search.maven.org/).
 
 ---
 
-## 🗃️ Struttura del progetto
+## ⚙️ Setup
 
+### 1. Database PostgreSQL
+1. Scarica, se non la possiedi, un’istanza **PostgreSQL** dal sito ufficiale https://www.postgresql.org/.
+2. Configura le credenziali di accesso.
+3. Avvia **setupDB.bat** per creare il database e le tabelle necessarie.
+### 2. Configurazione progetto
+- Java **17**
+- IDE consigliato: **IntelliJ IDEA Ultimate** (già configurato con `pom.xml`)
+- Modulo principale:
+   - Server: `bookrecommender.server.Main_Server`
+   - Client: `bookrecommender.client.Main_Client`
+
+---
+
+## ▶️ Avvio
+
+### Avvio da IDE
+- **Server** → esegui `Main_Server.java`
+- **Client** → esegui `Main_Client.java`
+
+### Avvio da distribuzione
+Se hai creato i runtime con `jpackage`, puoi avviare:
+```bash
+dist/BookRecommenderSrv/BookRecommenderSrv.exe   # Server (Windows)
+dist/BookRecommenderCli/BookRecommenderCli.exe   # Client (Windows)
 ```
-BookRecommender/
-├── autori.txt
-├── bookrecommender.iml
-├── LICENSE
-├── log_creazione_db
-├── README.md
-├── data/
-│   ├── tablecreation.sql          — Script di creazione tabelle
-│   └── dump/
-│       ├── consigli.sql
-│       ├── libreria_libro.sql
-│       ├── librerie.sql
-│       ├── libri.sql
-│       ├── utenti.sql
-│       └── valutazioni.sql
-├── src/
-│   ├── java/
-│   │   └── bookrecommender/
-│   │       ├── client/
-│   │       │   ├── AddLibroLibreriaController.java
-│   │       │   ├── AreaRiservataController.java
-│   │       │   ├── … (altri controller e classi client)
-│   │       ├── common/
-│   │       │   ├── Libro.java
-│   │       │   └── Token.java, RegToken.java
-│   │       └── server/
-│   │           ├── DBManager.java
-│   │           ├── Main_Server.java
-│   │           └── … (implementazioni server)
-│   └── resources/
-│       └── bookrecommender/
-│           ├── client/
-│           │   ├── fxml/         — *.fxml (Login, Home, ecc.)
-│           │   ├── icons/        — *.png, *.jpg
-│           │   └── stylesheets/  — *.css
-│           └── server/
-│               ├── fxml/
-│               ├── icons/
-│               └── stylesheets/
-└── doc/
 
+In alternativa, avvio manuale con `.bat`:
+```bat
+runtime\bin\java -jar app\client-1.0.0.jar
+runtime\bin\java -jar app\server-1.0.0.jar
 ```
 
 ---
 
-## ⚙️ Setup e Installazione
+## 🧪 Build & Packaging
 
-### 1. Preparazione del Database PostgreSQL
+Per generare runtime e installer multipiattaforma:
 
-1. Assicurati di avere un'istanza di **PostgreSQL** attiva.
-2. Crea un database vuoto (es. `bookrecommenderdb`).
-3. Vai nella cartella `data`.
-4. Esegui il file SQL `tablecreation.sql` con un client PostgreSQL come `psql`, **pgAdmin**, o un tool Java.
-5. Esegui in ordine: 
-   - `libri.sql`
-   - `utenti.sql`
-   - `librerie.sql`
-   - `libreria_libro.sql`
-   - `consigli.sql`
-   - `valutazioni.sql`
-6. Assicurati di inserire all'avvio del server le credenziali corrette.
+- **Build Maven**
+```bash
+mvn clean package
+```
 
----
+- **Runtime custom (jlink)**
+```bash
+jlink --module-path %JAVA_HOME%\jmods --add-modules javafx.controls,javafx.fxml --output runtime
+```
 
-## ▶️ Esecuzione del programma
+- **Installer (jpackage)**
+```bash
+jpackage --name BookRecommenderCli --type app-image --app-version 1.0.0  --runtime-image runtime --input target/ --main-jar client-1.0.0.jar  --icon icons/icon.ico
+```
 
-### Server
-
-- Avvia il file `Main_Server.java` nella cartella `bookrecommender.server`.
-
-### Interfaccia Cliente
-
-- Avvia il file `Main_Client.java` nella cartella `bookrecommender.client`.
-- Questo caricherà l’interfaccia grafica (FXML), gli stili (CSS) e le icone.
-
-> ⚠️ Assicurati che il server sia attivo prima di avviare il client.
-
----
-
-## 📚 Dettagli tecnici
-
-- `CliUtil.java`: contiene metodi comuni e variabili di configurazione globali (singleton).
-- I controller associati agli FXML si trovano nel package `bookrecommender.client`.
-- Le interfacce di comunicazione e le classi serializzabili si trovano in `bookrecommender.common`.
-- Le relative implementazioni lato server si trovano in `bookrecommender.server`.
-
----
-
-## 🧪 Requisiti tecnici
-
-- Java 17
-- PostgreSQL ≥ 12
-- IDE consigliato: IntelliJ IDEA o Eclipse
-- Librerie elencate nella sezione **Dipendenze**
+📌 Sono disponibili script `.bat` di esecuzione rapida del client/server.
 
 ---
 
 ## 📌 Note finali
 
-- Assicurati che i percorsi relativi siano rispettati.
-- Le connessioni al database sono gestite via JDBC tramite il driver PostgreSQL.
-- Tutti gli FXML devono avere il rispettivo controller associato dichiarato correttamente nel tag `fx:controller`.
+- Assicurati che il **server** sia attivo prima di avviare il **client**.
+- Tutti i file `.fxml` hanno controller associati in `bookrecommender.client`.
+- Connessioni DB gestite tramite **HikariCP** + driver PostgreSQL.
+- Documentazione tecnica aggiuntiva in `/doc`.
 
 ---
+
+## 📄 Licenza
+
+Questo progetto è distribuito con licenza [MIT](LICENSE).
