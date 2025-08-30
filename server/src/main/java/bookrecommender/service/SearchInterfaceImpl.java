@@ -163,7 +163,7 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
             logger.info("Searching for books by author: " + author + " and year: " + year + " From client " + getClientHost());
         }catch (ServerNotActiveException ignored){}
         List<Libro> risultati = new ArrayList<>();
-        String baseWhere = "FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) " + "AND CAST(ANNOPUBBLICAZIONE AS TEXT) LIKE ?";
+        String baseWhere = "FROM LIBRI WHERE LOWER(AUTORE) LIKE LOWER(?) " + "AND CAST(ANNOPUBBLICAZIONE AS TEXT) LIKE (?)";
         String countSql = "SELECT COUNT(*) " + baseWhere;
         String dataSql = "SELECT * " + baseWhere;
         String orderedLimitedSql = "SELECT * " + baseWhere + " ORDER BY STRPOS(LOWER(AUTORE), LOWER(?))" + " LIMIT (?)";
