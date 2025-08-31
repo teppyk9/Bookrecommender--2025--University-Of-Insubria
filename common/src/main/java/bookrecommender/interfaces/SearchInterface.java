@@ -19,7 +19,8 @@ import java.util.List;
 public interface SearchInterface extends Remote {
 
     /**
-     * Recupera un libro tramite il suo identificatore univoco.
+     * Recupera un libro tramite il suo identificatore univoco (id).
+     *
      * @param id l'identificatore del libro
      * @return il libro corrispondente all'id fornito
      * @throws RemoteException in caso di errore di comunicazione remota
@@ -28,7 +29,9 @@ public interface SearchInterface extends Remote {
 
     /**
      * Cerca libri il cui titolo corrisponde (o contiene) la stringa fornita.
-     * @param title il titolo o parte del titolo del libro
+     *
+     * @param title      il titolo o parte del titolo del libro
+     * @param maxResults numero massimo di risultati da restituire
      * @return lista di libri che corrispondono al titolo
      * @throws RemoteException in caso di errore di comunicazione remota
      */
@@ -36,7 +39,9 @@ public interface SearchInterface extends Remote {
 
     /**
      * Cerca libri scritti dall'autore specificato.
-     * @param author il nome dell'autore
+     *
+     * @param author     il nome dell'autore
+     * @param maxResults numero massimo di risultati da restituire
      * @return lista di libri scritti dall'autore
      * @throws RemoteException in caso di errore di comunicazione remota
      */
@@ -44,8 +49,10 @@ public interface SearchInterface extends Remote {
 
     /**
      * Cerca libri scritti dall'autore specificato e pubblicati nell'anno indicato.
-     * @param author il nome dell'autore
-     * @param year   l'anno di pubblicazione
+     *
+     * @param author     il nome dell'autore
+     * @param year       l'anno di pubblicazione
+     * @param maxResults numero massimo di risultati da restituire
      * @return lista di libri corrispondenti ai criteri di ricerca
      * @throws RemoteException in caso di errore di comunicazione remota
      */
@@ -53,6 +60,7 @@ public interface SearchInterface extends Remote {
 
     /**
      * Ottiene i dettagli completi di un libro specifico.
+     *
      * @param libro il libro di cui si vogliono ottenere i dettagli
      * @return oggetto {@link Libro_Details} contenente informazioni dettagliate
      * @throws RemoteException in caso di errore di comunicazione remota
@@ -62,6 +70,7 @@ public interface SearchInterface extends Remote {
     /**
      * Cerca libri il cui titolo corrisponde (o contiene) la stringa fornita,
      * con autenticazione tramite token.
+     *
      * @param token token di autenticazione dell'utente
      * @param title il titolo o parte del titolo del libro
      * @return lista di libri che corrispondono al titolo
@@ -72,6 +81,7 @@ public interface SearchInterface extends Remote {
     /**
      * Cerca libri scritti dall'autore specificato,
      * con autenticazione tramite token.
+     *
      * @param token  token di autenticazione dell'utente
      * @param author il nome dell'autore
      * @return lista di libri scritti dall'autore
@@ -82,6 +92,7 @@ public interface SearchInterface extends Remote {
     /**
      * Cerca libri scritti dall'autore specificato e pubblicati nell'anno indicato,
      * con autenticazione tramite token.
+     *
      * @param token  token di autenticazione dell'utente
      * @param author il nome dell'autore
      * @param year   l'anno di pubblicazione
@@ -93,6 +104,7 @@ public interface SearchInterface extends Remote {
     /**
      * Ottiene la lista completa di tutti i libri disponibili,
      * con autenticazione tramite token.
+     *
      * @param token token di autenticazione dell'utente
      * @return lista di tutti i libri
      * @throws RemoteException in caso di errore di comunicazione remota
@@ -101,8 +113,9 @@ public interface SearchInterface extends Remote {
 
     /**
      * Verifica se un libro ha valutazioni o recensioni associate.
+     *
      * @param libro il libro da verificare
-     * @return true se il libro ha valutazioni o recensioni, false altrimenti
+     * @return {@code true} se il libro ha valutazioni o recensioni, {@code false} altrimenti
      * @throws RemoteException in caso di errore di comunicazione remota
      */
     boolean hasValRec (Libro libro) throws RemoteException;

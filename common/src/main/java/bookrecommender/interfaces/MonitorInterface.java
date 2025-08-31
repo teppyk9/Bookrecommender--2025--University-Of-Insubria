@@ -4,14 +4,15 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * Interfaccia remota per la registrazione di listener nel sistema di raccomandazione.
+ * Interfaccia remota per registrare listener nel sistema di raccomandazione.
  * <p>
- * Permette ai client di registrare un {@link ServerListener} per ricevere
+ * Consente ai client di registrare un {@link ServerListener} per ricevere
  * notifiche o eventi generati dal server.
  * </p>
- *
- * <p>Essendo un'interfaccia RMI, tutti i metodi possono lanciare
- * {@link RemoteException} in caso di problemi di comunicazione remota.</p>
+ * <p>
+ * Essendo un'interfaccia RMI, i metodi possono lanciare
+ * {@link RemoteException} in caso di problemi di comunicazione remota.
+ * </p>
  *
  * @see ServerListener
  */

@@ -110,23 +110,93 @@ public interface LibInterface extends Remote {
      */
     LocalDate getCreationDate(Token token, String nome) throws RemoteException;
 
+    /**
+     * Verifica se esiste una valutazione dell’utente per il libro indicato.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro di cui verificare la valutazione
+     * @return true se la valutazione esiste, false altrimenti
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     boolean existVal(Token token, Libro libro) throws RemoteException;
 
+    /**
+     * Verifica se esiste un consiglio associato al libro indicato per l’utente.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro di riferimento per il consiglio
+     * @return true se il consiglio esiste, false altrimenti
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     boolean existCon(Token token, Libro libro) throws RemoteException;
 
+    /**
+     * Aggiorna la valutazione esistente per il libro indicato.
+     * @param token token di autenticazione dell’utente
+     * @param valutazione nuova valutazione da salvare (sostituisce quella esistente)
+     * @return true se l’aggiornamento è andato a buon fine, false altrimenti
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     boolean updateVal(Token token, Valutazione valutazione) throws RemoteException;
 
+    /**
+     * Aggiorna il consiglio esistente associato al libro indicato.
+     * @param token token di autenticazione dell’utente
+     * @param libri nuova lista di libri consigliati da salvare
+     * @return true se l’aggiornamento è andato a buon fine, false altrimenti
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     boolean updateCon(Token token, List<Libro> libri) throws RemoteException;
 
+    /**
+     * Elimina la valutazione dell’utente relativa al libro indicato.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro per cui eliminare la valutazione
+     * @return true se l’eliminazione è andata a buon fine, false altrimenti
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     boolean deleteVal(Token token, Libro libro) throws RemoteException;
 
+    /**
+     * Elimina il consiglio dell’utente relativo al libro indicato.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro di riferimento per cui eliminare il consiglio
+     * @return true se l’eliminazione è andata a buon fine, false altrimenti
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     boolean deleteCon(Token token, Libro libro) throws RemoteException;
 
+    /**
+     * Restituisce la data associata (creazione o ultima modifica) alla valutazione dell’utente per il libro.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro di riferimento
+     * @return data della valutazione (creazione o ultima modifica, a seconda dell’implementazione)
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     LocalDate getValDate(Token token, Libro libro) throws RemoteException;
 
+    /**
+     * Restituisce la data associata (creazione o ultima modifica) al consiglio dell’utente per il libro.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro di riferimento
+     * @return data del consiglio (creazione o ultima modifica, a seconda dell’implementazione)
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     LocalDate getConDate(Token token, Libro libro) throws RemoteException;
 
+    /**
+     * Restituisce la lista dei libri consigliati associati al libro indicato.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro di riferimento per il consiglio
+     * @return lista di libri consigliati
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     List<Libro> getConsigli(Token token, Libro libro) throws RemoteException;
 
+    /**
+     * Restituisce la valutazione dell’utente per il libro indicato.
+     * @param token token di autenticazione dell’utente
+     * @param libro libro valutato
+     * @return la valutazione esistente, oppure {@code null} se non presente
+     * @throws RemoteException se si verifica un errore nella comunicazione remota
+     */
     Valutazione getValutazione(Token token, Libro libro) throws RemoteException;
 }
