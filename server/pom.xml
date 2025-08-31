@@ -197,7 +197,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>Server-${project.version}-Executable</finalName>
+                    <finalName>serverBR</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <outputDirectory>${maven.multiModuleProjectDirectory}/bin</outputDirectory>
                 </configuration>

@@ -179,7 +179,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>Client-${project.version}-Executable</finalName>
+                    <finalName>clientBR</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <outputDirectory>${maven.multiModuleProjectDirectory}/bin</outputDirectory>
                 </configuration>
