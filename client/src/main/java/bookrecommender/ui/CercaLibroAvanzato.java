@@ -31,9 +31,12 @@ import javafx.stage.Stage;
  */
 public class CercaLibroAvanzato extends TableViewEngine {
 
+    /** Menu che applica limiti/ordinamenti ai risultati della ricerca avanzata. */
     @FXML private MenuButton limiterBox;
     @FXML private Button GoBackButton_MainMenu;
     @FXML private Button bottoneCerca;
+
+    /** Indicatore di caricamento delle ricerche con più filtri; viene disattivato a fine operazione. */
     @FXML private ProgressIndicator loadingCircle;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
@@ -207,8 +210,13 @@ public class CercaLibroAvanzato extends TableViewEngine {
     protected TableColumn<Libro, Void> getOActionCol() {return null;}
 
     /**
-     * @return valore booleano che rappresenta lo stato interno della modalità di ricerca.
-     * Viene usato da {@link TableViewEngine} per variare il comportamento.
+     * Restituisce lo stato corrente della modalità di ricerca.
+     * <p>
+     * Il valore è gestito internamente dalla variabile {@code searchType},
+     * che può essere invertita tramite {@link #setRicerca()}.
+     * </p>
+     *
+     * @return {@code true} o {@code false} in base alla modalità di ricerca attiva
      */
     @Override
     protected boolean getSearchType() {return searchType;}
@@ -257,8 +265,12 @@ public class CercaLibroAvanzato extends TableViewEngine {
     }
 
     /**
-     * Inverte il valore booleano interno {@code searchType}, che distingue le modalità di ricerca.
-     * Usato per aggiornare il comportamento dei metodi ereditati.
+     * Inverte il valore della variabile {@code searchType}, che distingue
+     * le modalità di ricerca (ad esempio tra base e avanzata).
+     * <p>
+     * Questo influisce sul comportamento dei metodi ereditati che interrogano
+     * {@link #getSearchType()}.
+     * </p>
      */
     @FXML private void setRicerca() {
         searchType = !searchType;

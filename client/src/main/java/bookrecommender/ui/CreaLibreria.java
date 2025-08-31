@@ -168,11 +168,23 @@ public class CreaLibreria extends TableViewEngine {
         return FXMLtype.CREALIBRERIA;
     }
 
+    /**
+     * Restituisce l’indicatore grafico di progresso, utilizzato
+     * per mostrare lo stato delle operazioni asincrone di ricerca.
+     *
+     * @return indicatore di caricamento della schermata
+     */
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
     }
 
+    /**
+     * Restituisce il menu a tendina che consente di applicare
+     * filtri o limiti ai risultati della ricerca.
+     *
+     * @return menu di limitazione dei risultati
+     */
     @Override
     protected MenuButton getLimiterBox() {
         return limiterBox;

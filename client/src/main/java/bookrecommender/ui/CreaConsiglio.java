@@ -303,11 +303,23 @@ public class CreaConsiglio extends TableViewEngine {
         return FXMLtype.CREACONSIGLIO;
     }
 
+    /**
+     * Restituisce l’indicatore di caricamento della schermata,
+     * usato per mostrare lo stato delle operazioni asincrone.
+     *
+     * @return indicatore di progresso
+     */
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;
     }
 
+    /**
+     * Restituisce il menu a tendina che permette di limitare
+     * o ordinare i risultati della ricerca.
+     *
+     * @return menu di limitazione
+     */
     @Override
     protected MenuButton getLimiterBox() {
         return limiterBox;

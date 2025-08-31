@@ -86,13 +86,10 @@ public class CambiaPassword extends PasswordEngine{
     }
 
     /**
-     * Gestisce la logica per cambiare la password dell’utente.
+     * Torna alla schermata account senza applicare modifiche.
      * <p>
-     * Se i due campi password corrispondono, viene mostrata una finestra di conferma
-     * e, in caso positivo, inviata la richiesta al server. Al termine,
-     * l’utente viene reindirizzato alla schermata account.
+     * Chiude la schermata corrente e carica {@link FXMLtype#ACCOUNT}.
      * </p>
-     * In caso di errore o mismatch, viene mostrato un messaggio nella GUI.
      */
     @FXML private void goBackAreaRiservata() {
         CliUtil.getInstance().buildStage(FXMLtype.ACCOUNT, null, null);

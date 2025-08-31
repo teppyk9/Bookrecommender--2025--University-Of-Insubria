@@ -106,8 +106,10 @@ public enum FXMLtype {
      */
     ACCOUNT("/fxml/Account.fxml", "Account");
 
-
+    /** Percorso al file FXML associato alla schermata. */
     private final String path;
+
+    /** Titolo finestra associato alla schermata. */
     private final String title;
 
     /**

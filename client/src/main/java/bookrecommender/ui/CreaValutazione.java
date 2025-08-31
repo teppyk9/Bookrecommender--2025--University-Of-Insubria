@@ -164,6 +164,7 @@ public class CreaValutazione {
      * Se il salvataggio ha successo, l'utente riceve una conferma e viene riportato alla schermata precedente.
      * In caso di fallimento o errore di comunicazione, viene mostrato un messaggio d'errore.
      * </p>
+     *
      */
     @FXML private void SalvaValutazione() {
         try {

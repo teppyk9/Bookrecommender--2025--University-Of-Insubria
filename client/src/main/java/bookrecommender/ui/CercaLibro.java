@@ -26,13 +26,18 @@ public class CercaLibro extends TableViewEngine {
 
     @FXML private Button bottoneCerca;
     @FXML private Button GoBackButton_MainMenu;
+
+    /** Indicatore di caricamento mostrato durante la ricerca; nascosto al termine. */
     @FXML private ProgressIndicator loadingCircle;
+
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;
     @FXML private MenuButton MenuTipoRicerca;
     @FXML private MenuItem MenuCercaTitolo;
     @FXML private MenuItem MenuCercaAutore;
     @FXML private MenuItem MenuCercaAutoreAnno;
+
+    /** Menu per limitare/ordinare i risultati (es. quantità, data, rating). */
     @FXML private MenuButton limiterBox;
 
     @FXML private TableView<Libro> tableView;
@@ -117,7 +122,7 @@ public class CercaLibro extends TableViewEngine {
         return titoloCol;
     }
 
-    /** @return colonna dei titoli dei libri */
+    /** @return colonna degli autori dei libri */
     @Override
     protected TableColumn<Libro, String> getSAutoreCol() {
         return autoreCol;
@@ -197,30 +202,39 @@ public class CercaLibro extends TableViewEngine {
     protected TableColumn<Libro, Void> getOActionCol() {return null;}
 
     /**
-     * Modalità di ricerca non alternabile in questa vista.
-     * @return {@code false}
+     * Indica se la modalità di ricerca avanzata è abilitata.
+     * <p>In questa schermata restituisce sempre {@code false}.</p>
+     *
+     * @return {@code false}, perché la ricerca avanzata non è disponibile
      */
     @Override
     protected boolean getSearchType() {return false;}
 
     /**
-     * Nessun libro preimpostato in questa schermata.
-     * @return {@code null}
+     * Restituisce il libro preimpostato per la ricerca.
+     * <p>In questa schermata non è previsto alcun libro preimpostato.</p>
+     *
+     * @return sempre {@code null}
      */
     @Override
     protected Libro getMyLibro() {return null;}
 
     /**
-     * Tipo FXML non definito esplicitamente per questa schermata.
-     * @return {@code null}
+     * Restituisce il tipo FXML associato a questa schermata.
+     *
+     * @return {@link FXMLtype#CERCA}
      */
     @Override
     protected FXMLtype getMyFXMLtype() {
         return FXMLtype.CERCA;
     }
 
-    /** Indicatore di caricamento per operazioni asincrone.
-     * @return l'indicatore di questa interfaccia*/
+    /**
+     * Restituisce l’indicatore di caricamento mostrato durante
+     * le operazioni asincrone di ricerca.
+     *
+     * @return l’indicatore di caricamento della schermata
+     */
     @Override
     protected ProgressIndicator getProgressIndicator() {
         return loadingCircle;

@@ -37,10 +37,35 @@ public class Account extends PasswordEngine {
 
     private String oldUsername = "";
     private String oldEmail = "";
+
+    /**
+     * Tooltip che informa l'utente sui requisiti dello username
+     * (ad esempio lunghezza minima e massima).
+     */
     private Tooltip Uinfo;
+
+    /**
+     * Tooltip mostrato quando l'indirizzo email inserito non è valido.
+     */
     private Tooltip Einfo;
+
+    /**
+     * Indica se lo username è stato modificato e non ancora confermato. *
+     */
     private boolean isUsernameChanged = false;
+
+    /**
+     * Indica se l'email è stata modificata e non ancora confermata.
+     * */
     private boolean isEmailChanged = false;
+
+    /**
+     * Espressione regolare per la validazione sintattica dell'indirizzo email.
+     * <p>
+     * Nota: questa validazione controlla il formato, non garantisce l'esistenza
+     * o la raggiungibilità della casella di posta.
+     * </p>
+     */
     private final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$", Pattern.CASE_INSENSITIVE);
 
     /**
@@ -135,8 +160,12 @@ public class Account extends PasswordEngine {
     }
 
     /**
-     * Abilita o conferma la modifica dello username.
-     * Se lo username è valido e differente da quello attuale, tenta di aggiornare il valore nel server.
+     * Abilita o applica la modifica dello username.
+     * <p>
+     * Se in modalità "abilita", sblocca il campo e prepara la conferma.
+     * Se in modalità "conferma": valida input non vuoto/differente, invia l'aggiornamento
+     * al backend e, in caso di successo, aggiorna la UI e azzera lo stato di modifica.
+     * </p>
      */
     @FXML private void changeUsername() {
         if(!isUsernameChanged) {
@@ -171,8 +200,13 @@ public class Account extends PasswordEngine {
     }
 
     /**
-     * Abilita o conferma la modifica dell'email.
-     * Se l'email è valida e differente da quella attuale, tenta di aggiornare il valore nel server.
+     * Abilita o applica la modifica dell'email.
+     * <p>
+     * Se in modalità "abilita", sblocca il campo e mostra i requisiti/tooltip.
+     * Se in modalità "conferma": valida il formato con {@link #EMAIL_PATTERN},
+     * invia la richiesta di aggiornamento e, se riuscita, aggiorna la UI
+     * e azzera lo stato di modifica.
+     * </p>
      */
     @FXML private void changeEmail() {
         if(!isEmailChanged) {

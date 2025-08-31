@@ -141,6 +141,9 @@ public enum IMGtype {
      */
     SAVE("/icons/Save_fcf7f8.png"),;
 
+    /**
+     * Percorso del file immagine associato all'elemento enum.
+     */
     private final String path;
 
     /**
@@ -183,7 +186,14 @@ public enum IMGtype {
      * distinte per colore (rosso o bianco) e livello (da 0/4 a 4/4).
      */
     public enum STARtype{
+        /**
+         * Serie di icone stella in colore rosso, dal livello 0/4 (vuota) a 4/4 (piena).
+         */
         RED(STAR_0_4_RED, STAR_1_4_RED, STAR_2_4_RED, STAR_3_4_RED, STAR_4_4_RED),
+
+        /**
+         * Serie di icone stella in colore bianco, dal livello 0/4 (vuota) a 4/4 (piena).
+         */
         WHITE(STAR_0_4_WHITE, STAR_1_4_WHITE, STAR_2_4_WHITE, STAR_3_4_WHITE, STAR_4_4_WHITE);
 
         private final IMGtype[] stars;

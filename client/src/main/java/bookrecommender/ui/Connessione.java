@@ -59,10 +59,11 @@ public class Connessione {
     /**
      * Gestisce il click sul bottone "Conferma".
      * <ul>
-     *   <li>Valida host e porta</li>
-     *   <li>Effettua il test della connessione</li>
-     *   <li>In caso di successo, mostra una conferma per continuare</li>
-     *   <li>In caso di rifiuto o errore, termina l'applicazione</li>
+     *   <li>Valida host e porta inseriti</li>
+     *   <li>Tenta la connessione al server RMI</li>
+     *   <li>In caso di successo, chiude la finestra corrente,
+     *       inizializza i servizi RMI e apre la schermata principale</li>
+     *   <li>In caso di errore, aggiorna {@code testLabel} con il messaggio corrispondente</li>
      * </ul>
      */
     @FXML private void conferma() {

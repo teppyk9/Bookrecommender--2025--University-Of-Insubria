@@ -90,6 +90,7 @@ public class AddLibroLibreria extends TreeTableEngine {
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
             @Override
             protected void updateItem(Boolean present, boolean empty) {
+                // Mostra spunta/croce a seconda che il libro sia presente; gestisce anche la cella vuota.
                 super.updateItem(present, empty);
                 if (empty || present == null)
                     setGraphic(null);
@@ -111,9 +112,10 @@ public class AddLibroLibreria extends TreeTableEngine {
     }
 
     /**
-     * Gestisce il doppio click su un nodo della TreeTableView per mostrare i dettagli del libro.
+     * Gestisce il doppio click su un nodo della {@code TreeTableView}.
+     * Se il nodo rappresenta un {@link Libro}, apre la schermata dei dettagli.
      *
-     * @param v oggetto selezionato (di tipo {@code Libro} se valido)
+     * @param v oggetto associato al nodo selezionato (atteso: {@link Libro})
      */
     @Override
     protected void handleDoubleClick(Object v) {

@@ -233,11 +233,27 @@ public class GestioneLibrerie extends TreeTableEngine {
         return libDates;
     }
 
+    /**
+     * Restituisce la mappa della presenza del libro corrente nelle librerie.
+     * <p>
+     * In questa schermata non è prevista: restituisce sempre {@code null}.
+     * </p>
+     *
+     * @return sempre {@code null}
+     */
     @Override
     protected Map<String, Boolean> getLibPresent() {
         return null;
     }
 
+    /**
+     * Restituisce il libro associato a questa schermata.
+     * <p>
+     * In questa vista non è richiesto un libro specifico: restituisce sempre {@code null}.
+     * </p>
+     *
+     * @return sempre {@code null}
+     */
     @Override
     protected Libro getMyLibro() {
         return null;
@@ -473,14 +489,6 @@ public class GestioneLibrerie extends TreeTableEngine {
 
         return CliUtil.setMenuButtonStyle(mb);
     }
-
-    /**
-     * Applica uno stile grafico al {@link MenuButton} inserendo un'icona a discesa e applicando
-     * lo stile definito da {@link CliUtil}.
-     *
-     * @param mb Il pulsante a cui applicare lo stile.
-     */
-
 
     /**
      * Classe di supporto per rappresentare un libro all’interno della TreeTableView.

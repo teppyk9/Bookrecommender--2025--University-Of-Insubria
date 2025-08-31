@@ -18,16 +18,41 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Controller JavaFX per la schermata di login dell'applicazione.
+ * <p>
+ * Consente all'utente di autenticarsi inserendo username e password,
+ * gestisce la visibilità della password tramite {@link PasswordEngine},
+ * e fornisce collegamenti per la registrazione e il ritorno al menu principale.
+ * </p>
+ */
 public class Login extends PasswordEngine{
+    /** Pulsante per tornare al menu principale */
     @FXML private Button GoBackButton;
+    /** Pulsante per mostrare/nascondere la password */
     @FXML private Button ShowPButton;
+    /** Campo di input per la password (mascherata) */
     @FXML private PasswordField PasswordField;
+    /** Pulsante per avviare il login */
     @FXML private Button AccediButton;
+    /** Etichetta testuale cliccabile che rimanda alla registrazione */
     @FXML private Label NonHaiUnAccountFiled;
+    /** Testo di errore mostrato in caso di problemi di login */
     @FXML private Text ErrorToLogin;
+    /** Campo di input per lo username */
     @FXML private TextField UsernameField;
+    /** Campo di input per la password in chiaro (sincronizzato con PasswordField) */
     @FXML private TextField VisiblePasswordField;
 
+    /**
+     * Inizializza la schermata di login.
+     * <p>
+     * Configura icone e stili grafici, nasconde i messaggi di errore,
+     * abilita l’interazione con l’etichetta "Non hai un account",
+     * e imposta il focus iniziale sul campo username.
+     * Registra inoltre un handler di chiusura per terminare l’applicazione.
+     * </p>
+     */
     @FXML private void initialize() {
         GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         GoBackButton.setAlignment(Pos.TOP_LEFT);
@@ -52,12 +77,33 @@ public class Login extends PasswordEngine{
         });
     }
 
+    /**
+     * Gestisce la pressione del tasto Invio nella schermata.
+     * <p>
+     * Se premuto, richiama il metodo {@link #TryLogin()}.
+     * </p>
+     *
+     * @param keyEvent evento di tastiera associato alla pressione di un tasto
+     */
     @FXML private void EnterController(KeyEvent keyEvent) {
         if(keyEvent.getCode().getName().equals("Enter")) {
             TryLogin();
         }
     }
 
+    /**
+     * Tenta il login dell'utente con le credenziali fornite.
+     * <p>
+     * Verifica che username e password non siano vuoti,
+     * invia i dati al servizio remoto e:
+     * <ul>
+     *   <li>Se validi: salva il token corrente, mostra un messaggio di benvenuto
+     *       e apre l'area riservata</li>
+     *   <li>Se non validi: mostra un messaggio di errore</li>
+     * </ul>
+     * In caso di eccezione, richiama {@code CliUtil.LogOut(e)}.
+     * </p>
+     */
     @FXML private void TryLogin() {
         String username = UsernameField.getText().toLowerCase();
         String password = PasswordField.getText();
@@ -84,41 +130,68 @@ public class Login extends PasswordEngine{
         }
     }
 
+    /**
+     * Apre la schermata di registrazione se l’utente clicca
+     * sull’etichetta "Non hai un account".
+     *
+     * @param mouseEvent evento di click del mouse
+     */
     @FXML private void GoToRegisterPage(MouseEvent mouseEvent) {
         if(mouseEvent.getClickCount() == 1 || mouseEvent.getClickCount() == 2) {
             CliUtil.getInstance().buildStage(FXMLtype.REGISTRAZIONE, null, null);
         }
     }
 
+    /**
+     * Torna alla schermata principale (Home).
+     */
     @FXML private void GoBackMainMenu() {
         CliUtil.getInstance().buildStage(FXMLtype.HOME, null, null);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected PasswordField getPasswordField1() {
         return PasswordField;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Non utilizzato: restituisce sempre {@code null}.</p>
+     */
     @Override
     protected PasswordField getPasswordField2() {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Non utilizzato: restituisce sempre {@code null}.</p>
+     */
     @Override
     protected TextField getVisiblePasswordField1() {
         return VisiblePasswordField;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Non utilizzato: restituisce sempre {@code null}.</p>
+     */
     @Override
     protected TextField getVisiblePasswordField2() {
         return null;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Button getButton1() {
         return ShowPButton;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>Non utilizzato: restituisce sempre {@code null}.</p>
+     */
     @Override
     protected Button getButton2() {
         return null;

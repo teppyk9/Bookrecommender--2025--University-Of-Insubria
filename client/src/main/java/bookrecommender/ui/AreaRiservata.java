@@ -52,14 +52,22 @@ public class AreaRiservata {
     }
 
     /**
-     * Apre la finestra per effettuare una ricerca avanzata dei libri.
+     * Apre la finestra di ricerca avanzata dei libri.
+     * <p>
+     * Carica la schermata {@link FXMLtype#CERCA_AVANZATO}, che permette
+     * all'utente di effettuare ricerche filtrate e dettagliate nel catalogo.
+     * </p>
      */
     @FXML private void OpenCercaLibroAvanzato() {
         CliUtil.getInstance().buildStage(FXMLtype.CERCA_AVANZATO, null,null);
     }
 
     /**
-     * Apre la schermata di gestione delle librerie dell'utente.
+     * Apre la schermata di gestione delle librerie personali dell'utente.
+     * <p>
+     * Carica l'interfaccia {@link FXMLtype#GESTIONELIBRERIE} per consultare,
+     * creare, modificare e cancellare librerie e libri contenuti.
+     * </p>
      */
     @FXML private void OpenVisualizzaLibrerie() {
         CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE,null, null);
@@ -68,8 +76,8 @@ public class AreaRiservata {
     /**
      * Esegue il logout dell'utente corrente.
      * <p>
-     * Se il logout ha successo, mostra un messaggio di conferma e reindirizza l'utente alla schermata iniziale.
-     * In caso contrario, mostra un messaggio di errore.
+     * Delega a {@link bookrecommender.util.CliUtil} la terminazione della sessione
+     * e reindirizza alla schermata iniziale (esegue {@code getInstance().LogOut(...)}).
      * </p>
      */
     @FXML private void LogOut(){
@@ -79,7 +87,8 @@ public class AreaRiservata {
     /**
      * Apre la schermata delle impostazioni dell'account utente.
      * <p>
-     * Consente all'utente di modificare le proprie informazioni e preferenze.
+     * Carica la finestra {@link FXMLtype#ACCOUNT}, che consente
+     * di modificare dati personali e preferenze dell'account.
      * </p>
      */
     @FXML private void openImpostazioni() {
