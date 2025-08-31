@@ -33,6 +33,34 @@
                     <doctitle>DBCreator</doctitle>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>bookrecommender.DBCreator</mainClass>
+                        </manifest>
+                    </archive>
+                    <finalName>DBCreator</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <outputDirectory>${maven.multiModuleProjectDirectory}/bin</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
