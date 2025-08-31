@@ -56,18 +56,13 @@ In alternativa puoi scaricarle da [Maven Central](https://search.maven.org/).
 ### Avvio da IDE
 - **Server** → esegui `Main_Server.java`
 - **Client** → esegui `Main_Client.java`
-
-### Avvio da distribuzione
-Se hai creato i runtime con `jpackage`, puoi avviare:
-```bash
-dist/BookRecommenderSrv/BookRecommenderSrv.exe   # Server (Windows)
-dist/BookRecommenderCli/BookRecommenderCli.exe   # Client (Windows)
-```
+- **DBCreator** → esegui `DBCreator.java`
 
 In alternativa, avvio manuale con `.bat`:
 ```bat
-runtime\bin\java -jar app\client-1.0.0.jar
-runtime\bin\java -jar app\server-1.0.0.jar
+\bin\java -jar clientBR.jar
+\bin\java -jar serverBR.jar
+\bin\java -jar DBCreator.jar
 ```
 
 ---
