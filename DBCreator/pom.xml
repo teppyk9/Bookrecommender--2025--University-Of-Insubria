@@ -31,7 +31,16 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <doctitle>DBCreator</doctitle>
+                    <reportOutputDirectory>${maven.multiModuleProjectDirectory}/doc/DBCreator</reportOutputDirectory>
+                    <destDir>.</destDir>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-dbc-javadoc</id>
+                        <goals><goal>javadoc</goal></goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

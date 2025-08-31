@@ -23,7 +23,16 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <doctitle>Common</doctitle>
+                    <reportOutputDirectory>${maven.multiModuleProjectDirectory}/doc/common</reportOutputDirectory>
+                    <destDir>.</destDir>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-common-javadoc</id>
+                        <goals><goal>javadoc</goal></goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

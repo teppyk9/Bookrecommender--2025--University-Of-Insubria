@@ -233,7 +233,16 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <doctitle>Server</doctitle>
+                    <reportOutputDirectory>${maven.multiModuleProjectDirectory}/doc/server</reportOutputDirectory>
+                    <destDir>.</destDir>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-server-javadoc</id>
+                        <goals><goal>javadoc</goal></goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
