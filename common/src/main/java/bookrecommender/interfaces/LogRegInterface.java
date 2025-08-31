@@ -90,8 +90,7 @@ public interface LogRegInterface extends Remote {
      * <p>
      * La struttura esatta della lista dipende dall'implementazione, ma può includere
      * campi come nome, cognome, codice fiscale, email, username, ecc.
-     * </p>
-     *
+     * </p>     *
      * @param token token di autenticazione dell'utente
      * @return elenco di stringhe con le informazioni dell'utente; può essere vuota se non disponibili
      * @throws RemoteException se si verifica un errore nella comunicazione RMI

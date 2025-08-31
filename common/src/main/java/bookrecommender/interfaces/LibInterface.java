@@ -193,6 +193,7 @@ public interface LibInterface extends Remote {
 
     /**
      * Restituisce la valutazione dell’utente per il libro indicato.
+     *
      * @param token token di autenticazione dell’utente
      * @param libro libro valutato
      * @return la valutazione esistente, oppure {@code null} se non presente

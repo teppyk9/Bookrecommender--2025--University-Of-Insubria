@@ -14,6 +14,7 @@ import java.util.List;
  * Fornisce metodi per cercare libri per titolo, autore, anno, e per ottenere dettagli
  * avanzati di un libro. Alcuni metodi supportano l'autenticazione tramite {@link Token}.
  * </p>
+ *
  * Tutti i metodi possono lanciare {@link RemoteException} in caso di problemi di comunicazione remota.
  */
 public interface SearchInterface extends Remote {
