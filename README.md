@@ -41,14 +41,14 @@ In alternativa puoi scaricarle da [Maven Central](https://search.maven.org/).
 ### 1. Database PostgreSQL
 1. Scarica, se non la possiedi, un’istanza **PostgreSQL** dal sito ufficiale https://www.postgresql.org/.
 2. Configura le credenziali di accesso.
-3. Avvia **setupDB.bat** per creare il database e le tabelle necessarie.
+3. Dopo aver compilato il progetto (`mvn clean package`), esegui DBCreator. Sono disponibili script per l'esecuzione per Windows, Linux e MacOS. In alternativa trovi i file .jar in `/bin`.
 ### 2. Configurazione progetto
 - Java **17**
 - IDE consigliato: **IntelliJ IDEA Ultimate** (già configurato con `pom.xml`)
 - Modulo principale:
    - Server: `bookrecommender.server.Main_Server`
    - Client: `bookrecommender.client.Main_Client`
-
+   - DBCreator: `bookrecommender.DBCreator`
 ---
 
 ## ▶️ Avvio
@@ -81,25 +81,13 @@ Per generare runtime e installer multipiattaforma:
 mvn clean package
 ```
 
-- **Runtime custom (jlink)**
-```bash
-jlink --module-path %JAVA_HOME%\jmods --add-modules javafx.controls,javafx.fxml --output runtime
-```
-
-- **Installer (jpackage)**
-```bash
-jpackage --name BookRecommenderCli --type app-image --app-version 1.0.0  --runtime-image runtime --input target/ --main-jar client-1.0.0.jar  --icon icons/icon.ico
-```
-
-📌 Sono disponibili script `.bat` di esecuzione rapida del client/server.
+📌 Sono disponibili script di esecuzione rapida per client, server e DBCreator.
 
 ---
 
 ## 📌 Note finali
 
 - Assicurati che il **server** sia attivo prima di avviare il **client**.
-- Tutti i file `.fxml` hanno controller associati in `bookrecommender.client`.
-- Connessioni DB gestite tramite **HikariCP** + driver PostgreSQL.
 - Documentazione tecnica aggiuntiva in `/doc`.
 
 ---
