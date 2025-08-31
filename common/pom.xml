@@ -9,7 +9,23 @@
     </parent>
 
     <artifactId>common</artifactId>
-    <name>BookRecommender - Common</name>
     <packaging>jar</packaging>
+    <name>BookRecommender - Common</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <build>
+        <directory>${maven.multiModuleProjectDirectory}/bin/target_common</directory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <doctitle>Client</doctitle>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
