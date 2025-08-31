@@ -14,8 +14,6 @@ public class DBCreator {
     private static final String DEF_DB   = "mydb";
     private static final boolean TX_PER_FILE = true;
 
-    private static final String REL_SQL_DIR = "../../../data";
-
     public static void main(String[] args) {
         new DBCreator().run();
     }
