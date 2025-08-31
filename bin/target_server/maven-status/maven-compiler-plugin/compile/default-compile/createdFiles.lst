@@ -1,0 +1,13 @@
+bookrecommender\ui\TextFlowHandler.class
+bookrecommender\service\SearchInterfaceImpl.class
+bookrecommender\ui\ServerControl.class
+bookrecommender\service\LogRegInterfaceImpl.class
+bookrecommender\GUI.class
+bookrecommender\service\MonitorInterfaceImpl.class
+bookrecommender\service\LibInterfaceImpl.class
+bookrecommender\util\ServerUtil$Holder.class
+module-info.class
+bookrecommender\ui\ServerConfig.class
+bookrecommender\Main_Server.class
+bookrecommender\util\ServerUtil.class
+bookrecommender\dao\DBManager.class
