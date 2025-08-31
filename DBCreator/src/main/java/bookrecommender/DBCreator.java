@@ -40,10 +40,15 @@ public class DBCreator {
         try {
             exeDir = getExecutableDir();
         } catch (Exception e) {
-            System.err.println("❌ Impossibile determinare la cartella dell'eseguibile: " + e.getMessage());
+            System.err.println("Impossibile determinare la cartella dell'eseguibile: " + e.getMessage());
             return;
         }
-        Path sqlDir = exeDir.resolve(REL_SQL_DIR).normalize();
+        Path sqlDir;
+        try {
+            sqlDir = resolveSqlDir(exeDir);
+        }catch (Exception e) {
+            return;
+        }
         System.out.println("------------------------------------------------------------");
         System.out.printf("Exe : %s%n", exeDir);
         System.out.printf("SQL : %s%n", sqlDir);
@@ -76,16 +81,51 @@ public class DBCreator {
 
             System.out.println("\n✅ Completato.");
         } catch (SQLException e) {
-            System.err.println("❌ Errore SQL: " + e.getMessage());
+            System.err.println("Errore SQL: " + e.getMessage());
             e.printStackTrace(System.err);
         } catch (IOException e) {
-            System.err.println("❌ Errore IO: " + e.getMessage());
+            System.err.println("Errore IO: " + e.getMessage());
             e.printStackTrace(System.err);
         } catch (Exception e) {
-            System.err.println("❌ Errore imprevisto: " + e.getMessage());
+            System.err.println("Errore imprevisto: " + e.getMessage());
             e.printStackTrace(System.err);
         }
     }
+
+    private Path resolveSqlDir(Path exeDir) throws IOException {
+        String prop = System.getProperty("sql.dir");
+        if (prop != null && !prop.isBlank()) {
+            Path p = Paths.get(prop).toAbsolutePath().normalize();
+            if (Files.isDirectory(p)) return p;
+            throw new IOException("sql.dir non esiste: " + p);
+        }
+        Path p = exeDir;
+
+        if (p.getFileName() != null && p.getFileName().toString().equalsIgnoreCase("classes")) {
+            p = p.getParent();
+        }
+
+        if (p != null && p.getFileName() != null &&
+                p.getFileName().toString().equalsIgnoreCase("target_DBCreator")) {
+            p = p.getParent();
+        }
+
+        if (p != null && p.getFileName() != null &&
+                p.getFileName().toString().equalsIgnoreCase("bin")) {
+            Path candidate = p.getParent().resolve("data").normalize();
+            if (Files.isDirectory(candidate)) return candidate;
+        }
+
+        Path cur = exeDir;
+        for (int i = 0; i < 6 && cur != null; i++, cur = cur.getParent()) {
+            Path candidate = cur.resolve("data").normalize();
+            if (Files.isDirectory(candidate)) return candidate;
+        }
+
+        throw new IOException("Cartella 'data' non trovata partendo da: " + exeDir +
+                " (usa -Dsql.dir=\"/percorso/alla/data\" per forzare)");
+    }
+
 
     private static String scanOrDefault(Scanner sc, String label, String def) {
         System.out.println("DEFAULT [" + def + "] - " + label + ":");
