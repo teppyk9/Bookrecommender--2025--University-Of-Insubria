@@ -24,8 +24,6 @@ public class ServerConfig {
     public TextField portField;
     /** Bottone per testare la disponibilità della porta. */
     public Button testPortButton;
-    /** Campo di testo per l'inserimento dell'URL del database. */
-    public TextField dbUrlField;
     /** Campo di testo per l'inserimento dello username del database. */
     public TextField dbUserField;
     /** Campo per l'inserimento della password del database. */
@@ -36,6 +34,10 @@ public class ServerConfig {
     public Button confirmButton;
     /** Etichetta per visualizzare messaggi di feedback all'utente. */
     public Label testLabel;
+
+    public TextField dbPortField;
+
+    public TextField dbNameField;
 
 
     /**
@@ -95,16 +97,17 @@ public class ServerConfig {
      */
     @FXML
     private void testDB() {
-        String url  = dbUrlField.getText().trim();
+        String name = dbNameField.getText().trim();
+        String port = dbPortField.getText().trim();
         String user = dbUserField.getText().trim();
         String pass = dbPasswordField.getText();
 
-        if (url.isEmpty() || user.isEmpty()) {
+        if (name.isEmpty() || user.isEmpty() || port.isEmpty()) {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("URL e utente DB obbligatori");
             return;
         }
-        if (ServerUtil.getInstance().tryConnectToDb(url, user, pass)) {
+        if (ServerUtil.getInstance().tryConnectToDb(name, port, user, pass)) {
             testLabel.setStyle("-fx-text-fill: green;");
             testLabel.setText("Connessione al DB riuscita");
         } else {
@@ -122,7 +125,8 @@ public class ServerConfig {
      */
     @FXML
     private void confirm() {
-        String url  = dbUrlField.getText().trim();
+        String name = dbNameField.getText().trim();
+        String portdb = dbPortField.getText().trim();
         String user = dbUserField.getText().trim();
         String pass = dbPasswordField.getText();
         String portatxt = portField.getText().trim();
@@ -139,17 +143,17 @@ public class ServerConfig {
             testLabel.setText("Porta deve essere tra 0 e 65535!");
             return;
         }
-        if (url.isEmpty() || user.isEmpty()) {
+        if (name.isEmpty() || user.isEmpty() || portdb.isEmpty()) {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("URL e utente DB obbligatori");
             return;
         }
-        if (!ServerUtil.getInstance().tryConnectToDb(url, user, pass) || !ServerUtil.getInstance().isTcpPortAvailable(port)) {
+        if (!ServerUtil.getInstance().tryConnectToDb(name, portdb, user, pass) || !ServerUtil.getInstance().isTcpPortAvailable(port)) {
             testLabel.setStyle("-fx-text-fill: red;");
             testLabel.setText("Testa prima porta e DB");
             return;
         }
-        if(ServerUtil.getInstance().connectToDb(url, user, pass)) {
+        if(ServerUtil.getInstance().connectToDb(name, portdb, user, pass)) {
             if(ServerUtil.getInstance().setServer(port)) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Successo");

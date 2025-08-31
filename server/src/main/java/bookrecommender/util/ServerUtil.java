@@ -126,24 +126,25 @@ public final class ServerUtil {
 
     /**
      * Verifica la validità di una connessione al database senza mantenerla attiva.
-     * @param url      URL JDBC del database
-     * @param user     nome utente
+     * @param name      nome del database
+     * @param port      porta del database
      * @param password password del database
      * @return true se la connessione ha successo, false altrimenti
      */
-    public boolean tryConnectToDb(String url, String user, String password) {
-        return dbManager.tryConnection(url, user, password);
+    public boolean tryConnectToDb(String name, String port, String user, String password) {
+        return dbManager.tryConnection(name, port, user, password);
     }
 
     /**
      * Stabilisce una connessione permanente al database.
-     * @param url      URL JDBC del database
+     * @param name      nome del database
+     * @param port      porta del database
      * @param user     nome utente
      * @param password password del database
      * @return true se la connessione ha successo, false altrimenti
      */
-    public boolean connectToDb(String url, String user, String password){
-        return dbManager.connect(url, user, password);
+    public boolean connectToDb(String name, String port, String user, String password){
+        return dbManager.connect(name, port, user, password);
     }
 
     /**

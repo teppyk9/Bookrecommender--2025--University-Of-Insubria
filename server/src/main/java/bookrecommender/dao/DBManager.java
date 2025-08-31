@@ -29,15 +29,16 @@ public class DBManager {
     /**
      * Prova a connettersi al database con i parametri specificati.
      * Non mantiene la connessione aperta: serve solo per verificare la validità dei parametri.
-     * @param url      URL del database (es. jdbc:postgresql://localhost:5432/miodb)
+     * @param name     nome del database
+     * @param port     Porta TCP su cui il database è in ascolto
      * @param user     Nome utente per accedere al database
      * @param password Password dell'utente
      * @return true se la connessione di test ha successo, false altrimenti
      */
-    public boolean tryConnection(String url, String user, String password) {
+    public boolean tryConnection(String name, String port, String user, String password) {
         try{
             HikariConfig cfg = new HikariConfig();
-            cfg.setJdbcUrl(url);
+            cfg.setJdbcUrl("jdbc:postgresql://localhost:" + port + "/" + name);
             cfg.setUsername(user);
             cfg.setPassword(password);
             cfg.setMaximumPoolSize(1);
@@ -46,7 +47,7 @@ public class DBManager {
                 logger.log(Level.INFO, "Test connessione HikariCP riuscito.");
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Test connessione fallito", e);
             return false;
         }
@@ -54,18 +55,19 @@ public class DBManager {
 
     /**
      * Apre una connessione persistente al database se non già aperta.
-     * @param url      URL del database
+     * @param name     nome del database
+     * @param port     Porta TCP su cui il database è in ascolto
      * @param user     Nome utente del database
      * @param password Password dell'utente
      * @return true se la connessione è avvenuta correttamente, false altrimenti
      */
-    public boolean connect(String url, String user, String password) {
+    public boolean connect(String name, String port, String user, String password) {
         if (dataSource != null && !dataSource.isClosed()) {
             logger.log(Level.WARNING, "Pool già inizializzato.");
             return true;
         }
         try {
-            HikariConfig config = getHikariConfig(url, user, password);
+            HikariConfig config = getHikariConfig("jdbc:postgresql://localhost:" + port + "/" + name, user, password);
 
             dataSource = new HikariDataSource(config);
             logger.log(Level.INFO, "HikariCP pool creato con successo.");
