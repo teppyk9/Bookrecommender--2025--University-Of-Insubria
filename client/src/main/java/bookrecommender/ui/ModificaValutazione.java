@@ -12,31 +12,68 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.util.List;
-
+/**
+ * Controller JavaFX per la schermata di modifica di una {@link Valutazione}.
+ * <p>
+ * Gestisce 5 aspetti valutabili tramite stelle (Stile, Contenuto, Gradevolezza,
+ * Originalità, Edizione) e relativi commenti testuali, oltre a un testo finale
+ * riepilogativo. Usa immagini stelle di {@link IMGtype} e componenti JavaFX
+ * annotati con {@code @FXML}.
+ * </p>
+ */
 public class ModificaValutazione {
+    /** Pulsante “indietro”: ritorna alla schermata precedente con gestione modifiche non salvate. Non nullo dopo il caricamento FXML. */
     @FXML private Button GoBackButton;
+    /** Pulsante di conferma che salva la valutazione corrente. Non nullo dopo il caricamento FXML. */
     @FXML private Button SalvaModificheButton;
+    /** Stelle interattive per il voto di Stile (1–5). Non nulle dopo il caricamento FXML. */
     @FXML private ImageView starStile1,starStile2,starStile3,starStile4,starStile5;
+    /** Etichetta che mostra il valore numerico del voto di Stile. Non nulla dopo il caricamento FXML. */
     @FXML private Label votoStile;
+    /** Commento testuale relativo allo Stile. Non nullo dopo il caricamento FXML. */
     @FXML private TextArea testoStile;
+    /** Stelle interattive per il voto di Contenuto (1–5). Non nulle dopo il caricamento FXML. */
     @FXML private ImageView starContenuto1,starContenuto2,starContenuto3,starContenuto4,starContenuto5;
+    /** Etichetta che mostra il valore numerico del voto di Contenuto. Non nulla dopo il caricamento FXML. */
     @FXML private Label votoContenuto;
+    /** Commento testuale relativo al Contenuto. Non nullo dopo il caricamento FXML. */
     @FXML private TextArea testoContenuto;
+    /** Stelle interattive per il voto di Gradevolezza (1–5). Non nulle dopo il caricamento FXML. */
     @FXML private ImageView starGradevolezza1,starGradevolezza2,starGradevolezza3,starGradevolezza4,starGradevolezza5;
+    /** Etichetta che mostra il valore numerico del voto di Gradevolezza. Non nulla dopo il caricamento FXML. */
     @FXML private Label votoGradevolezza;
+    /** Commento testuale relativo alla Gradevolezza. Non nullo dopo il caricamento FXML. */
     @FXML private TextArea testoGradevolezza;
+    /** Stelle interattive per il voto di Originalità (1–5). Non nulle dopo il caricamento FXML. */
     @FXML private ImageView starOriginalita1,starOriginalita2,starOriginalita3,starOriginalita4,starOriginalita5;
+    /** Etichetta che mostra il valore numerico del voto di Originalità. Non nulla dopo il caricamento FXML. */
     @FXML private Label votoOriginalita;
+    /** Commento testuale relativo all’Originalità. Non nullo dopo il caricamento FXML. */
     @FXML private TextArea testoOriginalita;
+    /** Stelle interattive per il voto di Edizione (1–5). Non nulle dopo il caricamento FXML. */
     @FXML private ImageView starEdizione1,starEdizione2,starEdizione3,starEdizione4,starEdizione5;
+    /** Etichetta che mostra il valore numerico del voto di Edizione. Non nulla dopo il caricamento FXML. */
     @FXML private Label votoEdizione;
+    /** Commento testuale per l’Edizione e campo di testo finale riepilogativo. Non nulli dopo il caricamento FXML. */
     @FXML private TextArea testoEdizione, testoFinale;
+    /** Etichetta del titolo (es. titolo del libro o intestazione della schermata). Non nulla dopo il caricamento FXML. */
     @FXML private Label TitoloLabel;
 
+    /** Oggetto usato per caricare e salvare la valutazione. */
     private Valutazione myVal;
+    /** Tipo di schermata di provenienza, usato per la navigazione di ritorno. */
     private FXMLtype oldFXMLType;
+
     private boolean isMod = false;
 
+    /**
+     * Inizializza la UI e il comportamento interattivo delle stelle.
+     * <p>
+     * Imposta icone/grafica, allineamenti, listener di hover/click sulle stelle
+     * e stato iniziale dei controlli. Eseguito automaticamente dal loader FXML
+     * sul JavaFX Application Thread.
+     * </p>
+     */
     @FXML private void initialize() {
         GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         GoBackButton.setAlignment(Pos.TOP_LEFT);
@@ -52,6 +89,14 @@ public class ModificaValutazione {
         });
     }
 
+    /**
+     * Inizializza la UI e il comportamento interattivo delle stelle.
+     * <p>
+     * Imposta icone/grafica, allineamenti, listener di hover/click sulle stelle
+     * e stato iniziale dei controlli. Eseguito automaticamente dal loader FXML
+     * sul JavaFX Application Thread.
+     * </p>
+     */
     public void setValutazione(Valutazione v, FXMLtype oldFXMLType) {
         this.myVal = v;
         this.oldFXMLType = oldFXMLType;
@@ -118,6 +163,13 @@ public class ModificaValutazione {
         testoFinale.textProperty().addListener((o,oldN,newN)-> setModified());
     }
 
+    /**
+     * Salva le modifiche apportate alla valutazione.
+     * <p>
+     * Legge i voti (1–5) e i commenti dai controlli, aggiorna {@link #myVal} e
+     * invia i dati al livello applicativo/servizio. Mostra esiti di successo o errore.
+     * </p>
+     */
     @FXML private void salvaModifiche() {
         float s,c,g,o,e;
         try {
@@ -143,6 +195,10 @@ public class ModificaValutazione {
         }
     }
 
+    /**
+     * Elimina definitivamente la valutazione corrente previa conferma dell’utente.
+     * <p>Mostra notifica di esito e aggiorna la schermata/navigazione.</p>
+     */
     @FXML private void eliminaValutazione() {
         if (CliUtil.getInstance().createConfirmation("Conferma eliminazione", "Sei sicuro di voler eliminare questa valutazione? Non potrà essere recuperata.", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {
             try {
@@ -158,6 +214,13 @@ public class ModificaValutazione {
         }
     }
 
+    /**
+     * Ritorna alla schermata precedente.
+     * <p>
+     * Se sono presenti modifiche non salvate, chiede conferma (ed eventualmente
+     * offre di salvare) prima di uscire.
+     * </p>
+     */
     @FXML private void ExitApplication() {
         if (isMod && CliUtil.getInstance().createConfirmation("Conferma uscita", "Hai modificato la valutazione. Vuoi salvare le modifiche prima di uscire?", true).showAndWait().orElse(ButtonType.YES) == ButtonType.YES) {salvaModifiche();
         } else {
@@ -165,11 +228,27 @@ public class ModificaValutazione {
         }
     }
 
+    /**
+     * Segna la schermata come “modificata” abilitando i controlli di salvataggio
+     * e attivando la richiesta di conferma in uscita.
+     */
     private void setModified() {
         isMod = true;
         SalvaModificheButton.setDisable(false);
     }
 
+    /**
+     * Configura il comportamento interattivo di un gruppo di stelle.
+     * <p>
+     * Gestisce hover e click per aggiornare dinamicamente la grafica delle stelle
+     * e il valore numerico mostrato in {@code labelVoto}. Invoca {@code onModify}
+     * quando l’utente effettua una modifica.
+     * </p>
+     *
+     * @param stelle    lista delle icone stella (in ordine) da 1 a 5
+     * @param labelVoto etichetta che visualizza il voto selezionato
+     * @param onModify  azione da eseguire quando la valutazione cambia
+     */
     private void configureInteractive(List<ImageView> stelle, Label labelVoto, Runnable onModify) {
         updateStars(stelle, 0);
         for (int i = 0; i < stelle.size(); i++) {
@@ -186,6 +265,13 @@ public class ModificaValutazione {
         }
     }
 
+    /**
+     * Aggiorna la grafica delle stelle impostando piene le prime {@code pieno}
+     * e vuote le successive.
+     *
+     * @param stelle elenco delle stelle da aggiornare
+     * @param pieno  numero di stelle piene da mostrare (tipicamente 0–5)
+     */
     private void updateStars(List<ImageView> stelle, float pieno) {
         for (int i = 0; i < stelle.size(); i++) {
             stelle.get(i).setImage(i < pieno ? IMGtype.STAR_4_4_WHITE.getImage() : IMGtype.STAR_0_4_WHITE.getImage());

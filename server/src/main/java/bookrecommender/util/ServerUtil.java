@@ -128,6 +128,7 @@ public final class ServerUtil {
      * Verifica la validità di una connessione al database senza mantenerla attiva.
      * @param name      nome del database
      * @param port      porta del database
+     * @param user     nome utente
      * @param password password del database
      * @return true se la connessione ha successo, false altrimenti
      */

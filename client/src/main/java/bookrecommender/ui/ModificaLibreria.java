@@ -16,35 +16,104 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller JavaFX per la schermata di modifica delle librerie utente.
+ * <p>
+ * Consente di cercare libri (tabella S), aggiungerli/rimuoverli dalla libreria (tabella O),
+ * rinominare ed eliminare la libreria corrente e salvare le modifiche.
+ * Vincoli: nome libreria 5–50 caratteri; la libreria deve contenere almeno 3 libri per essere salvata.
+ * </p>
+ * <p>
+ * Estende {@link TableViewEngine} riutilizzandone la logica di ricerca/tabelle.
+ * Usa i servizi remoti tramite {@link CliUtil} ({@code getLibService()}, {@code getSearchService()}).
+ * </p>
+ */
 public class ModificaLibreria extends TableViewEngine {
-    @FXML private Button ExitButton;
-    @FXML private Button bottoneCerca;
-    @FXML private ProgressIndicator loadingCircle;
-    @FXML private TextField campoRicerca;
-    @FXML private TextField campoRicercaAnno;
-    @FXML private MenuButton MenuTipoRicerca;
-    @FXML private MenuItem MenuCercaTitolo;
-    @FXML private MenuItem MenuCercaAutore;
-    @FXML private MenuItem MenuCercaAutoreAnno;
-    @FXML private TableView <Libro>tableView;
-    @FXML private TableColumn <Libro, String> titoloCol;
-    @FXML private TableColumn <Libro, String>autoreCol;
-    @FXML private TableColumn <Libro, Integer> annoCol;
-    @FXML private TableColumn <Libro, Void> azioniCol;
-    @FXML private TableView <Libro> risTableView;
-    @FXML private TableColumn <Libro, String> risTitoloCol;
-    @FXML private TableColumn <Libro, String> risAutoreCol;
-    @FXML private TableColumn <Libro, Integer> risAnnoCol;
-    @FXML private TableColumn <Libro, Void> risAzioniCol;
-    @FXML private TextField NomeLibreria;
-    @FXML private Text Titolo_Librerie;
-    @FXML private Button BottoneCambiaNome;
-    @FXML private Button BottoneEliminaLibreria;
-    @FXML private MenuButton limiterBox;
+    /** Pulsante di uscita: apre la schermata Gestione Librerie, con conferma se ci sono modifiche non salvate. Non nullo dopo il caricamento FXML. */
+@FXML private Button ExitButton;
 
+/** Pulsante per avviare la ricerca dei libri nella tabella S. Non nullo dopo il caricamento FXML. */
+@FXML private Button bottoneCerca;
+
+/** Indicatore di progresso per le operazioni asincrone. Non nullo dopo il caricamento FXML. */
+@FXML private ProgressIndicator loadingCircle;
+
+/** Campo di testo per i termini di ricerca (titolo/autore). Non nullo dopo il caricamento FXML. */
+@FXML private TextField campoRicerca;
+
+/** Campo di testo per il filtro sull'anno (facoltativo). Non nullo dopo il caricamento FXML. */
+@FXML private TextField campoRicercaAnno;
+
+/** Menu per la scelta del tipo di ricerca. Non nullo dopo il caricamento FXML. */
+@FXML private MenuButton MenuTipoRicerca;
+
+/** Voce di menu: ricerca per titolo. Non nullo dopo il caricamento FXML. */
+@FXML private MenuItem MenuCercaTitolo;
+
+/** Voce di menu: ricerca per autore. Non nullo dopo il caricamento FXML. */
+@FXML private MenuItem MenuCercaAutore;
+
+/** Voce di menu: ricerca per autore + anno. Non nullo dopo il caricamento FXML. */
+@FXML private MenuItem MenuCercaAutoreAnno;
+
+/** Tabella S con i risultati della ricerca. Non nullo dopo il caricamento FXML. */
+@FXML private TableView<Libro> tableView;
+
+/** Colonna Titolo della tabella S. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,String> titoloCol;
+
+/** Colonna Autore della tabella S. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,String> autoreCol;
+
+/** Colonna Anno della tabella S. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,Integer> annoCol;
+
+/** Colonna azioni (aggiungi/rimuovi) nella tabella S. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,Void> azioniCol;
+
+/** Tabella O con i libri attualmente presenti nella libreria. Non nullo dopo il caricamento FXML. */
+@FXML private TableView<Libro> risTableView;
+
+/** Colonna Titolo della tabella O. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,String> risTitoloCol;
+
+/** Colonna Autore della tabella O. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,String> risAutoreCol;
+
+/** Colonna Anno della tabella O. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,Integer> risAnnoCol;
+
+/** Colonna azioni (rimuovi) nella tabella O. Non nullo dopo il caricamento FXML. */
+@FXML private TableColumn<Libro,Void> risAzioniCol;
+
+/** Campo di testo per rinominare la libreria; disabilitato finché non si sceglie “cambia nome”. Non nullo dopo il caricamento FXML. */
+@FXML private TextField NomeLibreria;
+
+/** Testo di intestazione con il nome corrente della libreria. Non nullo dopo il caricamento FXML. */
+@FXML private Text Titolo_Librerie;
+
+/** Pulsante per abilitare l’editing del nome libreria. Non nullo dopo il caricamento FXML. */
+@FXML private Button BottoneCambiaNome;
+
+/** Pulsante per eliminare definitivamente la libreria (con conferma). Non nullo dopo il caricamento FXML. */
+@FXML private Button BottoneEliminaLibreria;
+
+    /** Menu per limitare il numero di risultati mostrati in S. Non nullo dopo il caricamento FXML. */
+@FXML private MenuButton limiterBox;
+
+
+    /** Nome corrente della libreria visualizzata/modificata. */
     private String LibName;
+
+    /** Copia iniziale dei libri presenti nella libreria, usata per rilevare modifiche non salvate. */
     private List<Libro> OriginalLibri;
 
+
+    /**
+     * Inizializza la UI: imposta icone/allineamenti, rende non ridimensionabili le colonne,
+     * nasconde il campo di rinomina, inizializza tabelle/colonne/azioni.
+     * Eseguito automaticamente dal loader FXML sul JavaFX Application Thread.
+     */
     @FXML private void initialize() {
         ExitButton.setGraphic(IMGtype.INDIETRO.getImageView(43,43));
         ExitButton.setAlignment(Pos.TOP_LEFT);
@@ -80,6 +149,12 @@ public class ModificaLibreria extends TableViewEngine {
         });
     }
 
+    /**
+     * Imposta il contesto per la libreria indicata: aggiorna il titolo,
+     * carica i libri via servizio remoto, popola le tabelle e inizializza colonne/azioni.
+     *
+     * @param nomeLibreria nome della libreria da caricare nella schermata
+     */
     public void setLibreria(String nomeLibreria) {
         LibName = nomeLibreria;
         Titolo_Librerie.setText(LibName);
@@ -175,11 +250,20 @@ public class ModificaLibreria extends TableViewEngine {
 
     @Override protected TableColumn<Libro, Void> getOActionCol() {return risAzioniCol;}
 
+    /**
+     * Gestisce l’uscita dalla schermata: se ci sono modifiche non salvate
+     * (rinomina in corso o differenze tra liste), chiede conferma prima di uscire.
+     */
     @FXML
     private void ExitApplication() {
         saveFlag();
     }
 
+    /**
+     * Verifica se ci sono modifiche non salvate (rinomina in corso o differenze tra liste).
+     * Se sì, chiede conferma prima di tornare alla schermata di gestione librerie;
+     * altrimenti esegue direttamente la navigazione.
+     */
     private void saveFlag() {
         if (CliUtil.getInstance().hannoDifferenze(OriginalLibri, new ArrayList<>(risTableView.getItems())) || !NomeLibreria.getText().isEmpty()) {
             CliUtil.getInstance().createConfirmation("Conferma uscita", "Tutte le modifiche andranno perse!\nSei sicuro di voler uscire?", true).showAndWait().ifPresent(response -> {
@@ -190,6 +274,7 @@ public class ModificaLibreria extends TableViewEngine {
             CliUtil.getInstance().buildStage(FXMLtype.GESTIONELIBRERIE, null, null);
     }
 
+    /** Abilita l’editing del nome della libreria rendendo il campo visibile e modificabile. */
     @FXML
     private void cambiaNome() {
         NomeLibreria.setDisable(false);
@@ -197,6 +282,10 @@ public class ModificaLibreria extends TableViewEngine {
         NomeLibreria.setVisible(true);
     }
 
+    /**
+     * Mostra una conferma ed elimina la libreria corrente tramite servizio remoto.
+     * In caso di successo mostra conferma e chiude la finestra; altrimenti mostra un avviso d’errore.
+     */
     @FXML
     private void eliminaLibreria() {
         CliUtil.getInstance().createConfirmation("Conferma eliminazione", "Sei sicuro di voler eliminare la libreria '" + LibName + "'?", true).showAndWait().ifPresent(response -> {
@@ -215,6 +304,11 @@ public class ModificaLibreria extends TableViewEngine {
         });
     }
 
+    /**
+     * Salva le modifiche: rinomina la libreria se il nome è valido (5–50 caratteri)
+     * e/o aggiorna l’elenco dei libri se è cambiato. Richiede almeno 3 libri totali.
+     * Mostra conferme/avvisi a seconda dell’esito.
+     */
     @FXML
     private void SalvaLibreria() {
         if (!NomeLibreria.getText().isEmpty() && NomeLibreria.getText().trim().length() >= 5 && NomeLibreria.getText().trim().length() <= 50) {
