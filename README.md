@@ -58,12 +58,11 @@ In alternativa puoi scaricarle da [Maven Central](https://search.maven.org/).
 - **Client** → esegui `Main_Client.java`
 - **DBCreator** → esegui `DBCreator.java`
 
-In alternativa, avvio manuale con `.bat`:
-```bat
-\bin\java -jar clientBR.jar
-\bin\java -jar serverBR.jar
-\bin\java -jar DBCreator.jar
-```
+In alternativa, avvio manuale tramite gli script forniti:
+- **Windows**: `Windows-serverBR.cmd`, `Windows-clientBR.cmd`, `Windows-DBCreator.cmd`
+- **Linux**: `Linux-serverBR.sh`, `Linux-clientBR.sh`, `Linux-DBCreator.sh`
+- **MacOS-Intel**: `MacOS-Intel-serverBR.sh`, `MacOS-Intel-clientBR.sh`, `MacOS-Intel-DBCreator.sh`
+- **MacOS-aarch64**: `MacOS-aarch64-serverBR.sh`, `MacOS-aarch64-clientBR.sh`, `MacOS-aarch64-DBCreator.sh`
 
 ---
 
@@ -73,11 +72,8 @@ Per generare runtime e installer multipiattaforma:
 
 - **Build Maven**
 ```bash
-mvn clean package
+   mvn clean package
 ```
-
-📌 Sono disponibili script di esecuzione rapida per client, server e DBCreator.
-
 ---
 
 ## 📌 Note finali
