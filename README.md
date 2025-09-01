@@ -8,6 +8,8 @@
 
 Sistema client–server scritto in **Java 17** che permette di gestire un database di libri, valutazioni e librerie personali, con interfaccia grafica JavaFX e backend RMI su PostgreSQL.
 
+Manuale Tecnico, Manuale Utente, Diagrammi UML e JavaDoc disponibili in `/doc`.
+
 ---
 
 ## 👥 Autori
