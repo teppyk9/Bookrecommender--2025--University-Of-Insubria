@@ -18,6 +18,22 @@ import javafx.scene.input.KeyEvent;
 import java.rmi.RemoteException;
 import java.util.*;
 
+/**
+ * Motore astratto per la gestione di ricerche e tabelle (JavaFX) di libri.
+ * <p>
+ * Fornisce la logica comune per:
+ * <ul>
+ *   <li>configurare le colonne e le tabelle dei risultati;</li>
+ *   <li>eseguire ricerche per titolo/autore/anno, anche limitate per utente;</li>
+ *   <li>mostrare azioni contestuali (valuta/consigli/aggiungi/rimuovi);</li>
+ *   <li>gestire progresso, limiti e placeholder.</li>
+ * </ul>
+ * Le sottoclassi devono esporre i controlli FXML e le scelte di ambito di ricerca.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
+ */
 public abstract class TableViewEngine {
     /**
      * Restituisce il campo di input per il testo della ricerca.
@@ -162,18 +178,51 @@ public abstract class TableViewEngine {
 
     protected abstract Libro getMyLibro();
 
+    /**
+     * Restituisce il tipo FXML della schermata corrente, usato per aprire finestre figlie coerenti.
+     *
+     * @return il FXMLtype
+     */
     protected abstract FXMLtype getMyFXMLtype();
 
+    /**
+     * Restituisce il ProgressIndicator da mostrare durante le ricerche asincrone.
+     *
+     * @return il ProgressIndicator
+     */
     protected abstract ProgressIndicator getProgressIndicator();
 
+    // protected abstract MenuButton getLimiterBox();
+    /**
+     * Restituisce il MenuButton che permette di selezionare il limite massimo di risultati.
+     *
+     * @return il MenuButton
+     */
     protected abstract MenuButton getLimiterBox();
 
+    /** Tipo di ricerca selezionato: "Titolo", "Autore" oppure "AutoreAnno". */
     private String searchType = "";
+
+    /** Cache: per ogni libro indica se esiste almeno una valutazione o un consiglio (globale). */
     private final Map<Libro, Boolean> hasRec = new HashMap<>();
+
+    /** Per ogni libro indica se l’utente corrente ha inserito una valutazione. */
     private final Map<Libro, Boolean> hasVal = new HashMap<>();
+
+    /** Per ogni libro indica se l’utente corrente ha inserito dei consigli. */
     private final Map<Libro, Boolean> hasCon = new HashMap<>();
+
+    /** Per ogni libro indica se è presente in almeno una libreria dell’utente corrente. */
     private final Map<Libro, Boolean> inLib = new HashMap<>();
 
+    /**
+     * Inizializza i controlli base di ricerca:
+     * <ul>
+     *   <li>nasconde/abilita il campo Anno a seconda del tipo;</li>
+     *   <li>imposta placeholder e icone dei menu;</li>
+     *   <li>collega le azioni dei MenuItem del tipo di ricerca;</li>
+     *   <li>configura colonne Titolo/Autore/Anno.</li>
+     */
     protected void initBasicSearch() {
         getCampoRicercaAnno().setVisible(false);
         getCampoRicercaAnno().setDisable(true);
@@ -217,6 +266,7 @@ public abstract class TableViewEngine {
 
     }
 
+    /** Configura la colonna “Recensioni” con icone check/cross e allineamento centrale. */
     protected void initSRecensioniCol(){
         getSRecensioniCol().setCellValueFactory(cellData -> new ReadOnlyBooleanWrapper(hasRec.get(cellData.getValue())));
         getSRecensioniCol().setResizable(false);
@@ -241,6 +291,8 @@ public abstract class TableViewEngine {
         getSAggiungiAdvCol().setResizable(false);
         getSAggiungiAdvCol().setStyle("-fx-alignment: CENTER;");
         getSAggiungiAdvCol().setCellFactory(col -> new TableCell<>() {
+
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
