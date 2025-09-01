@@ -8,11 +8,12 @@ import bookrecommender.model.Libro_Details;
 import bookrecommender.model.Valutazione;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ import java.util.List;
  * @author Fabbian Gabriele, 755699, VA
  */
 public class DettaglioLibro {
+    @FXML private Button GoBackButton;
     // Etichette per i metadati testuali del libro
     @FXML private Label titoloLabel;          // Mostra il titolo del libro
     @FXML private Label autoreLabel;          // Mostra l'autore del libro
@@ -99,6 +101,11 @@ public class DettaglioLibro {
     /** Dettagli del libro ottenuti dal server (valutazioni e consigli)*/
     private Libro_Details details;
 
+    public void initialize() {
+        GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(40, 40));
+        GoBackButton.setAlignment(Pos.TOP_LEFT);
+        GoBackButton.setPadding(new javafx.geometry.Insets(0, 0, 0, 0));
+    }
     /**
      * Carica nella GUI tutte le informazioni relative al {@link Libro} selezionato,
      * inclusi metadati, descrizione, valutazioni medie e consigli di lettura.
@@ -125,6 +132,7 @@ public class DettaglioLibro {
         descrizioneArea.setWrapText(true);
         descrizioneArea.setEditable(false);
         titoloLabel.setText(libro.getTitolo());
+        titoloLabel.setWrapText(true);
         autoreLabel.setText(libro.getAutore());
         if(libro.getCategoria() == null || libro.getCategoria().isEmpty()) {
             categoriaLabel.setText("Non specificato");
@@ -207,5 +215,14 @@ public class DettaglioLibro {
                 CliUtil.getInstance().buildStage(FXMLtype.DETTAGLIOLIBRO, null, selezionato);
             }
         }
+    }
+
+    /**
+     * Chiude la finestra corrente della schermata.
+     * <p>Recupera lo {@link Stage} dal nodo del titolo e invoca {@code close()}.</p>
+     */
+    @FXML private void exitApplication() {
+        Stage stage = (Stage) GoBackButton.getScene().getWindow();
+        stage.close();
     }
 }
