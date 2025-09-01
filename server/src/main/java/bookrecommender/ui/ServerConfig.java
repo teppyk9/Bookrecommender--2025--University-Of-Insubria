@@ -14,36 +14,51 @@ import java.util.Objects;
  * Controller dell'interfaccia grafica di configurazione del server.
  * <p>
  * Questa classe gestisce l'interazione con il pannello FXML associato, permettendo all'utente di:
- *     <li>Testare la disponibilità di una porta TCP
- *     <li>Verificare la connessione al database
- *     <li>Confermare e avviare la configurazione del server
- *     <li>Utilizza il singleton {@link ServerUtil} per accedere alla logica di backend.
+ * <ul>
+ *   <li>testare la disponibilità di una porta TCP</li>
+ *   <li>verificare la connessione al database</li>
+ *   <li>confermare e avviare la configurazione del server</li>
+ * </ul>
+ * Utilizza il singleton {@link ServerUtil} per accedere alla logica di backend.
+ * </p>
  */
 public class ServerConfig {
+
     /** Campo di testo per l'inserimento del numero di porta TCP. */
     public TextField portField;
+
     /** Bottone per testare la disponibilità della porta. */
     public Button testPortButton;
+
     /** Campo di testo per l'inserimento dello username del database. */
     public TextField dbUserField;
+
     /** Campo per l'inserimento della password del database. */
     public PasswordField dbPasswordField;
+
     /** Bottone per testare la connessione al database. */
     public Button testDbButton;
+
     /** Bottone per confermare la configurazione. */
     public Button confirmButton;
+
     /** Etichetta per visualizzare messaggi di feedback all'utente. */
     public Label testLabel;
 
+    /** Campo di testo per l'inserimento della porta del database. */
     public TextField dbPortField;
 
+    /** Campo di testo per l'inserimento del nome del database. */
     public TextField dbNameField;
-
 
     /**
      * Metodo di inizializzazione del controller.
+     * <p>
      * Pulisce l’etichetta di stato, inizializza il {@code DBManager} e imposta
      * un comportamento personalizzato alla chiusura della finestra (uscita completa).
+     * Questo metodo viene invocato automaticamente dal FXMLLoader dopo
+     * l'iniezione dei campi FXML.
+     * </p>
      */
     public void initialize() {
         testLabel.setText("");
@@ -57,11 +72,12 @@ public class ServerConfig {
         });
     }
 
-
     /**
      * Verifica se la porta TCP inserita è valida e libera.
+     * <p>
      * Mostra un messaggio informativo nell'etichetta {@code testLabel},
      * colorato in base all'esito.
+     * </p>
      */
     @FXML
     private void testPort() {
@@ -89,11 +105,12 @@ public class ServerConfig {
         }
     }
 
-
     /**
-     * Testa la connessione al database utilizzando i dati inseriti,
-     * verifica che i campi URL e utente non siano vuoti e poi chiama
-     * {@code tryConnectToDb()} dal {@link ServerUtil}.
+     * Testa la connessione al database utilizzando i dati inseriti.
+     * <p>
+     * Verifica che i campi nome DB, porta DB e utente non siano vuoti e poi chiama
+     * {@code tryConnectToDb(name, port, user, pass)} su {@link ServerUtil}.
+     * </p>
      */
     @FXML
     private void testDB() {
@@ -116,12 +133,13 @@ public class ServerConfig {
         }
     }
 
-
     /**
      * Esegue la configurazione finale del server.
+     * <p>
      * Controlla la validità di tutti i campi (porta, credenziali DB),
-     * verifica le connessioni e in caso di successo avvia il server e chiude la finestra.
+     * verifica le connessioni e, in caso di successo, avvia il server e chiude la finestra.
      * In caso di errore mostra un {@link Alert} o un messaggio in {@code testLabel}.
+     * </p>
      */
     @FXML
     private void confirm() {
@@ -178,8 +196,8 @@ public class ServerConfig {
     }
 
     /**
-     * Ripristina lo stato iniziale dell’etichetta di feedback.
-     * Utile per cancellare eventuali messaggi di errore precedenti.
+     * Ripristina lo stato iniziale dell’etichetta di feedback,
+     * utile per cancellare eventuali messaggi di errore precedenti.
      */
     public void resetLabel() {
         testLabel.setText("");

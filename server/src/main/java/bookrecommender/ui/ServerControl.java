@@ -29,35 +29,52 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Controller JavaFX del pannello di controllo del server. Questa classe gestisce:
- *   L'inizializzazione del logging verso l'interfaccia grafica
- *   L'interruzione del server tramite bottone dedicato
- *   Il salvataggio dei log su file locale
- * È pensata per consentire il monitoraggio in tempo reale del server e la gestione interattiva
- * da parte dell'utente tramite interfaccia grafica.
+ * Controller JavaFX del pannello di controllo del server.
+ * <p>
+ * Responsabilità principali:
+ * <ul>
+ *   <li>inizializzazione del logging verso l’interfaccia grafica</li>
+ *   <li>arresto controllato del server tramite bottone dedicato</li>
+ *   <li>esportazione dei log su file locale</li>
+ * </ul>
+ * È pensata per consentire il monitoraggio in tempo reale del server e la gestione
+ * interattiva tramite UI.
+ * </p>
  */
 public class ServerControl {
     /** Bottone per arrestare il server manualmente. */
     public Button stopServerButton;
+
     /** Bottone per salvare su file il contenuto dei log. */
     public Button saveLogsButton;
 
     /** Icona grafica usata nei popup di conferma. */
-    private final ImageView confirmation_icon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/alert_confirmation_icon.png"))));
+    private final ImageView confirmation_icon =
+            new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/alert_confirmation_icon.png"))));
+
     /** Icona grafica usata nei popup di errore. */
-    private final ImageView alert_icon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/alert_icon.png"))));
+    private final ImageView alert_icon =
+            new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/alert_icon.png"))));
+
     /** Area in cui vengono visualizzati i log del server in tempo reale. */
     public TextFlow logFlow;
-    /** ScrollPane contenente l’area di log. */
-    public ScrollPane logScrollPane;
 
+    /** Contenitore scrollabile dell’area di log. */
+    public ScrollPane logScrollPane;
 
     /**
      * Inizializza il pannello di controllo del server.
-     * - Imposta le dimensioni delle icone
-     * - Reindirizza il logging Java verso il {@link TextFlow} con un handler personalizzato
-     * - Applica un filtro per visualizzare solo log rilevanti
-     * - Imposta un comportamento di chiusura sicuro per la finestra
+     * <p>
+     * Operazioni eseguite:
+     * <ul>
+     *   <li>imposta le dimensioni delle icone</li>
+     *   <li>rimuove gli handler console predefiniti</li>
+     *   <li>crea e registra un handler personalizzato {@code TextFlowHandler} per il {@link TextFlow}</li>
+     *   <li>applica un filtro per mostrare solo i log rilevanti (classi/servizi del progetto)</li>
+     *   <li>imposta una chiusura sicura della finestra (arresto server + uscita applicazione)</li>
+     * </ul>
+     * Questo metodo è invocato automaticamente dal FXMLLoader dopo l’iniezione dei campi.
+     * </p>
      */
     public void initialize() {
         confirmation_icon.setFitWidth(48);
@@ -65,14 +82,16 @@ public class ServerControl {
         alert_icon.setFitWidth(48);
         alert_icon.setFitHeight(48);
 
-        /* Rimuove gli handler console predefiniti */
+        // Rimuove gli handler console predefiniti
         Logger rootLogger = Logger.getLogger("");
-        Arrays.stream(rootLogger.getHandlers()).filter(h -> h instanceof ConsoleHandler).forEach(rootLogger::removeHandler);
-
+        Arrays.stream(rootLogger.getHandlers())
+                .filter(h -> h instanceof ConsoleHandler)
+                .forEach(rootLogger::removeHandler);
 
         // Crea e configura handler personalizzato per i log grafici
         TextFlowHandler tfHandler = new TextFlowHandler(logFlow, logScrollPane);
-        //Definisce i package/classi da cui accettare log
+
+        // Definisce i package/classi da cui accettare log
         Set<String> allowed = Set.of(
                 ServerUtil.class.getName(),
                 DBManager.class.getName(),
@@ -80,7 +99,6 @@ public class ServerControl {
                 LogRegInterfaceImpl.class.getName(),
                 SearchInterfaceImpl.class.getName()
         );
-
         tfHandler.setFilter(record -> allowed.contains(record.getLoggerName()));
 
         // Aggiunge handler al root logger
@@ -88,6 +106,7 @@ public class ServerControl {
         rootLogger.setLevel(Level.ALL);
 
         Logger.getLogger(ServerUtil.class.getName()).info("Pannello di controllo avviato");
+
         // Comportamento alla chiusura della finestra
         Platform.runLater(() -> {
             Stage stage = ServerUtil.getInstance().getPrimaryStage();
@@ -99,13 +118,16 @@ public class ServerControl {
         });
     }
 
-
     /**
      * Arresta il server in modo sicuro, mostrando prima una finestra di conferma.
-     * Se l’utente conferma, il metodo:
-     *     Chiama {@link ServerUtil#closeServer()}
-     *     Chiude JavaFX con {@code Platform.exit()}
-     *     Termina il processo con {@code System.exit(0)}
+     * <p>
+     * Se l’utente conferma:
+     * <ol>
+     *   <li>chiama {@link ServerUtil#closeServer()}</li>
+     *   <li>chiude JavaFX con {@link Platform#exit()}</li>
+     *   <li>termina il processo con {@code System.exit(0)}</li>
+     * </ol>
+     * </p>
      */
     public void stopServer() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -126,10 +148,11 @@ public class ServerControl {
 
     /**
      * Salva su file il contenuto corrente dei log visualizzati nell'interfaccia.
-     * L'utente sceglie il file tramite un {@link FileChooser}, con suggerimento
-     * di salvataggio sul desktop. I log sono salvati in formato UTF-8.
-     * In caso di successo, viene mostrata una finestra di conferma con il percorso.
-     * In caso di errore I/O, viene mostrata una finestra di errore dettagliata.
+     * <p>
+     * L’utente sceglie il percorso tramite {@link FileChooser} (directory di default: Desktop).
+     * I log sono salvati in UTF-8. In caso di successo viene mostrato un popup di conferma,
+     * altrimenti un popup d’errore con il dettaglio dell’eccezione.
+     * </p>
      */
     public void saveLogs() {
         FileChooser fileChooser = new FileChooser();
@@ -154,8 +177,8 @@ public class ServerControl {
                         sb.append(textNode.getText());
                     }
                 }
-
                 writer.write(sb.toString());
+
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Log salvati con successo");
                 alert.setContentText("Log salvati in: " + file.getAbsolutePath());
@@ -164,6 +187,7 @@ public class ServerControl {
                 stage.getIcons().setAll(confirmation_icon.getImage());
                 alert.getButtonTypes().setAll(ButtonType.OK);
                 alert.showAndWait();
+
                 writer.flush();
             } catch (IOException e) {
                 new Alert(Alert.AlertType.ERROR, "Errore nel salvataggio dei log:\n" + e.getMessage(), ButtonType.OK).showAndWait();
