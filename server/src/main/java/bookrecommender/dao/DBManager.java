@@ -6,13 +6,18 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
- * Classe responsabile della gestione della connessione al database, dell'esecuzione delle query e della manipolazione dei dati relativi a libri e utenti.
- * Utilizzata nel lato server dell'applicazione BookRecommender.
+ * Classe responsabile della gestione della connessione al database, dell'esecuzione delle query
+ * e della manipolazione dei dati relativi a libri e utenti.
+ * <p>
+ * Utilizzata nel lato server dell'applicazione BookRecommender. La classe gestisce un pool
+ * di connessioni basato su HikariCP mantenuto in un campo statico condiviso.
+ * </p>
  */
 public class DBManager {
 
-    /** Connessione condivisa al database, usata dalle varie operazioni del DBManager. */
+    /** Pool di connessioni HikariCP condiviso e riutilizzabile. */
     private static HikariDataSource dataSource;
 
     /** Logger per la registrazione di eventi, errori e messaggi di debug della classe DBManager. */
@@ -20,20 +25,21 @@ public class DBManager {
 
     /**
      * Costruttore vuoto della classe DBManager.
-     * Attualmente non inizializza risorse ma può essere esteso per configurazioni future.
+     * <p>Attualmente non inizializza risorse ma può essere esteso per configurazioni future.</p>
      */
     public DBManager() {
-        //al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
+        // al momento non è necessario alcun codice nel costruttore
     }
 
     /**
      * Prova a connettersi al database con i parametri specificati.
-     * Non mantiene la connessione aperta: serve solo per verificare la validità dei parametri.
+     * <p>Non mantiene la connessione aperta: serve solo per verificare la validità dei parametri.</p>
+     *
      * @param name     nome del database
-     * @param port     Porta TCP su cui il database è in ascolto
-     * @param user     Nome utente per accedere al database
-     * @param password Password dell'utente
-     * @return true se la connessione di test ha successo, false altrimenti
+     * @param port     porta TCP su cui il database è in ascolto
+     * @param user     nome utente per accedere al database
+     * @param password password dell'utente
+     * @return {@code true} se la connessione di test ha successo, {@code false} altrimenti
      */
     public boolean tryConnection(String name, String port, String user, String password) {
         try{
@@ -55,11 +61,12 @@ public class DBManager {
 
     /**
      * Apre una connessione persistente al database se non già aperta.
+     *
      * @param name     nome del database
-     * @param port     Porta TCP su cui il database è in ascolto
-     * @param user     Nome utente del database
-     * @param password Password dell'utente
-     * @return true se la connessione è avvenuta correttamente, false altrimenti
+     * @param port     porta TCP su cui il database è in ascolto
+     * @param user     nome utente del database
+     * @param password password dell'utente
+     * @return {@code true} se il pool è stato inizializzato (o era già attivo), {@code false} in caso di errore
      */
     public boolean connect(String name, String port, String user, String password) {
         if (dataSource != null && !dataSource.isClosed()) {
@@ -78,6 +85,14 @@ public class DBManager {
         }
     }
 
+    /**
+     * Crea e configura un {@link HikariConfig} per la connessione JDBC fornita.
+     *
+     * @param url      URL JDBC (es. {@code jdbc:postgresql://host:porta/database})
+     * @param user     nome utente del database
+     * @param password password del database
+     * @return configurazione HikariCP pronta per essere usata in un {@link HikariDataSource}
+     */
     private static HikariConfig getHikariConfig(String url, String user, String password) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(url);
@@ -94,6 +109,12 @@ public class DBManager {
         return config;
     }
 
+    /**
+     * Restituisce una connessione dal pool.
+     *
+     * @return una {@link Connection} attiva se disponibile; {@code null} se il pool non è inizializzato
+     *         o se si verifica un errore nell'ottenimento della connessione
+     */
     public Connection getConnection(){
         if (dataSource == null) {
             logger.warning("DataSource non inizializzato. Chiama connect() prima.");
@@ -108,6 +129,7 @@ public class DBManager {
 
     /**
      * Chiude la connessione attualmente aperta al database, se esistente.
+     * <p>Chiude il pool HikariCP e rilascia le risorse.</p>
      */
     public void closeConnection() {
         if (dataSource != null && !dataSource.isClosed()) {
@@ -119,12 +141,12 @@ public class DBManager {
     /**
      * Svuota completamente la tabella delle sessioni di login,
      * resettando anche il contatore degli ID.
-     * Utile per test o per azzerare lo stato delle sessioni.
+     * <p>Utile per test o per azzerare lo stato delle sessioni.</p>
      */
     public void svuotaSessioniLogin() {
         String sql = "TRUNCATE TABLE SESSIONI_LOGIN RESTART IDENTITY";
         try (Connection conn = getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Errore nel restart delle sessioni", e);

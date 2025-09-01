@@ -26,17 +26,26 @@ import java.util.stream.Collectors;
  * Implementazione remota dell'interfaccia {@link LibInterface} per la gestione
  * delle librerie personali degli utenti. Fornisce funzionalità RMI per la creazione,
  * modifica, eliminazione, valutazione e consultazione delle librerie e dei libri.
- * Tutte le operazioni sono registrate tramite {@link Logger} e delegate al {@link DBManager}.
- * In caso di chiamata RMI non valida (es. Client sconosciuto), i metodi restituiscono valori di fallback.
+ * <p>
+ * Tutte le operazioni sono registrate tramite {@link Logger} e delegare a
+ * servizi e utility lato server ({@link ServerUtil}, {@link DBManager}).
+ * In caso di chiamata RMI non valida (client sconosciuto) o token non valido,
+ * i metodi restituiscono valori di fallback (tipicamente {@code false}, {@code null}
+ * o liste con codice errore), senza lanciare eccezioni applicative.
+ * </p>
  */
 public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterface {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    /** Logger di classe per tracciare le operazioni esposte via RMI. */
     private final Logger logger;
 
     /**
-     * Costruttore della classe {@code LibInterfaceImpl}
-     * @throws RemoteException Se si verifica un errore nella configurazione dell'oggetto remoto.
+     * Costruttore della classe {@code LibInterfaceImpl}.
+     *
+     * @throws RemoteException se si verifica un errore nella
+     *                         configurazione dell'oggetto remoto.
      */
     public LibInterfaceImpl() throws RemoteException {
         super();
@@ -44,18 +53,25 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     }
 
     /**
-     * Crea una nuova libreria per l'utente specificato.
-     * @param token Token di autenticazione dell'utente.
-     * @param nome Nome della libreria da creare.
-     * @param libri Lista dei libri iniziali da inserire nella libreria.
-     * @return {@code true} se la libreria è stata creata con successo, {@code false} altrimenti.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     * Crea una nuova libreria per l'utente specificato e, se forniti,
+     * inserisce i libri iniziali.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param nome nome della libreria da creare
+     * @param libri lista dei libri iniziali da inserire (può essere vuota)
+     * @return {@code true} se la libreria è stata creata con successo;
+     *         {@code false} in caso contrario
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public boolean createLib(Token token, String nome, List<Libro> libri) throws RemoteException {
         try {
             logger.info("Creazione libreria: " + nome + " da parte di " + token.userId() + "con IP: " + getClientHost());
-        }catch(ServerNotActiveException e){
+        } catch (ServerNotActiveException e) {
             return false;
         }
         if (ServerUtil.getInstance().isTokenNotValid(token)) {
@@ -115,10 +131,15 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     /**
      * Elimina una libreria dell'utente.
-     * @param token Token di autenticazione dell'utente.
-     * @param nome Nome della libreria da eliminare.
-     * @return {@code true} se la libreria è stata eliminata con successo, {@code false} altrimenti.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param nome nome della libreria da eliminare
+     * @return {@code true} se la libreria è stata eliminata; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public boolean deleteLib(Token token, String nome) throws RemoteException {
@@ -145,14 +166,24 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     }
 
     /**
-     * Aggiorna il contenuto di una libreria dell'utente, aggiungendo o rimuovendo libri.
-     * Vengono effettuati controlli per evitare rimozioni di libri valutati o consigliati.
-     * @param token Token di autenticazione dell'utente.
-     * @param nome Nome della libreria da aggiornare.
-     * @param libriUp Lista aggiornata dei libri desiderati nella libreria.
-     * @return Lista di interi: {@code [1]} se aggiornamento riuscito, {@code [0, idLibro, codiceErrore, ...]} altrimenti.
-     *         I codici errore indicano: 0 → valutazione presente, 1 → libro consigliato, 2 → libro usato in un consiglio.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     * Aggiorna il contenuto (insieme libri) di una libreria dell'utente,
+     * aggiungendo e rimuovendo rispetto allo stato corrente.
+     *
+     * <p>Esegue controlli per impedire la rimozione di libri:
+     * (0) con valutazione presente, (1) consigliati, (2) usati in un consiglio.</p>
+     *
+     * <p>Valore di ritorno:
+     * <ul>
+     *   <li>{@code [1]} se l'aggiornamento è riuscito;</li>
+     *   <li>{@code [0, idLibro, codiceErrore, ...]} in caso di blocchi/violazioni.</li>
+     * </ul>
+     * In caso di token non valido o di {@link ServerNotActiveException} viene restituito {@code [0]}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param nome nome della libreria da aggiornare
+     * @param libriUp lista aggiornata desiderata dei libri
+     * @return lista di interi con esito/codici errore come sopra
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public List<Integer> updateLib(Token token, String nome, List<Libro> libriUp) throws RemoteException {
@@ -264,10 +295,15 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     /**
      * Recupera i libri presenti in una specifica libreria dell'utente.
-     * @param token Token di autenticazione dell'utente.
-     * @param nome Nome della libreria.
-     * @return Lista dei libri contenuti nella libreria, oppure {@code null} in caso di errore.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code null}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param nome nome della libreria
+     * @return lista dei libri contenuti; può essere vuota; {@code null} in caso di errore
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public List<Libro> getLib(Token token, String nome) throws RemoteException {
@@ -296,9 +332,14 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     /**
      * Recupera tutti i nomi delle librerie associate all'utente.
-     * @param token Token di autenticazione dell'utente.
-     * @return Lista dei nomi delle librerie, oppure {@code null} in caso di errore.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code null}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @return lista dei nomi delle librerie; può essere vuota; {@code null} in caso di errore
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public List<String> getLibs(Token token) throws RemoteException {
@@ -329,15 +370,22 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
     }
 
     /**
-     * Aggiunge una valutazione a un libro per conto dell'utente.
-     * @param token Token di autenticazione dell'utente.
-     * @param valutazione Oggetto {@link Valutazione} contenente punteggi e commenti.
-     * @return {@code true} se la valutazione è stata inserita correttamente, {@code false} altrimenti.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     * Inserisce una valutazione per un libro dell'utente.
+     *
+     * <p>Prerequisiti: il libro deve essere presente in almeno una libreria dell’utente.</p>
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param valutazione oggetto {@link Valutazione} con voti e commenti
+     * @return {@code true} se inserita; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public boolean addValutazione(Token token, Valutazione valutazione) throws RemoteException {
-        try{
+        try {
             logger.info("Aggiunta valutazione da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
@@ -346,7 +394,7 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
             logger.log(Level.WARNING, "Token non valido > " + token.token() + " utente di id " + token.userId() + " IP:" + token.ipClient());
             return false;
         }
-        if(!ServerUtil.getInstance().userHasLibro(token, valutazione.getLibro())) {
+        if (!ServerUtil.getInstance().userHasLibro(token, valutazione.getLibro())) {
             logger.log(Level.WARNING, "L'utente con ID: " + token.userId() + " non ha il libro con ID: " + valutazione.getIdLibro() + " nelle sue librerie.");
             return false;
         }
@@ -389,14 +437,22 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     /**
      * Aggiunge un consiglio associato a un libro dell'utente, suggerendo fino a 3 altri libri.
-     * @param token Token di autenticazione dell'utente.
-     * @param libri Lista dei libri: il primo è il libro target, gli altri sono suggerimenti.
-     * @return {@code true} se il consiglio è stato salvato correttamente, {@code false} altrimenti.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     *
+     * <p>La lista deve contenere almeno il libro target (indice 0) e un suggerimento (indice 1).
+     * Se sono forniti meno di 3 suggerimenti, gli slot mancanti vengono inseriti come {@code NULL}.</p>
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libri lista dei libri: il primo è il libro target; gli altri fino a 3 sono suggerimenti
+     * @return {@code true} se il consiglio è stato salvato; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public boolean addConsiglio(Token token, List<Libro> libri) throws RemoteException {
-        try{
+        try {
             logger.info("Aggiunta consigli da parte di " + token.userId() + " con IP: " + getClientHost() + " a libro: " + libri.get(0).getId());
         } catch (ServerNotActiveException e) {
             return false;
@@ -426,11 +482,11 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
             stmt.setInt(1, libri.get(0).getId());
             stmt.setInt(2, token.userId());
             stmt.setInt(3, libri.get(1).getId());
-            if(libri.get(2) == null)
+            if (libri.get(2) == null)
                 stmt.setNull(4, Types.INTEGER);
             else
                 stmt.setInt(4, libri.get(2).getId());
-            if(libri.get(3) == null)
+            if (libri.get(3) == null)
                 stmt.setNull(5, Types.INTEGER);
             else
                 stmt.setInt(5, libri.get(3).getId());
@@ -451,15 +507,20 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     /**
      * Modifica il nome di una libreria dell'utente.
-     * @param token Token di autenticazione dell'utente.
-     * @param oldName Nome attuale della libreria.
-     * @param newName Nuovo nome desiderato.
-     * @return {@code true} se il nome è stato modificato correttamente, {@code false} altrimenti.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param oldName nome attuale della libreria
+     * @param newName nuovo nome desiderato
+     * @return {@code true} se il nome è stato modificato; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public boolean modifyLibName(Token token, String oldName, String newName) throws RemoteException {
-        try{
+        try {
             logger.info("Modifica del nome della libreria " + oldName + " con il nome: " + newName + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
@@ -497,10 +558,14 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     /**
      * Verifica se un determinato libro è presente in almeno una libreria dell'utente.
-     * @param token Token di autenticazione dell'utente.
-     * @param libro Libro da cercare.
-     * @return {@code true} se il libro è presente in una delle librerie dell'utente, {@code false} altrimenti.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     *
+     * <p>Valori di fallback:
+     * in caso di token non valido restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro da cercare
+     * @return {@code true} se presente in almeno una libreria; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public boolean isLibPresent(Token token, Libro libro) throws RemoteException {
@@ -510,11 +575,14 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
 
     /**
      * Restituisce la data di creazione di una libreria.
-     * @param token Token di autenticazione dell'utente.
-     * @param nome Nome della libreria.
-     * @return {@link LocalDate} corrispondente alla data di creazione della libreria,
-     *         oppure {@code null} se non trovata o in caso di errore.
-     * @throws RemoteException In caso di errore di comunicazione remota.
+     *
+     * <p>Valori di fallback:
+     * in caso di token non valido restituisce {@code null}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param nome nome della libreria
+     * @return {@link LocalDate} della creazione; {@code null} se non trovata o in errore
+     * @throws RemoteException in caso di errore di comunicazione remota
      */
     @Override
     public LocalDate getCreationDate(Token token, String nome) throws RemoteException {
@@ -551,6 +619,17 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Verifica l'esistenza di una valutazione dell'utente per il libro indicato.
+     *
+     * <p>Valori di fallback:
+     * in caso di token non valido restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return {@code true} se esiste almeno una valutazione; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public boolean existVal(Token token, Libro libro) throws RemoteException {
         //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
@@ -572,6 +651,17 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Verifica l'esistenza di un consiglio dell'utente per il libro indicato.
+     *
+     * <p>Valori di fallback:
+     * in caso di token non valido restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return {@code true} se esiste un consiglio; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public boolean existCon(Token token, Libro libro) throws RemoteException {
         //TODO: Gestire ServerNotActiveException e capire se avere una stampa di log
@@ -593,9 +683,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Aggiorna una valutazione esistente dell'utente per il libro indicato.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param valutazione valutazione aggiornata da salvare
+     * @return {@code true} se almeno una riga è stata aggiornata; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public boolean updateVal(Token token, Valutazione valutazione) throws RemoteException {
-        try{
+        try {
             logger.info("Modifica valutazione per libro " + valutazione.getIdLibro() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
@@ -640,9 +742,24 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Aggiorna i libri consigliati collegati a un libro dell'utente.
+     *
+     * <p>La lista deve avere dimensione 2..4:
+     * indice 0 = libro di riferimento, 1..3 = suggerimenti (possono essere {@code null} via {@code setObject}).</p>
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libri lista contenente libro di riferimento e suggerimenti (2..4 elementi)
+     * @return {@code true} se aggiornato; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public boolean updateCon(Token token, List<Libro> libri) throws RemoteException {
-        try{
+        try {
             logger.info("Modifica consigli per libro " + libri.get(0).getId() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
@@ -674,9 +791,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Elimina la valutazione dell'utente per un libro.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return {@code true} se una riga è stata eliminata; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public boolean deleteVal(Token token, Libro libro) throws RemoteException {
-        try{
+        try {
             logger.info("Eliminazione valutazione del libro " + libro.getId() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
@@ -697,9 +826,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Elimina i consigli associati al libro dell'utente.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code false}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return {@code true} se una riga è stata eliminata; {@code false} altrimenti
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public boolean deleteCon(Token token, Libro libro) throws RemoteException {
-        try{
+        try {
             logger.info("Eliminazione consigli del libro " + libro.getId() + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return false;
@@ -720,9 +861,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Restituisce la data di ultima modifica della valutazione dell'utente su un libro.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code null}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return data di ultima modifica; {@code null} se non presente o in errore
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public LocalDate getValDate(Token token, Libro libro) throws RemoteException {
-        try{
+        try {
             logger.info("Recupero data di modifica per la valutazione del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
@@ -750,9 +903,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Restituisce la data di ultima modifica del consiglio associato a un libro.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code null}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return data di ultima modifica; {@code null} se non presente o in errore
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public LocalDate getConDate(Token token, Libro libro) throws RemoteException {
-        try{
+        try {
             logger.info("Recupero data di modifica per il consiglio del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
@@ -780,9 +945,23 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Recupera i libri consigliati associati a un libro dell'utente.
+     * La lista restituita include sempre anche il libro di riferimento come primo elemento.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code null}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return lista contenente il libro di riferimento seguito dai consigli (massimo 3);
+     *         {@code null} se nessun consiglio presente o in errore
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public List<Libro> getConsigli(Token token, Libro libro) throws RemoteException {
-        try{
+        try {
             logger.info("Recupero consiglio del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;
@@ -816,9 +995,21 @@ public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterfac
         }
     }
 
+    /**
+     * Recupera la valutazione dell'utente per il libro indicato.
+     *
+     * <p>Valori di fallback:
+     * in caso di {@link ServerNotActiveException} o token non valido
+     * restituisce {@code null}.</p>
+     *
+     * @param token token di autenticazione dell'utente
+     * @param libro libro di riferimento
+     * @return oggetto {@link Valutazione} se presente; {@code null} se assente o in errore
+     * @throws RemoteException in caso di errore di comunicazione remota
+     */
     @Override
     public Valutazione getValutazione(Token token, Libro libro) throws RemoteException {
-        try{
+        try {
             logger.info("Recupero valutazione del libro " + libro.getId()  + " da parte di " + token.userId() + " con IP: " + getClientHost());
         } catch (ServerNotActiveException e) {
             return null;

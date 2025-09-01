@@ -22,9 +22,15 @@ import java.util.logging.Logger;
 /**
  * Implementazione dell'interfaccia remota {@link LogRegInterface} per la gestione
  * delle operazioni di login, registrazione e logout degli utenti.
- * Questa classe viene esposta dal server tramite RMI e si occupa di validare
- * le credenziali degli utenti, registrarli nel sistema e gestirne la sessione.
- * Le operazioni sono loggate con {@link Logger} per monitoraggio lato server.
+ * <p>
+ * Questa classe viene esposta dal server tramite RMI e si occupa di:
+ * <ul>
+ *   <li>validare le credenziali di accesso</li>
+ *   <li>registrare nuovi utenti</li>
+ *   <li>gestire sessioni, cambi credenziali ed eliminazione account</li>
+ * </ul>
+ * Le operazioni sono registrate con {@link Logger} per monitoraggio lato server.
+ * </p>
  */
 public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegInterface{
 
@@ -46,13 +52,15 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
 
     /**
      * Tenta il login di un utente verificando le credenziali fornite.
-     * Se le credenziali sono corrette, viene restituito un {@link Token} valido.
-     * In caso contrario, restituisce {@code null}.
-     * Il metodo registra il tentativo di accesso e salva anche l'indirizzo del client remoto.
-     * @param username nome utente fornito.
-     * @param password password associata all'utente.
-     * @return un {@link Token} se l'autenticazione ha successo, altrimenti {@code null}.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * <p>
+     * Se le credenziali sono corrette e non esiste già una sessione attiva,
+     * restituisce un {@link Token} valido; altrimenti {@code null}.
+     * </p>
+     * Il metodo registra anche il tentativo di accesso e salva anche l'indirizzo del client remoto.
+     * @param username nome utente o email fornita
+     * @param password password associata
+     * @return un {@link Token} se l’autenticazione ha successo, altrimenti {@code null}
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     @Override
     public Token TryLogin(String username, String password) throws RemoteException {
@@ -206,6 +214,14 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         }
     }
 
+    /**
+     * Cambia la password dell’utente autenticato.
+     *
+     * @param token      token della sessione utente
+     * @param newPassword nuova password da impostare
+     * @return {@code true} se l’aggiornamento è riuscito, {@code false} altrimenti
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
+     */
     @Override
     public boolean cambiaPassword(Token token, String newPassword) throws RemoteException {
         try {
@@ -227,6 +243,14 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         return false;
     }
 
+    /**
+     * Elimina in modo permanente l’account dell’utente e tutte le sue entità correlate
+     * (consigli, valutazioni, librerie, sessioni).
+     *
+     * @param token token della sessione utente
+     * @return {@code true} se l’eliminazione è avvenuta con successo, {@code false} altrimenti
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
+     */
     @Override
     public boolean eliminaAccount(Token token) throws RemoteException {
         try {
@@ -272,6 +296,14 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         return false;
     }
 
+    /**
+     * Cambia l’email associata all’account dell’utente, se non già in uso.
+     *
+     * @param token    token della sessione utente
+     * @param newEmail nuova email da associare
+     * @return {@code true} se aggiornata, {@code false} se già in uso o in errore
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
+     */
     @Override
     public boolean cambiaEmail(Token token, String newEmail) throws RemoteException {
         try {
@@ -310,6 +342,14 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         return false;
     }
 
+    /**
+     * Cambia lo username dell’utente, se non già in uso.
+     *
+     * @param token       token della sessione utente
+     * @param newUsername nuovo username desiderato
+     * @return {@code true} se aggiornato, {@code false} se già in uso o in errore
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
+     */
     @Override
     public boolean cambiaUsername(Token token, String newUsername) throws RemoteException {
         try {
@@ -348,6 +388,18 @@ public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegIn
         return false;
     }
 
+    /**
+     * Recupera le informazioni principali dell’utente autenticato.
+     * <p>
+     * Restituisce una lista contenente:
+     * {@code [username, nome, cognome, codice fiscale, email, password]}.
+     * In caso di token non valido restituisce una lista vuota.
+     * </p>
+     *
+     * @param token token della sessione utente
+     * @return lista con i dati dell’utente; lista vuota in caso di errore
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
+     */
     @Override
     public List<String> getUserInfo(Token token) throws RemoteException {
         try {

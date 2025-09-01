@@ -28,6 +28,18 @@ public class MonitorInterfaceImpl extends UnicastRemoteObject implements Monitor
         super();
     }
 
+    /**
+     * Registra un listener remoto per ricevere notifiche dal server.
+     * <p>
+     * La struttura dati è thread-safe; possono essere registrati più listener.
+     * Non è prevista la rimozione né il controllo duplicati in questa implementazione.
+     * Il parametro non deve essere {@code null}.
+     * </p>
+     *
+     * @param listener istanza remota che implementa {@link ServerListener}
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
+     * @throws NullPointerException se {@code listener} è {@code null}
+     */
     @Override
     public void registerListener(ServerListener listener) throws RemoteException {
         listeners.add(listener);
@@ -35,8 +47,11 @@ public class MonitorInterfaceImpl extends UnicastRemoteObject implements Monitor
 
     /**
      * Notifica a tutti i listener registrati che il server sta per arrestarsi.
-     * Il metodo richiama in remoto {@code serverWillStop()} su ciascun listener.
-     * Eventuali errori di rete sono ignorati.
+     * <p>
+     * Per ogni listener viene invocato in remoto {@link ServerListener#serverWillStop()}.
+     * Eventuali {@link RemoteException} sollevate dai singoli listener vengono ignorate
+     * per proseguire la notifica agli altri.
+     * </p>
      */
     public void notifyShutdown() {
         for (ServerListener l : listeners) {

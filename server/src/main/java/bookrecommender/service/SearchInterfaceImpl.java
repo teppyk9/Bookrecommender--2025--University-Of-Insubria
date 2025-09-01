@@ -61,7 +61,10 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Cerca libri che corrispondono al titolo specificato.
+     * Cerca libri che corrispondono (parzialmente) al titolo specificato.
+     * Il risultato viene limitato a {@code maxResults} se il totale supera tale soglia, con un
+     * ordinamento basato su {@code STRPOS}.
+     *
      * @param title titolo del libro da cercare.
      * @return lista di libri con titolo corrispondente.
      * @throws RemoteException se si verifica un errore di comunicazione RMI.
@@ -108,10 +111,14 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Cerca libri scritti da un determinato autore.
-     * @param author nome dell'autore.
-     * @return lista di libri dell'autore specificato.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * Cerca libri scritti da un determinato autore (match parziale case-insensitive).
+     * Se il numero di risultati supera {@code maxResults}, applica un limite e un
+     * ordinamento euristico.
+     *
+     * @param author     nome (o parte del nome) dell'autore
+     * @param maxResults massimo numero di risultati da restituire (se possibile)
+     * @return lista di libri dell'autore specificato; può essere vuota ma non {@code null}
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     @Override
     public List<Libro> searchByAuthor(String author, int maxResults) throws RemoteException {
@@ -151,11 +158,14 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Cerca libri scritti da un determinato autore in un determinato anno.
-     * @param author nome dell'autore.
-     * @param year   anno di pubblicazione.
-     * @return lista di libri che soddisfano i criteri.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * Cerca libri scritti da un determinato autore in uno specifico anno (match parziale sull'anno).
+     * Applica limite/ordinamento come negli altri metodi di ricerca, se necessario.
+     *
+     * @param author     autore (match parziale, case-insensitive)
+     * @param year       anno di pubblicazione (match parziale su stringa)
+     * @param maxResults massimo numero di risultati da restituire (se possibile)
+     * @return lista di libri che soddisfano i criteri; può essere vuota ma non {@code null}
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     @Override
     public List<Libro> searchByAuthorAndYear(String author, int year, int maxResults) throws RemoteException {
@@ -199,10 +209,11 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Restituisce i dettagli completi di un libro selezionato.
-     * @param libro oggetto {@link Libro} di cui si vogliono i dettagli.
-     * @return oggetto {@link Libro_Details} con le informazioni dettagliate.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * Restituisce i dettagli completi (valutazioni e consigli) di un libro selezionato.
+     *
+     * @param libro oggetto {@link Libro} di cui si vogliono i dettagli
+     * @return oggetto {@link Libro_Details} con le informazioni dettagliate; non {@code null}
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     @Override
     public Libro_Details getDetails(Libro libro) throws RemoteException {
@@ -270,11 +281,12 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Cerca libri per titolo, tenendo conto del token utente per eventuali filtri o preferenze.
-     * @param token token utente autenticato.
-     * @param title titolo da cercare.
-     * @return lista di libri corrispondenti.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * Cerca libri per titolo limitando la ricerca ai libri nelle librerie dell'utente (token).
+     *
+     * @param token token utente autenticato
+     * @param title titolo da cercare
+     * @return lista di libri corrispondenti o {@code null} se token non valido/errore
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     public List<Libro> searchByName(Token token, String title) throws RemoteException {
         try{
@@ -307,11 +319,12 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Cerca libri per autore, tenendo conto del token utente.
-     * @param token  token utente autenticato.
-     * @param author autore da cercare.
-     * @return lista di libri corrispondenti.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * Cerca libri per autore limitando ai libri presenti nelle librerie dell'utente (token).
+     *
+     * @param token  token utente autenticato
+     * @param author autore da cercare (match parziale, case-insensitive)
+     * @return lista di libri corrispondenti o {@code null} se token non valido/errore
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     public List<Libro> searchByAuthor(Token token, String author) throws RemoteException {
         try{
@@ -344,12 +357,13 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Cerca libri per autore e anno, con token utente.
-     * @param token  token utente autenticato.
-     * @param author autore del libro.
-     * @param year   anno di pubblicazione.
-     * @return lista di libri corrispondenti.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * Cerca libri per autore e anno limitando ai libri presenti nelle librerie dell'utente (token).
+     *
+     * @param token  token utente autenticato
+     * @param author autore del libro (match parziale, case-insensitive)
+     * @param year   anno di pubblicazione (match parziale su stringa)
+     * @return lista di libri corrispondenti o {@code null} se token non valido/errore
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     public List<Libro> searchByAuthorAndYear(Token token, String author, int year) throws RemoteException {
         try {
@@ -384,10 +398,11 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
     }
 
     /**
-     * Restituisce la lista completa dei libri visibili all’utente.
-     * @param token token dell’utente autenticato.
-     * @return lista di libri associati o visibili all’utente.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     * Restituisce la lista completa dei libri visibili/associati all’utente autenticato.
+     *
+     * @param token token dell’utente autenticato
+     * @return lista dei libri; {@code null} se token non valido o in caso di errore
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     @Override
     public List<Libro> getAllBooks(Token token) throws RemoteException {
@@ -423,9 +438,10 @@ public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchIn
 
     /**
      * Verifica se il libro specificato ha almeno una valutazione o un consiglio associato.
-     * @param libro oggetto {@link Libro} da analizzare.
-     * @return {@code true} se il libro ha almeno una valutazione o consiglio, {@code false} altrimenti.
-     * @throws RemoteException se si verifica un errore di comunicazione RMI.
+     *
+     * @param libro oggetto {@link Libro} da analizzare
+     * @return {@code true} se esiste almeno una valutazione o un consiglio; {@code false} altrimenti
+     * @throws RemoteException se si verifica un errore di comunicazione RMI
      */
     @Override
     public boolean hasValRec(Libro libro) throws RemoteException {
