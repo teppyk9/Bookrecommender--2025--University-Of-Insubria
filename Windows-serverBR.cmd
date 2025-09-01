@@ -1,5 +1,5 @@
 @echo off
 setlocal
-cd bin
+cd bin/Windows
 start javaw -jar serverBR.jar
 endlocal

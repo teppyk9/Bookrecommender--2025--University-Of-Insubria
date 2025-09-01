@@ -1,6 +1,6 @@
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-BIN="$SCRIPT_DIR/bin"
+BIN="$SCRIPT_DIR/bin/Linux"
 JAR="$BIN/serverBR.jar"
 
 if [[ ! -f "$JAR" ]]; then

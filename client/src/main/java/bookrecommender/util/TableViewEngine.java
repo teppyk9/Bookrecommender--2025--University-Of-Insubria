@@ -23,10 +23,10 @@ import java.util.*;
  * <p>
  * Fornisce la logica comune per:
  * <ul>
- *   <li>configurare le colonne e le tabelle dei risultati;</li>
- *   <li>eseguire ricerche per titolo/autore/anno, anche limitate per utente;</li>
- *   <li>mostrare azioni contestuali (valuta/consigli/aggiungi/rimuovi);</li>
- *   <li>gestire progresso, limiti e placeholder.</li>
+ *   <li>Configurare le colonne e le tabelle dei risultati;</li>
+ *   <li>Eseguire ricerche per titolo/autore/anno, anche limitate per utente;</li>
+ *   <li>Mostrare azioni contestuali (valuta/consigli/aggiungi/rimuovi);</li>
+ *   <li>Gestire progresso, limiti e placeholder.</li>
  * </ul>
  * Le sottoclassi devono esporre i controlli FXML e le scelte di ambito di ricerca.
  *
@@ -120,7 +120,7 @@ public abstract class TableViewEngine {
     protected abstract TableColumn<Libro, Void> getSAggiungiAdvCol();
 
     /**
-     * Restituisce la colonna dei comandi di nella TableView.
+     * Restituisce la colonna dei comandi di aggiunta/rimozione nella TableView dei risultati.
      *
      * @return la TableColumn con le opzioni associate ai libri
      */
@@ -218,10 +218,10 @@ public abstract class TableViewEngine {
     /**
      * Inizializza i controlli base di ricerca:
      * <ul>
-     *   <li>nasconde/abilita il campo Anno a seconda del tipo;</li>
-     *   <li>imposta placeholder e icone dei menu;</li>
-     *   <li>collega le azioni dei MenuItem del tipo di ricerca;</li>
-     *   <li>configura colonne Titolo/Autore/Anno.</li>
+     *   <li>Nasconde/abilita il campo Anno a seconda del tipo;</li>
+     *   <li>Imposta placeholder e icone dei menu;</li>
+     *   <li>Collega le azioni dei MenuItem del tipo di ricerca;</li>
+     *   <li>Configura colonne Titolo/Autore/Anno.</li>
      */
     protected void initBasicSearch() {
         getCampoRicercaAnno().setVisible(false);
@@ -286,6 +286,13 @@ public abstract class TableViewEngine {
         });
     }
 
+    /**
+     * Configura la colonna delle azioni avanzate di aggiunta nella TableView dei risultati.
+     * <p>
+     * Imposta ordinamento e ridimensionamento, allineamento grafico e una cell factory che
+     * provvede a mostrare i controlli (es. Pulsanti o icone) nelle righe non vuote.
+     * La logica specifica dell’azione viene gestita nella cella tramite {@code updateItem}.
+     */
     protected void initSAggiungiAdvCol(){
         getSAggiungiAdvCol().setSortable(false);
         getSAggiungiAdvCol().setResizable(false);
@@ -307,6 +314,14 @@ public abstract class TableViewEngine {
         });
     }
 
+    /**
+     * Configura la colonna con menu contestuale "Aggiungi / Rimuovi" nella TableView dei risultati.
+     * <p>
+     * La voce <b>Aggiungi</b> inserisce il libro selezionato nella tabella di destra (OTableView) e
+     * aggiorna le cache locali ({@code inLib}, {@code hasVal}, {@code hasCon}, {@code hasRec}).
+     * La voce <b>Rimuovi</b> effettua l’operazione inversa, ripulendo anche le cache.
+     * Viene inoltre nascosta la freccia di default del {@link MenuButton} per un’icona custom.
+     */
     protected void initSAddRemCol(){
         getSAddRemCol().setSortable(false);
         getSAddRemCol().setResizable(false);
@@ -438,6 +453,11 @@ public abstract class TableViewEngine {
         });
     }
 
+    /**
+     * Inizializza la TableView di destra (OTableView) impostando i value factory per
+     * titolo, autore e anno, disabilitando il ridimensionamento delle colonne e
+     * allineando i contenuti al centro.
+     */
     protected void initOTableView() {
         getOTitoloCol().setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getTitolo()));
         getOTitoloCol().setResizable(false);
@@ -451,12 +471,22 @@ public abstract class TableViewEngine {
         getOTableView().setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
+    /**
+     * Applica la {@link #initRows()} come row factory alla/le TableView
+     * e imposta lo stile di allineamento. Se presente, applica la row factory
+     * anche alla OTableView.
+     */
     protected void initTableViews(){
         getSTableView().setRowFactory(tv -> initRows());
         getSTableView().setStyle("-fx-alignment: CENTER;");
         if(getOTableView() != null) getOTableView().setRowFactory(tv -> initRows());
     }
 
+    /**
+     * Inizializzazione rapida dell’insieme di viste per la sezione "Consigli":
+     * avvia la ricerca base, prepara la colonna aggiungi/rimuovi, le azioni della
+     * tabella di destra e le row factory su entrambe le tabelle.
+     */
     protected void initForConsigli(){
         initBasicSearch();
         initSAddRemCol();
@@ -465,6 +495,11 @@ public abstract class TableViewEngine {
         initTableViews();
     }
 
+    /**
+     * Inizializza il selettore del limite risultati ({@code getLimiterBox()}) con
+     * le opzioni predefinite (200, 500, 1000, 2000, No Limit), applica l’icona
+     * e nasconde la freccia di default della skin.
+     */
     protected void initLimiter(){
         List<String> options = List.of("200", "500", "1000", "2000", "No Limit");
         for (String label : options) {
@@ -484,6 +519,16 @@ public abstract class TableViewEngine {
         });
     }
 
+    /**
+     * Restituisce il numero massimo di risultati in base al testo del {@code getLimiterBox()}.
+     * <ul>
+     *   <li>{@code "No Limit"} → {@link Integer#MAX_VALUE}</li>
+     *   <li>Testo numerico → valore intero parsato</li>
+     *   <li>Valore non valido o assente → 200</li>
+     * </ul>
+     *
+     * @return il limite massimo di risultati
+     */
     private int getMaxResults() {
         if (getLimiterBox() == null) {
             return 200;
@@ -500,6 +545,12 @@ public abstract class TableViewEngine {
         }
     }
 
+    /**
+     * Crea e restituisce una {@link TableRow} con doppio click abilitato per
+     * aprire la finestra dei dettagli del libro ({@link FXMLtype#DETTAGLIOLIBRO}).
+     *
+     * @return la row configurata
+     */
     private TableRow<Libro> initRows(){
         TableRow<Libro> row = new TableRow<>();
         row.setOnMouseClicked(evt -> {
@@ -510,6 +561,16 @@ public abstract class TableViewEngine {
         return row;
     }
 
+    /**
+     * Costruisce il {@link MenuButton} delle azioni contestuali per la OTableView.
+     * <p>
+     * Aggiunge la voce "Aggiungi a una libreria" e, se opportuno, voci relative
+     * a valutazioni/consigli. Nasconde la freccia di default della skin.
+     *
+     * @param tableView la tabella di riferimento
+     * @param idx       indice della riga/elemento a cui applicare il menu
+     * @return il MenuButton configurato
+     */
     private MenuButton menuAzioni(TableView<Libro> tableView, int idx) {
         MenuButton menu = new MenuButton();
         menu.setGraphic(IMGtype.ARROW_DOWN.getImageView(12,12));
@@ -562,6 +623,14 @@ public abstract class TableViewEngine {
         return menu;
     }
 
+    /**
+     * Crea il {@link MenuItem} "Modifica Valutazione" che apre la finestra di
+     * modifica per il libro selezionato.
+     *
+     * @param tableView la tabella che contiene il libro
+     * @param idx       indice dell’elemento selezionato
+     * @return il MenuItem configurato
+     */
     private MenuItem getMenuItem(TableView<Libro> tableView, int idx) {
         MenuItem modValuta = new MenuItem("Modifica Valutazione");
         modValuta.getStyleClass().add("dinamicMenu");
@@ -575,6 +644,14 @@ public abstract class TableViewEngine {
         return modValuta;
     }
 
+    /**
+     * Imposta il tipo di ricerca e aggiorna la UI: seleziona la voce di menu,
+     * nasconde/mostra il campo anno in base alla modalità (Titolo, Autore, AutoreAnno)
+     * e regola dinamicamente le opzioni del menu.
+     *
+     * @param key  chiave logica interna del tipo di ricerca
+     * @param text testo visualizzato nel MenuButton
+     */
     private void switchType(String key, String text) {
         getMenuTipoRicerca().getItems().setAll(getMenuCercaTitolo(), getMenuCercaAutore(), getMenuCercaAutoreAnno());
         getCampoRicercaAnno().setVisible(false);
@@ -594,6 +671,13 @@ public abstract class TableViewEngine {
         }
     }
 
+    /**
+     * Avvia la ricerca in base al tipo selezionato e ai campi inseriti.
+     * <p>
+     * Valida l’input (almeno 2 caratteri; tipo di ricerca presente), mostra il
+     * {@link ProgressIndicator}, esegue la ricerca in un {@link Task} dedicato e
+     * popola la tabella dei risultati. Gestisce errori e logout se necessario.
+     */
     @FXML
     private void handleClickCerca() {
         String testo = getCampoRicerca().getText();
@@ -675,6 +759,13 @@ public abstract class TableViewEngine {
     }
 
 
+    /**
+     * Aggiorna le cache locali per i libri passati (presenza in libreria, esistenza
+     * di valutazioni/consigli a livello utente/globale) quando è presente un token
+     * valido. I risultati sono usati per mostrare correttamente icone e azioni.
+     *
+     * @param libri lista di libri da analizzare e cache-izzare
+     */
     private void setLibriP(List<Libro> libri){
         if(CliUtil.getInstance().getCurrentToken() != null){
             hasVal.clear();
@@ -697,18 +788,35 @@ public abstract class TableViewEngine {
         }
     }
 
+    /**
+     * Gestore {@code @FXML} per l’Enter nel primo campo di ricerca.
+     * Se il tasto premuto è Invio, richiama {@link #handleClickCerca()}.
+     *
+     * @param e evento tastiera
+     */
     @FXML
     private void keyEnterPressed_1(KeyEvent e) {
         if ("Enter".equals(e.getCode().getName()))
             handleClickCerca();
     }
 
+    /**
+     * Gestore {@code @FXML} per l’Enter nel secondo campo (anno).
+     * Se il tasto premuto è Invio, richiama {@link #handleClickCerca()}.
+     *
+     * @param e evento tastiera
+     */
     @FXML
     private void keyEnterPressed_2(KeyEvent e) {
         if ("Enter".equals(e.getCode().getName()))
             handleClickCerca();
     }
 
+    /**
+     * Recupera l’elenco completo dei libri dal servizio remoto (in base al token
+     * corrente), rimuove l’eventuale libro “corrente” della vista e popola la
+     * tabella dei risultati.
+     */
     @FXML
     private void getAllBooks() {
         try {
@@ -720,6 +828,12 @@ public abstract class TableViewEngine {
         }
     }
 
+    /**
+     * Valida il campo anno: ammessi da 1 a 4 cifre decimali.
+     *
+     * @param anno stringa dell’anno da validare
+     * @return {@code true} se valido, altrimenti {@code false}
+     */
     private boolean validateYear(String anno) {
         if (anno == null || anno.trim().isEmpty() || !anno.matches("\\d{1,4}")) {
             CliUtil.getInstance().createAlert("Errore", "Inserire un anno valido (fino a 4 cifre).").showAndWait();
@@ -728,41 +842,96 @@ public abstract class TableViewEngine {
         return true;
     }
 
+    /**
+     * Verifica la presenza di un libro in una lista tramite {@code equals}.
+     *
+     * @param list   lista in cui cercare
+     * @param target libro da cercare
+     * @return {@code true} se presente, altrimenti {@code false}
+     */
     private boolean containsLibro(List<Libro> list, Libro target) {
         if (list == null || target == null) return false;
         return list.stream().anyMatch(item -> Objects.equals(item, target));
     }
 
+    /**
+     * Ricerca per titolo. Se è presente un token utente, effettua la ricerca
+     * scoped all’utente; altrimenti esegue la ricerca globale con limite
+     * {@link #getMaxResults()}.
+     *
+     * @param testo stringa di ricerca per il titolo
+     * @return lista di libri trovati
+     * @throws Exception eccezioni propagate dal servizio remoto
+     */
     private List<Libro> searchByTitle(String testo) throws Exception{
         return getSearchType()
                 ? CliUtil.getInstance().getSearchService().searchByName(CliUtil.getInstance().getCurrentToken(), testo)
                 : CliUtil.getInstance().getSearchService().searchByName(testo, getMaxResults());
     }
 
+    /**
+     * Ricerca per autore. Se è presente un token utente, effettua la ricerca
+     * scoped all’utente; altrimenti esegue la ricerca globale con limite
+     * {@link #getMaxResults()}.
+     *
+     * @param testo stringa di ricerca per l’autore
+     * @return lista di libri trovati
+     * @throws Exception eccezioni propagate dal servizio remoto
+     */
     private List<Libro> searchByAuthor(String testo) throws Exception{
         return getSearchType()
                 ? CliUtil.getInstance().getSearchService().searchByAuthor(CliUtil.getInstance().getCurrentToken(), testo)
                 : CliUtil.getInstance().getSearchService().searchByAuthor(testo, getMaxResults());
     }
 
+    /**
+     * Ricerca per autore e anno. Se è presente un token utente, effettua la ricerca
+     * scoped all’utente; altrimenti esegue la ricerca globale con limite
+     * {@link #getMaxResults()}.
+     *
+     * @param testo stringa di ricerca per l’autore
+     * @param anno  anno di pubblicazione
+     * @return lista di libri trovati
+     * @throws Exception eccezioni propagate dal servizio remoto
+     */
     private List<Libro> searchByAuthorAndYear(String testo, int anno) throws Exception{
         return getSearchType()
                 ? CliUtil.getInstance().getSearchService().searchByAuthorAndYear(CliUtil.getInstance().getCurrentToken(), testo, anno)
                 : CliUtil.getInstance().getSearchService().searchByAuthorAndYear(testo, anno, getMaxResults());
     }
 
+    /**
+     * Mappa cache: per ciascun libro indica se esistono valutazioni/consigli (visione globale).
+     *
+     * @return mappa libro → flag presenza recensioni/consigli
+     */
     protected Map<Libro, Boolean> getHasRec() {
         return this.hasRec;
     }
 
+    /**
+     * Mappa cache: per ciascun libro indica se l’utente corrente ha inserito almeno una valutazione.
+     *
+     * @return mappa libro → flag presenza valutazioni utente
+     */
     protected Map<Libro, Boolean> getHasVal() {
         return this.hasVal;
     }
 
+    /**
+     * Mappa cache: per ciascun libro indica se l’utente corrente ha inserito consigli.
+     *
+     * @return mappa libro → flag presenza consigli utente
+     */
     protected Map<Libro, Boolean> getHasCon() {
         return this.hasCon;
     }
 
+    /**
+     * Mappa cache: per ciascun libro indica se è presente in almeno una libreria dell’utente corrente.
+     *
+     * @return mappa libro → flag presenza in libreria
+     */
     protected Map<Libro, Boolean> getInLib() {
         return this.inLib;
     }

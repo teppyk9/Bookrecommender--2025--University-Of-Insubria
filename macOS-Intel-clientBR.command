@@ -1,7 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-BIN="$SCRIPT_DIR/bin"
-JAR="$BIN/serverBR.jar"
+BIN="$SCRIPT_DIR/bin/Mac-Intel"
+JAR="$BIN/clientBR.jar"
 
 if [[ ! -f "$JAR" ]]; then
   echo "[ERR] JAR non trovato: $JAR"
