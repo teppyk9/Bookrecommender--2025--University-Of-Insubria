@@ -12,9 +12,10 @@ import javafx.stage.Stage;
  * attraverso {@link ServerUtil} e carica le interfacce FXML
  * necessarie al controllo dei log e alla configurazione.
  * </p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class GUI extends Application {
     /**

@@ -28,6 +28,10 @@ import java.util.logging.Logger;
  * ricerca per titolo, autore, anno, recupero dettagli di un libro e verifica
  * della presenza di valutazioni o consigli.
  * Ogni metodo è accompagnato da logging server-side per il monitoraggio delle richieste.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class SearchInterfaceImpl extends UnicastRemoteObject implements SearchInterface {
     /**UID per la serializzazione RMI.*/

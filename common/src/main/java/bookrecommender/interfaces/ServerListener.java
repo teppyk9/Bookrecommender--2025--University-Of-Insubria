@@ -12,7 +12,10 @@ import java.rmi.RemoteException;
  * Essendo un'interfaccia RMI, i metodi possono lanciare {@link RemoteException}
  * in caso di problemi di comunicazione remota.
  * </p>
- */
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA*/
 public interface ServerListener extends Remote {
 
     /**

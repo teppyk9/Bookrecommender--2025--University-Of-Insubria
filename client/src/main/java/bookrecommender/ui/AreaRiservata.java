@@ -22,6 +22,10 @@ import javafx.stage.Stage;
  * Alla chiusura della finestra viene automaticamente effettuata
  * la disconnessione dell'utente dal server remoto.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class AreaRiservata {
     @FXML private Button BottoneLogOut;

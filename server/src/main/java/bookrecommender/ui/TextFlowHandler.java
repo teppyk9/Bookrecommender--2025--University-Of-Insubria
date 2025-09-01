@@ -28,6 +28,10 @@ import javafx.scene.text.TextFlow;
  *   <li>Scroll automatico a fondo lista tramite {@link ScrollPane} associato.</li>
  *   <li>Formattazione delegata al {@link Formatter} impostato (default: {@link SimpleFormatter}).</li>
  * </ul>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class TextFlowHandler extends Handler {
 

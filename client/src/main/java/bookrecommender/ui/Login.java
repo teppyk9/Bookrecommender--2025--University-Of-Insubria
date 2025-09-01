@@ -25,6 +25,10 @@ import javafx.stage.Stage;
  * gestisce la visibilità della password tramite {@link PasswordEngine},
  * e fornisce collegamenti per la registrazione e il ritorno al menu principale.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class Login extends PasswordEngine{
     /** Pulsante per tornare al menu principale */

@@ -21,6 +21,10 @@ import java.util.Objects;
  * </ul>
  * Utilizza il singleton {@link ServerUtil} per accedere alla logica di backend.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class ServerConfig {
 

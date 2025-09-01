@@ -13,8 +13,9 @@
  * <p>I controller collaborano con {@link bookrecommender.util.ServerUtil} per il
  * caricamento FXML, la gestione degli {@link javafx.stage.Stage} e
  * le operazioni di servizio.</p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 package bookrecommender.ui;

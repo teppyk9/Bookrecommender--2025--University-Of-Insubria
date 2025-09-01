@@ -40,6 +40,10 @@ import java.util.logging.Logger;
  * È pensata per consentire il monitoraggio in tempo reale del server e la gestione
  * interattiva tramite UI.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class ServerControl {
     /** Bottone per arrestare il server manualmente. */

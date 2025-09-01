@@ -8,6 +8,10 @@ import java.util.Objects;
 /**
  * Enum che rappresenta le icone grafiche utilizzate nell'interfaccia client.
  * Ogni elemento dell'enum associa un percorso a un file immagine, utilizzabile tramite {@link Image} o {@link ImageView}.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public enum IMGtype {
 

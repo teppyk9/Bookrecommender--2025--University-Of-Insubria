@@ -18,6 +18,10 @@ import java.util.List;
  * Permette la ricerca dei libri e la selezione di almeno 3 libri per creare una libreria,
  * associata ad un nome valido.
  * Estende {@link TableViewEngine} per gestire le funzionalità comuni di ricerca e gestione tabelle.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class CreaLibreria extends TableViewEngine {
 

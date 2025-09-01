@@ -21,6 +21,10 @@ import java.util.List;
  * L’utente può selezionare fino a 3 libri da consigliare e salvarli tramite il server.
  * Estende {@link TableViewEngine} per la gestione delle due tabelle (ricerca e risultati).
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class CreaConsiglio extends TableViewEngine {
 

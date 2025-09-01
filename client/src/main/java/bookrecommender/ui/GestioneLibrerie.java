@@ -32,6 +32,10 @@ import java.util.stream.Collectors;
  *     <li>Rinominare librerie tramite form e pulsante</li>
  * </ul>
  * La comunicazione con il server avviene tramite RMI.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class GestioneLibrerie extends TreeTableEngine {
 

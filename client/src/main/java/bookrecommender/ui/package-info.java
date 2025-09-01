@@ -15,8 +15,9 @@
  *   <li>{@link bookrecommender.enums.FXMLtype} e {@link bookrecommender.enums.IMGtype}
  *       per riferimenti tipizzati a viste e icone.</li>
  * </ul>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 package bookrecommender.ui;

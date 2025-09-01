@@ -13,6 +13,7 @@ import javafx.stage.Stage;
  * attraverso {@link CliUtil} e carica le interfacce FXML
  * necessarie al controllo dei log e alla configurazione.
  * </p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
  * @author Fabbain Gabriele, 755699, VA

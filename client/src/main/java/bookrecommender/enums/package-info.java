@@ -11,8 +11,9 @@
  *
  * <p>Queste enum sono consumate da loader e controller per ridurre
  * le stringhe “magiche” e centralizzare i riferimenti a risorse.</p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 package bookrecommender.enums;

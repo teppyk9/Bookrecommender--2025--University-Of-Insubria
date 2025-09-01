@@ -6,9 +6,10 @@ package bookrecommender;
  * l'esecuzione a {@link GUI}, la classe JavaFX responsabile
  * della gestione dell'interfaccia grafica.
  * </p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class Main_Server{
 

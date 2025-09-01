@@ -24,6 +24,10 @@ import java.util.ArrayList;
  * </p>
  * <p>
  * Questa classe è registrata come oggetto remoto tramite RMI.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class ClientListener extends UnicastRemoteObject implements ServerListener {
     /**

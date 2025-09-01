@@ -9,8 +9,9 @@
  *       gestione librerie/valutazioni e monitoraggio eventi;</li>
  *   <li>{@code model}: entità di dominio (libri, dettagli, valutazioni, token) serializzabili.</li>
  * </ul>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 package bookrecommender;

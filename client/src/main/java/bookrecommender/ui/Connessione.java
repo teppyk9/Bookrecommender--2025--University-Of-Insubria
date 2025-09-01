@@ -65,6 +65,10 @@ public class Connessione {
      *       inizializza i servizi RMI e apre la schermata principale</li>
      *   <li>In caso di errore, aggiorna {@code testLabel} con il messaggio corrispondente</li>
      * </ul>
+     *
+     * @author Maffioli Gianmarco, 757587, VA
+     * @author Rolla Francesca, 757922, VA
+     * @author Fabbian Gabriele, 755699, VA
      */
     @FXML private void conferma() {
         String host = hostField.getText();

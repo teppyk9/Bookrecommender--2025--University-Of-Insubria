@@ -15,8 +15,9 @@
  *
  * <p>Questa utility centralizza la logica infrastrutturale, riducendo
  * il codice boilerplate nei controller e nelle classi di avvio.</p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 package bookrecommender.util;

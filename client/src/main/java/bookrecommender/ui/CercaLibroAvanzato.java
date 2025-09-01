@@ -28,6 +28,10 @@ import javafx.stage.Stage;
  *     <li>Bottone per aggiungere libri</li>
  * </ul>
  * Estende {@link TableViewEngine} per ereditare la logica di gestione delle tabelle e della ricerca.
+ * 
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class CercaLibroAvanzato extends TableViewEngine {
 

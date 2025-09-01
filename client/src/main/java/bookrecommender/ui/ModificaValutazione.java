@@ -20,6 +20,10 @@ import java.util.List;
  * riepilogativo. Usa immagini stelle di {@link IMGtype} e componenti JavaFX
  * annotati con {@code @FXML}.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class ModificaValutazione {
     /** Pulsante “indietro”: ritorna alla schermata precedente con gestione modifiche non salvate. Non nullo dopo il caricamento FXML. */

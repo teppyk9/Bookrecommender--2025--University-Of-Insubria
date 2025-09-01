@@ -9,7 +9,10 @@ import java.util.List;
 
 /**
  * Interfaccia remota RMI che definisce le operazioni di login, registrazione e logout per un utente.
- * Implementata dal server, questa interfaccia viene richiamata dal client tramite RMI per autenticare o registrare utenti.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA* Implementata dal server, questa interfaccia viene richiamata dal client tramite RMI per autenticare o registrare utenti.
  */
 public interface LogRegInterface extends Remote {
 

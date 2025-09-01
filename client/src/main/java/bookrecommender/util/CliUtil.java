@@ -48,6 +48,10 @@ import java.util.logging.Logger;
  * </ul>
  * Implementa il pattern singleton tramite inner class statica {@code Holder}.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public final class CliUtil {
 

@@ -33,6 +33,10 @@ import java.util.stream.Collectors;
  * i metodi restituiscono valori di fallback (tipicamente {@code false}, {@code null}
  * o liste con codice errore), senza lanciare eccezioni applicative.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class LibInterfaceImpl extends UnicastRemoteObject implements LibInterface {
     @Serial

@@ -26,6 +26,10 @@ import java.util.List;
  * <p>
  * L’interfaccia consente di accedere al dettaglio di ogni valutazione o libro consigliato tramite doppio clic.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class DettaglioLibro {
     // Etichette per i metadati testuali del libro

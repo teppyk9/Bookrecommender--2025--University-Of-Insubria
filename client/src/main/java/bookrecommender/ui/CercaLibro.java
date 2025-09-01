@@ -21,6 +21,10 @@ import javafx.stage.Stage;
  * Estende {@link TableViewEngine} per riutilizzare la logica comune
  * alle ricerche tabellari dell'applicazione.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class CercaLibro extends TableViewEngine {
 

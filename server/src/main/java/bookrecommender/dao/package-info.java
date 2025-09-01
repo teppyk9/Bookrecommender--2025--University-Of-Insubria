@@ -10,8 +10,9 @@
  * </ul>
  * Le altre componenti del server (GUI, servizi RMI) dipendono da questo livello
  * per ottenere connessioni e interagire con PostgreSQL.</p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 package bookrecommender.dao;

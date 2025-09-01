@@ -18,6 +18,10 @@ import java.util.List;
  * Controller JavaFX responsabile dell'interfaccia grafica per la creazione di una {@link Valutazione}
  * su un {@link Libro}. Permette all’utente di esprimere un voto (da 1 a 5) e un commento per diversi aspetti del libro,
  * come stile, contenuto, gradevolezza, originalità ed edizione, e infine di inviare la valutazione al server remoto.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class CreaValutazione {
 

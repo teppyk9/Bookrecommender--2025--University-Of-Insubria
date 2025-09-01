@@ -27,6 +27,10 @@ import java.util.List;
  * Estende {@link TableViewEngine} riutilizzandone la logica di ricerca/tabelle.
  * Usa i servizi remoti tramite {@link CliUtil} ({@code getLibService()}, {@code getSearchService()}).
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class ModificaLibreria extends TableViewEngine {
     /** Pulsante di uscita: apre la schermata Gestione Librerie, con conferma se ci sono modifiche non salvate. Non nullo dopo il caricamento FXML. */

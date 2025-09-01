@@ -25,7 +25,10 @@ import java.util.regex.Pattern;
  * delle credenziali (email, username, password) e l’invio della richiesta
  * di registrazione. Estende {@link PasswordEngine} per il supporto alla
  * visualizzazione/nascondimento delle password.
- * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA* </p>
  */
 public class Registrazione extends PasswordEngine {
 

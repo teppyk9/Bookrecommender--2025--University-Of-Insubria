@@ -31,6 +31,10 @@ import java.util.logging.Logger;
  * </ul>
  * Le operazioni sono registrate con {@link Logger} per monitoraggio lato server.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class LogRegInterfaceImpl extends UnicastRemoteObject implements LogRegInterface{
 

@@ -27,6 +27,10 @@ import java.util.List;
  * Estende {@link TableViewEngine} riutilizzando logica di ricerca, tabelle S/O
  * (sorgente/output) e limitazioni dei risultati.
  * </p>
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class ModificaConsiglio extends TableViewEngine {
     /** Pulsante per avviare la ricerca; icona e stile inizializzati in {@link #initialize()}. Non nullo dopo il caricamento FXML. */

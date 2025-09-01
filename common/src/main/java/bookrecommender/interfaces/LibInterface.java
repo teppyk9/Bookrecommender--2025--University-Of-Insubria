@@ -13,6 +13,10 @@ import java.util.List;
  * Interfaccia remota per la gestione delle librerie utente, delle valutazioni e dei consigli.
  * Espone metodi remoti RMI per l’interazione con il server da parte del client.
  * Ogni operazione richiede un {@link Token} per identificare l’utente autenticato.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public interface LibInterface extends Remote {
 

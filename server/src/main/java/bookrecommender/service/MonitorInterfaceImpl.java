@@ -13,6 +13,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * I listener registrati devono implementare l'interfaccia {@link ServerListener}.
  * La lista dei listener è thread-safe grazie all'uso di {@link CopyOnWriteArrayList}.
  * Questa classe viene esportata come oggetto RMI.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class MonitorInterfaceImpl extends UnicastRemoteObject implements MonitorInterface {
 

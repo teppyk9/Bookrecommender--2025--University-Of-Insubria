@@ -38,6 +38,10 @@ import java.util.Map;
  *   <li><b>dateColumn</b>: data di creazione della libreria</li>
  * </ul>
  * @see TreeTableEngine
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class AddLibroLibreria extends TreeTableEngine {
     @FXML private Button ExitButton;

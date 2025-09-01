@@ -18,8 +18,9 @@
  *   <li>{@link bookrecommender.interfaces.ServerListener} — callback remota invocata
  *       dal server (es. Segnale di arresto imminente).</li>
  * </ul>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbiin Gabriele, 755699, VA
  */
 package bookrecommender.interfaces;

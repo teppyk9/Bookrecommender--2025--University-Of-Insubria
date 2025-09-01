@@ -102,6 +102,10 @@ public class CambiaPassword extends PasswordEngine{
      * In base al risultato, abilita o disabilita il pulsante per il cambio password
      * e mostra eventuali messaggi d’errore.
      * </p>
+     *
+     * @author Maffioli Gianmarco, 757587, VA
+     * @author Rolla Francesca, 757922, VA
+     * @author Fabbian Gabriele, 755699, VA
      */
     private void validatePasswords() {
         String p1 = PasswordField1.getText();

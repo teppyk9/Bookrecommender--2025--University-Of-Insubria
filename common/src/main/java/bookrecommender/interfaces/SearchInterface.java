@@ -15,7 +15,10 @@ import java.util.List;
  * avanzati di un libro. Alcuni metodi supportano l'autenticazione tramite {@link Token}.
  * </p>
  *
- * Tutti i metodi possono lanciare {@link RemoteException} in caso di problemi di comunicazione remota.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA* Tutti i metodi possono lanciare {@link RemoteException} in caso di problemi di comunicazione remota.
  */
 public interface SearchInterface extends Remote {
 

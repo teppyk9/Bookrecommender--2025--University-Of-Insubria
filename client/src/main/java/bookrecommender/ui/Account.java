@@ -19,6 +19,10 @@ import java.util.regex.Pattern;
  * Permette la visualizzazione e modifica di username, email e password.
  * Integra meccanismi di validazione e conferma per ogni modifica effettuata.
  * Estende {@link PasswordEngine} per gestire la visibilità del campo password.
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public class Account extends PasswordEngine {
     @FXML private TextArea nomeLabel;

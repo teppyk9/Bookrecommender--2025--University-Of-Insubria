@@ -14,6 +14,10 @@ import java.rmi.RemoteException;
  * {@link RemoteException} in caso di problemi di comunicazione remota.
  * </p> *
  * @see ServerListener
+ *
+ * @author Maffioli Gianmarco, 757587, VA
+ * @author Rolla Francesca, 757922, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 public interface MonitorInterface extends Remote {
 

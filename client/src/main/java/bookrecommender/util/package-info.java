@@ -15,8 +15,9 @@
  *
  * <p>L’obiettivo è ridurre duplicazioni nei controller e centralizzare la
  * gestione delle risorse e dei componenti UI ricorrenti.</p>
+ *
  * @author Maffioli Gianmarco, 757587, VA
  * @author Rolla Francesca, 757922, VA
- * @author Fabbain Gabriele, 755699, VA
+ * @author Fabbian Gabriele, 755699, VA
  */
 package bookrecommender.util;
