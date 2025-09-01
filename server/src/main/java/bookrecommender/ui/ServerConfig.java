@@ -121,7 +121,7 @@ public class ServerConfig {
 
         if (name.isEmpty() || user.isEmpty() || port.isEmpty()) {
             testLabel.setStyle("-fx-text-fill: red;");
-            testLabel.setText("URL e utente DB obbligatori");
+            testLabel.setText("Nome, utente e porta DB obbligatori");
             return;
         }
         if (ServerUtil.getInstance().tryConnectToDb(name, port, user, pass)) {
@@ -163,7 +163,7 @@ public class ServerConfig {
         }
         if (name.isEmpty() || user.isEmpty() || portdb.isEmpty()) {
             testLabel.setStyle("-fx-text-fill: red;");
-            testLabel.setText("URL e utente DB obbligatori");
+            testLabel.setText("Nome, utente e porta DB obbligatori");
             return;
         }
         if (!ServerUtil.getInstance().tryConnectToDb(name, portdb, user, pass) || !ServerUtil.getInstance().isTcpPortAvailable(port)) {
