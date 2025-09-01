@@ -35,12 +35,10 @@ import javafx.stage.Stage;
  */
 public class CercaLibroAvanzato extends TableViewEngine {
 
-    /** Menu che applica limiti/ordinamenti ai risultati della ricerca avanzata. */
     @FXML private MenuButton limiterBox;
     @FXML private Button GoBackButton_MainMenu;
     @FXML private Button bottoneCerca;
 
-    /** Indicatore di caricamento delle ricerche con più filtri; viene disattivato a fine operazione. */
     @FXML private ProgressIndicator loadingCircle;
     @FXML private TextField campoRicerca;
     @FXML private TextField campoRicercaAnno;

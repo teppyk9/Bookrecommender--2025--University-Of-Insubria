@@ -74,6 +74,10 @@ public final class CliUtil {
         // Al momento non è necessario alcun codice nel costruttore, poi ci penso se serve
     }
 
+    /**
+     * Idioma Initialization-on-demand holder: inizializza pigramente l'istanza singleton
+     * di {@link CliUtil} in modo thread-safe senza sincronizzazione esplicita.
+     */
     private static class Holder {
         private static final CliUtil INSTANCE = new CliUtil();
     }
@@ -529,6 +533,12 @@ public final class CliUtil {
         control.setOnMouseExited (e -> { enlarge.stop(); shrink.playFromStart(); });
     }
 
+    /**
+     * Esegue il logout applicativo: chiude eventuali sessioni attive, pulisce le credenziali
+     * in memoria e mostra/notifica l'errore che ha causato la disconnessione, se presente.
+     *
+     * @param ex eccezione che ha originato il logout; può essere {@code null}
+     */
     public void LogOut(Exception ex){
         if(ex != null){
             createAlert("Errore", ex.getLocalizedMessage()).showAndWait();

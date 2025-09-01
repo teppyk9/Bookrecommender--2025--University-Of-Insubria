@@ -101,6 +101,10 @@ public class DettaglioLibro {
     /** Dettagli del libro ottenuti dal server (valutazioni e consigli)*/
     private Libro_Details details;
 
+    /**
+     * Inizializza il tasto di ritorno alla schermata precedente.
+     * In questo l'interfaccia viene inmpostata da {@code setLibro(Libro)}.
+     */
     public void initialize() {
         GoBackButton.setGraphic(IMGtype.INDIETRO.getImageView(40, 40));
         GoBackButton.setAlignment(Pos.TOP_LEFT);

@@ -94,7 +94,6 @@ public class AddLibroLibreria extends TreeTableEngine {
         presentColumn.setCellFactory(col -> new TreeTableCell<>() {
             @Override
             protected void updateItem(Boolean present, boolean empty) {
-                // Mostra spunta/croce a seconda che il libro sia presente; gestisce anche la cella vuota.
                 super.updateItem(present, empty);
                 if (empty || present == null)
                     setGraphic(null);
