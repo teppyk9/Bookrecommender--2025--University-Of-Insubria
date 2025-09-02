@@ -9,13 +9,20 @@ import java.util.*;
 /**
  * Utility per l’inizializzazione di un database PostgreSQL:
  * chiede i parametri di connessione, garantisce l’esistenza del DB di destinazione
- * e applica gli script SQL presenti nella cartella <code>data</code> (ordine alfabetico).
+ * e applica gli script SQL.
  * <p>
  * Supporta due modalità di esecuzione:
  * <ul>
  *   <li><b>Transazione per file</b> (default): ogni file .sql è eseguito in una singola transazione
  *       con commit/rollback atomico.</li>
  *   <li><b>Auto-commit</b>: esegue ogni statement con commit immediato.</li>
+ * </ul>
+ *
+ * All'utente vengono proposte due modalità di setup:
+ * <ul>
+ *     <li><b>Basic</b>: crea le tabelle e popola la tabella libri.</li>
+ *     <li><b>Full</b>: crea le tabelle, popola la
+ *     tabella libri e aggiunge un dump per il testing (utente "test" con password "testtest").</li>
  * </ul>
  *
  * @author Maffioli Gianmarco, 757587, VA
