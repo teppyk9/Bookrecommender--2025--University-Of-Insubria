@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="usecase1" name="Use Case Diagram">
+    <mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <!-- Actors -->
+        <mxCell id="actor_user" value="Utente" style="shape=umlActor;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="30" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="actor_authuser" value="Utente Autenticato" style="shape=umlActor;" vertex="1" parent="1">
+          <mxGeometry x="40" y="200" width="30" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- System boundary -->
+        <mxCell id="system" value="BookRecommender (Client + Server APIs)" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="40" width="600" height="800" as="geometry"/>
+        </mxCell>
+
+        <!-- Use cases inside system -->
+        <mxCell id="uc01" value="Configura Connessione Client" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="system">
+          <mxGeometry x="40" y="40" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc02" value="Registrazione" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="40" y="100" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc03" value="Login" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="40" y="160" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc04" value="Logout" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="40" y="220" width="160" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc10" value="Gestione Account" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="250" y="40" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc20" value="Ricerca Libro" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="250" y="100" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc30" value="Crea Libreria (≥3 libri)" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="250" y="160" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc31" value="Gestione Librerie" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="250" y="220" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc40" value="Crea Valutazione" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="250" y="280" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc50" value="Crea Consiglio" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="250" y="340" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="uc60" value="Notifica Arresto Server" style="ellipse;" vertex="1" parent="system">
+          <mxGeometry x="250" y="400" width="160" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges: connect actors to some main use cases -->
+        <mxCell id="edge1" style="endArrow=none;" edge="1" parent="1" source="actor_user" target="uc01">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge2" style="endArrow=none;" edge="1" parent="1" source="actor_user" target="uc02">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge3" style="endArrow=none;" edge="1" parent="1" source="actor_user" target="uc03">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge4" style="endArrow=none;" edge="1" parent="1" source="actor_authuser" target="uc04">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge5" style="endArrow=none;" edge="1" parent="1" source="actor_authuser" target="uc10">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge6" style="endArrow=none;" edge="1" parent="1" source="actor_authuser" target="uc20">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge7" style="endArrow=none;" edge="1" parent="1" source="actor_authuser" target="uc30">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge8" style="endArrow=none;" edge="1" parent="1" source="actor_authuser" target="uc31">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge9" style="endArrow=none;" edge="1" parent="1" source="actor_authuser" target="uc40">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge10" style="endArrow=none;" edge="1" parent="1" source="actor_authuser" target="uc50">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge11" style="endArrow=none;" edge="1" parent="1" source="actor_user" target="uc60">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

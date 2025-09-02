@@ -1,0 +1,3 @@
+module:bookrecommender.common
+bookrecommender.interfaces
+bookrecommender.model

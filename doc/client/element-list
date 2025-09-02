@@ -1,0 +1,6 @@
+module:bookrecommender.client
+bookrecommender
+bookrecommender.enums
+bookrecommender.listener
+bookrecommender.ui
+bookrecommender.util

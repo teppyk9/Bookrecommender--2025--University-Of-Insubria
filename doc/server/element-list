@@ -1,0 +1,6 @@
+module:bookrecommender.server
+bookrecommender
+bookrecommender.dao
+bookrecommender.service
+bookrecommender.ui
+bookrecommender.util

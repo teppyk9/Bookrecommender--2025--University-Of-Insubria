@@ -1,0 +1,548 @@
+---
+config:
+  theme: neutral
+  look: classic
+---
+classDiagram
+direction BT
+class Account {
+  + Account() 
+  - TextField VisiblePasswordField1
+  - PasswordField PasswordField1
+  - eliminaAccount() void
+  - validateUsername() void
+  - LogOut() void
+  - changePassword() void
+  - changeEmail() void
+  - GoToMainMenu() void
+  - changeUsername() void
+  - initialize() void
+  - validateEmail() void
+   PasswordField passwordField2
+   PasswordField PasswordField1
+   Button button2
+   TextField VisiblePasswordField1
+   TextField visiblePasswordField2
+   Button button1
+}
+class AddLibroLibreria {
+  + AddLibroLibreria() 
+  - Map~String, Integer~ libCounts
+  - Map~String, LocalDate~ libDates
+  - Map~String, Boolean~ libPresent
+  - handleAddBook() void
+  # caricaFigliLibri(TreeItem~Object~, String) void
+  - ExitApplication() void
+  - initialize() void
+  + setLibro(Libro, FXMLtype) void
+  # handleDoubleClick(Object) void
+   Map~String, LocalDate~ libDates
+   Map~String, Integer~ libCounts
+   Libro myLibro
+   Map~String, Boolean~ libPresent
+}
+class AreaRiservata {
+  + AreaRiservata() 
+  - initialize() void
+  - OpenVisualizzaLibrerie() void
+  - openImpostazioni() void
+  - OpenCercaLibroAvanzato() void
+  - LogOut() void
+}
+class CambiaPassword {
+  + CambiaPassword() 
+  - PasswordField PasswordField2
+  - TextField VisiblePasswordField1
+  - TextField VisiblePasswordField2
+  - PasswordField PasswordField1
+  - enterControl(KeyEvent) void
+  - cambiaPassword() void
+  - goBackAreaRiservata() void
+  - validatePasswords() void
+  - initialize() void
+   PasswordField PasswordField1
+   PasswordField PasswordField2
+   Button button2
+   TextField VisiblePasswordField1
+   TextField VisiblePasswordField2
+   Button button1
+}
+class CercaLibro {
+  + CercaLibro() 
+  - MenuItem MenuCercaAutoreAnno
+  - TextField campoRicerca
+  - MenuItem MenuCercaAutore
+  - MenuButton limiterBox
+  - TextField campoRicercaAnno
+  - MenuButton MenuTipoRicerca
+  - MenuItem MenuCercaTitolo
+  - initialize() void
+  - GoToMainMenu() void
+   MenuItem MenuCercaAutore
+   TableColumn~Libro, Integer~ SAnnoCol
+   TextField campoRicerca
+   TableView~Libro~ STableView
+   MenuItem MenuCercaAutoreAnno
+   TableColumn~Libro, String~ OAutoreCol
+   MenuButton limiterBox
+   TableColumn~Libro, Void~ SAggiungiAdvCol
+   TableColumn~Libro, String~ OTitoloCol
+   ProgressIndicator progressIndicator
+   MenuItem MenuCercaTitolo
+   TableView~Libro~ OTableView
+   TableColumn~Libro, Void~ OActionCol
+   TableColumn~Libro, Void~ SAddRemCol
+   TextField campoRicercaAnno
+   MenuButton MenuTipoRicerca
+   TableColumn~Libro, Integer~ OAnnoCol
+   boolean searchType
+   Libro myLibro
+   FXMLtype myFXMLtype
+   TableColumn~Libro, String~ SAutoreCol
+   TableColumn~Libro, String~ STitoloCol
+   TableColumn~Libro, Boolean~ SRecensioniCol
+}
+class CercaLibroAvanzato {
+  + CercaLibroAvanzato() 
+  - TextField campoRicerca
+  - boolean searchType
+  - MenuButton limiterBox
+  - TextField campoRicercaAnno
+  - MenuItem MenuCercaAutore
+  - MenuButton MenuTipoRicerca
+  - MenuItem MenuCercaAutoreAnno
+  - MenuItem MenuCercaTitolo
+  - initialize() void
+  - GoToMainMenu() void
+  - setRicerca() void
+   MenuItem MenuCercaAutore
+   TableColumn~Libro, Integer~ SAnnoCol
+   TextField campoRicerca
+   TableView~Libro~ STableView
+   MenuItem MenuCercaAutoreAnno
+   TableColumn~Libro, String~ OAutoreCol
+   MenuButton limiterBox
+   TableColumn~Libro, Void~ SAggiungiAdvCol
+   TableColumn~Libro, String~ OTitoloCol
+   ProgressIndicator progressIndicator
+   MenuItem MenuCercaTitolo
+   TableView~Libro~ OTableView
+   TableColumn~Libro, Void~ OActionCol
+   TableColumn~Libro, Void~ SAddRemCol
+   TextField campoRicercaAnno
+   MenuButton MenuTipoRicerca
+   TableColumn~Libro, Integer~ OAnnoCol
+   boolean searchType
+   Libro myLibro
+   FXMLtype myFXMLtype
+   TableColumn~Libro, String~ SAutoreCol
+   TableColumn~Libro, String~ STitoloCol
+   TableColumn~Libro, Boolean~ SRecensioniCol
+}
+class CliUtil {
+  - CliUtil() 
+  - LibInterface libService
+  - Token currentToken
+  - LogRegInterface logRegService
+  - SearchInterface searchService
+  + setMenuButtonStyle(MenuButton) Node
+  + setMonitorService() void
+  + init(Stage) void
+  + softRestart() void
+  + createConfirmation(String, String, boolean) Alert
+  + buildStage(FXMLtype, FXMLtype, Object) void
+  + hannoDifferenze(List~Libro~, List~Libro~) boolean
+  + styleIconControl(Labeled) void
+  + setServer(String, int) void
+  + testConnection() boolean
+  + LogOut(Exception) void
+  + setStar(ImageView, ImageView, ImageView, ImageView, ImageView, float, STARtype) void
+  + createAlert(String, String) Alert
+  + reviewLibUpdate(List~Integer~) void
+   LibInterface libService
+   Token currentToken
+   LogRegInterface logRegService
+   CliUtil instance
+   SearchInterface searchService
+}
+class ClientListener {
+  + ClientListener() 
+  + serverWillStop() void
+}
+class Connessione {
+  + Connessione() 
+  - resetLabel() void
+  - conferma() void
+  - initialize() void
+  - test() void
+}
+class CreaConsiglio {
+  + CreaConsiglio() 
+  - MenuButton limiterBox
+  - TextField campoRicerca
+  - TextField campoRicercaAnno
+  - MenuItem MenuCercaAutoreAnno
+  - MenuButton MenuTipoRicerca
+  - MenuItem MenuCercaTitolo
+  - Libro myLibro
+  - MenuItem MenuCercaAutore
+  - salvaConsiglio() void
+  + setLibro(Libro, FXMLtype) void
+  - initialize() void
+  - GoToMainMenu() void
+   MenuItem MenuCercaAutore
+   TableColumn~Libro, Integer~ SAnnoCol
+   TextField campoRicerca
+   TableView~Libro~ STableView
+   MenuItem MenuCercaAutoreAnno
+   TableColumn~Libro, String~ OAutoreCol
+   MenuButton limiterBox
+   TableColumn~Libro, Void~ SAggiungiAdvCol
+   TableColumn~Libro, String~ OTitoloCol
+   ProgressIndicator progressIndicator
+   MenuItem MenuCercaTitolo
+   TableView~Libro~ OTableView
+   TableColumn~Libro, Void~ OActionCol
+   TableColumn~Libro, Void~ SAddRemCol
+   TextField campoRicercaAnno
+   MenuButton MenuTipoRicerca
+   TableColumn~Libro, Integer~ OAnnoCol
+   boolean searchType
+   Libro myLibro
+   FXMLtype myFXMLtype
+   TableColumn~Libro, String~ SAutoreCol
+   TableColumn~Libro, String~ STitoloCol
+   TableColumn~Libro, Boolean~ SRecensioniCol
+}
+class CreaLibreria {
+  + CreaLibreria() 
+  - MenuButton limiterBox
+  - MenuItem MenuCercaAutoreAnno
+  - MenuButton MenuTipoRicerca
+  - TextField campoRicercaAnno
+  - MenuItem MenuCercaAutore
+  - TextField campoRicerca
+  - MenuItem MenuCercaTitolo
+  - SalvaLibreria() void
+  - ExitApplication() void
+  - initialize() void
+   MenuItem MenuCercaAutore
+   TableColumn~Libro, Integer~ SAnnoCol
+   TextField campoRicerca
+   TableView~Libro~ STableView
+   MenuItem MenuCercaAutoreAnno
+   TableColumn~Libro, String~ OAutoreCol
+   MenuButton limiterBox
+   TableColumn~Libro, Void~ SAggiungiAdvCol
+   TableColumn~Libro, String~ OTitoloCol
+   ProgressIndicator progressIndicator
+   MenuItem MenuCercaTitolo
+   TableView~Libro~ OTableView
+   TableColumn~Libro, Void~ OActionCol
+   TableColumn~Libro, Void~ SAddRemCol
+   TextField campoRicercaAnno
+   MenuButton MenuTipoRicerca
+   TableColumn~Libro, Integer~ OAnnoCol
+   boolean searchType
+   Libro myLibro
+   FXMLtype myFXMLtype
+   TableColumn~Libro, String~ SAutoreCol
+   TableColumn~Libro, String~ STitoloCol
+   TableColumn~Libro, Boolean~ SRecensioniCol
+}
+class CreaValutazione {
+  + CreaValutazione() 
+  - initialize() void
+  + setLibro(Libro, FXMLtype) void
+  - configuraValutazione(List~ImageView~, Label) void
+  - SalvaValutazione() void
+  - aggiornaStelle(int, List~ImageView~) void
+  - resetMessaggioErrore() void
+  - exitApplication() void
+}
+class DettaglioLibro {
+  + DettaglioLibro() 
+  - clickValutazione(MouseEvent) void
+  - clickConsiglio(MouseEvent) void
+   Libro libro
+}
+class FXMLtype {
+<<enumeration>>
+  - FXMLtype(String, String) 
+  - String path
+  - String title
+  + values() FXMLtype[]
+  + valueOf(String) FXMLtype
+   String path
+   String title
+}
+class GestioneLibrerie {
+  + GestioneLibrerie() 
+  - Map~String, Integer~ libCounts
+  - Map~String, LocalDate~ libDates
+  - initialize() void
+  - cambiaNome() void
+  # handleDoubleClick(Object) void
+  # caricaFigliLibri(TreeItem~Object~, String) void
+  - createMenuBookActions(TreeTableCell~Object, Void~) Node
+  - creaLibreria() void
+  - setupCheckColumn(TreeTableColumn~Object, Boolean~, Function~LibroRow, BooleanProperty~) void
+  - createMenuLibrerieActions(TreeTableCell~Object, Void~) Node
+  - ExitApplication() void
+   Map~String, LocalDate~ libDates
+   Map~String, Integer~ libCounts
+   Libro myLibro
+   Map~String, Boolean~ libPresent
+}
+class Home {
+  + Home() 
+  - OpenLoginPage() void
+  - initialize() void
+  - OpenCercaLibroBasePage() void
+  - OpenSignUpPage() void
+}
+class IMGtype {
+<<enumeration>>
+  - IMGtype(String) 
+  + valueOf(String) IMGtype
+  + values() IMGtype[]
+  + getImageView(double, double) ImageView
+   Image image
+}
+class Login {
+  + Login() 
+  - initialize() void
+  - GoBackMainMenu() void
+  - TryLogin() void
+  - EnterController(KeyEvent) void
+  - GoToRegisterPage(MouseEvent) void
+   PasswordField passwordField2
+   PasswordField passwordField1
+   Button button2
+   TextField visiblePasswordField2
+   TextField visiblePasswordField1
+   Button button1
+}
+class Main_Client {
+  + Main_Client() 
+  + main(String[]) void
+  + start(Stage) void
+}
+class ModificaConsiglio {
+  + ModificaConsiglio() 
+  - TextField campoRicerca
+  - MenuButton limiterBox
+  - MenuItem MenuCercaTitolo
+  - Libro myLibro
+  - MenuButton MenuTipoRicerca
+  - MenuItem MenuCercaAutoreAnno
+  - MenuItem MenuCercaAutore
+  - TextField campoRicercaAnno
+  - eliminaConsigli() void
+  - initialize() void
+  - salvaConsiglio() void
+  - GoToMainMenu() void
+  + setLibro(Libro, FXMLtype) void
+   MenuItem MenuCercaAutore
+   TableColumn~Libro, Integer~ SAnnoCol
+   TextField campoRicerca
+   TableView~Libro~ STableView
+   MenuItem MenuCercaAutoreAnno
+   TableColumn~Libro, String~ OAutoreCol
+   MenuButton limiterBox
+   TableColumn~Libro, Void~ SAggiungiAdvCol
+   TableColumn~Libro, String~ OTitoloCol
+   ProgressIndicator progressIndicator
+   MenuItem MenuCercaTitolo
+   TableView~Libro~ OTableView
+   TableColumn~Libro, Void~ OActionCol
+   TableColumn~Libro, Void~ SAddRemCol
+   TextField campoRicercaAnno
+   MenuButton MenuTipoRicerca
+   TableColumn~Libro, Integer~ OAnnoCol
+   boolean searchType
+   Libro myLibro
+   FXMLtype myFXMLtype
+   TableColumn~Libro, String~ SAutoreCol
+   TableColumn~Libro, String~ STitoloCol
+   TableColumn~Libro, Boolean~ SRecensioniCol
+}
+class ModificaLibreria {
+  + ModificaLibreria() 
+  - MenuButton limiterBox
+  - MenuItem MenuCercaTitolo
+  - TextField campoRicercaAnno
+  - TextField campoRicerca
+  - MenuItem MenuCercaAutore
+  - MenuItem MenuCercaAutoreAnno
+  - MenuButton MenuTipoRicerca
+  - ExitApplication() void
+  - cambiaNome() void
+  - eliminaLibreria() void
+  - saveFlag() void
+  - SalvaLibreria() void
+  - initialize() void
+   MenuItem MenuCercaAutore
+   TableColumn~Libro, Integer~ SAnnoCol
+   TextField campoRicerca
+   TableView~Libro~ STableView
+   MenuItem MenuCercaAutoreAnno
+   TableColumn~Libro, String~ OAutoreCol
+   MenuButton limiterBox
+   TableColumn~Libro, Void~ SAggiungiAdvCol
+   TableColumn~Libro, String~ OTitoloCol
+   ProgressIndicator progressIndicator
+   MenuItem MenuCercaTitolo
+   TableView~Libro~ OTableView
+   TableColumn~Libro, Void~ OActionCol
+   TableColumn~Libro, Void~ SAddRemCol
+   TextField campoRicercaAnno
+   MenuButton MenuTipoRicerca
+   TableColumn~Libro, Integer~ OAnnoCol
+   boolean searchType
+   Libro myLibro
+   FXMLtype myFXMLtype
+   TableColumn~Libro, String~ SAutoreCol
+   TableColumn~Libro, String~ STitoloCol
+   String libreria
+   TableColumn~Libro, Boolean~ SRecensioniCol
+}
+class ModificaValutazione {
+  + ModificaValutazione() 
+  + setValutazione(Valutazione, FXMLtype) void
+  - salvaModifiche() void
+  - updateStars(List~ImageView~, float) void
+  - ExitApplication() void
+  - initialize() void
+  - setModified() void
+  - eliminaValutazione() void
+  - configureInteractive(List~ImageView~, Label, Runnable) void
+}
+class PasswordEngine {
+  + PasswordEngine() 
+  - showP2() void
+  # initP1() void
+  # initP2() void
+  - showP1() void
+   PasswordField passwordField2
+   PasswordField passwordField1
+   Button button2
+   TextField visiblePasswordField2
+   TextField visiblePasswordField1
+   Button button1
+}
+class Registrazione {
+  + Registrazione() 
+  - PasswordField PasswordField2
+  - PasswordField PasswordField1
+  - TextField VisiblePasswordField1
+  - TextField VisiblePasswordField2
+  - RegAction(KeyEvent) void
+  - GoToLoginPage() void
+  - TryReg() void
+  - initialize() void
+  - GoBackMainMenu() void
+   PasswordField PasswordField1
+   PasswordField PasswordField2
+   Button button2
+   TextField VisiblePasswordField1
+   TextField VisiblePasswordField2
+   Button button1
+}
+class TableViewEngine {
+  + TableViewEngine() 
+  - Map~Libro, Boolean~ hasRec
+  - Map~Libro, Boolean~ hasVal
+  - String searchType
+  - Map~Libro, Boolean~ inLib
+  - Map~Libro, Boolean~ hasCon
+  # initSAggiungiAdvCol() void
+  - validateYear(String) boolean
+  # initTableViews() void
+  - handleClickCerca() void
+  - initRows() TableRow~Libro~
+  - containsLibro(List~Libro~, Libro) boolean
+  - getAllBooks() void
+  - searchByAuthor(String) List~Libro~
+  # initLimiter() void
+  - switchType(String, String) void
+  # initSRecensioniCol() void
+  - keyEnterPressed_1(KeyEvent) void
+  - searchByAuthorAndYear(String, int) List~Libro~
+  - getMenuItem(TableView~Libro~, int) MenuItem
+  # initBasicSearch() void
+  # initOTableView() void
+  # initOActionCol() void
+  # initForConsigli() void
+  - searchByTitle(String) List~Libro~
+  # initSAddRemCol() void
+  - menuAzioni(TableView~Libro~, int) MenuButton
+  - keyEnterPressed_2(KeyEvent) void
+   TextField campoRicerca
+   MenuItem menuCercaAutoreAnno
+   TableView~Libro~ STableView
+   TableColumn~Libro, String~ OAutoreCol
+   TableColumn~Libro, String~ OTitoloCol
+   TableView~Libro~ OTableView
+   TableColumn~Libro, Void~ SAddRemCol
+   TableColumn~Libro, Integer~ OAnnoCol
+   Libro myLibro
+   boolean searchType
+   int maxResults
+   TableColumn~Libro, String~ STitoloCol
+   TableColumn~Libro, Boolean~ SRecensioniCol
+   MenuItem menuCercaAutore
+   TableColumn~Libro, Integer~ SAnnoCol
+   List~Libro~ libriP
+   MenuItem menuCercaTitolo
+   MenuButton limiterBox
+   TableColumn~Libro, Void~ SAggiungiAdvCol
+   Map~Libro, Boolean~ hasRec
+   ProgressIndicator progressIndicator
+   TableColumn~Libro, Void~ OActionCol
+   Map~Libro, Boolean~ hasCon
+   TextField campoRicercaAnno
+   FXMLtype myFXMLtype
+   MenuButton menuTipoRicerca
+   TableColumn~Libro, String~ SAutoreCol
+   Map~Libro, Boolean~ hasVal
+   Map~Libro, Boolean~ inLib
+}
+class TreeTableEngine {
+  + TreeTableEngine() 
+  # loadSimple(TreeTableColumn~Object, T~, Map~String, T~) void
+  # loadLibraries() void
+  # initializeTree() void
+  # creaFigliLibri(String) void
+  # handleDoubleClick(Object) void
+  # caricaFigliLibri(TreeItem~Object~, String) void
+   Map~String, LocalDate~ libDates
+   Map~String, Integer~ libCounts
+   Libro myLibro
+   Map~String, Boolean~ libPresent
+}
+class VisualizzaValutazione {
+  + VisualizzaValutazione() 
+  - displayGroup(ImageView[], Label, String, TextArea, float, String, STARtype) void
+  - initialize() void
+  - exitApplication() void
+   Valutazione valutazione
+}
+Account  -->  PasswordEngine 
+AddLibroLibreria "1" *--> "odlFXML 1" FXMLtype 
+AddLibroLibreria  -->  TreeTableEngine 
+CambiaPassword  -->  PasswordEngine 
+CercaLibro  -->  TableViewEngine 
+CercaLibroAvanzato  -->  TableViewEngine 
+CliUtil  ..>  ClientListener : «create»
+CreaConsiglio "1" *--> "oldFXMLType 1" FXMLtype 
+CreaConsiglio  -->  TableViewEngine 
+CreaLibreria  -->  TableViewEngine 
+CreaValutazione "1" *--> "oldFXMLType 1" FXMLtype 
+GestioneLibrerie  -->  TreeTableEngine 
+Login  -->  PasswordEngine 
+ModificaConsiglio "1" *--> "oldFXMLType 1" FXMLtype 
+ModificaConsiglio  -->  TableViewEngine 
+ModificaLibreria  -->  TableViewEngine 
+ModificaValutazione "1" *--> "oldFXMLType 1" FXMLtype 
+Registrazione  -->  PasswordEngine

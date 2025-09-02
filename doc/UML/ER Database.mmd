@@ -1,0 +1,76 @@
+---
+config:
+  layout: elk
+  theme: neutral
+  look: classic
+---
+erDiagram
+    UTENTI ||--o{ LIBRERIE : possiede
+    UTENTI ||--o{ SESSIONI_LOGIN : apre
+    UTENTI ||--o{ VALUTAZIONI : valuta
+    LIBRI  ||--o{ VALUTAZIONI : riceve
+    UTENTI ||--o{ CONSIGLI : crea
+    LIBRI  ||--o{ CONSIGLI : riguarda
+    LIBRERIE ||--o{ LIBRERIA_LIBRO : contiene
+    LIBRI    ||--o{ LIBRERIA_LIBRO : è_in
+    UTENTI {
+        int id
+        string username
+        string nome
+        string cognome
+        string codice_fiscale
+        string email
+        string password
+    }
+    LIBRI {
+        int id
+        string titolo
+        string autore
+        string descrizione
+        string categoria
+        string editore
+        float prezzo
+        int anno_pubblicazione
+        int mese_pubblicazione
+    }
+    VALUTAZIONI {
+        int idlibro
+        int id_utente
+        string c_stile
+        int v_stile
+        string c_contenuto
+        int v_contenuto
+        string c_gradevolezza
+        int v_gradevolezza
+        string c_originalita
+        int v_originalita
+        string c_edizione
+        int v_edizione
+        float v_finale
+        string valutazione_time
+    }
+    CONSIGLI {
+        int idlibro
+        int id_utente
+        int lib_1
+        int lib_2
+        int lib_3
+        string consiglio_time
+    }
+    LIBRERIE {
+        int id
+        int id_utente
+        string titolo_libreria
+        string libreria_time
+    }
+    LIBRERIA_LIBRO {
+        int idlibreria
+        int idlibro
+    }
+    SESSIONI_LOGIN {
+        int id
+        int idutente
+        string ip_client
+        string token
+        string login_time
+    }
