@@ -122,6 +122,8 @@ public class DBCreator {
             }
 
             System.out.println("\nCompletato.");
+            System.out.println("Premere un tasto per uscire...");
+            in.nextLine();
         } catch (SQLException e) {
             System.err.println("Errore SQL: " + e.getMessage());
             e.printStackTrace(System.err);
