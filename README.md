@@ -44,10 +44,14 @@ In alternativa puoi scaricarle da [Maven Central](https://search.maven.org/).
 1. Scarica, se non la possiedi, un’istanza **PostgreSQL** dal sito ufficiale https://www.postgresql.org/.
 2. Configura le credenziali di accesso.
 3. Dopo aver compilato il progetto (`mvn clean package`), esegui DBCreator. Sono disponibili script per l'esecuzione per Windows, Linux e MacOS. In alternativa trovi i file .jar in `/bin`.
+4. Se si desidera testare con un database vuoto utilizzare la modalità `basic`, in caso contrario utilizzare la modalità `full` per popolare il database con dei dati/utente di test.
+5. Le credenziali dell'utente test sono:
+   - Username: `test`
+   - Password: `testtest`
 ### 2. Configurazione progetto
 - Java **17**
 - IDE consigliato: **IntelliJ IDEA Ultimate** (già configurato con `pom.xml`)
-- Modulo principale:
+- Moduli:
    - Server: `bookrecommender.server.Main_Server`
    - Client: `bookrecommender.client.Main_Client`
    - DBCreator: `bookrecommender.DBCreator`
@@ -81,10 +85,3 @@ Per generare runtime e installer multipiattaforma:
 ## 📌 Note finali
 
 - Assicurati che il **server** sia attivo prima di avviare il **client**.
-- Documentazione tecnica aggiuntiva in `/doc`.
-
----
-
-## 📄 Licenza
-
-Questo progetto è distribuito con licenza [MIT](LICENSE).

@@ -25,6 +25,12 @@
     </dependencies>
     <build>
         <directory>${maven.multiModuleProjectDirectory}/bin/target_DBCreator</directory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
