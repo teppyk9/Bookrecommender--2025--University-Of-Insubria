@@ -141,7 +141,7 @@ public class ServerConfig {
      * Esegue la configurazione finale del server.
      * <p>
      * Controlla la validità di tutti i campi (porta, credenziali DB),
-     * verifica le connessioni e, in caso di successo, avvia il server e chiude la finestra.
+     * verifica le connessioni, verifica la validità dello schema e, in caso di successo, avvia il server e chiude la finestra.
      * In caso di errore mostra un {@link Alert} o un messaggio in {@code testLabel}.
      * </p>
      */
@@ -175,7 +175,8 @@ public class ServerConfig {
             testLabel.setText("Testa prima porta e DB");
             return;
         }
-        if(ServerUtil.getInstance().connectToDb(name, portdb, user, pass)) {
+        ServerUtil.DBChecks DBChechker = ServerUtil.getInstance().connectToDb(name, portdb, user, pass);
+        if(DBChechker.success()) {
             if(ServerUtil.getInstance().setServer(port)) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Successo");
@@ -195,7 +196,7 @@ public class ServerConfig {
             }
         } else {
             testLabel.setStyle("-fx-text-fill: red;");
-            testLabel.setText("Errore nella configurazione del database");
+            testLabel.setText(DBChechker.errorMessage());
         }
     }
 

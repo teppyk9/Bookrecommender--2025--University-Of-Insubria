@@ -71,6 +71,15 @@ public final class ServerUtil {
     }
 
     /**
+     * <p>
+     *  Record pubblico utilizzato per identificare gli errori durante il check e la connessione al Database
+     *</p>
+     * @param success
+     * @param errorMessage
+     */
+    public record DBChecks(boolean success, String errorMessage) {}
+
+    /**
      * Restituisce l’unica istanza del singleton {@code ServerUtil}.
      *
      * @return istanza singleton di {@code ServerUtil}
@@ -152,9 +161,9 @@ public final class ServerUtil {
      * @param port      porta del database
      * @param user      nome utente del database
      * @param password  password del database
-     * @return {@code true} se la connessione è stabilita; {@code false} altrimenti
+     * @return {@link ServerUtil.DBChecks} con i dettagli
      */
-    public boolean connectToDb(String name, String port, String user, String password){
+    public ServerUtil.DBChecks connectToDb(String name, String port, String user, String password){
         return dbManager.connect(name, port, user, password);
     }
 
