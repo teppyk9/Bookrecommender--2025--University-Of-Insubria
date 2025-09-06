@@ -1,25 +1,25 @@
 INSERT INTO utenti (username, nome, cognome, codice_fiscale, email, password)
-VALUES ('test', 'Test', 'User', 'TSTTST00A00A000A', 'test@test.test', 'testtest');
-INSERT INTO librerie (id, id_utente, titolo_libreria, libreria_time) VALUES
-                                                                         (2001, 1, 'Test_Lib_1', CURRENT_TIMESTAMP),
-                                                                         (2002, 1, 'Test_Lib_2', CURRENT_TIMESTAMP),
-                                                                         (2003, 1, 'Test_Lib_3', CURRENT_TIMESTAMP),
-                                                                         (2004, 1, 'Test_Lib_4', CURRENT_TIMESTAMP),
-                                                                         (2005, 1, 'Test_Lib_5', CURRENT_TIMESTAMP);
-INSERT INTO libreria_libro (idlibreria, idlibro) VALUES (2001, 101),(2001, 205),(2001, 309),(2001, 412),(2001, 523),
-                                                        (2001, 634),(2001, 745),(2001, 856),(2001, 967),(2001, 1078);
+VALUES ('utentetest', 'Test', 'User', 'TSTTST00A00A000A', 'test@test.test', 'testtest');
+INSERT INTO librerie (id_utente, titolo_libreria, libreria_time) VALUES
+                                                                         (1, 'Test_Lib_1', CURRENT_TIMESTAMP),
+                                                                         (1, 'Test_Lib_2', CURRENT_TIMESTAMP),
+                                                                         (1, 'Test_Lib_3', CURRENT_TIMESTAMP),
+                                                                         (1, 'Test_Lib_4', CURRENT_TIMESTAMP),
+                                                                         (1, 'Test_Lib_5', CURRENT_TIMESTAMP);
+INSERT INTO libreria_libro (idlibreria, idlibro) VALUES (1, 101),(1, 205),(1, 309),(1, 412),(1, 523),
+                                                        (1, 634),(1, 745),(1, 856),(1, 967),(1, 1078);
 INSERT INTO libreria_libro (idlibreria, idlibro) VALUES
-                                                            (2002, 2101),(2002, 2202),(2002, 2303),(2002, 2404),(2002, 2505),
-                                                            (2002, 2606),(2002, 2707),(2002, 2808),(2002, 2909),(2002, 3010);
+                                                            (2, 2101),(2, 2202),(2, 2303),(2, 2404),(2, 2505),
+                                                            (2, 2606),(2, 2707),(2, 2808),(2, 2909),(2, 3010);
 INSERT INTO libreria_libro (idlibreria, idlibro) VALUES
-                                                            (2003, 4001),(2003, 4002),(2003, 4003),(2003, 4004),(2003, 4005),
-                                                            (2003, 4006),(2003, 4007),(2003, 4008),(2003, 4009),(2003, 4010);
+                                                            (3, 4001),(3, 4002),(3, 4003),(3, 4004),(3, 4005),
+                                                            (3, 4006),(3, 4007),(3, 4008),(3, 4009),(3, 4010);
 INSERT INTO libreria_libro (idlibreria, idlibro) VALUES
-                                                            (2004, 5001),(2004, 5002),(2004, 5003),(2004, 5004),(2004, 5005),
-                                                            (2004, 5006),(2004, 5007),(2004, 5008),(2004, 5009),(2004, 5010);
+                                                            (4, 5001),(4, 5002),(4, 5003),(4, 5004),(4, 5005),
+                                                            (4, 5006),(4, 5007),(4, 5008),(4, 5009),(4, 5010);
 INSERT INTO libreria_libro (idlibreria, idlibro) VALUES
-                                                            (2005, 6001),(2005, 6002),(2005, 6003),(2005, 6004),(2005, 6005),
-                                                            (2005, 6006),(2005, 6007),(2005, 6008),(2005, 6009),(2005, 6010);
+                                                            (5, 6001),(5, 6002),(5, 6003),(5, 6004),(5, 6005),
+                                                            (5, 6006),(5, 6007),(5, 6008),(5, 6009),(5, 6010);
 INSERT INTO valutazioni (idlibro, id_utente, c_stile, v_stile, c_contenuto, v_contenuto, c_gradevolezza, v_gradevolezza, c_originalita, v_originalita, c_edizione, v_edizione, c_finale, valutazione_time) VALUES
                                                                                                                                                                                                                       (101, 1, 'Stile valido', 4, 'Contenuto interessante', 4, 'Gradevole', 4, 'Originale', 3, 'Buona edizione', 4, 'OK', CURRENT_TIMESTAMP),
                                                                                                                                                                                                                       (205, 1, 'Stile valido', 3, 'Contenuto interessante', 3, 'Gradevole', 4, 'Originale', 3, 'Buona edizione', 3, 'OK', CURRENT_TIMESTAMP),

@@ -20,7 +20,7 @@
  * <ul>
  *     <li><b>Basic</b>: crea le tabelle e popola la tabella libri.</li>
  *     <li><b>Full</b>: crea le tabelle, popola la
- *     tabella libri e aggiunge un dump per il testing (utente "test" con password "testtest").</li>
+ *     tabella libri e aggiunge un dump per il testing (utente "utentetest" con password "testtest").</li>
  * </ul>
  * <p>
  * Per ulteriori dettagli sul funzionamento del programma, incluse

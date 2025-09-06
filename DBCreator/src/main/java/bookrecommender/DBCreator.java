@@ -22,7 +22,7 @@ import java.util.*;
  * <ul>
  *     <li><b>Basic</b>: crea le tabelle e popola la tabella libri.</li>
  *     <li><b>Full</b>: crea le tabelle, popola la
- *     tabella libri e aggiunge un dump per il testing (utente "test" con password "testtest").</li>
+ *     tabella libri e aggiunge un dump per il testing (utente "utentetest" con password "testtest").</li>
  * </ul>
  *
  * @author Maffioli Gianmarco, 757587, VA
@@ -83,7 +83,7 @@ public class DBCreator {
         L'utente ha a disposizione 2 modalità di esecuzione.
         [\u001B[33mbasic\u001B[0m] - Creazione delle tabelle e popolamento della tabella libri.
         [\u001B[33mfull\u001B[0m]  - Creazione delle tabelle, popolamento della tabella libri e di un dump per il testing.
-        Username \u001B[32mtest\u001B[0m con password \u001B[32mtesttest\u001B[0m.
+        Username \u001B[32mutentetest\u001B[0m con password \u001B[32mtesttest\u001B[0m.
         Scegliere la modalità (basic|full)""", "full").toLowerCase(Locale.ROOT);
 
         Mode mode = modeStr.startsWith("f") ? Mode.FULL : Mode.BASIC;
