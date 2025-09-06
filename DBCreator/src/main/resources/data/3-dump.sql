@@ -1,5 +1,5 @@
-INSERT INTO utenti (id, username, nome, cognome, codice_fiscale, email, password)
-VALUES (1, 'test', 'Test', 'User', 'TSTTST00A00A000A', 'test@test.test', 'testtest');
+INSERT INTO utenti (username, nome, cognome, codice_fiscale, email, password)
+VALUES ('test', 'Test', 'User', 'TSTTST00A00A000A', 'test@test.test', 'testtest');
 INSERT INTO librerie (id, id_utente, titolo_libreria, libreria_time) VALUES
                                                                          (2001, 1, 'Test_Lib_1', CURRENT_TIMESTAMP),
                                                                          (2002, 1, 'Test_Lib_2', CURRENT_TIMESTAMP),
