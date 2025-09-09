@@ -46,7 +46,7 @@ In alternativa puoi scaricarle da [Maven Central](https://search.maven.org/).
 3. Dopo aver compilato il progetto (`mvn clean package`), esegui DBCreator. Sono disponibili script per l'esecuzione per Windows, Linux e MacOS. In alternativa trovi i file .jar in `/bin`.
 4. Se si desidera testare con un database vuoto utilizzare la modalità `basic`, in caso contrario utilizzare la modalità `full` per popolare il database con dei dati/utente di test.
 5. Le credenziali dell'utente test sono:
-   - Username: `test`
+   - Username: `utentetest`
    - Password: `testtest`
 ### 2. Configurazione progetto
 - Java **17**
